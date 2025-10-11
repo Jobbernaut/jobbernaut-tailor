@@ -47,9 +47,13 @@ This is the most critical step. You will rewrite the content for the selected ex
 -   Do not include any explanations, apologies, or text outside of this final JSON object.
 
 ### CRITICAL DIRECTIVES:
--   **Quantify Everything:** Every rewritten bullet point should aim to include a number or a clear statement of impact.
--   **Results first:** Every rewritten bullet point should have a clear visible, and striking result within the first 5 words. RSTA, not STAR.
--   **Keyword Matching** Every important keyword in the Job Description that the Hiring Manager could use for a filter must mandatorily appear in the resume at least once, ideally more than once.
+-   **Quantify Everything:** Every single rewritten bullet point should aim to include a number or a clear statement of impact.
+-   **Results first:** Every single rewritten bullet point should have a clear visible, and striking result within the first 5 words. RSTA, not STAR.
+-   **Keyword Matching:** Every important keyword in the Job Description that the Hiring Manager could use for a filter must mandatorily appear in the resume at least once, ideally more than once.
+-   **ATS Optimization:** Ensure exact keyword matches from the job description appear in context (not just listed). Use the exact phrasing from the JD when possible (e.g., if they say "Kubernetes," don't substitute "K8s"). Mirror technical terms verbatim.
+-   **Density Control:** Aim for 3-5 bullet points per experience. Quality over quantity - each bullet must demonstrate clear impact.
+-   **Recency Bias:** Prioritize more recent experiences when selecting projects. Older projects should only be included if they're uniquely relevant to the key requirements.
+-   **Technical Depth:** For engineering roles, include specific version numbers, scale metrics (e.g., "serving 10M+ requests/day"), and architecture patterns where available in the master profile.
 -   **Tailor Aggressively:** The final resume should look like it was written specifically for this one job.
--   **Maintain Authenticity:** Do not invent facts or metrics. Use the narrative context in the master profile as your source of truth.
+-   **Maintain Authenticity:** Do not invent facts or metrics. Use the narrative context in the master profile as your source of truth. Stretch the truth, but don't reinvent.
 -   **JSON Only:** The final response must be nothing but the specified JSON object.

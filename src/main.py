@@ -34,7 +34,26 @@ class ResumeOptimizationPipeline:
 
         # Load configuration
         self.config = load_json("config.json")
-        self.bot_name = self.config.get("bot_name", "Gemini-2.5-Pro")
+
+        # Resume generation config
+        self.resume_config = self.config.get("resume_generation", {})
+        self.resume_bot = self.resume_config.get("bot_name", "Gemini-2.5-Pro")
+        self.resume_thinking_budget = self.resume_config.get("thinking_budget", "4096")
+        self.resume_web_search = self.resume_config.get("web_search", True)
+
+        # Cover letter generation config
+        self.cover_letter_config = self.config.get("cover_letter_generation", {})
+        self.cover_letter_bot = self.cover_letter_config.get(
+            "bot_name", "Claude-3.7-Sonnet"
+        )
+        self.cover_letter_thinking_budget = self.cover_letter_config.get(
+            "thinking_budget", "2048"
+        )
+        self.cover_letter_web_search = self.cover_letter_config.get("web_search", False)
+
+        # Global settings
+        self.reasoning_trace = self.config.get("reasoning_trace", False)
+        self.dry_run = self.config.get("dry_run", False)
 
         # Load master profile data
         self.master_resume = load_json("profile/master_resume.json")
@@ -51,19 +70,37 @@ class ResumeOptimizationPipeline:
             "generate_cover_letter.txt"
         )
 
-    async def call_poe_api(self, prompt: str) -> str:
-        """Call the Poe API with the given prompt."""
-        print(f"Calling {self.bot_name} API...")
+    async def call_poe_api(
+        self, prompt: str, bot_name: str, max_retries: int = 3
+    ) -> str:
+        """Call the Poe API with retry logic and exponential backoff."""
+        import asyncio
 
-        response_text = ""
-        async for partial in fp.get_bot_response(
-            messages=[fp.ProtocolMessage(role="user", content=prompt)],
-            bot_name=self.bot_name,
-            api_key=self.api_key,
-        ):
-            response_text += partial.text
+        for attempt in range(max_retries):
+            try:
+                print(
+                    f"🔍 Calling {bot_name} API (attempt {attempt + 1}/{max_retries})..."
+                )
 
-        return response_text
+                response_text = ""
+                async for partial in fp.get_bot_response(
+                    messages=[fp.ProtocolMessage(role="user", content=prompt)],
+                    bot_name=bot_name,
+                    api_key=self.api_key,
+                ):
+                    response_text += partial.text
+
+                return response_text
+
+            except Exception as e:
+                if attempt == max_retries - 1:
+                    print(f"❌ API call failed after {max_retries} attempts: {e}")
+                    raise
+                wait_time = 2**attempt
+                print(f"⚠️  API error: {e}. Retrying in {wait_time}s...")
+                await asyncio.sleep(wait_time)
+
+        return ""
 
     def build_resume_prompt(self, job_description: str, company_name: str) -> str:
         """Build the prompt for resume generation."""
@@ -84,10 +121,22 @@ class ResumeOptimizationPipeline:
         tailored_resume_json: dict,
         job_description: str,
         company_name: str,
-        selected_point: dict,
+        best_point: dict,
+        default_point: dict,
     ) -> str:
         """Build the prompt for cover letter generation."""
         prompt = self.cover_letter_prompt_template
+
+        # Combine both points - default point is mandatory, best point is optional
+        personal_notes = []
+
+        if default_point:
+            personal_notes.append(default_point.get("point_text", ""))
+
+        if best_point and best_point != default_point:
+            personal_notes.append(best_point.get("point_text", ""))
+
+        combined_notes = "\n\n".join(filter(None, personal_notes))
 
         # Replace placeholders
         prompt = prompt.replace(
@@ -97,11 +146,24 @@ class ResumeOptimizationPipeline:
         prompt = prompt.replace("[JOB_DESCRIPTION]", f"```\n{job_description}\n```")
         prompt = prompt.replace("[COMPANY_NAME]", company_name)
         prompt = prompt.replace("[HIRING_MANAGER_NAME]", "N/A")
-        prompt = prompt.replace(
-            "[USER_PERSONAL_NOTE]", selected_point.get("point_text", "")
-        )
+        prompt = prompt.replace("[USER_PERSONAL_NOTE]", combined_notes)
 
         return prompt
+
+    def validate_resume_json(self, resume: dict) -> bool:
+        """Validate resume has required fields."""
+        required_keys = [
+            "contact_info",
+            "professional_summaries",
+            "work_experience",
+            "skills",
+        ]
+        missing_keys = [key for key in required_keys if key not in resume]
+
+        if missing_keys:
+            print(f"⚠️  Warning: Resume JSON missing required fields: {missing_keys}")
+            return False
+        return True
 
     def extract_json_from_response(self, response: str) -> dict:
         """Extract JSON from the API response."""
@@ -121,7 +183,7 @@ class ResumeOptimizationPipeline:
         try:
             return json.loads(json_str)
         except json.JSONDecodeError as e:
-            print(f"Error parsing JSON: {e}")
+            print(f"❌ Error parsing JSON: {e}")
             print(f"Response: {response[:500]}...")
             raise
 
@@ -133,32 +195,49 @@ class ResumeOptimizationPipeline:
         job_description = job.get("job_description")
 
         print(f"\n{'='*60}")
-        print(f"Processing: {job_title} at {company_name}")
-        print(f"Job ID: {job_id}")
+        print(f"📋 Processing: {job_title} at {company_name}")
+        print(f"🆔 Job ID: {job_id}")
         print(f"{'='*60}\n")
 
         # Step 1: Select best cover letter point
-        print("Step 1: Selecting best cover letter point...")
-        selected_point = select_best_cover_letter_point(
+        print("📌 Step 1: Selecting best cover letter point...")
+        best_point, default_point = select_best_cover_letter_point(
             job_description, self.cover_letter_points
         )
-        print(f"Selected point: {selected_point.get('id')}")
+        print(f"Best point: {best_point.get('id') if best_point else 'None'}")
+        print(f"Default point: {default_point.get('id') if default_point else 'None'}")
 
         # Step 2: Generate tailored resume
-        print("\nStep 2: Generating tailored resume...")
+        print(f"\n📝 Step 2: Generating tailored resume using {self.resume_bot}...")
         resume_prompt = self.build_resume_prompt(job_description, company_name)
-        resume_response = await self.call_poe_api(resume_prompt)
+        resume_response = await self.call_poe_api(resume_prompt, self.resume_bot)
         tailored_resume = self.extract_json_from_response(resume_response)
-        print("Resume generated successfully!")
+
+        # Validate the resume JSON
+        if self.validate_resume_json(tailored_resume):
+            print("✓ Resume generated successfully!")
+        else:
+            print("⚠️  Resume generated but may be incomplete")
 
         # Step 3: Generate cover letter
-        print("\nStep 3: Generating cover letter...")
+        print(f"\n✉️  Step 3: Generating cover letter using {self.cover_letter_bot}...")
         cover_letter_prompt = self.build_cover_letter_prompt(
-            tailored_resume, job_description, company_name, selected_point
+            tailored_resume, job_description, company_name, best_point, default_point
         )
-        cover_letter_response = await self.call_poe_api(cover_letter_prompt)
-        # Cover letter is plain text, no JSON extraction needed
+        cover_letter_response = await self.call_poe_api(
+            cover_letter_prompt, self.cover_letter_bot
+        )
+
+        # Filter reasoning traces if disabled
         cover_letter_text = cover_letter_response.strip()
+        if not self.reasoning_trace:
+            # Remove lines starting with ">" (reasoning traces)
+            lines = cover_letter_text.split("\n")
+            filtered_lines = [
+                line for line in lines if not line.strip().startswith(">")
+            ]
+            cover_letter_text = "\n".join(filtered_lines).strip()
+
         print("Cover letter generated successfully!")
 
         # Step 4: Create output directory and save files

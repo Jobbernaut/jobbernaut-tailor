@@ -31,6 +31,9 @@ The letter must follow a classic three-paragraph structure and be under 300 word
     -   Select one or two of your most impressive achievements from the [TAILORED_RESUME_JSON] (e.g., "At Vivriti Capital, I spearheaded a project that reduced report processing time by 99%...").
     -   Explicitly connect this achievement to a key requirement in the [JOB_DESCRIPTION] (e.g., "...which I believe directly aligns with your need for a candidate skilled in process automation and cloud architecture.").
     -   Seamlessly weave the [USER_PERSONAL_NOTE] into this paragraph to add a layer of authentic interest.
+    - **Show, Don't Tell:** Instead of saying "I'm skilled in X," demonstrate it through the achievement (e.g., "By architecting an event-driven pipeline with AWS Lambda and SQS, I reduced...")
+    - **Company-Specific Language:** Mirror 1-2 key phrases from the job description verbatim to show alignment (e.g., if they say "ship quickly and safely," use that exact phrase).
+    - **Transition Smoothness:** The [USER_PERSONAL_NOTE] should flow naturally. If it feels forced, rephrase it to connect to the achievement you just mentioned.
 
 -   **Paragraph 3 (The Close):**
     -   Reiterate your strong interest in the role and your confidence in your ability to contribute to the team.
@@ -44,5 +47,8 @@ The letter must follow a classic three-paragraph structure and be under 300 word
 
 ### CRITICAL DIRECTIVES:
 -   **Be Specific:** Use the numbers and results from the tailored resume.
+-   **Show, Don't Tell:** Instead of saying "I'm skilled in X," demonstrate it through achievements (e.g., "By architecting an event-driven pipeline with AWS Lambda and SQS, I reduced...").
+-   **Company-Specific Language:** Mirror 1-2 key phrases from the job description verbatim to show alignment (e.g., if they say "ship quickly and safely," use that exact phrase).
+-   **Smooth Transitions:** The [USER_PERSONAL_NOTE] should flow naturally. If it feels forced, rephrase it to connect to the achievement you just mentioned.
 -   **Be Confident, Not Arrogant:** The tone should be professional and enthusiastic.
 -   **No Placeholders:** The final output must be a complete letter with all information filled in.

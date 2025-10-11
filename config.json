@@ -1,5 +1,14 @@
 {
+  "resume_generation": {
     "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "8192",
+    "thinking_budget": "4096",
     "web_search": true
+  },
+  "cover_letter_generation": {
+    "bot_name": "Claude-3.7-Sonnet",
+    "thinking_budget": "2048",
+    "web_search": false
+  },
+  "reasoning_trace": false,
+  "dry_run": false
 }

@@ -56,10 +56,11 @@ def update_job_status(filepath: str, job_id: str, new_status: str) -> None:
 
 def select_best_cover_letter_point(
     job_description: str, cover_letter_points: List[Dict]
-) -> Dict:
+) -> tuple:
     """
     Select the best cover letter point based on keyword matching.
-    Returns the point with the most keyword matches, or the default point if no matches.
+    Returns a tuple of (best_point, default_point).
+    The best_point has the most keyword matches, default_point is always included.
     """
     job_desc_lower = job_description.lower()
     best_point = None
@@ -71,16 +72,19 @@ def select_best_cover_letter_point(
         if point.get("default", False):
             default_point = point
 
-        # Count keyword matches
-        keywords = point.get("keywords", [])
-        matches = sum(1 for keyword in keywords if keyword.lower() in job_desc_lower)
+        # Count keyword matches (skip default point from keyword matching)
+        if not point.get("default", False):
+            keywords = point.get("keywords", [])
+            matches = sum(
+                1 for keyword in keywords if keyword.lower() in job_desc_lower
+            )
 
-        if matches > max_matches:
-            max_matches = matches
-            best_point = point
+            if matches > max_matches:
+                max_matches = matches
+                best_point = point
 
-    # Return the best match, or default if no matches found
-    return best_point if best_point else default_point
+    # Return both the best match and the default point
+    return (best_point, default_point)
 
 
 def create_output_directory(job_id: str, job_title: str, company_name: str) -> str:
