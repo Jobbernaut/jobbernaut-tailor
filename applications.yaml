@@ -1,10 +1,10 @@
 - job_id: add58865-8b9f-4cf7-9720-2908ba5f4d80
   job_title: Software Engineer, Infrastructure, Early Career
   company_name: Notion
-  status: processed
-  job_description: 'About Us:
+  status: pending
+  job_description: "About Us:
 
-    Notion helps you build beautiful tools for your life’s work. In today''s world
+    Notion helps you build beautiful tools for your life’s work. In today's world
     of endless apps and tabs, Notion provides one place for teams to get everything
     done, seamlessly connecting docs, notes, projects, calendar, and email—with AI
     built in to find answers and automate work. Millions of users, from individuals
@@ -12,7 +12,7 @@
     and choose it because it helps them save time and money.
 
 
-    In-person collaboration is essential to Notion''s culture. We require all team
+    In-person collaboration is essential to Notion's culture. We require all team
     members to work from our offices on Mondays and Thursdays, our designated Anchor
     Days. Certain teams or positions may require additional in-office workdays.
 
@@ -27,7 +27,7 @@
     teams to ship quickly and safely.
 
 
-    What You''ll Achieve:
+    What You'll Achieve:
 
     Ship improvements to core infrastructure that increase reliability, performance,
     scalability, and cost efficiency.
@@ -76,7 +76,7 @@
     testing.
 
 
-    Skills You''ll Need to Bring:
+    Skills You'll Need to Bring:
 
     BS or MS in Computer Science or related field, or equivalent practical experience.
 
@@ -147,4 +147,4 @@
 
     #LI-Onsite
 
-    '
+    "
