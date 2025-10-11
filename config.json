@@ -5,7 +5,7 @@
     "web_search": true
   },
   "cover_letter_generation": {
-    "bot_name": "Claude-3.7-Sonnet",
+    "bot_name": "Claude-Haiku-3.5",
     "thinking_budget": "2048",
     "web_search": false
   },
