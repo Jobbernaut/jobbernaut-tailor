@@ -49,6 +49,7 @@ This is the most critical step. You will rewrite the content for the selected ex
 ### CRITICAL DIRECTIVES:
 -   **Quantify Everything:** Every rewritten bullet point should aim to include a number or a clear statement of impact.
 -   **Results first:** Every rewritten bullet point should have a clear visible, and striking result within the first 5 words. RSTA, not STAR.
+-   **Keyword Matching** Every important keyword in the Job Description that the Hiring Manager could use for a filter must mandatorily appear in the resume at least once, ideally more than once.
 -   **Tailor Aggressively:** The final resume should look like it was written specifically for this one job.
 -   **Maintain Authenticity:** Do not invent facts or metrics. Use the narrative context in the master profile as your source of truth.
 -   **JSON Only:** The final response must be nothing but the specified JSON object.

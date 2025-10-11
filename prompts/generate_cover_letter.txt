@@ -15,7 +15,7 @@ Your task is to write a concise, professional, and enthusiastic cover letter.
 
 **Step 1: Deconstruct the Inputs**
 -   Review the [JOB_DESCRIPTION] to identify the top 2-3 most important qualifications.
--   Review the [TAILORED_RESUME_JSON] to find the most powerful, quantified achievements that directly map to those qualifications.
+-   Review the [TAILORED_RESUME_JSON] to find the most powerful, quantified achievements with results that directly map to those qualifications.
 
 **Step 2: Structure the Cover Letter**
 The letter must follow a classic three-paragraph structure and be under 300 words.
