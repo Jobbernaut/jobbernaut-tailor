@@ -1,0 +1,5 @@
+{
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "8192",
+    "web_search": true
+}

@@ -1,0 +1,69 @@
+- job_id: "add58865-8b9f-4cf7-9720-2908ba5f4d80"
+  job_title: "Software Engineer, Infrastructure, Early Career"
+  company_name: "Notion"
+  status: "pending"
+  job_description: |
+    About Us:
+    Notion helps you build beautiful tools for your life’s work. In today's world of endless apps and tabs, Notion provides one place for teams to get everything done, seamlessly connecting docs, notes, projects, calendar, and email—with AI built in to find answers and automate work. Millions of users, from individuals to large organizations like Toyota, Figma, and OpenAI, love Notion for its flexibility and choose it because it helps them save time and money.
+
+    In-person collaboration is essential to Notion's culture. We require all team members to work from our offices on Mondays and Thursdays, our designated Anchor Days. Certain teams or positions may require additional in-office workdays.
+
+    About the Role:
+    As a Software Engineer, Infrastructure (Early Career), you’ll help build and operate the platform that powers Notion for millions of users. You’ll work on services, storage, data, networking, observability, CI/CD, and developer experience to make our systems reliable, scalable, and efficient. You’ll collaborate with senior engineers to design and implement high‑leverage infrastructure that enables product teams to ship quickly and safely.
+
+    What You'll Achieve:
+    Ship improvements to core infrastructure that increase reliability, performance, scalability, and cost efficiency.
+
+    Contribute to backend systems that meet the needs of over 100 million global users, large enterprise customers, and our rapidly growing business.
+
+    Build and maintain observability, alerting, and incident tooling to reduce MTTR and improve on‑call experience.
+
+    Develop the skills and confidence to debug live production systems with minimal disruption. You will participate in an on-call rotation, responding to incidents to uphold service reliability and quickly restore normal operations.
+
+    Automate operations with tooling and infrastructure‑as‑code to make our systems easy to run and evolve.
+
+    Partner with our security teams to implement best practices for hardening, secrets, access, and compliance.
+
+    Areas You Might Work On:
+    Storage and databases: schema design, migrations, performance tuning, caching.
+
+    Compute and orchestration: service frameworks, containerization, CI/CD, rollout safety.
+
+    Observability: metrics, tracing, logging, SLOs, dashboards.
+
+    Networking and edge: APIs, rate limiting, load balancing, traffic shaping, CDN.
+
+    Platform foundations: developer tooling, local dev ergonomics, SDKs, testing infra.
+
+    Reliability engineering: capacity planning, failover, disaster recovery, chaos testing.
+
+    Skills You'll Need to Bring:
+    BS or MS in Computer Science or related field, or equivalent practical experience.
+
+    Proficiency in at least one general‑purpose programming language such as Typescript, Python, Rust, Go, Java, Python, or C++.
+
+    Solid CS fundamentals in data structures, algorithms, systems, and networking.
+
+    Experience from internships or projects building backend services , infrastructure, or full stack products.
+
+    Strong communication skills and a collaborative, product‑minded approach.
+
+    Nice to Haves:
+    Familiarity with distributed systems, databases, and concurrency.
+
+    Familiarity with Linux, cloud platforms (e.g., AWS or GCP), and containers.
+
+    Exposure to Infrastructure‑as‑Code (e.g., Terraform), container orchestration, or service meshes.
+
+    Hands‑on with observability stacks (e.g., Prometheus, OpenTelemetry, Grafana).
+
+    We hire talented and passionate people from a variety of backgrounds because we want our global employee base to represent the wide diversity of our customers. If you’re excited about a role but your past experience doesn’t align perfectly with every bullet point listed in the job description, we still encourage you to apply. If you’re a builder at heart, share our company values, and enthusiastic about making software toolmaking ubiquitous, we want to hear from you.
+
+    Notion is proud to be an equal opportunity employer. We do not discriminate in hiring or any employment decision based on race, color, religion, national origin, age, sex (including pregnancy, childbirth, or related medical conditions), marital status, ancestry, physical or mental disability, genetic information, veteran status, gender identity or expression, sexual orientation, or other applicable legally protected characteristic. Notion considers qualified applicants with criminal histories, consistent with applicable federal, state and local law. Notion is also committed to providing reasonable accommodations for qualified individuals with disabilities and disabled veterans in our job application procedures. If you need assistance or an accommodation due to a disability, please let your recruiter know.
+
+    Notion is committed to providing highly competitive cash compensation, equity, and benefits. The compensation offered for this role will be based on multiple factors such as location, the role’s scope and complexity, and the candidate’s experience and expertise, and may vary from the range provided below. For roles based in San Francisco or New York City, the estimated base salary range for this role is $126k - $155k per year.
+
+
+    By clicking “Submit Application”, I understand and agree that Notion and its affiliates and subsidiaries will collect and process my information in accordance with Notion’s Global Recruiting Privacy Policy.
+
+    #LI-Onsite
