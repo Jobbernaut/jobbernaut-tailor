@@ -123,14 +123,65 @@ def save_resume(
 def save_cover_letter(
     output_dir: str, cover_letter_text: str, job_title: str, company_name: str
 ) -> str:
-    """Save the cover letter to the output directory."""
-    filename = f"{company_name}_{job_title}_CoverLetter.txt"
-    filepath = os.path.join(output_dir, filename)
+    """Save the cover letter to the output directory as both TXT and PDF."""
+    # Save as TXT
+    txt_filename = f"{company_name}_{job_title}_CoverLetter.txt"
+    txt_filepath = os.path.join(output_dir, txt_filename)
 
-    with open(filepath, "w", encoding="utf-8") as f:
+    with open(txt_filepath, "w", encoding="utf-8") as f:
         f.write(cover_letter_text)
 
-    return filepath
+    # Save as PDF
+    pdf_filename = f"{company_name}_{job_title}_CoverLetter.pdf"
+    pdf_filepath = os.path.join(output_dir, pdf_filename)
+
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.lib.enums import TA_LEFT
+    from html import escape
+
+    # Create PDF
+    doc = SimpleDocTemplate(
+        pdf_filepath,
+        pagesize=letter,
+        rightMargin=0.75 * inch,
+        leftMargin=0.75 * inch,
+        topMargin=0.75 * inch,
+        bottomMargin=0.75 * inch,
+    )
+
+    # Container for the 'Flowable' objects
+    elements = []
+
+    # Define styles
+    styles = getSampleStyleSheet()
+    normal_style = ParagraphStyle(
+        "CustomNormal",
+        parent=styles["Normal"],
+        fontSize=11,
+        leading=14,
+        alignment=TA_LEFT,
+        spaceAfter=12,
+    )
+
+    # Split text into paragraphs and add to PDF
+    paragraphs = cover_letter_text.split("\n\n")
+    for para_text in paragraphs:
+        if para_text.strip():
+            # Escape special characters for reportlab using html.escape
+            para_text = escape(para_text)
+            # Replace single newlines with <br/> tags for reportlab
+            para_text = para_text.replace("\n", "<br/>")
+            para = Paragraph(para_text, normal_style)
+            elements.append(para)
+            elements.append(Spacer(1, 0.1 * inch))
+
+    # Build PDF
+    doc.build(elements)
+
+    return pdf_filepath
 
 
 def save_latex_resume(

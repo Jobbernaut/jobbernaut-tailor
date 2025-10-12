@@ -253,10 +253,14 @@ class ResumeOptimizationPipeline:
         # Filter reasoning traces if disabled
         cover_letter_text = cover_letter_response.strip()
         if not self.reasoning_trace:
-            # Remove lines starting with ">" (reasoning traces)
+            # Remove lines starting with ">" (reasoning traces) and "*Thinking...*"
             lines = cover_letter_text.split("\n")
             filtered_lines = [
-                line for line in lines if not line.strip().startswith(">")
+                line
+                for line in lines
+                if not line.strip().startswith(">")
+                and "*Thinking*" not in line
+                and "Thinking..." not in line
             ]
             cover_letter_text = "\n".join(filtered_lines).strip()
 
@@ -273,7 +277,7 @@ class ResumeOptimizationPipeline:
         cover_letter_path = save_cover_letter(
             output_dir, cover_letter_text, job_title, company_name
         )
-        print(f"Cover letter saved: {cover_letter_path}")
+        print(f"Cover letter saved as PDF: {cover_letter_path}")
 
         # Step 4b: Convert resume JSON to LaTeX
         print(f"\n📄 Step 4b: Converting resume to LaTeX using {self.latex_bot}...")
