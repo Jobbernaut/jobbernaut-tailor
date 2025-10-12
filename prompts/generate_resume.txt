@@ -17,7 +17,8 @@ You will be given the following data, clearly delineated:
 **Step 2: Relevance Analysis & Content Selection**
 -   Carefully analyze the [JOB_DESCRIPTION] to identify the top 5-7 most critical skills, technologies, and responsibilities (the "Key Requirements").
 -   Review the [MASTER_RESUME_JSON]. Your task is to select the most relevant experiences to include in the final resume.
--   **Rule for `work_experience`:** You MUST include ALL entries from the `work_experience` section. For each entry, select the 3 MOST IMPACTFUL and RELEVANT bullet points that best demonstrate the "Key Requirements".
+-   **Rule for `work_experience`:** You MUST include ALL entries from the `work_experience` section in REVERSE CHRONOLOGICAL ORDER (most recent first, oldest last). For each entry, select the 3 MOST IMPACTFUL and RELEVANT bullet points that best demonstrate the "Key Requirements".
+-   **CRITICAL - Chronological Order:** Before finalizing, verify work experiences are ordered by start_date from newest to oldest. A position starting in "2024-07" comes BEFORE a position starting in "2024-01" in the final output.
 -   **Rule for `projects`:** You MUST select EXACTLY 2 projects that best demonstrate the "Key Requirements". Choose based on keyword overlap and relevance to the job description.
 
 **Step 3: Content Rewriting & Tailoring (The RSTA Framework)**
