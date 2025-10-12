@@ -400,6 +400,35 @@ class ResumeOptimizationPipeline:
         latex_path = save_latex_resume(output_dir, latex_text, job_title, company_name)
         print(f"✓ LaTeX resume saved: {latex_path}")
 
+        # Step 4d: Compile LaTeX to PDF
+        print(f"\n📄 Step 4d: Compiling LaTeX to PDF...")
+        try:
+            from utils import compile_latex_to_pdf
+
+            resume_pdf_path = compile_latex_to_pdf(latex_path, output_dir)
+            print(f"✓ Resume PDF generated: {resume_pdf_path}")
+        except Exception as e:
+            print(f"\n❌ LaTeX compilation failed: {e}")
+            print(
+                "The process has been halted. Please fix the LaTeX errors and try again."
+            )
+            raise
+
+        # Step 4e: Organize files and rename with proper convention
+        print(f"\n📁 Step 4e: Organizing output files...")
+        try:
+            from utils import organize_output_files
+
+            first_name = self.master_resume["contact_info"]["first_name"]
+            last_name = self.master_resume["contact_info"]["last_name"]
+            organize_output_files(
+                output_dir, first_name, last_name, company_name, job_id
+            )
+            print(f"✓ Files organized successfully!")
+        except Exception as e:
+            print(f"\n⚠️  File organization failed: {e}")
+            print("Files were generated but may not be in the expected structure.")
+
         # Step 5: Update job status
         print("\nStep 5: Updating job status...")
         update_job_status("applications.yaml", job_id, "processed")

@@ -202,3 +202,162 @@ def load_prompt_template(prompt_file: str) -> str:
     filepath = os.path.join("prompts", prompt_file)
     with open(filepath, "r", encoding="utf-8") as f:
         return f.read()
+
+
+def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
+    """
+    Compile LaTeX file to PDF using pdflatex.
+    Returns the path to the generated PDF file.
+    """
+    import subprocess
+    import shutil
+
+    # Check if pdflatex is available
+    if shutil.which("pdflatex") is None:
+        raise RuntimeError(
+            "pdflatex not found. Please install MiKTeX or TeX Live.\n"
+            "Download MiKTeX from: https://miktex.org/download"
+        )
+
+    # Copy resume.cls to the output directory (required for compilation)
+    resume_cls_source = "resume.cls"
+    resume_cls_dest = os.path.join(output_dir, "resume.cls")
+
+    if not os.path.exists(resume_cls_source):
+        raise FileNotFoundError(
+            f"resume.cls not found in the project root. "
+            f"Please ensure resume.cls exists at: {resume_cls_source}"
+        )
+
+    shutil.copy2(resume_cls_source, resume_cls_dest)
+
+    # Get the base name without extension
+    tex_basename = os.path.basename(tex_file_path)
+    tex_name_no_ext = os.path.splitext(tex_basename)[0]
+
+    # Set environment variables for MiKTeX to auto-install packages without prompting
+    env = os.environ.copy()
+    env["MIKTEX_AUTOINSTALL"] = "1"  # Enable automatic package installation
+    env["MIKTEX_ENABLEINSTALLER"] = "t"  # Enable the package installer
+
+    # Run pdflatex twice (standard practice for proper references)
+    for run in range(1, 3):
+        print(f"  Running pdflatex (pass {run}/2)...")
+        try:
+            result = subprocess.run(
+                [
+                    "pdflatex",
+                    "-interaction=nonstopmode",
+                    "-output-directory",
+                    output_dir,
+                    tex_file_path,
+                ],
+                capture_output=True,
+                text=True,
+                timeout=120,  # Increased timeout to allow for package installation
+                env=env,  # Pass environment variables
+            )
+
+            # Check for errors in the output
+            if result.returncode != 0:
+                # Extract relevant error information from log
+                log_file = os.path.join(output_dir, f"{tex_name_no_ext}.log")
+                error_msg = "LaTeX compilation failed."
+
+                if os.path.exists(log_file):
+                    with open(log_file, "r", encoding="utf-8", errors="ignore") as f:
+                        log_content = f.read()
+                        # Look for error lines
+                        error_lines = [
+                            line
+                            for line in log_content.split("\n")
+                            if line.startswith("!")
+                        ]
+                        if error_lines:
+                            error_msg += f"\n\nErrors found:\n" + "\n".join(
+                                error_lines[:5]
+                            )
+
+                raise RuntimeError(error_msg)
+
+        except subprocess.TimeoutExpired:
+            raise RuntimeError("LaTeX compilation timed out after 120 seconds.")
+
+    # Clean up auxiliary files
+    aux_extensions = [".aux", ".log", ".out"]
+    for ext in aux_extensions:
+        aux_file = os.path.join(output_dir, f"{tex_name_no_ext}{ext}")
+        if os.path.exists(aux_file):
+            os.remove(aux_file)
+
+    # Also remove the copied resume.cls
+    if os.path.exists(resume_cls_dest):
+        os.remove(resume_cls_dest)
+
+    # Return the path to the generated PDF
+    pdf_path = os.path.join(output_dir, f"{tex_name_no_ext}.pdf")
+
+    if not os.path.exists(pdf_path):
+        raise RuntimeError(
+            f"PDF was not generated. Expected at: {pdf_path}\n"
+            "Check the LaTeX file for syntax errors."
+        )
+
+    return pdf_path
+
+
+def organize_output_files(
+    output_dir: str,
+    first_name: str,
+    last_name: str,
+    company_name: str,
+    job_id: str,
+) -> None:
+    """
+    Organize output files into final structure:
+    - Create debug/ subdirectory
+    - Move .tex, .json, .txt files to debug/
+    - Rename PDFs with proper naming convention
+    """
+    import shutil
+
+    # Create debug subdirectory
+    debug_dir = os.path.join(output_dir, "debug")
+    os.makedirs(debug_dir, exist_ok=True)
+
+    # Sanitize names for filenames (replace spaces with underscores)
+    safe_first = first_name.replace(" ", "_")
+    safe_last = last_name.replace(" ", "_")
+    safe_company = company_name.replace(" ", "_")
+
+    # Find and move files to debug/
+    for filename in os.listdir(output_dir):
+        filepath = os.path.join(output_dir, filename)
+
+        # Skip if it's a directory
+        if os.path.isdir(filepath):
+            continue
+
+        # Move .tex, .json, .txt files to debug/
+        if filename.endswith((".tex", ".json", ".txt")):
+            dest_path = os.path.join(debug_dir, filename)
+            shutil.move(filepath, dest_path)
+            print(f"  Moved {filename} to debug/")
+
+        # Rename PDFs with proper naming convention
+        elif filename.endswith(".pdf"):
+            if "Resume" in filename:
+                new_name = (
+                    f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+                )
+                new_path = os.path.join(output_dir, new_name)
+                shutil.move(filepath, new_path)
+                print(f"  Renamed resume PDF to: {new_name}")
+
+            elif "CoverLetter" in filename or "Cover_Letter" in filename:
+                new_name = (
+                    f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
+                )
+                new_path = os.path.join(output_dir, new_name)
+                shutil.move(filepath, new_path)
+                print(f"  Renamed cover letter PDF to: {new_name}")
