@@ -43,7 +43,7 @@ Convert the JSON resume into a complete, ready-to-compile LaTeX document using t
 
 \begin{rSection}{Education}
 
-[FOR EACH EDUCATION ENTRY:]
+[FOR EACH EDUCATION ENTRY - NO \\ ON LAST LINE:]
 {\bf [DEGREE]}, [INSTITUTION] \hfill {[GRADUATION_DATE]}\\
 
 \end{rSection}

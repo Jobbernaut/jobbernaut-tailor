@@ -48,6 +48,18 @@ class ResumeOptimizationPipeline:
         self.latex_thinking_budget = self.latex_config.get("thinking_budget", "2048")
         self.latex_web_search = self.latex_config.get("web_search", False)
 
+        # LaTeX verification config
+        self.latex_verification_config = self.config.get("latex_verification", {})
+        self.latex_verification_bot = self.latex_verification_config.get(
+            "bot_name", "Gemini-2.5-Pro"
+        )
+        self.latex_verification_thinking_budget = self.latex_verification_config.get(
+            "thinking_budget", "4096"
+        )
+        self.latex_verification_web_search = self.latex_verification_config.get(
+            "web_search", False
+        )
+
         # Cover letter generation config
         self.cover_letter_config = self.config.get("cover_letter_generation", {})
         self.cover_letter_bot = self.cover_letter_config.get(
@@ -78,6 +90,9 @@ class ResumeOptimizationPipeline:
         )
         self.latex_conversion_prompt_template = load_prompt_template(
             "convert_resume_to_latex.txt"
+        )
+        self.latex_verification_prompt_template = load_prompt_template(
+            "verify_latex_resume.txt"
         )
 
     async def call_poe_api(
@@ -171,6 +186,74 @@ class ResumeOptimizationPipeline:
         )
 
         return prompt
+
+    def build_latex_verification_prompt(self, latex_text: str) -> str:
+        """Build the prompt for verifying LaTeX resume against master resume."""
+        prompt = self.latex_verification_prompt_template
+
+        # Replace placeholders
+        prompt = prompt.replace(
+            "[MASTER_RESUME_JSON]",
+            f"```json\n{json.dumps(self.master_resume, indent=2)}\n```",
+        )
+        prompt = prompt.replace(
+            "[LATEX_RESUME]",
+            f"```latex\n{latex_text}\n```",
+        )
+
+        return prompt
+
+    async def verify_latex_resume(self, latex_text: str) -> tuple:
+        """
+        Verify the LaTeX resume against the master resume.
+        Returns (verification_passed: bool, verification_result: dict)
+        """
+        print(
+            f"\n🔍 Step 4c: Verifying LaTeX resume using {self.latex_verification_bot}..."
+        )
+
+        verification_prompt = self.build_latex_verification_prompt(latex_text)
+        verification_response = await self.call_poe_api(
+            verification_prompt, self.latex_verification_bot
+        )
+
+        # Extract verification result JSON
+        verification_result = self.extract_json_from_response(verification_response)
+
+        # Check if verification passed
+        verification_passed = verification_result.get("verification_passed", False)
+        quality_score = verification_result.get("quality_score", 0)
+        issues = verification_result.get("issues", [])
+        summary = verification_result.get("summary", "No summary provided")
+
+        print(f"\n{'='*60}")
+        print(f"VERIFICATION RESULTS")
+        print(f"{'='*60}")
+        print(f"Status: {'✓ PASSED' if verification_passed else '✗ FAILED'}")
+        print(f"Quality Score: {quality_score}/100")
+        print(f"Summary: {summary}")
+
+        if issues:
+            print(f"\nIssues Found ({len(issues)}):")
+            for i, issue in enumerate(issues, 1):
+                severity = issue.get("severity", "unknown")
+                category = issue.get("category", "unknown")
+                description = issue.get("description", "No description")
+                location = issue.get("location", "Unknown location")
+
+                severity_emoji = {"critical": "🔴", "major": "🟡", "minor": "🟢"}.get(
+                    severity, "⚪"
+                )
+
+                print(f"\n{i}. {severity_emoji} [{severity.upper()}] {category}")
+                print(f"   Description: {description}")
+                print(f"   Location: {location}")
+        else:
+            print("\nNo issues found!")
+
+        print(f"{'='*60}\n")
+
+        return verification_passed, verification_result
 
     def validate_resume_json(self, resume: dict) -> bool:
         """Validate resume has required fields."""
@@ -295,8 +378,27 @@ class ResumeOptimizationPipeline:
             end = latex_text.find("```", start)
             latex_text = latex_text[start:end].strip()
 
+        # Step 4c: Verify LaTeX resume
+        verification_passed, verification_result = await self.verify_latex_resume(
+            latex_text
+        )
+
+        if not verification_passed:
+            print("\n" + "=" * 60)
+            print("❌ VERIFICATION FAILED")
+            print("=" * 60)
+            print(
+                "The LaTeX resume contains blatant lies, major misrepresentations, or critical quality issues."
+            )
+            print("The process has been halted. Please review the issues above.")
+            print("=" * 60 + "\n")
+            raise ValueError(
+                "LaTeX verification failed. Resume contains critical issues that must be addressed."
+            )
+
+        # Verification passed - save the LaTeX file
         latex_path = save_latex_resume(output_dir, latex_text, job_title, company_name)
-        print(f"LaTeX resume saved: {latex_path}")
+        print(f"✓ LaTeX resume saved: {latex_path}")
 
         # Step 5: Update job status
         print("\nStep 5: Updating job status...")

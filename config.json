@@ -14,6 +14,11 @@
     "thinking_budget": "8192",
     "web_search": false
   },
+  "latex_verification": {
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "4096",
+    "web_search": false
+  },
   "reasoning_trace": false,
   "dry_run": false
 }
