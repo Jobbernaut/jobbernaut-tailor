@@ -17,27 +17,51 @@ You will be given the following data, clearly delineated:
 **Step 2: Relevance Analysis & Content Selection**
 -   Carefully analyze the [JOB_DESCRIPTION] to identify the top 5-7 most critical skills, technologies, and responsibilities (the "Key Requirements").
 -   Review the [MASTER_RESUME_JSON]. Your task is to select the most relevant experiences to include in the final resume.
--   **Rule for `work_experience`:** You MUST include ALL entries from the `work_experience` section in REVERSE CHRONOLOGICAL ORDER (most recent first, oldest last). For each entry, select the 3 MOST IMPACTFUL and RELEVANT bullet points that best demonstrate the "Key Requirements".
--   **CRITICAL - Chronological Order:** Before finalizing, verify work experiences are ordered by start_date from newest to oldest. A position starting in "2024-07" comes BEFORE a position starting in "2024-01" in the final output.
+-   **Rule for `work_experience`:** You MUST include ALL entries from the `work_experience` section. For each entry, select the 3 MOST IMPACTFUL and RELEVANT bullet points that best demonstrate the "Key Requirements".
 -   **Rule for `projects`:** You MUST select EXACTLY 2 projects that best demonstrate the "Key Requirements". Choose based on keyword overlap and relevance to the job description.
+
+**Step 2.5: ACCURACY-FIRST PRINCIPLES**
+Before optimizing for impact, you must ensure factual accuracy. Every transformation must pass these tests:
+
+1. **ROLE PRESERVATION TEST**
+   - ❌ NEVER: Transform supporting roles into primary ownership
+     - "aided" → "secured", "contributed" → "led", "supported" → "drove", "helped enable" → "delivered"
+   - ✅ ALWAYS: Preserve the exact nature of your contribution as stated in the source
+   - EXAMPLE:
+     - Master JSON: "Aided in enabling a $1M+ investment"
+     - ❌ WRONG: "Secured a $1M+ investment"
+     - ✅ RIGHT: "Enabled a $1M+ investment by delivering a proof-of-concept that influenced leadership decisions"
+
+2. **METRIC PRECISION TEST**
+   - ❌ NEVER: Extrapolate beyond stated numbers (e.g., "5-30 people" → "30 people")
+   - ❌ NEVER: Claim 100% reduction when you automated one specific task within a larger workflow
+   - ❌ NEVER: Round up percentages or inflate scope for impact
+   - ✅ ALWAYS: Use exact metrics from the source or describe scope accurately
+   - EXAMPLE:
+     - Master JSON: "automated a 3-hour weekly manual task"
+     - ❌ WRONG: "Achieved 100% reduction in grading time"
+     - ✅ RIGHT: "Eliminated 3-hour weekly manual grading task through automation"
+
+3. **OWNERSHIP CLARITY TEST**
+   - ❌ NEVER: Claim sole ownership of team achievements
+   - ❌ NEVER: Omit handoffs or transitions (e.g., if you built a PoC that was handed to another team, don't claim the final outcome)
+   - ✅ ALWAYS: Acknowledge collaborative context when present in the narrative
+   - ✅ ALWAYS: Use "contributed to", "enabled", "influenced" when you were part of a larger effort
+
+4. **SOURCE FIDELITY TEST**
+   - ❌ NEVER: Change URLs from the `project_url` field
+   - ❌ NEVER: Modify the `job_title` field (don't add "Intern" if it's not there)
+   - ❌ NEVER: Alter any structured data fields from the master JSON
+   - ✅ ALWAYS: Use exact values from master_resume.json for all structured fields
 
 **Step 3: Content Rewriting & Tailoring (The RSTA Framework)**
 This is the most critical step. You will rewrite the content for the selected experiences.
 
 -   **OBJECTIVE Section (MANDATORY FORMAT):**
-    -   **CRITICAL:** Use this EXACT text from the master resume's `professional_summaries` field, word-for-word, with NO modifications:
-    
-    ```
-    Graduate-level Software Engineer with experience delivering enterprise-grade solutions in two hands-on internships. Authorized to work full-time in U.S. without requiring any sponsorship now or for foreseeable future. Availability begins with CPT in January 2026, then F-1 OPT/STEM from June 2026 to 2029.
-    ```
-    
+    -   **CRITICAL:** Use the EXACT text from the master resume's `professional_summaries` field, word-for-word, with NO modifications:
     -   **DO NOT modify, add to, or change this text in any way.**
     -   Store this EXACT text in the `professional_summaries` field as a single string (not a list).
     -   This is the complete OBJECTIVE section - do not add any additional sentences.
-
--   **Professional Summary (DEPRECATED - Use OBJECTIVE instead):**
-    -   The `professional_summaries` field will now contain the OBJECTIVE section text.
-    -   Do NOT use the old professional summary format.
 
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, transform the raw, narrative `bullet_points` into professional, impact-focused statements.
@@ -46,6 +70,8 @@ This is the most critical step. You will rewrite the content for the selected ex
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     -   **MANDATORY:** Start every bullet point with a strong action verb (e.g., Architected, Engineered, Reduced, Accelerated, Spearheaded).
     -   **MANDATORY:** Quantify the **Result** with specific metrics (%, $, time, volume) whenever possible, drawing from the narrative context. If a number isn't present, describe the tangible impact.
+    -   **CRITICAL CONSTRAINT:** Results must be factually grounded in the source material. Do not inflate your role or claim outcomes beyond what the narrative supports.
+    -   **Results first:** Every single rewritten bullet point should have a clear visible, and striking result within the first 5 words. RSTA, not STAR.
     -   The final bullet point should be a single, concise sentence, ideally under 25 words.
 
 -   **Skills Section:**
@@ -61,7 +87,6 @@ This is the most critical step. You will rewrite the content for the selected ex
 
 ### CRITICAL DIRECTIVES:
 -   **Quantify Everything:** Every single rewritten bullet point should aim to include a number or a clear statement of impact.
--   **Results first:** Every single rewritten bullet point should have a clear visible, and striking result within the first 5 words. RSTA, not STAR.
 -   **Keyword Matching:** Every important keyword in the Job Description that the Hiring Manager could use for a filter must mandatorily appear in the resume at least once, ideally more than once.
 -   **ATS Optimization:** Ensure exact keyword matches from the job description appear in context (not just listed). Use the exact phrasing from the JD when possible (e.g., if they say "Kubernetes," don't substitute "K8s"). Mirror technical terms verbatim.
 -   **STRICT Filtering Rules:**
@@ -71,6 +96,24 @@ This is the most critical step. You will rewrite the content for the selected ex
     -   OBJECTIVE: Use the EXACT text from master resume with ZERO modifications
 -   **Recency Bias:** Prioritize more recent experiences when selecting projects. Older projects should only be included if they're uniquely relevant to the key requirements.
 -   **Technical Depth:** For engineering roles, include specific version numbers, scale metrics (e.g., "serving 10M+ requests/day"), and architecture patterns where available in the master profile.
+-   **Enterprise Positioning:** Frame all bullet points to emphasize working within established, professional engineering environments. Use language that signals scale, complexity, and organizational maturity (e.g., 'production systems', 'enterprise codebase', 'cross-team collaboration', 'established architecture'). The resume should convey 'big company, serious engineering' without sacrificing quantified results.
 -   **Tailor Aggressively:** The final resume should look like it was written specifically for this one job.
--   **Maintain Authenticity:** Do not invent facts or metrics. Use the narrative context in the master profile as your source of truth. Stretch the truth, but don't reinvent.
+-   **Maintain Authenticity:** Do not invent facts or metrics. Use the narrative context in the master profile as your source of truth.
+    - **ACCEPTABLE:** Condensing narrative details into concise, quantified statements
+    - **ACCEPTABLE:** Selecting the most impressive factual elements from the narrative
+    - **ACCEPTABLE:** Using strong action verbs that accurately reflect your role
+    - **UNACCEPTABLE:** Changing the nature of your role (supporting → primary, aided → secured, contributed → led)
+    - **UNACCEPTABLE:** Inflating metrics beyond what's mathematically defensible from the source
+    - **UNACCEPTABLE:** Claiming outcomes you enabled but didn't directly control (e.g., if you built a PoC that led to investment, say "enabled" not "secured")
+    - **UNACCEPTABLE:** Modifying structured data fields (URLs, job titles, dates) from the master JSON
 -   **JSON Only:** The final response must be nothing but the specified JSON object.
+
+### FINAL VERIFICATION CHECKLIST:
+Before outputting your JSON, mentally verify each bullet point against these questions:
+1. Does this bullet preserve the nature of my contribution as stated in the source? (aided vs secured, contributed vs led)
+2. Are all metrics exact or conservatively derived from the source narrative?
+3. Have I acknowledged team context where the narrative indicates collaboration?
+4. Are all structured fields (URLs, job_titles, dates) exactly as they appear in master_resume.json?
+5. If I built something that was handed off, have I framed it as "enabled" or "contributed to" rather than claiming the final outcome?
+
+If any answer is "no", revise that bullet point before proceeding.
