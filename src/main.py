@@ -16,6 +16,7 @@ from utils import (
     create_output_directory,
     save_resume,
     save_cover_letter,
+    save_latex_resume,
     load_prompt_template,
 )
 
@@ -40,6 +41,12 @@ class ResumeOptimizationPipeline:
         self.resume_bot = self.resume_config.get("bot_name", "Gemini-2.5-Pro")
         self.resume_thinking_budget = self.resume_config.get("thinking_budget", "4096")
         self.resume_web_search = self.resume_config.get("web_search", True)
+
+        # LaTeX conversion config
+        self.latex_config = self.config.get("latex_conversion", {})
+        self.latex_bot = self.latex_config.get("bot_name", "Gemini-2.5-Pro")
+        self.latex_thinking_budget = self.latex_config.get("thinking_budget", "2048")
+        self.latex_web_search = self.latex_config.get("web_search", False)
 
         # Cover letter generation config
         self.cover_letter_config = self.config.get("cover_letter_generation", {})
@@ -68,6 +75,9 @@ class ResumeOptimizationPipeline:
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
         self.cover_letter_prompt_template = load_prompt_template(
             "generate_cover_letter.txt"
+        )
+        self.latex_conversion_prompt_template = load_prompt_template(
+            "convert_resume_to_latex.txt"
         )
 
     async def call_poe_api(
@@ -147,6 +157,18 @@ class ResumeOptimizationPipeline:
         prompt = prompt.replace("[COMPANY_NAME]", company_name)
         prompt = prompt.replace("[HIRING_MANAGER_NAME]", "N/A")
         prompt = prompt.replace("[USER_PERSONAL_NOTE]", combined_notes)
+
+        return prompt
+
+    def build_latex_conversion_prompt(self, tailored_resume_json: dict) -> str:
+        """Build the prompt for converting resume JSON to LaTeX."""
+        prompt = self.latex_conversion_prompt_template
+
+        # Replace placeholder with the tailored resume JSON
+        prompt = prompt.replace(
+            "[TAILORED_RESUME_JSON]",
+            f"```json\n{json.dumps(tailored_resume_json, indent=2)}\n```",
+        )
 
         return prompt
 
@@ -252,6 +274,25 @@ class ResumeOptimizationPipeline:
             output_dir, cover_letter_text, job_title, company_name
         )
         print(f"Cover letter saved: {cover_letter_path}")
+
+        # Step 4b: Convert resume JSON to LaTeX
+        print(f"\n📄 Step 4b: Converting resume to LaTeX using {self.latex_bot}...")
+        latex_prompt = self.build_latex_conversion_prompt(tailored_resume)
+        latex_response = await self.call_poe_api(latex_prompt, self.latex_bot)
+
+        # Extract LaTeX from response (remove any markdown code blocks)
+        latex_text = latex_response.strip()
+        if "```latex" in latex_text:
+            start = latex_text.find("```latex") + 8
+            end = latex_text.find("```", start)
+            latex_text = latex_text[start:end].strip()
+        elif "```" in latex_text:
+            start = latex_text.find("```") + 3
+            end = latex_text.find("```", start)
+            latex_text = latex_text[start:end].strip()
+
+        latex_path = save_latex_resume(output_dir, latex_text, job_title, company_name)
+        print(f"LaTeX resume saved: {latex_path}")
 
         # Step 5: Update job status
         print("\nStep 5: Updating job status...")

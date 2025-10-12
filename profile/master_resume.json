@@ -10,21 +10,7 @@
     "portfolio_url": "https://srmanda.com/",
     "kaggle_url": "https://www.kaggle.com/ashishreddy9000"
   },
-  "professional_summaries": [
-    {
-      "type": "Full-Stack & Product Focus",
-      "summary": "Results-driven Software Engineer with a proven track record of leading high-impact projects from conception to deployment. Expert in full-stack development (Python, TypeScript, React, Java) and cloud architecture (AWS, Azure), with a passion for automating complex processes and modernizing legacy systems to deliver significant business value. Balances swift execution with enduring code maintainability to build scalable and secure applications."
-    },
-    {
-      "type": "AI/Automation Focus",
-      "summary": "Innovative Software Engineer specializing in process automation and applied AI. Demonstrated success in architecting and implementing solutions using LLMs, RAG, and NLP to reduce manual effort by over 99% and transform business workflows. Adept at identifying high-value opportunities and rapidly developing robust systems that solve critical business problems."
-    },
-    {
-      "type": "Results Focus",
-      "summary": "Full-stack SDE intern experienced in building production-grade document-processing pipelines on AWS and applying advanced optimization models to solve NP-hard resource allocation problems. Contributed to a $1M+ Performance Management System by delivering a key proof-of-concept using React/Next.js and Python/Flask. Reduced asset-tracking costs by 37% by developing a device-management portal for 10,000 employees."
-    }
-  ],
-  "work_authorization": "Authorized to work full-time in the U.S. for 3+ years (F-1 CPT/OPT/STEM) with no sponsorship required.",
+  "professional_summaries": "Graduate-level Software Engineer with experience delivering enterprise-grade solutions in two hands-on internships. Authorized to work full-time in U.S. without requiring any sponsorship now or for foreseeable future. Availability begins with CPT in January 2026, then F-1 OPT/STEM from June 2026 to 2029.",
   "education": [
     {
       "institution": "UNC Chapel Hill",
@@ -40,7 +26,7 @@
       "graduation_date": "2024-06",
       "gpa": "",
       "relevant_coursework": [],
-      "honors": ["First Class with Distinction"]
+      "honors": []
     }
   ],
   "skills": {
@@ -293,7 +279,15 @@
         "It also automatically tailors their resumes and cover letters according to the Job Description, and public company knowledge.",
         "It also provides job seekers with a lot of insights into their job search, like referral rate, applications that worked within <24 hrs, etc.",
         "50+ people exhibited interest, and are actively used it.",
-        "I am currently working on a production-ready version, as the original one was just a PoC which worked too well."
+        "I am currently working on a production-ready version, as the original one was just a PoC which worked too well.",
+        "Jobbernaut also automatically tailors the applicant's resume to the Job Description and the company, guaranteeing at least a 90% fit.",
+        "Architected and developed an AI-driven automation engine to dynamically tailor application materials, using a Python-based agentic workflow, multiple LLM APIs, and a structured data approach (JSON/YAML).",
+        "Initially integrated the engine as a core feature within the Jobbernaut application tracker. The feature demonstrated extremely high efficacy in user testing.",
+        "Conducted a strategic product review and made the executive decision to pivot the feature into a private, proprietary build. This decision was based on its overwhelming effectiveness, which represented a core intellectual property asset too valuable for a free-to-public release.",
+        "The private engine reduces application tailoring time by over 99.99% (from ~30 mins to 30 seconds) while measurably improving keyword alignment with job descriptions.",
+        "This project demonstrates a full lifecycle of product development: from ideation and rapid prototyping with AI tools to strategic analysis and intellectual property management.",
+        "The tool itself is enterprise-grade, with every line of code written with future maintenance in mind.",
+        "The tool is also End-to-End rapid. From noticing a job to having a fully tailored resume (in PDF format too) and cover letter is about 30 seconds."
       ],
       "keywords": [
         "Python",

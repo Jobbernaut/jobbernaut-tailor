@@ -17,19 +17,31 @@ You will be given the following data, clearly delineated:
 **Step 2: Relevance Analysis & Content Selection**
 -   Carefully analyze the [JOB_DESCRIPTION] to identify the top 5-7 most critical skills, technologies, and responsibilities (the "Key Requirements").
 -   Review the [MASTER_RESUME_JSON]. Your task is to select the most relevant experiences to include in the final resume.
--   **Rule for `work_experience`:** You MUST include ALL entries from the `work_experience` section.
--   **Rule for `projects`:** You MUST select the top 2-3 most relevant projects that best demonstrate the "Key Requirements". If a project has low relevance, it must be excluded.
+-   **Rule for `work_experience`:** You MUST include ALL entries from the `work_experience` section. For each entry, select the 3 MOST IMPACTFUL and RELEVANT bullet points that best demonstrate the "Key Requirements".
+-   **Rule for `projects`:** You MUST select EXACTLY 2 projects that best demonstrate the "Key Requirements". Choose based on keyword overlap and relevance to the job description.
 
 **Step 3: Content Rewriting & Tailoring (The RSTA Framework)**
 This is the most critical step. You will rewrite the content for the selected experiences.
 
--   **Professional Summary:**
-    -   Select the most appropriate summary from the `professional_summaries` list in the master profile.
-    -   Rewrite it to be concise (2-3 sentences) and powerful.
-    -   Inject 1-2 "Key Requirements" from the job description and at least one "Core Company Theme" you researched.
+-   **OBJECTIVE Section (MANDATORY FORMAT):**
+    -   **CRITICAL:** Use this EXACT text from the master resume's `professional_summaries` field, word-for-word, with NO modifications:
+    
+    ```
+    Graduate-level Software Engineer with experience delivering enterprise-grade solutions in two hands-on internships. Authorized to work full-time in U.S. without requiring any sponsorship now or for foreseeable future. Availability begins with CPT in January 2026, then F-1 OPT/STEM from June 2026 to 2029.
+    ```
+    
+    -   **DO NOT modify, add to, or change this text in any way.**
+    -   Store this EXACT text in the `professional_summaries` field as a single string (not a list).
+    -   This is the complete OBJECTIVE section - do not add any additional sentences.
+
+-   **Professional Summary (DEPRECATED - Use OBJECTIVE instead):**
+    -   The `professional_summaries` field will now contain the OBJECTIVE section text.
+    -   Do NOT use the old professional summary format.
 
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, transform the raw, narrative `bullet_points` into professional, impact-focused statements.
+    -   **WORK EXPERIENCE:** Select and rewrite the 3 MOST IMPACTFUL bullet points per position. Do not include more than 3 bullets per work experience entry.
+    -   **PROJECTS:** For each of the 2 selected projects, combine the description and bullet_points into a flowing narrative paragraph (not individual bullets). Keep it concise but informative.
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     -   **MANDATORY:** Start every bullet point with a strong action verb (e.g., Architected, Engineered, Reduced, Accelerated, Spearheaded).
     -   **MANDATORY:** Quantify the **Result** with specific metrics (%, $, time, volume) whenever possible, drawing from the narrative context. If a number isn't present, describe the tangible impact.
@@ -51,7 +63,11 @@ This is the most critical step. You will rewrite the content for the selected ex
 -   **Results first:** Every single rewritten bullet point should have a clear visible, and striking result within the first 5 words. RSTA, not STAR.
 -   **Keyword Matching:** Every important keyword in the Job Description that the Hiring Manager could use for a filter must mandatorily appear in the resume at least once, ideally more than once.
 -   **ATS Optimization:** Ensure exact keyword matches from the job description appear in context (not just listed). Use the exact phrasing from the JD when possible (e.g., if they say "Kubernetes," don't substitute "K8s"). Mirror technical terms verbatim.
--   **Density Control:** Aim for 3-5 bullet points per experience. Quality over quantity - each bullet must demonstrate clear impact.
+-   **STRICT Filtering Rules:**
+    -   Work Experience: EXACTLY 3 bullets per position (select the most impactful)
+    -   Projects: EXACTLY 2 projects total (select the most relevant through keyword matching, and JD relevance)
+    -   Projects: Combine description + bullets into a single flowing paragraph per project
+    -   OBJECTIVE: Use the EXACT text from master resume with ZERO modifications
 -   **Recency Bias:** Prioritize more recent experiences when selecting projects. Older projects should only be included if they're uniquely relevant to the key requirements.
 -   **Technical Depth:** For engineering roles, include specific version numbers, scale metrics (e.g., "serving 10M+ requests/day"), and architecture patterns where available in the master profile.
 -   **Tailor Aggressively:** The final resume should look like it was written specifically for this one job.

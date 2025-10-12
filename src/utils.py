@@ -133,6 +133,19 @@ def save_cover_letter(
     return filepath
 
 
+def save_latex_resume(
+    output_dir: str, latex_text: str, job_title: str, company_name: str
+) -> str:
+    """Save the LaTeX resume to the output directory."""
+    filename = f"{company_name}_{job_title}_Resume.tex"
+    filepath = os.path.join(output_dir, filename)
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(latex_text)
+
+    return filepath
+
+
 def load_prompt_template(prompt_file: str) -> str:
     """Load a prompt template from the prompts directory."""
     filepath = os.path.join("prompts", prompt_file)
