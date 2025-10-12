@@ -160,7 +160,7 @@ def save_cover_letter(
     normal_style = ParagraphStyle(
         "CustomNormal",
         parent=styles["Normal"],
-        fontSize=11,
+        fontSize=10,
         leading=14,
         alignment=TA_LEFT,
         spaceAfter=12,
