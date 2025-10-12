@@ -6,7 +6,7 @@ This project automates the tedious process of creating tailored resumes and cove
 
 The design of this project is guided by three core principles:
 
-1.  **A Single Source of Truth:** All job application data, including the raw job descriptions, lives in one master file: `applications.yml`. This eliminates the need to manage separate input files for each job, creating a scalable and maintainable database of all your prospects.
+1.  **A Single Source of Truth:** All job application data, including the raw job descriptions, lives in one master file: `applications.yaml`. This eliminates the need to manage separate input files for each job, creating a scalable and maintainable database of all your prospects.
 2.  **Hassle-Free Data Entry:** Using the YAML format allows for raw, multi-line text blocks (`job_description: |`). You can copy and paste a job description directly from a website without any manual formatting or escaping of special characters.
 3.  **Intelligent Automation, Not Just Generation:** The system doesn't just generate generic documents. It intelligently selects the most relevant personal story for each cover letter by analyzing the job description for keywords. This provides strategic personalization without requiring manual intervention for each job.
 
@@ -14,7 +14,9 @@ The design of this project is guided by three core principles:
 
 - **Queue-Based Processing:** The script automatically finds the next job with `status: "pending"` and processes it.
 - **Persistent Job Archive:** Stores the full, original job description for every application, protecting you from postings being taken down.
-- **Automated Cover Letter Personalization:** Intelligently selects from a bank of your personal stories (`cover_letter_points.json`) based on keyword matching against the job description.
+- **Automated Cover Letter Personalization:** Intelligently selects from a bank of your personal stories (`master_cover_letter_points.json`) based on keyword matching against the job description.
+- **Multiple Output Formats:** Generates both JSON and LaTeX versions of your tailored resume, plus PDF cover letters.
+- **Configurable AI Models:** Use different AI models (via Poe API) for resume generation, LaTeX conversion, and cover letter writing.
 - **YAML Database:** A human-readable and easy-to-edit master file for all your jobs.
 - **Idempotent:** Once a job is `processed`, the script will ignore it on subsequent runs, allowing you to safely re-run the pipeline at any time.
 
@@ -23,15 +25,24 @@ The design of this project is guided by three core principles:
 ```
 .
 ├── .gitignore
-├── applications.yml              # <-- YOUR MASTER JOB DATABASE. This is the main file you will edit.
-├── profile/
-│   └── cover_letter_points.json  # <-- Your personal story bank with keywords.
-├── prompts/
-│   ├── generate_cover_letter.txt # <-- Prompt for generating the cover letter.
-│   └── tailor_resume.txt         # <-- Prompt for tailoring the resume.
+├── applications.yaml              # <-- YOUR MASTER JOB DATABASE. This is the main file you will edit.
+├── config.json                    # <-- Configuration for AI models and pipeline settings
 ├── requirements.txt
-└── src/
-    └── main.py                   # <-- The main script that runs the pipeline.
+├── profile/
+│   ├── master_resume.json         # <-- Your master resume data in JSON format
+│   └── master_cover_letter_points.json  # <-- Your personal story bank with keywords
+├── prompts/
+│   ├── generate_resume.txt        # <-- Prompt template for generating tailored resumes
+│   ├── generate_cover_letter.txt  # <-- Prompt template for generating cover letters
+│   └── convert_resume_to_latex.txt # <-- Prompt template for LaTeX conversion
+├── src/
+│   ├── main.py                    # <-- The main pipeline script
+│   └── utils.py                   # <-- Helper functions for file I/O and processing
+└── output/                        # <-- Generated resumes and cover letters (auto-created)
+    └── [job_id]/
+        ├── [Company]_[Title]_Resume.json
+        ├── [Company]_[Title]_Resume.tex
+        └── [Company]_[Title]_CoverLetter.pdf
 ```
 
 ## Setup and Installation
@@ -40,7 +51,7 @@ The design of this project is guided by three core principles:
 
     ```bash
     git clone <your-repo-url>
-    cd <your-repo-name>
+    cd resume-optimization
     ```
 
 2.  **Create a Virtual Environment (Recommended):**
@@ -56,23 +67,64 @@ The design of this project is guided by three core principles:
     pip install -r requirements.txt
     ```
 
-    This will install `PyYAML` and any other required libraries (e.g., `openai`).
+    This will install all required libraries including `PyYAML`, `fastapi_poe`, `python-dotenv`, `reportlab`, and others.
 
 4.  **Set Up API Keys:**
-    It is highly recommended to use environment variables for your API keys. Create a `.env` file in the root directory (and make sure `.env` is in your `.gitignore` file).
+
+    Create a `.env` file in the root directory (and make sure `.env` is in your `.gitignore` file):
+
     ```
     # .env
-    OPENAI_API_KEY="your_api_key_here"
+    POE_API_KEY="your_poe_api_key_here"
     ```
-    Your Python script (`main.py`) should be configured to load this key.
+
+    The pipeline uses the Poe API to access various AI models. You can get an API key from [Poe](https://poe.com/).
+
+5.  **Configure Your Profile:**
+
+    - Edit `profile/master_resume.json` with your complete resume data
+    - Edit `profile/master_cover_letter_points.json` with your personal stories and keywords
+    - Optionally customize `config.json` to change AI models or settings
+
+## Configuration
+
+The `config.json` file allows you to customize the AI models and settings for each stage of the pipeline:
+
+```json
+{
+  "resume_generation": {
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "8192",
+    "web_search": true
+  },
+  "latex_conversion": {
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "8192",
+    "web_search": false
+  },
+  "cover_letter_generation": {
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "8192",
+    "web_search": false
+  },
+  "reasoning_trace": false,
+  "dry_run": false
+}
+```
+
+- **bot_name:** The Poe AI model to use (e.g., "Gemini-2.5-Pro", "Claude-3.7-Sonnet", "GPT-4o")
+- **thinking_budget:** Token budget for model reasoning
+- **web_search:** Enable/disable web search capabilities for the model
+- **reasoning_trace:** Show/hide AI reasoning traces in cover letters
+- **dry_run:** Test mode (not fully implemented)
 
 ## Daily Workflow
 
 Your entire workflow consists of just two simple steps: adding a job and running the script.
 
-### Step 1: Add a New Job to `applications.yml`
+### Step 1: Add a New Job to `applications.yaml`
 
-Open `applications.yml` and add a new entry at the top of the list.
+Open `applications.yaml` and add a new entry at the top of the list.
 
 - Set the `status` to `"pending"`.
 - Fill in the `job_id`, `job_title`, and `company_name`.
@@ -90,13 +142,12 @@ Open `applications.yml` and add a new entry at the top of the list.
 
     We are looking for an engineer with a strong sense of ownership and a proactive mindset. You will be expected to improve our CI/CD pipelines, automate deployments, and enhance system reliability.
 
-- job_id: "add58865-8b9f-4cf7-9720-2908ba5f4d80"
-  job_title: "Software Engineer, Infrastructure, Early Career"
-  company_name: "Notion"
+- job_id: "AMZ26535.1"
+  job_title: "Software Dev Engineer II"
+  company_name: "Amazon Web Services"
   status: "processed" # This job will be skipped by the script
   job_description: |
-    About Us:
-    Notion helps you build beautiful tools for your life’s work...
+    Description Employer: Amazon Web Services, Inc...
 ```
 
 ### Step 2: Run the Pipeline
@@ -111,21 +162,33 @@ python src/main.py
 
 The script will:
 
-1.  Find the first job in `applications.yml` with `status: "pending"` (the Cyberdyne Systems job in our example).
-2.  Read its job description and automatically select the best personal story from `profile/cover_letter_points.json` by matching keywords.
-3.  Call the AI API to generate the tailored resume and cover letter.
-4.  Save the output files to an `output/` directory, named with the `job_id`.
-5.  **Crucially, it will then update `applications.yml` in-place, changing the job's status from `pending` to `processed`.**
+1.  Find the first job in `applications.yaml` with `status: "pending"` (the Cyberdyne Systems job in our example).
+2.  Read its job description and automatically select the best personal story from `profile/master_cover_letter_points.json` by matching keywords.
+3.  Call the Poe API to generate a tailored resume in JSON format using your master resume data.
+4.  Convert the tailored resume JSON to LaTeX format for professional typesetting.
+5.  Generate a personalized cover letter as a PDF document.
+6.  Save all outputs to the `output/[job_id]/` directory with descriptive filenames.
+7.  **Crucially, it will then update `applications.yaml` in-place, changing the job's status from `pending` to `processed`.**
 
 The next time you run the script, it will skip the Cyberdyne job and look for the next `pending` one.
 
+## Output Files
+
+For each processed job, the pipeline creates a directory under `output/` with the following files:
+
+- **`[Company]_[Title]_Resume.json`** - Tailored resume in JSON format
+- **`[Company]_[Title]_Resume.tex`** - Tailored resume in LaTeX format (ready to compile)
+- **`[Company]_[Title]_CoverLetter.pdf`** - Cover letter as a PDF document
+
+Example: `output/AMZ26535.1/Amazon Web Services_Software Dev Engineer II_Resume.json`
+
 ## Customizing Your Narrative
 
-To make the automation more effective, you can customize your personal story bank in `profile/cover_letter_points.json`.
+To make the automation more effective, you can customize your personal story bank in `profile/master_cover_letter_points.json`.
 
 - **`point_text`**: The actual story or statement you want to include in your cover letter.
 - **`keywords`**: A list of words that, if found in a job description, make this story relevant. The script will pick the story with the most keyword matches.
-- **`default`**: Set `true` for one (and only one) point. This will be the fallback option if no keywords are matched.
+- **`default`**: Set `true` for one (and only one) point. This will be the fallback option if no keywords are matched, and will always be included in every cover letter.
 
 ```json
 {
@@ -151,3 +214,45 @@ To make the automation more effective, you can customize your personal story ban
   ]
 }
 ```
+
+## Master Resume Format
+
+Your `profile/master_resume.json` should contain your complete resume data in a structured JSON format. The pipeline will use this to generate tailored versions for each job. Key sections include:
+
+- `contact_info`: Your name, email, phone, location, LinkedIn, GitHub, etc.
+- `professional_summaries`: Different summary statements for various roles
+- `work_experience`: All your work history with detailed accomplishments
+- `skills`: Technical skills, tools, frameworks, etc.
+- `education`: Degrees and certifications
+- `projects`: Personal or academic projects (optional)
+
+The AI will intelligently select and tailor content from this master file based on the job description.
+
+## Troubleshooting
+
+- **No pending jobs found:** All jobs in `applications.yaml` have `status: "processed"`. Add a new job with `status: "pending"`.
+- **API errors:** Check that your `POE_API_KEY` is correctly set in the `.env` file and that you have API credits.
+- **JSON parsing errors:** The AI response may not be properly formatted. Try adjusting the `bot_name` in `config.json` or check the prompt templates.
+- **Missing output files:** Check the console output for errors during the pipeline execution.
+
+## Advanced Usage
+
+### Customizing Prompts
+
+You can modify the prompt templates in the `prompts/` directory to change how the AI generates content:
+
+- `generate_resume.txt` - Controls how resumes are tailored
+- `generate_cover_letter.txt` - Controls cover letter generation
+- `convert_resume_to_latex.txt` - Controls LaTeX formatting
+
+### Using Different AI Models
+
+Edit `config.json` to use different Poe AI models for different tasks. For example:
+
+- Use `Claude-3.7-Sonnet` for cover letters (better at creative writing)
+- Use `Gemini-2.5-Pro` for resume generation (better at structured data)
+- Use `GPT-4o` for LaTeX conversion (better at formatting)
+
+## License
+
+This project is for personal use. Modify and extend as needed for your job search automation.
