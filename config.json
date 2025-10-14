@@ -1,22 +1,22 @@
 {
   "resume_generation": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "8192",
+    "bot_name": "Claude-Sonnet-3.5",
+    "thinking_budget": "4096",
     "web_search": true
   },
   "latex_conversion": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "8192",
+    "bot_name": "Claude-Sonnet-3.5",
+    "thinking_budget": "4096",
     "web_search": false
   },
   "cover_letter_generation": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "8192",
-    "web_search": false
+    "bot_name": "Claude-Sonnet-3.5",
+    "thinking_budget": "4096",
+    "web_search": true
   },
   "latex_verification": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "8192",
+    "bot_name": "Claude-Sonnet-3.5",
+    "thinking_budget": "4096",
     "web_search": false
   },
   "reasoning_trace": false,
