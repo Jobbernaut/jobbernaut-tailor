@@ -133,7 +133,7 @@ The letter must follow this exact structure and be 250-350 words:
 -   Ensure all placeholders like [COMPANY_NAME] are filled in.
 -   The final text should be ready to copy and paste.
 -   Use proper spacing between paragraphs (double line break).
--   DO NOT INCLUDE the date of the application or the location of the hiring team in the cover letter
+-   DO NOT INCLUDE the date of the application or the location of the hiring team in the cover letter or candidate's email or candidate's phone number. Except phone number and email address, the other links can appear.
 -   No use of em dashes anywhere to join sentences or show impact. Use alternative grammatical tools, but no em dashes or dashes.
 -   **Total cover letter from End to End cannot exceed 350 words at any cost**
 

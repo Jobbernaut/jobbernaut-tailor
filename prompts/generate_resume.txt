@@ -67,8 +67,8 @@ This is the most critical step. You will rewrite the content for the selected ex
 
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, transform the raw, narrative `bullet_points` into professional, impact-focused statements.
-    -   **WORK EXPERIENCE:** Select and rewrite the 3 MOST IMPACTFUL bullet points per position. Do not include more than 3 bullets per work experience entry. Per bullet cannot exceed two lines at any cost (25 words max). Each bullet has to fit in two lines.
-    -   **PROJECTS:** For each of the 2 selected projects, combine the description and bullet_points into a flowing narrative paragraph (not individual bullets). Keep it concise but informative. Cannot exceed four lines (50 words max) at any cost. It all has to fit in four lines.
+    -   **WORK EXPERIENCE:** Select and rewrite the 3 MOST IMPACTFUL bullet points per position. Do not include more than 3 bullets per work experience entry. Per bullet cannot exceed two lines at any cost (40 words max). Each bullet has to fit fully in two lines.
+    -   **PROJECTS:** For each of the 2 selected projects, combine the description and bullet_points into a flowing narrative paragraph (not individual bullets). Keep it concise but informative. Cannot exceed four to five lines (80 words max) at any cost. It all has to fit fully in four to five lines.
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     -   **MANDATORY:** Start every bullet point with a strong action verb (e.g., Architected, Engineered, Reduced, Accelerated, Spearheaded).
     -   **MANDATORY:** Quantify the **Result** with specific metrics (%, $, time, volume) whenever possible, drawing from the narrative context. If a number isn't present, describe the tangible impact.
@@ -80,7 +80,6 @@ This is the most critical step. You will rewrite the content for the selected ex
     -   Generate a new, tailored `skills` object.
     -   From the master `skills` object, select ONLY the skills and technologies that are directly mentioned in or highly relevant to the [JOB_DESCRIPTION].
     -   Maintain the same categorization (`programming_languages`, `frameworks_and_libraries`, etc.).
-    -   **CRITICAL:** The skills section in whole with the category and the skills CANNOT exceed 15 words, it all has to fit in one line per category.
 
 ### OUTPUT FORMAT: STRICT JSON
 -   Your final output MUST be a single, valid JSON object.

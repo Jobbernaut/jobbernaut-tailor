@@ -306,6 +306,75 @@ def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
     return pdf_path
 
 
+def flatten_pdf_with_ghostscript(pdf_path: str) -> str:
+    """
+    Flatten PDF using Ghostscript to ensure compatibility.
+    Returns the path to the flattened PDF.
+    """
+    import subprocess
+
+    # Use gswin64c for Windows (assume Ghostscript is installed)
+    gs_command = "gswin64c"
+
+    # Create output path for flattened PDF
+    pdf_dir = os.path.dirname(pdf_path)
+    pdf_basename = os.path.basename(pdf_path)
+    pdf_name_no_ext = os.path.splitext(pdf_basename)[0]
+
+    flattened_pdf_path = os.path.join(pdf_dir, f"{pdf_name_no_ext}_clean.pdf")
+
+    print(f"  Flattening PDF with Ghostscript...")
+
+    try:
+        result = subprocess.run(
+            [
+                gs_command,
+                "-sDEVICE=pdfwrite",
+                "-dCompatibilityLevel=1.4",
+                "-dPDFSETTINGS=/printer",
+                "-dNOPAUSE",
+                "-dQUIET",
+                "-dBATCH",
+                "-dSAFER",
+                "-dNOOUTERSAVE",
+                "-dNoOutputFonts",
+                "-dPrinted=false",
+                "-dEmbedAllFonts=true",
+                "-dSubsetFonts=true",
+                "-dCompressFonts=true",
+                "-dNOPLATFONTS",
+                "-dMaxSubsetPct=100",
+                "-dPDFX",
+                f"-sOutputFile={flattened_pdf_path}",
+                pdf_path,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+
+        if result.returncode != 0:
+            error_msg = f"Ghostscript flattening failed.\nError: {result.stderr}"
+            raise RuntimeError(error_msg)
+
+    except subprocess.TimeoutExpired:
+        raise RuntimeError("Ghostscript flattening timed out after 60 seconds.")
+
+    # Verify the flattened PDF was created
+    if not os.path.exists(flattened_pdf_path):
+        raise RuntimeError(
+            f"Flattened PDF was not generated. Expected at: {flattened_pdf_path}"
+        )
+
+    # Replace the original PDF with the flattened version
+    os.remove(pdf_path)
+    os.rename(flattened_pdf_path, pdf_path)
+
+    print(f"  ✓ PDF flattened successfully")
+
+    return pdf_path
+
+
 def organize_output_files(
     output_dir: str,
     first_name: str,

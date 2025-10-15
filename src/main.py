@@ -414,6 +414,17 @@ class ResumeOptimizationPipeline:
             )
             raise
 
+        # Step 4d-ii: Flatten PDF with Ghostscript
+        print(f"\n📄 Step 4d-ii: Flattening PDF with Ghostscript...")
+        try:
+            from utils import flatten_pdf_with_ghostscript
+
+            resume_pdf_path = flatten_pdf_with_ghostscript(resume_pdf_path)
+            print(f"✓ Resume PDF flattened: {resume_pdf_path}")
+        except Exception as e:
+            print(f"\n❌ PDF flattening failed: {e}")
+            raise
+
         # Step 4e: Organize files and rename with proper convention
         print(f"\n📁 Step 4e: Organizing output files...")
         try:
