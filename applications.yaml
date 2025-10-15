@@ -1,2354 +1,305 @@
-- job_id: ncra_R1150457
-  job_title: Site Reliability Engineer I
-  company_name: NCR Atleos
+- job_id: SAS40406
+  job_title: Software Developer (Emerging Career)
+  company_name: SAS
   status: processed
-  job_description: ' About NCR Atleos
-
-    NCR Atleos, headquartered in Atlanta, is a leader in expanding financial access.
-    Our dedicated 20,000 employees optimize the branch, improve operational efficiency
-    and maximize self-service availability for financial institutions and retailers
-    across the globe. NCR Atleos was ranked #12 in Newsweek’s prestigious 2025 Top
-    100 Global Most Loved Workplaces® list.
-
-    Title: Site Reliability Engineer I Location: Atlanta, GA (May consider Frisco,
-    TX)
-
-    Eligibility: Please note that this position is not eligible for Visa sponsorship
-    now or in the future. This restriction applies to all candidates for this position.
-
-    Job Description We are seeking a Site Reliability Engineer (SRE) to join our team,
-    with an initial focus on supporting production operations (AppOps). This is a
-    great opportunity for recent graduates or early-career professionals who are eager
-    to grow in a fast-paced Cloud/SaaS environment.
-
-    As part of the SRE team, you’ll work alongside experienced engineers to help maintain
-    and improve the reliability, scalability, and performance of our cloud-based services.
-    You’ll gain hands-on experience with automation, monitoring, and incident response,
-    while learning best practices in modern infrastructure and DevOps.
-
-    Key Responsibilities: Assist in supporting and scaling production services and
-    servers that power cloud-based applications, under the guidance of senior engineers.
-    Collaborate across development, quality, security, and operations teams to support
-    reliable service delivery. Help monitor and analyze SaaS services to improve scalability,
-    reliability, and performance. Contribute to automation tasks for provisioning
-    and managing infrastructure, with opportunities to learn scripting and infrastructure-as-code
-    tools. Develop foundational skills in software engineering practices focused on
-    reliability and scalability. Participate in continuous improvement initiatives
-    for software delivery processes within cross-functional teams. Support configuration,
-    monitoring, and management of systems used by product development teams. Learn
-    and assist in disaster recovery planning and execution. Help with patching and
-    maintenance of Windows and Linux servers in private data centers and cloud environments
-    (e.g., Azure). Collaborate with DevOps teams to promote code using CI/CD pipelines
-    and integrate application security tooling. Work with senior engineers to define
-    and implement Service Level Indicators (SLIs), Objectives (SLOs), and Agreements
-    (SLAs). Assist in implementing monitoring alerts, building dashboards, and understanding
-    escalation paths. Participate in incident response activities, including Post-Incident
-    Reviews (PIRs) and Root Cause Analyses (RCAs), with mentorship. Join on-call rotations
-    with support and supervision, assisting during off-hours as needed. Preferred
-    Qualifications: Bachelor’s or Master’s degree in Computer Science, Software Engineering,
-    Information Technology, or a related technical field. Basic understanding of cloud
-    platforms such as Azure, AWS, or GCP, with a strong interest in learning more.
-    Exposure to programming or scripting languages like Python, Bash, PowerShell,
-    JavaScript, or Java. Familiarity with CI/CD tools such as Azure DevOps, GitHub
-    Actions, or Jenkins. Introductory knowledge of container technologies like Docker
-    and Kubernetes. Comfortable working with Linux and Windows systems; basic shell
-    scripting experience is a plus. Understanding of networking fundamentals, TLS/SSL,
-    firewalls, and load balancers. Exposure to monitoring and logging tools such as
-    Prometheus, ELK stack, or Azure Monitor. Awareness of infrastructure automation
-    tools like Terraform, Ansible, or Helm. Strong analytical and troubleshooting
-    skills with a willingness to learn root cause analysis. Ability to work collaboratively
-    in cross-functional teams and communicate technical ideas clearly. Eagerness to
-    learn new technologies and grow into a reliable engineer in cloud and SaaS operations.
-    Any hands-on experience with distributed systems (e.g., Kafka, Elasticsearch,
-    Cassandra) is a plus. Cloud certifications (e.g., Azure Fundamentals, AWS Cloud
-    Practitioner) are a bonus but not required. #LI-AD1
-
-    #LI-HYBRID
-
-    Offers of employment are conditional upon passage of screening criteria applicable
-    to the job.
-
-    Full time employee benefits include:
-
-    Medical Insurance
-
-    Dental Insurance
-
-    Life Insurance
-
-    Vision Insurance
-
-    Short/Long Term Disability
-
-    Paid Vacation
-
-    401k
-
-    EEO Statement NCR Atleos is an equal-opportunity employer. It is NCR Atleos policy
-    to hire, train, promote, and pay associates based on their job-related qualifications,
-    ability, and performance, without regard to race, color, creed, religion, national
-    origin, citizenship status, sex, sexual orientation, gender identity/expression,
-    pregnancy, marital status, age, mental or physical disability, genetic information,
-    medical condition, military or veteran status, or any other factor protected by
-    law.
-
-
-    Statement to Third Party Agencies
-
-    To ALL recruitment agencies: NCR Atleos only accepts resumes from agencies on
-    the NCR Atleos preferred supplier list. Please do not forward resumes to our applicant
-    tracking system, NCR Atleos employees, or any NCR Atleos facility. NCR Atleos
-    is not responsible for any fees or charges associated with unsolicited resumes. '
-- job_id: esri_4728895007
-  job_title: Java Software Engineer I
-  company_name: esri
-  status: processed
-  job_description: ' Overview Build the next generation of ArcGIS Enterprise, a suite
-    of products delivering state-of-the-art mapping and analytics capability to thousands
-    of customers and millions of users worldwide.
-
-    Our team builds cutting-edge, highly-scalable and reliable distributed software
-    for on-premises and the cloud to make maps, geographic information, and analyses
-    available on any device, anywhere, at any time. Our software engineers provide
-    a strong technical voice in the product development process and use the best tools
-    available to design, develop, and deliver a high-quality distributed systems platform.
-
-    As a software engineer, you will work with our cross-functional global team of
-    software engineers, product engineers, designers, product managers, and release
-    engineers. You will be actively involved in enhancing the capability of the ArcGIS
-    Enterprise platform from feature inception to delivery, using bleeding edge technology.
-
-    If you are passionate about building great distributed systems, micro-services
-    architecture, and spatial data analytics, join us!
-
-    Responsibilities Build server-side Java components and web services to power user
-    experience and geospatial workflows Prototype, design, develop, and deliver complete
-    software features and products that can scale, are fault tolerant, and handle
-    concurrent workloads Design, architect, and develop complete software features/products
-    to meet customer requirements Find, analyze, and fix bugs/performance problems
-    whenever and wherever they occur Work collaboratively with other teams to understand
-    requirements and incorporate them into the software Requirements 1+ years of experience
-    developing middleware software components using core Java, Servlets (JavaEE),
-    JSP Good understanding of cloud computing platforms (AWS and Azure) and services
-    such as Amazon S3, SQS, EC2 and Azure services such as Blob Service, Table Service,
-    and more Good understanding of Java design patterns Knowledge of relational databases
-    such as SQL Server, Oracle, PostgreSQL, or DB2 Experience working with large code
-    bases Fundamental understanding of web services including REST and SOAP Proficient
-    in debugging and profiling tools (Eclipse/IntelliJ Debugger, JProfiler, and more)
-    Knowledge of working with a source control system, preferably GIT Excellent problem-solving,
-    design, development, and debugging skills Excellent written and verbal communication
-    and time management skills Bachelor''s in math, computer science, physics, or
-    related field Recommended Qualifications Familiarity with JSON and XML Knowledge
-    of and familiarity with Java build systems, such as Maven and ANT Experience with
-    HTTP monitoring tools (Fiddler) and JDK debugging tools (JProfiler, jmap) Knowledge
-    of Docker containers and orchestrators such as Kubernetes Master''s in math, computer
-    science, physics, or related field #LI-TA1
-
-    #LI-Hybrid
-
-    Total Rewards
-
-    Esri’s competitive total rewards strategy includes industry-leading health and
-    welfare benefits: medical, dental, vision, basic and supplemental life insurance
-    for employees (and their families), 401(k) and profit-sharing programs, minimum
-    accrual of 80 hours of vacation leave, twelve paid holidays throughout the calendar
-    year, and opportunities for personal and professional growth. Base salary is one
-    component of our total rewards strategy. Compensation decisions and the base range
-    for this role take into account many factors including but not limited to skill
-    sets; experience and training; licensure and certifications; and other business
-    and organizational needs.
-
-    A reasonable estimate of the base salary range is $79,040-$129,792 USD About Esri
-    At Esri, diversity is more than just a word on a map. When employees of different
-    experiences, perspectives, backgrounds, and cultures come together, we are more
-    innovative and ultimately a better place to work. We believe in having a diverse
-    workforce that is unified under our mission of creating positive global change.
-    We understand that diversity, equity, and inclusion is not a destination but an
-    ongoing process. We are committed to the continuation of learning, growing, and
-    changing our workplace so every employee can contribute to their life’s best work.
-    Our commitment to these principles extends to the global communities we serve
-    by creating positive change with GIS technology. For more information on Esri’s
-    Racial Equity and Social Justice initiatives, please visit our website here.
-
-    If you don’t meet all of the preferred qualifications for this position, we encourage
-    you to still apply!
-
-    Esri is an equal opportunity employer (EOE) and all qualified applicants will
-    receive consideration for employment without regard to race, color, religion,
-    sex, sexual orientation, gender identity, national origin, disability status,
-    protected veteran status, or any other characteristic protected by law. If you
-    need reasonable accommodation for any part of the employment process, please email
-    askcareers@esri.com and let us know the nature of your request and your contact
-    information. Please note that only those inquiries concerning a request for reasonable
-    accommodation will be responded to from this e-mail address.
-
-    Esri Privacy Esri takes our responsibility to protect your privacy seriously.
-    We are committed to respecting your privacy by providing transparency in how we
-    acquire and use your information, giving you control of your information and preferences,
-    and holding ourselves to the highest national and international standards, including
-    CCPA and GDPR compliance.
-
-    Requisition ID: 2025-2583'
-- job_id: OM6602927003
-  job_title: Junior Software Engineer
-  company_name: Old Mission
-  status: processed
-  job_description: ' Old Mission is a global proprietary trading firm that leverages
-    state-of-the-art technology and research to identify and execute profitable trading
-    strategies across multiple asset classes around the world. Our offices in Chicago,
-    New York, and London are all composed of naturally-curious individuals who thrive
-    in a team environment and constantly strive for improvement.
-
-    Old Mission does not seek capital from outside investors, allowing us the flexibility
-    to aggressively invest in our team members and keep them engaged in the firm’s
-    growth.
-
-    About the Position
-
-    Our development program is geared for college graduates who want to work alongside
-    our talented software engineers creating impactful solutions to further the firm’s
-    market initiatives. Responsibilities include developing and supporting C++ based
-    trading applications and tools. You will be given immediate responsibilities which
-    will significantly contribute to the firm’s daily activities. In this role, you’ll
-    have the opportunity to learn more about creative programming and the tools needed
-    to support electronic trading. If you are looking to have an immediate contribution
-    and would like to be part of building out our business, feel free to apply today!
-
-    Required Skills
-
-    An undergraduate or an advanced degree in a quantitative field such as Computer
-    Science, Engineering, or one of the hard sciences Minimum 3.0 GPA Knowledge of
-    C++ and Python, SQL, JavaScript, React Understanding of systems programming, data
-    structures, and algorithms Familiarity working in a Linux environment Strong analytical
-    and problem solving skills Great communication skills, both written and verbal
-    A strong work ethic and ability to adapt quickly in a fast-paced environment Benefits
-    and Perks Fully paid Medical, Dental, Vision, Disability, and Life Insurance Fully
-    stocked kitchen; free breakfast and lunch every day on-site Tuition Reimbursement
-    Program 401(k) with employer match Paid Vacation, Sick, and Parental leaves Commuter
-    and Flexible Spending Programs Base Salary Range
-
-    $145,000 - $175,000 - Salaries are based on numerous factors such as skills, experience,
-    and education. Our compensation package also includes a discretionary bonus and
-    a comprehensive benefits program for full-time employees. For more information,
-    reach out to your recruiter.
-
-    Old Mission is not accepting unsolicited resumes from any staffing/search firms.
-    All resumes submitted by staffing/search firms to any employee at Old Mission
-    via-email, the Internet or directly without a valid signed search agreement will
-    be deemed the sole property of Old Mission, and no fee will be paid in the event
-    the candidate is hired by Old Mission.'
-- job_id: SAP282026
-  job_title: Full Stack Software Engineer
-  company_name: SAP
-  status: processed
-  job_description: ' We help the world run better At SAP, we keep it simple: you bring
-    your best to us, and we''ll bring out the best in you. We''re builders touching
-    over 20 industries and 80% of global commerce, and we need your unique talents
-    to help shape what''s next. The work is challenging – but it matters. You''ll
-    find a place where you can be yourself, prioritize your wellbeing, and truly belong.
-    What''s in it for you? Constant learning, skill growth, great benefits, and a
-    team that wants you to grow and succeed.
-
-
-
-
-
-    SAP brings out your best – what will you discover?
-
-
-
-    Previously known as SAP Next Talent (SNT), the SAP Academy for Product and Engineering
-    (SAP&E) Technical Early Talent Rotation Program will launch your career by diving
-    into the vast, innovative world of SAP. SAP&E brings out your best by working
-    on different technologies, developing new skills and connections, and making an
-    impact by contributing to SAP’s goal of being the #1 Enterprise application and
-    Business AI company.
-
-    Here’s how:
-
-    Join a cohort of other curious, passionate, and motivated individuals Rotate every
-    6 months across a vast-array of teams to experience different technology stacks,
-    products, and industries while refining your knowledge and understanding of the
-    business Receive impactful projects, tailored learning, robust mentorship, and
-    networking opportunities
-
-
-    With this program, you will be better equipped to find teams within SAP that best
-    align with your passions and career goals. As an SAP&E Next Gen, you will be eligible
-    to permanently join a dedicated team after or during any of the three 6-month
-    rotations.
-
-
-
-    The goal for the SAP Academy for Product and Engineering program is to fill naturally
-    occurring backfill or new roles in the company with SAP Academy for Product and
-    Engineering participants.
-
-
-
-    Get ready to grow exponentially by building a broad range of skills while discovering
-    your strengths, making you a versatile and influential professional in the B2B
-    (Business to Business) tech space!
-
-
-    Three reasons to join SAP Academy for Product and Engineering (SAP&E)
-
-    Diverse Learning Opportunities: Through the three rotations, you''ll have the
-    chance to work in various teams and experience different technology stacks, products,
-    and industries. This diversity of experiences will help you broaden your skill
-    set and understanding of the business world, setting you up for a well-rounded
-    and versatile career in the software industry. Supportive Environment: You’ll
-    join a cohort of fellow early talent who share your passion and motivation. Your
-    cohort will go through upskilling workshops together and meet up at other office
-    engagements. SAP&E’s supportive community will provide you with a network of peers,
-    mentors and over 100 SAP&E Next Gen Alums, who can guide you through your professional
-    journey. Additionally, you''ll receive tailored learning opportunities and robust
-    mentorship to help you reach your full potential. Real Impact in AI: SAP is a
-    global leader in enterprise software touching 87% of global commerce, which uniquely
-    positions the company to lead in AI. As a SAP&E Next Gen, you''ll be contributing
-    to SAP''s mission of becoming the #1 Enterprise application and Business AI company.
-    You''ll work on impactful projects that make a difference, giving you a sense
-    of purpose and the opportunity to see your work influence the business world positively.
-
-
-    Who you are:
-
-    We are looking for early talent who have solid technical fundamentals, are knowledgeable
-    about GenAI, who are fueled by curiosity and thrive on self-improvement, show
-    the ability to learn quickly, are team players, and want to work for a B2B (Business
-    to Business) software company. You enjoy working on meaningful projects and are
-    energized by being part of a community. Our required qualifications for this recruitment
-    cycle includes:
-
-    Graduating from a degree or certification program in 2026 and ability to start
-    in July 2026 or January 2027 Education or relevant practical experience in Software
-    Engineering/Development, Data Science (Bachelors, Masters, Community College,
-    or Bootcamps) No requirement for U.S. work authorization sponsorship, now or in
-    the future. SAP Academy for Product and Engineering currently does not support
-    U.S. work authorization sponsorship at any-point Ability to work out of Palo Alto
-    and/or San Ramon, CA offices at least 3 days/week (relocation stipend available)
-    Currently studying or residing in the United States. Fluent in English: written
-    and verbal communication skills
-
-
-    Preferred qualifications:
-
-    Prior SAP experience Foundational knowledge and/or hands-on experience with GenAI
-    languages, frameworks, and skills as described in the technical skills below Involvement
-    and/or leadership in associations or student organizations Relevant internship
-    or work experience up to 18-months
-
-
-    Tech Skills:
-
-    Full Stack Software Engineering Track
-
-    Knowledge in general programming languages/libraries: Python, Java, JavaScript,
-    React, SQL Experience working with APIs, databases, data structures, node.js,
-    Git/GitHub, JIRA Hands-on experience in designing, testing, and implementing solutions.
-    Foundational knowledge in LLMs, machine learning algorithms, TensorFlow, PyTorch
-    Knowledge of concepts to build generative AI applications backed by advanced prompting
-    & RAG technologies and agentic frameworks Experience with Spring Boot, Docker,
-    Linux, and Go is a plus
-
-
-    Business Skills:
-
-    Customer-Centric: Understand customer needs and translate to actionable items
-    Effective and Proactive Communication:  Reaches out proactively, networks, seeks
-    answers, finds new projects Growth Mindset: Ability to think critically, creatively,
-    and can pivot when necessary Process-oriented: Excellent organizational and multitasking
-    skills Problem-solver: Connects dots, sees patterns, gaps, or opportunities to
-    proactively solve problems
-
-
-
-
-
-    #SAPNextGen #SAPAcademyforProductandEngineering #SAPNextTalent
-
-
-
-
-
-
-
-
-    Bring out your best SAP innovations help more than four hundred thousand customers
-    worldwide work together more efficiently and use business insight more effectively.
-    Originally known for leadership in enterprise resource planning (ERP) software,
-    SAP has evolved to become a market leader in end-to-end business application software
-    and related services for database, analytics, intelligent technologies, and experience
-    management. As a cloud company with two hundred million users and more than one
-    hundred thousand employees worldwide, we are purpose-driven and future-focused,
-    with a highly collaborative team ethic and commitment to personal development.
-    Whether connecting global industries, people, or platforms, we help ensure every
-    challenge gets the solution it deserves. At SAP, you can bring out your best.
-
-    We win with inclusion SAP’s culture of inclusion, focus on health and well-being,
-    and flexible working models help ensure that everyone – regardless of background
-    – feels included and can run at their best. At SAP, we believe we are made stronger
-    by the unique capabilities and qualities that each person brings to our company,
-    and we invest in our employees to inspire confidence and help everyone realize
-    their full potential. We ultimately believe in unleashing all talent and creating
-    a better world.
-
-    SAP is committed to the values of Equal Employment Opportunity and provides accessibility
-    accommodations to applicants with physical and/or mental disabilities. If you
-    are interested in applying for employment with SAP and are in need of accommodation
-    or special assistance to navigate our website or to complete your application,
-    please send an e-mail with your request to Recruiting Operations Team: Careers@sap.com.
-
-    For SAP employees: Only permanent roles are eligible for the SAP Employee Referral
-    Program, according to the eligibility rules set in the SAP Referral Policy. Specific
-    conditions may apply for roles in Vocational Training.
-
-    Qualified applicants will receive consideration for employment without regard
-    to their age, race, religion, national origin, ethnicity,  gender (including pregnancy,
-    childbirth, et al), sexual orientation, gender identity or expression, protected
-    veteran status, or disability, in compliance with applicable federal, state, and
-    local legal requirements.
-
-    SAP believes the value of pay transparency contributes towards an honest and supportive
-    culture and is a significant step toward demonstrating SAP’s commitment to pay
-    equity. SAP provides the hourly base salary rate range applicable for the posted
-    role. The targeted range for this position is 103300 - 175500(USD) CAD. The actual
-    amount to be offered to the successful candidates will be within that range, dependent
-    upon the key aspects of each case which may include education, skills, experience,
-    scope of the role, location, etc. as determined through the selection process.
-    SAP offers limited benefits for employees hired into hourly or like roles subject
-    to appliable plan/policy terms. A summary of benefits and eligibility requirements
-    can be found by clicking this link:  www.SAPNorthAmericaBenefits.com.
-
-    Due to the nature of the role, which involves global interactions with SAP entities,
-    as well as with employees and stakeholders in Canada, functional proficiency in
-    English is required for positions based in the Quebec.
-
-
-
-    AI Usage in the Recruitment Process
-
-    For information on the responsible use of AI in our recruitment process, please
-    refer to our Guidelines for Ethical Usage of AI in the Recruiting Process.
-
-
-
-    Please note that any violation of these guidelines may result in disqualification
-    from the hiring process.
-
-    Requisition ID: 436794  | Work Area: Software-Design and Development  | Expected
-    Travel: 0 - 10%  | Career Status: Graduate  | Employment Type: Regular Full Time   |
-    Additional Locations:  #LI-Hybrid
-
-    ​
-
-
-
-
-    Nearest Major Market: San Jose Nearest Secondary Market: Palo Alto Job Segment:
-    Test Engineer, Software Engineer, SAP, Testing, Cloud, Engineering, Technology'
-- job_id: intersys_6667825003
-  job_title: Core Development Program
-  company_name: InterSystems
-  status: processed
-  job_description: ' Software Engineer Rotational Program – Early Career
-
-    About InterSystems
-
-    InterSystems powers mission-critical applications in healthcare, financial services,
-    government, and other industries. Our data platform, interoperability solutions,
-    and analytics technologies help organizations solve complex problems and deliver
-    meaningful outcomes. With a focus on innovation and client success, we support
-    systems that make a real-world impact.
-
-    Our Core Development Program is a rotational experience designed for soon-to-be
-    graduates (BS, MS, or PhD) looking to build a strong foundation in software engineering.
-    The program offers opportunities in front-end, back-end and/or full stack development
-    across our product teams. You’ll contribute to real codebases and collaborate
-    cross-functionally gaining exposure to a wide range of technologies.
-
-    Program Highlights:
-
-    3-week onboarding and training: Learn core technologies, tools, platforms, and
-    best practices. Two 6-week team rotations: Complete two 6-week software development
-    projects with different InterSystems product teams (HealthShare, IntelliCare,
-    Data Platforms, Financial Services) Mentorship and support: Work closely with
-    experienced engineers for guidance and career development. Team placement: At
-    the end of the program, participants transition to their long-term role with a
-    team based on interest, fit, and business needs. Why Join Us?
-
-    Cross-Team Experience: Gain exposure to interoperability platforms, data infrastructure,
-    and clinical systems. Supportive Mentorship: Learn from seasoned engineers with
-    insight into best practices and career planning. Career Path: Transition into
-    a full-time role with growth opportunities in software development and beyond.
-    What We’re Looking For
-
-    Education & Background
-
-    Soon-to-be graduates with a degree in Computer Science, Software Engineering,
-    Mathematics, Physics, or a related STEM field. Graduation dates ranging from December
-    2025 to August 2026. Technical Skills
-
-    Experience with at least one programming language (e.g., JavaScript, Python, Java,
-    C++, C#) Understanding of data structures, algorithms, and object-oriented programming
-    Professional Attributes
-
-    Strong problem-solving, communication and collaboration skills Eagerness to learn
-    new tools, technologies, and domains Initiative shown through personal, academic,
-    or team projects
-
-
-    About InterSystems
-
-    InterSystems, a creative data technology provider, delivers a unified foundation
-    for next-generation applications for healthcare, finance, manufacturing, and supply
-    chain customers in more than 80 countries. Our data platforms solve interoperability,
-    speed, and scalability problems for large organizations around the globe to unlock
-    the power of data and allow people to perceive data in imaginative ways. Established
-    in 1978, InterSystems is committed to excellence through its 24×7 support for
-    customers and partners around the world. Privately held and headquartered in Boston,
-    Massachusetts, InterSystems has 38 offices in 28 countries worldwide. For more
-    information, please visit InterSystems.com.'
-- job_id: quora_79962dbb-c552-43e0-b4ce-fff1d31addd2
-  job_title: Software Engineer
-  company_name: Quora
-  status: processed
-  job_description: ' Quora is a privately held, remote-first company. This position
-    can be performed remotely from multiple countries around the world. Please visit
-    careers.quora.com/eligible-countries for details regarding employment eligibility
-    by country.]
-
-    About Quora: Quora’s mission is to grow and share the world’s knowledge. To do
-    so, we have two knowledge sharing products:
-
-    Quora: a global knowledge sharing platform with over 400M monthly unique visitors,
-    bringing people together to share insights on various topics and providing a unique
-    platform to learn and connect with others.
-
-    Poe: a platform providing millions of global users with one place to chat, explore
-    and build with a wide variety of AI language models (bots), including GPT-5, Claude
-    Sonnet 4.5, Grok 4, Veo 3, Gemini 2.5 Flash Image (Nano Banana), and more. As
-    AI capabilities rapidly advance, Poe provides a single platform to instantly integrate
-    and utilize these new models.
-
-    Behind these products are passionate, collaborative, and high-performing global
-    teams. We have a culture rooted in transparency, idea-sharing, and experimentation
-    that allows us to celebrate success and grow together through meaningful work.
-    Join us on this journey to create a positive impact and make a significant change
-    in the world.
-
-    This role will be working on our Poe product.
-
-    About the Team and Role: We are seeking a talented Senior Full Stack Engineer
-    to contribute to Poe, our rapidly growing AI product. On the Creators team, you’ll
-    have the thrilling opportunity to build cutting-edge features from the ground
-    up as part of a team focused on improving the bot ecosystem and supporting bot
-    creators. Example projects include building tools for bot creator and improving
-    mechanisms for interacting with bots to highlight their capabilities. You’ll play
-    a key role in shaping how users interact with bots, ensuring new functionality
-    is intuitive, impactful, and delivers a seamless end-to-end user experience.
-
-    🚀🤖✨ Check out some of the amazing bots our Creators team has recently launched,
-    in collaboration with our cutting-edge LLM partners! 🚀🤖✨
-
-    https://poe.com/blog/report-early-2025-ai-ecosystem-trends
-
-    In this role, you''ll help plan and implement new product features, contribute
-    across the stack, and take shared ownership of the cross-functional development
-    cycle. We''re looking for strong technical collaborators who are excited about
-    AI, energized by fast-paced environments, and eager to learn and experiment with
-    emerging technologies. If that sounds like you, we''d love to hear from you.
-
-    Responsibilities: Collaborate closely with cross-functional teams (design, product,
-    data science, QA, and engineering) to advise on product roadmap and create innovative
-    features and user experiences for bot creators
-
-    Rapidly prototype and implement new product features from ideation to production,
-    using modern web technologies and best practices for performance and reliability
-
-    Be a champion for both user experience and for sustainable, scalable code practices
-
-    Collaborate closely with LLM providers to easily integrate new LLMs on Poe
-
-    Participate in on-call responsibilities to ensure Poe provides a reliable and
-    high quality product
-
-    Minimum Requirements: Availability for meetings and impromptu communication during
-    Quoras coordination hours (Mon-Fri: 9am-3pm Pacific Time)
-
-    5+ years of experience working with large scale codebases and systems, particularly
-    web applications
-
-    3+ years of experience working with React, Typescript, and GraphQL.
-
-    3+ years experience in Python or similar programming language
-
-    A passion for learning and always improving yourself and the team around you
-
-    Strong communication and interpersonal skills
-
-    Preferred Requirements: Passion for Poe and Quora''s products and mission
-
-    Passion for code quality and designing elegant systems
-
-    At Quora, we value diversity and inclusivity and welcome individuals from all
-    backgrounds, including marginalized or underrepresented groups in tech, to apply
-    for our job openings. We encourage all candidates who share a passion for growing
-    the world’s knowledge, even those who may not strictly meet all the preferred
-    requirements, to apply, as we know that a diverse range of perspectives can have
-    a significant impact on our products and our culture.
-
-    Additional Information: We are accepting applications on an ongoing basis.
-
-    Quora offers a wide range of benefits including medical/dental/vision coverage,
-    equity refreshers, remote work reimbursement, paid time off, employee assistance
-    programs, and more. Benefits are country-specific and may vary. For more information
-    on benefits, visit this link: https://www.careers.quora.com/benefits
-
-    There are many factors that will determine the starting pay, including but not
-    limited to experience, location, education, and business needs.
-
-    US candidates only: For US based applicants, the salary range is $155,656 - $225,160
-    USD + equity + benefits.
-
-    Canada candidates only: For Toronto and Vancouver based applicants, the salary
-    range is $202,383 - $278,361 CAD + equity + benefits. For all other locations
-    in Canada, the salary range is $188,891 - $259,803 CAD + equity + benefits.
-
-    We are an equal opportunity employer and value diversity at our company. We do
-    not discriminate on the basis of race, religion, color, national origin, gender,
-    sexual orientation, age, marital status, veteran status, or disability status.
-
-    Job Applicant Privacy Notice: https://www.careers.quora.com/applicant-privacy-notice
-
-    #LI-SD1 #LI-REMOTE'
-- job_id: citadel_001
-  job_title: Software Engineer – University Graduate
-  company_name: Citadel Securities
-  status: processed
-  job_description: ' Job Description At Citadel Securities, our engineers work in
-    small teams to turn the best ideas into high-performing and resilient technology.
-    With short development cycles, work rapidly goes into production. As an engineer,
-    you can create systems architectures, develop platforms and build web frameworks.
-    You’ll have access to state-of-the-art tools and apply innovative techniques including
-    distributed computing, natural language processing, machine learning and more.
-    Your Objectives: Create technological tools that bring trading strategies to life
-    Develop high-performance, large data research platforms Work in small teams to
-    build the future of finance Your Skills & Talents: Bachelor''s, master''s or PhD
-    in Computer Science, Computer Engineering or related fields Exceptional programming
-    and design skills Strong analytical skills and familiarity with probability and
-    statistics Ability to communicate effectively in a collaborative, complex and
-    highly technical team environment Intellectual curiosity and passion for solving
-    challenging problems using technology Opportunities available in Miami, New York.
-
-    In accordance with applicable law, the base salary range for this role is $200,000
-    to $250,000. In addition, the employee who fills this role will be eligible to
-    participate in a discretionary incentive compensation program, as well as a wide
-    array of benefit programs, such as medical and life insurance, retirement and
-    tax-free savings plans, and access to other healthcare programs.
-
-    About Citadel Securities Citadel Securities is the next-generation capital markets
-    firm and a leading global market maker. We provide institutional and retail investors
-    with the liquidity they need to trade a broad array of equity and fixed income
-    products in any market condition. The brightest minds in finance, science and
-    technology use powerful, advanced analytics to solve the market’s most critical
-    challenges, turning big ideas into real-world outcomes.'
-- job_id: msft_1848352
-  job_title: Software Engineer
-  company_name: Microsoft
-  status: processed
-  job_description: ' Overview Imagine building the world’s computer that provides
-    unprecedented reliability and unlimited scale, an organization that empowers individuals
-    to achieve their best and treasure grass root innovation, technology that spans
-    machine learning, networking, operating systems, UX, security, and solutions that
-    enable millions of customers to run their mission critical workloads with confidence.
-    The opportunities are infinite, and innovation is limited only by our own imagination.
-
-
-    We are part of the Azure networking team designing, building, and operating critical
-    services for customers. We are responsible for hybrid connectivity to enable enterprises
-    to connect to Azure, application load balancing, secure VM access, network function
-    virtualization, application & network security services and Network Diagnostics
-    Platform. At the core of these services is a solid SDN and NFV infrastructure
-    that we continuously innovate on to improve agility, scalability, reliability,
-    and cost effectiveness of our services.
-
-    Our culture promotes diversity and inclusion and is clearly reflected in all the
-    things we do. Diversity is more than a commitment for us - it is the foundation
-    of what we do. We are looking for a Software Engineer in the Hybrid Networking
-    Team to build, deploy and monitor various Azure Networking Services on incumbent
-    X64 platforms and the challenger ARM platforms. If you have passion to build &
-    manage services at planet scale that can run on any platform and hardware, this
-    is a great opportunity for you to learn, contribute and grow.
-
-
-
-    Microsoft’s mission is to empower every person and every organization on the planet
-    to achieve more. As employees we come together with a growth mindset, innovate
-    to empower others, and collaborate to realize our shared goals. Each day we build
-    on our values of respect, integrity, and accountability to create a culture of
-    inclusion where everyone can thrive at work and beyond.
-
-    Qualifications Required Qualifications
-
-    Bachelor''s Degree in Computer Science, or related technical discipline with proven
-    experience coding in languages including, but not limited to, C#, Java, or Python,
-    OR equivalent experience. Other Requirements:
-
-    Ability to meet Microsoft, customer and/or government security screening requirements
-    are required for this role. These requirements include, but are not limited to
-    the following specialized security screenings: Microsoft Cloud Background Check:
-    This position will be required to pass the Microsoft Cloud Background Check upon
-    hire/transfer and every two years thereafter.
-
-
-    Preferred Qualifications
-
-    Bachelor''s Degree in Computer Science, or related technical field AND 1+ year(s)
-    technical engineering experience with coding in languages including, but not limited
-    to, C#, Java, or Python, OR Master''s Degree in Computer Science or related technical
-    field with proven experience coding in languages including, but not limited to,
-    C#, Java, or Python, OR equivalent experience. Experience with cloud services
-    and infrastructure. Experience with cross-platform development and deployment.
-    Knowledge of containerization technologies like Docker. Familiarity with hardware
-    architectures (Intel and Arm). Demonstrated problem-solving skills and attention
-    to detail. Software Engineering IC2 - The typical base pay range for this role
-    across the U.S. is USD $84,200 - $165,200 per year. There is a different range
-    applicable to specific work locations, within the San Francisco Bay area and New
-    York City metropolitan area, and the base pay range for this role in those locations
-    is USD $109,000 - $180,400 per year.
-
-    Certain roles may be eligible for benefits and other compensation. Find additional
-    benefits and pay information here: https://careers.microsoft.com/us/en/us-corporate-pay
-
-
-
-    Microsoft will accept applications for the role until October 20, 2025.
-
-
-
-
-
-
-    #azurecorejobs #IC2SWE #EiP
-
-    Responsibilities Designs, develops, and maintains software services for X64 and
-    ARM platforms. Collaborates with cross-functional teams to define, design, and
-    ship new features. Optimizes software for performance and scalability on different
-    hardware architectures. Troubleshoots and resolves complex technical issues. Conducts
-    code reviews and ensures adherence to best practices. Stays updated with the latest
-    industry trends and technologies.'
-- job_id: fireworksai_4036755009
-  job_title: Software Engineer, Cloud Infrastructure
-  company_name: Fireworks AI
-  status: processed
-  job_description: ' About Us: Here at Fireworks, we’re building the future of generative
-    AI infrastructure. Fireworks offers the generative AI platform with the highest-quality
-    models and the fastest, most scalable inference. We’ve been independently benchmarked
-    to have the fastest LLM inference and have been getting great traction with innovative
-    research projects, like our own function calling and multi-modal models. Fireworks
-    is funded by top investors, like Benchmark and Sequoia, and we’re an ambitious,
-    fun team composed primarily of veterans from Pytorch and Google Vertex AI.
-
-    The Role: As a Software Engineer on our Cloud Infrastructure team, you will help
-    design and build the core systems that power Fireworks AI’s generative AI platform.
-    You will work on projects that support distributed AI workloads across multiple
-    cloud environments, building tools and services that keep our platform fast, reliable,
-    and scalable.
-
-    This is an exciting opportunity for a new graduate who wants to grow as a software
-    engineer and work hands-on with cloud infrastructure, distributed systems, and
-    large-scale machine learning platforms. You will collaborate closely with experienced
-    engineers, learn from technical mentors, and contribute to the next generation
-    of AI infrastructure.
-
-    Key Responsibilities: Contribute to the design and development of scalable backend
-    infrastructure that supports distributed training, inference, and data pipelines
-    Build and maintain core backend services such as job schedulers, autoscalers,
-    resource managers, and model serving systems Support performance optimization,
-    cost efficiency, and reliability improvements across compute, storage, and networking
-    layers Collaborate with ML, DevOps, and product teams to translate research and
-    product needs into infrastructure solutions Learn and apply modern cloud technologies
-    including Kubernetes, Ray, Kubeflow, and MLFlow Participate in code reviews, technical
-    discussions, and continuous integration and deployment processes Minimum Qualifications:
-    Bachelor’s degree in Computer Science, Engineering, or a related technical field
-    (or equivalent practical experience) Strong programming skills in Python, C++,
-    or a similar language Solid understanding of computer systems concepts such as
-    networking, storage, and distributed computing Familiarity with cloud platforms
-    like AWS, GCP, or Azure, and containerization tools like Docker or Kubernetes
-    Knowledge and interest in cloud infrastructure, distributed systems, and machine
-    learning Preferred Qualifications: 2+ years of relevant industry experience through
-    internships, co-ops, or full-time employment Experience with ML frameworks such
-    as PyTorch, TensorFlow, Vertex AI, or SageMaker Exposure to infrastructure-as-code
-    and CI/CD tools such as Terraform, ArgoCD, or GitHub Actions Contributions to
-    open-source infrastructure or ML projects Strong problem-solving skills and curiosity
-    to learn new technologies Deadline to apply: November 7th at 11:59 PM PT Why Fireworks
-    AI? Solve Hard Problems: Tackle challenges at the forefront of AI infrastructure,
-    from low-latency inference to scalable model serving. Build What’s Next: Work
-    with bleeding-edge technology that impacts how businesses and developers harness
-    AI globally. Ownership & Impact: Join a fast-growing, passionate team where your
-    work directly shapes the future of AI—no bureaucracy, just results. Learn from
-    the Best: Collaborate with world-class engineers and AI researchers who thrive
-    on curiosity and innovation. Fireworks AI is an equal-opportunity employer. We
-    celebrate diversity and are committed to creating an inclusive environment for
-    all innovators. '
-- job_id: wanderlog0885de2e-da16-432e-ac61-75c2d5478a1b
-  job_title: Full-Stack Software Engineer
-  company_name: Wanderlog
-  status: processed
-  job_description: ' Warning: if you’re outside of the Americas timezones, unfortunately,
-    we’re only hiring for engineers with at least some timezone overlap.
-
-    Wanderlog helps make leisure travel easier. We believe that travel makes the world
-    better, and are building tools that lower the bar to it. Our core product, built
-    starting 2019, is a travel planning app (we’re the top-ranked trip planner on
-    iOS and Android), but we’re also helping travelers book hotels (without hidden
-    fees), providing them with information (through various pages on e.g., best attractions,
-    restaurants, etc.), and more.
-
-    Our founders are twin brothers. Peter worked as an engineer at Stripe and a consultant
-    at McKinsey, and Harry as a product manager at Google. We’re an engineering and
-    product-driven team: the founders studied computer science at Yale, and have built
-    successful, bootstrapped travel companies (BookWithMatrix and All the Flight Deals)
-    with products people love before starting Wanderlog.
-
-    We now serve millions of travelers a month, and are a team of 6, including 5 engineers
-    hailing from Yale, University of Toronto, UCLA, and more; and 1 designer. We’re
-    a self-sustaining, default-alive startup.
-
-    We also love traveling. Whether it’s a short hop to Austin, Seattle, or New Orleans;
-    or a longer jaunt to Australia, Hawaii, or Banff National Park (all places the
-    team’s traveled to in the past year!), travel broadens our horizons, builds empathy,
-    and challenges us to grow. We’re working to bring these experiences to more of
-    the world.
-
-    What you’ll do: As an engineer, you’ll be responsible for owning portions of the
-    product. You’ll be expected to:
-
-    Build new features on our website and mobile app. (Our stack is Javascript (Typescript):
-    modern React on the web, React Native on mobile, and Node.js/Express on the server.)
-
-    Design and decide what to build based on what would help travelers and drive growth.
-    You won’t be handed a spec; you’ll be coming up with it!
-
-    Build data pipelines to crawl, process, and synthesize data from various sources
-    around the web.
-
-    Write tests and and build out engineering infrastructure. Our code is fully typed
-    (Typescript) and tested.
-
-    Debug and fix bugs and scale the infrastructure as it grows.
-
-    Review code written by other engineers.
-
-    Be fast and nimble: figure out the best way to build new features at lowest cost
-    in time and future technical debt.
-
-    This position is a full-time role reporting to the cofounders at Wanderlog.
-
-    What you might work on: New, user-friendly hotel booking interfaces that make
-    finding a place to stay easier.
-
-    AI-powered tools that read articles and watch videos for you and summarize the
-    places they mention.
-
-    Improvements to our React Native mobile app so that it runs faster on slower Android
-    phones.
-
-    A Chrome extension to let travelers quickly compare possible places to visit,
-    airfares, and hotels.
-
-    Better invite and collaboration tools to encourage people using Wanderlog to get
-    more friends to join them.
-
-    A better profile page that lets travelers on Wanderlog show off where they’ve
-    been, see how many people they’ve helped, and follow other friends and their trips.
-
-    You may be a good fit if you: Are a Javascript developer comfortable with React
-    and/or React Native.
-
-    Are a product person: you’ve built products end-to-end before, and really care
-    about the people who use them.
-
-    Are comfortable with picking up various technologies for the task at hand. We
-    quickly evaluate libraries and tools that could help our product, and variously
-    use Redis, Elasticsearch, and Python as needed too.
-
-    Are entrepreneurial: excited about joining a small, high-growth team and talking
-    to users, doing product and design, and wearing a variety of hats.
-
-    Love travel and believe in it as a positive force personally and for the world.
-
-    What’s it like to work here? We’re an engineering and product-heavy team. Travel’s
-    something everyone does, and we love using the tools we build. A typical week’s
-    work involves talking to users, prioritizing tasks in Sheets, designing on Figma,
-    and building and shipping them continuously.
-
-    Our values include putting travelers first, owning the product end-to-end, treating
-    teammates with respect, and moving fast by being smart about what we build and
-    how we build it.
-
-    We believe in work fitting in with your life. We love travel and believe it rejuvenates
-    us and makes us better people, and have twice annual travel offsites where the
-    goal is to enjoy visiting a new place and collaborate more closely with the team
-    in person.
-
-    Our hiring process We’ll first have you do 2 short rounds of asynchronous programming
-    challenges, including one with a virtual interviewer. After that, we’ll have a
-    coding interview where you work on a quick program on your laptop in your preferred
-    language with one of the founders, followed by a half-day final-round virtual
-    onsite via video call.
-
-    Founders Peter Xu and Harry Yu are twin brothers. Peter shuttled between Los Angeles,
-    Houston, New York, Tokyo, and Hong Kong as a consultant at McKinsey before settling
-    down at Stripe as a full-stack engineer, where he worked closely with support
-    teams to build tools that made support agents’ work more productive.
-
-    Harry worked at Google as a product manager on Hotel Search, Chrome, and finally
-    Google Assistant for the past three, where he was one of the early PMs on the
-    team.
-
-    Before building Wanderlog, they had built Coursetable (featured in the New York
-    Times) and travel sites All the Flight Deals (a flight deals aggregator) and BookWithMatrix
-    (a power-traveler flight search tool). The founders are now glad to have been
-    working on Wanderlog for 6 years, and are excited to make travelers’ lives easier! '
-- job_id: jerry8e6b9a39-2ef0-4016-b513-dc54a2048b6d
-  job_title: Software Engineer I (entry)
-  company_name: Jerry.ai
-  status: processed
-  job_description: ' 👋 Hi there! If you''re looking to make a real-world impact fast
-    while leveling up your skills in a high-growth startup, we might be the right
-    place for you!
-
-    🚗 Why join Jerry?
-
-    We’re Jerry, and we’re building the first AI-powered AllCar™ app to completely
-    rethink what it means to own a car. Car insurance, maintenance, repairs, financing—we’re
-    simplifying it all into one seamless mobile experience. Our users already save
-    over $1,000/year with us, and we’ve grown revenue 60x in the last 5 years.
-
-    Now we’re scaling from 5M to 50M users, and we need sharp, curious engineers located
-    in the SF area to help us get there.
-
-    🌟 Here’s what you’ll get:
-
-    ✅ Impact from Day One — you’ll be writing production code within your first few
-    weeks.
-
-    ✅ Backed and booming — we’ve raised $240M+ and are cash-flow positive.
-
-    ✅ Modern tech stack — React, Node, Python, AWS, TypeScript, and more.
-
-    ✅ Mentorship + learning — work with top engineers from companies like Nvidia,
-    TikTok, and Cepton.
-
-    ✅ Merit-based growth — no seniority theater here. You grow fast if you deliver
-    and learn fast.
-
-    🫵 What you’ll be working on
-
-    You’ll join one of our engineering pods (core app, retention, automation) depending
-    on your interests and skills. Every team ships regularly, works closely with product,
-    and contributes to a mission that matters.
-
-    We don’t expect you to know everything on day one, but we do expect:
-
-    A love for learning
-
-    Comfort with ambiguity
-
-    Hustle and curiosity
-
-    Pride in building high-quality, user-first software
-
-    💻 Our stack:
-
-    Frontend: React, React Native
-
-    Backend: NodeJS + TypeScript
-
-    Infra: AWS, Go, Python, Docker, CI/CD
-
-    Data: Redis, Postgres, DynamoDB, Clickhouse
-
-    AI/ML: Python pipelines, LLM integrations, internal models
-
-    You don’t need to know it all—but if some of that excites you, let’s talk.
-
-    🚀 What we’re looking for:
-
-    Bachelor’s degree in Computer Science, Engineering, or a related field
-
-    Internship, co-op, or side project experience is a plus—but not required
-
-    Eagerness to learn, build, and grow
-
-    While we appreciate your interest and application, only applicants under consideration
-    will be contacted.
-
-    Jerry.ai is proud to be an Equal Employment Opportunity employer. We prohibit
-    discrimination based on race, religion, color, national origin, sex, pregnancy,
-    reproductive health decisions or related medical conditions, sexual orientation,
-    gender identity, gender expression, age, veteran status, disability, genetic information,
-    or other characteristics protected by applicable local, state or federal laws.
-
-    Jerry.ai is committed to providing reasonable accommodations for individuals with
-    disabilities in our job application process. If you need assistance or an accommodation
-    due to a disability, please contact us at recruiting@jerry.ai
-
-    The successful candidate’s starting pay will fall within the pay range listed
-    on this job posting, determined based on job-related factors including, but not
-    limited to, skills, experience, qualifications, work location, and market conditions.
-    Ranges are market-dependent and may be modified in the future. In addition to
-    base salary, the compensation may include opportunities for equity grants.
-
-    We offer a comprehensive benefits package to regular employees, including health,
-    dental, and vision coverage, paid time off, paid parental leave, 401(K) plan with
-    employer matching, and wellness benefits, among others. Equity opportunities may
-    also be part of your total rewards package. Part-time, contract, or freelance
-    roles may not be eligible for certain benefits.
-
-    About Jerry.ai:
-
-    Jerry.ai is America’s first and only super app to radically simplify car ownership.
-    We are redefining how people manage owning a car, one of their most expensive
-    and time-consuming assets.
-
-    Backed by artificial intelligence and machine learning, Jerry.ai simplifies and
-    automates owning and maintaining a car while providing personalized services for
-    all car owners'' needs. We spend every day innovating and improving our AI-powered
-    app to provide the best possible experience for our customers. From car insurance
-    and financing to maintenance and safety, Jerry.ai does it all.
-
-    We are the #1 rated and most downloaded app in our category with a 4.7 star rating
-    in the App Store. We have more than 5 million customers — and we’re just getting
-    started.
-
-    Jerry.ai was founded in 2017 by serial entrepreneurs and has raised more than
-    $240 million in financing.
-
-    Join our team and work with passionate, curious and egoless people who love solving
-    real-world problems. Help us build a revolutionary product that’s disrupting a
-    massive market. '
-- job_id: StarSling001
-  job_title: Full-Stack Software Engineer (New Grad)
-  company_name: StarSling
-  status: processed
-  job_description: ' About the role We’re looking for a Full-Stack Software Engineer
-    (New Grad) with experience building AI applications to join our team in the San
-    Francisco Bay Area. As a new grad we don’t expect you to have much experience,
-    but you must have at least one public project on GitHub that you built (not a
-    fork). This can be a hackathon project, side project, or something you just built
-    for fun. The most important thing is that you’ve built an app end-to-end (ideally
-    an AI application that has been used by people). When applying, please include
-    a link to a project you’ve built.
-
-    At StarSling we''re focused on making all the annoying tasks outside of your code
-    editor fully agentic; everything from deployment to performance, incidents, and
-    bugs. We’re building Cursor for DevOps (more details here).
-
-    You''ll be working directly with me (Daniel). Before StarSling, I was the Engineering
-    Manager at Netflix working on the most used internal tool across all of Netflix’s
-    3K+ engineers and tens of thousands of microservices — an internal developer portal
-    called Netflix Console. Earlier in my career I was an engineer on Facebook’s AI
-    Camera team and helped build the mobile computer vision library that currently
-    powers camera effects for 100M+ DAUs across IG, FB, and WhatsApp. I’m obsessed
-    with helping every engineer be more productive.
-
-    You’ll also be working directly with my co-founder Yonas. Before StarSling, Yonas
-    was the Founder & CEO of StackShare, a developer community used by over 40 million
-    developers. He raised $12M as a first-time founder and did founder sales to get
-    them to just under $1M ARR with their enterprise product before selling the company
-    last year. He’s obsessed with creating product experiences that developers love
-    and building community.
-
-    💻 What You’ll Own Event-driven backend: Architect our Node.js / Next.js / TypeScript
-    and Supabase stack. Design schemas, event flows and ingest dev tools webhooks
-    to power a real-time personalized engineering portal. LLM Agentic Workflows: Build
-    a system of agents — MCP, tool use, memory, retry logic, context updates, feedback
-    mechanisms. Agent Experience (AX): Create intuitive product interfaces for human-agent
-    interactions. Explore and iterate with engineers to find the right interaction
-    paradigm to productivity work with a digital co-pilot. System Design & Technical
-    Strategy: Work directly with me to determine the best technical path that balances
-    moving fast and scaling to many customers using different dev tools. Determine
-    how we integrate and support the open-source community. ✅ This IS for you if You’re
-    a full-stack 0-to-1 builder who has shipped a complete application. You have a
-    genuine curiosity about agentic product experiences and are excited about understanding
-    the impact of AI on engineering users. You’re a previous founder or founding engineer.
-    You have built something from scratch that people use or pay for. You’re unusually
-    obsessed with hard problems. Your current skills or even what you''ve done before
-    is less important than your ability to go all-in and accomplish anything that
-    you set your mind to. You’re comfortable with ambiguity and adapting to dynamic
-    priorities. You need to have good judgement to know when to let little fires burn
-    and when to immediately jump in. You have excellent communication and candor.
-    You’ll be communicating directly with engineers and collaborating with us on key
-    decisions. You care about helping swamped engineers fight through the schlep of
-    software development. If that''s not an exciting mission for you, it will be hard
-    to stay motivated through the inevitable highs and lows. You have grit and perseverance.
-    You should accustomed to picking between hard options and pushing through it.
-    ❌ This IS NOT for you if You’re not based in The Bay Area (we’ll be a team of
-    four if you join so we’ll be sitting next to each other everyday) You’re not willing
-    to work six days per week (we take Sundays off) You’re not excited about using
-    codegen tools like Cursor, Windsurf, Claude Code, etc. You’re not comfortable
-    deleting 80%-90% of the code that you write. You’re not comfortable with ambiguity
-    and rapid context-switching. You don’t like candor- receiving and giving direct,
-    honest feedback. You need a well defined structure or career ladder. 🌍 The Opportunity
-    Work alongside two experienced co-founders - one who built and sold a dev tools
-    startup and one who led the engineering effort to create the same product we’re
-    creating at scale Get experience across the startup stack - you’ll be doing customer
-    support, bug squashing, user interviews, events, and everything else along with
-    writing code Be one of the first employees of the next dev tools category leader
-    - we’re not just building a dev tool, we’re building an engineering platform that
-    every company in Silicon Valley will be using and paying for About StarSling StarSling
-    is an agentic internal developer portal (IDP) that houses all your internal services,
-    applications, APIs, documentation and has AI agents continuously improving them
-    for you. One interface that automates all the tasks that eat up a developer’s
-    time after they’ve left their code editor: deployments, performance, incidents,
-    and bugs.
-
-
-    '
-- job_id: AUR8209480002
-  job_title: Software Engineer I - Remote Assist
-  company_name: Aurora
-  status: processed
-  job_description: ' Who we are
-
-    Aurora’s mission is to deliver the benefits of self-driving technology safely,
-    quickly, and broadly.
-
-
-    The Aurora Driver will create a new era in mobility and logistics, one that will
-    bring a safer, more efficient, and more accessible future to everyone.
-
-
-
-    At Aurora, you will tackle massively complex problems alongside other passionate,
-    intelligent individuals, growing as an expert while expanding your knowledge.
-    For the latest news from Aurora, visit aurora.tech or follow us on LinkedIn.
-
-
-
-    Aurora hires talented people with diverse backgrounds who are ready to help build
-    a transportation ecosystem that will make our roads safer, get crucial goods where
-    they need to go, and make mobility more efficient and accessible for all.
-
-    The Remote Assist team within the Aurora Services organization is responsible
-    for onboard, backend, and frontend development of the Remote Assist service that
-    enables human operators to provide support to autonomous vehicles with detailed
-    situational awareness through live streamed video, perception, and vehicle status
-    data.
-
-    We are looking for a talented entry-level Software Engineer to join the Remote
-    Assist team with the potential to contribute across the full stack.
-
-    In this role you will:
-
-    Help build the mission-critical Remote Assist service used to support Aurora’s
-    autonomous fleet. Work across a complex tech stack with frontend, backend, and
-    onboard systems working together. Write clean, efficient, and well-tested code
-    to ensure we maintain a reliable service. Gain deep experience with a variety
-    of technologies like Typescript, React, Golang, gRPC, C++, and AWS. Required Qualifications:
-
-    BS or MS in Computer Science or a related technical field, or equivalent practical
-    experience. 1 year of internship or professional engineering experience. A solid
-    grasp of computer science concepts and software engineering principles. Proficiency
-    in frontend development, backend development, and the integration of both into
-    a functional web tool. A willingness to learn new technologies and adapt to evolving
-    requirements. The ability to articulate ideas clearly and collaborate effectively
-    with diverse teams. Desirable Qualifications:
-
-    Experience with Typescript and React for frontend development. Experience with
-    Golang, gRPC, and AWS for backend development. Experience in onboard C++ development
-    for autonomous vehicles or other robotics. Experience in transportation, logistics,
-    or other time-sensitive operations. The base salary range for this position is
-    $105,000 - $157,000. Aurora’s pay ranges are determined by role, level, and location.
-    Within the range, the successful candidate’s starting base pay will be determined
-    based on factors including job-related skills, experience, qualifications, relevant
-    education or training, and market conditions. These ranges may be modified in
-    the future. The successful candidate will also be eligible for an annual bonus,
-    equity compensation, and benefits.
-
-    #LI-Entry Level
-
-    Working at Aurora
-
-    At Aurora, we bring together extraordinarily talented and experienced people united
-    by the strength of our values. We operate with integrity, set outrageous goals,
-    and build a culture where we win together — all without any jerks. Our Careers
-    page provides insight into what it is like to work at Aurora, and you can find
-    all the latest updates in our Newsroom.
-
-    Commitment to inclusion
-
-    Aurora considers candidates without regard to their race, color, religion, national
-    origin, age, sex, gender, gender identity, gender expression, sexual orientation,
-    marital status, pregnancy status, parent or caregiver status, ancestry, political
-    affiliation, veteran and/or military status, physical or mental disability, or
-    any other status protected by federal or state law. Aurora considers qualified
-    applicants with criminal histories, consistent with applicable federal, state,
-    and local law. We are also committed to providing reasonable accommodations for
-    qualified individuals with disabilities and disabled veterans in our job application
-    procedures. If you need assistance or an accommodation due to a disability, you
-    may contact us at careersiteaccommodations@aurora.tech.
-
-    For California applicants, information collected and processed as part of your
-    application and any job applications you choose to submit is subject to Aurora’s
-    California Employment Privacy Policy.
-
-
-    '
-- job_id: REV001
-  job_title: IT Software Engineer
-  company_name: Revature
-  status: processed
-  job_description: ' About the job About the Role:
-
-    Revature helps motivated individuals kick start a career in tech. With our Entry
-    Level Software Developer role, there is no prior professional experience required.
-    Our employees are well-prepared with effective, proven, on-the-job training across
-    all the most in-demand programming technologies.
-
-
-    About Revature:
-
-    Revature is one of the largest and fastest-growing employers of emerging talent
-    across the U.S., partnering with Fortune 500 companies, the biggest System Integrators,
-    and government contractors to identify future leaders who will truly make an impact
-    on their business.
-
-
-    Entry Level Software Developer Training Program:
-
-    Full time paid training Curriculum developed in partnership with our corporate
-    clients ensure that you are focused on only the most in-demand programming skills
-    Real world projects enhance your skills and prepare you for placement with one
-    of our corporate partners Employee engagement team members are assigned to support
-    you during your program Access to an expansive network of like-minded peers who
-    can show you the Revature ropes, and ensure you''ll rock up your new tech career
-
-
-    What We''re Looking For:
-
-    Bachelor''s degree, or higher Legally authorized to work in the US without the
-    need for current or future sponsorship Strong desire to learn to code – no prior
-    professional experience required A natural problem solver with strong communication
-    and interpersonal skills Must be available to work onsite in Plano, TX
-
-
-    Benefits of joining Revature as an Entry Level Software Developer:
-
-    Launch a career with no prior experience Competitive salary Paid time off 401k
-    Mentoring program Experience with the largest companies in the US Career acceleration:
-    over 72% of Revature alumni have received an additional promotion and 92% saw
-    their salary significantly increase after launching their tech career with Revature
-
-
-    Equal Opportunity Employer:
-
-    Revature (“Company”) is an equal opportunity employer. We will extend equal opportunity
-    to all individuals without regard to race, religion, color, sex, pregnancy, childbirth
-    or related medical conditions, sexual orientation, gender identity, national origin,
-    disability, age, genetic information, marital status, veteran status, or any other
-    status protected under applicable federal, state, or local laws. This policy applies
-    to all terms and conditions of employment, including but not limited to, hiring,
-    placement, promotion, termination, layoff, recall, transfer, leaves of absence,
-    benefits, compensation, and training. If you require accommodation to work, based
-    on any of these protected factors, please notify the Human Resources Department,
-    and the Company will evaluate the request and provide accommodation in accordance
-    with applicable law.
-
-
-    We seek to comply with all applicable federal, state, and local laws related to
-    discrimination and will not tolerate interference with the ability of any of the
-    Company''s employees to perform their job duties. Our policy reflects and affirms
-    the Company''s commitment to the principles of fair employment and the elimination
-    of all discriminatory practices.
-
-    '
-- job_id: MICRONJR81702
-  job_title: IT Software Engineer
-  company_name: Micron
-  status: processed
-  job_description: ' Job ID JR81702 Our vision is to transform how the world uses
-    information to enrich life for all.
-
-    Micron Technology is a world leader in innovating memory and storage solutions
-    that accelerate the transformation of information into intelligence, inspiring
-    the world to learn, communicate and advance faster than ever.
-
-    Configure, develop, maintain and support Micron and third party applications.
-    Create and analyze software specifications, and research, design, document, modify,
-    and support software throughout the development life cycle. Demonstrate the functional
-    and technical skills necessary to switch between development technologies and
-    merge them to provide the best solution. Create quality software and participate
-    in quality improvement efforts. Provide solutions that create business value while
-    at the same time minimizing negative impact through defects, downtime, or performance
-    degradation. Meet with customers, collaborate with others (Business Process Analysts,
-    Project Managers) to identify, clarify, and capture customer requirements, and
-    document and analyze business needs to understand the problem. Evaluate the available
-    software options, consult with the IT enterprise architects to understand the
-    IT roadmap, lead or participate in a cost analysis and decision analysis, collaborate
-    with the project manager to determine the time, resource constraints, and review
-    options with the customer to help determine the best solution. Design a solution
-    based on customer requirements, implement the software solution, complete unit
-    testing, participate with end users in integration and user acceptance testing,
-    and create documentation (technical specifications, test plans, deployment plans,
-    etc.). Partner with the IT Procurement representative to determine contracts,
-    support requirements, and training provided, participate in vendor selection,
-    work with the vendor to understand the product, attend vendor training and prototyping
-    sessions, determine how to integrate the solution into the existing business environment,
-    participate in software audits and service packs and software upgrades, and work
-    with project teams and stakeholders to ensure a successful implementation that
-    meets customer expectations. Act as the subject matter expert (SME) and final
-    point of contact, respond to customer or developer requests for assistance, troubleshoot
-    issues independently and with other teams, identify and document defects and enhancements,
-    assist with the onboarding of support team members through training and mentoring,
-    work to maintain skills and improve the IS roadmap, attend conferences, seminars,
-    training and implement the information learned, research best practices, current
-    trends, and techniques, make recommendations to the enterprise architect for changes
-    to the IT roadmap, and implement technology interactions based on company and
-    industry best practices. Create and maintain backend and front-end systems in
-    the photolithography space to increase yield, cycle time, and overall efficiency
-    of the semiconductor manufacturing process. May telecommute part-time.
-
-    Employer will accept a Bachelor’s degree in Computer Science, Information Systems,
-    Computer Engineering, or related field. Position requires education or experience
-    in: 1. Developing restful web services using NodeJS, Apache or C#; 2. Object Oriented
-    Programming; 3. SQL and NoSQL databases; 4. Angular, TypeScript, JavaScript, and
-    other Web technologies; 5. Git; 6. Docker, Kubernetes, OpenShift, or other container
-    technologies.
-
-    As a world leader in the semiconductor industry, Micron is dedicated to your personal
-    wellbeing and professional growth. Micron benefits are designed to help you stay
-    well, provide peace of mind and help you prepare for the future.  We offer a choice
-    of medical, dental and vision plans in all locations enabling team members to
-    select the plans that best meet their family healthcare needs and budget.  Micron
-    also provides benefit programs that help protect your income if you are unable
-    to work due to illness or injury, and paid family leave.  Additionally, Micron
-    benefits include a robust paid time-off program and paid holidays.  For additional
-    information regarding the Benefit programs available, please see the Benefits
-    Guide posted on micron.com/careers/benefits.
-
-    Micron is proud to be an equal opportunity workplace and is an affirmative action
-    employer. All qualified applicants will receive consideration for employment without
-    regard to race, color, religion, sex, sexual orientation, age, national origin,
-    citizenship status, disability, protected veteran status, gender identity or any
-    other factor protected by applicable federal, state, or local laws.
-
-    To learn about your right to work click here.
-
-    To learn more about Micron, please visit micron.com/careers
-
-    For US Sites Only: To request assistance with the application process and/or for
-    reasonable accommodations, please contact Micron’s People Organization at  hrsupport_na@micron.com
-    or 1-800-336-8918 (select option #3)
-
-    Micron Prohibits the use of child labor and complies with all applicable laws,
-    rules, regulations, and other international and industry labor standards.
-
-    Micron does not charge candidates any recruitment fees or unlawfully collect any
-    other payment from candidates as consideration for their employment with Micron.
-
-    AI alert: Candidates are encouraged to use AI tools to enhance their resume and/or
-    application materials. However, all information provided must be accurate and
-    reflect the candidate''s true skills and experiences. Misuse of AI to fabricate
-    or misrepresent qualifications will result in immediate disqualification.
-
-    Fraud alert: Micron advises job seekers to be cautious of unsolicited job offers
-    and to verify the authenticity of any communication claiming to be from Micron
-    by checking the official Micron careers website in the About Micron Technology,
-    Inc.
-
-    Micron Foundation
-
-    Strong communities and education are vital to the success of both society and
-    innovative companies. Every Micron site understands the complex needs of their
-    local community. Whether it’s through strategic giving, sponsorships or deploying
-    team member volunteers, we are making a difference.
-
-    Sustainability
-
-    Micron is committed to sustainable practices and supporting our global community.
-    We are building and maintaining sustainable operations, products, and communities
-    while focusing on opportunities and risks that are most important to our business
-    success and stakeholders.
-
-    '
-- job_id: WAMEGLOBALR000098612
-  job_title: WB Games Software Engineering Intern Co-op
-  company_name: WB Games New York
-  status: processed
-  job_description: ' Welcome to Warner Bros. Discovery… the stuff dreams are made
-    of.
-
-    Who We Are…
-
-    When we say, “the stuff dreams are made of,” we’re not just referring to the world
-    of wizards, dragons and superheroes, or even to the wonders of Planet Earth. Behind
-    WBD’s vast portfolio of iconic content and beloved brands, are the storytellers
-    bringing our characters to life, the creators bringing them to your living rooms
-    and the dreamers creating what’s next…
-
-    From brilliant creatives, to technology trailblazers, across the globe, WBD offers
-    career defining opportunities, thoughtfully curated benefits, and the tools to
-    explore and grow into your best selves. Here you are supported, here you are celebrated,
-    here you can thrive.
-
-    Warner Bros. Games New York works with some of the top talent in the game industry
-    to build online competitive and social features for video games. Our highly experienced
-    team of engineers utilize cutting-edge technology to build game services that
-    are robust and scalable enough to support world-class developers such as NetherRealm
-    Studios, Rocksteady, Monolith Productions, Warner Bros. Games Montréal, and more!
-
-    WB Games Software Engineering Intern Co-op: Troy, NY - January-May 2026
-
-    Application Deadline: Friday, November 7
-
-    Your New Role
-
-    This co-op will be located in the Troy, NY area. The selected co-op will be expected
-    to join us in the office on a regular cadence based on the manager’s in-office
-    schedule. We are the software engineering team that works on a central platform
-    utilized for online game features. We work closely with game teams to deliver
-    online game functionality necessary to launch games.
-
-    Your Role Accountabilities
-
-    Deliver improvements to the platform that improve game developer integration experience
-
-    Improve API documentation
-
-    Fix software bugs and reduce technical debt
-
-    Be part of collaborative software design process
-
-    Qualifications & Experience
-
-    Required experience:
-
-    Using one programming language to create software applications (could be small!)
-
-    Basic command line experience (grep, ls, bash scripting)
-
-    Experience nice to have but not required:
-
-    Git
-
-    Python
-
-    MongoDB
-
-    ElasticSearch
-
-    Understanding of REST APIs
-
-    Must be actively enrolled in an accredited college or university degree program
-    for the full duration of the internship (proof of enrollment required)
-
-    Must be a rising Junior or Senior (18 years or older)
-
-    Must be in academic good standing (3.0 or above GPA) A transcript will be required
-    to verify your GPA if an offer is extended.
-
-    Warner Bros. Discovery will only consider candidates who are presently authorized
-    to work for any employer in the United States and who will not require work visa
-    sponsorship from Warner Bros. Discovery now or in the future in order to retain
-    their authorization to work in the United States. Candidates currently on any
-    student or exchange visa, including F-1 CPT, F-1 OPT, J-1, M-1, etc., will not
-    be eligible for the internship program.
-
-    What to know before applying:
-
-    The duration of the Spring 2026 co-op program is 5 months from January to May
-    dependent on the student’s availability based on the semester schedule.
-
-    Co-ops will be expected to work 35-40 hours per week in a hybrid capacity for
-    the full duration of the program.
-
-    Our internships are paid opportunities with a competitive hourly wage. Credit
-    is not required; however, we will provide the necessary documentation for school
-    credit if desired. Relocation is not provided.
-
-    A Warner Bros. Discovery team member will contact you if your experiences and
-    interests match an open internship position. Due to the high volume of applications,
-    we are unable to give individual status updates.
-
-    About Our Program
-
-    WBD''s Internship/Co-op Program is designed to nurture students professionally
-    and personally. We attract the country’s boldest and brightest students for paid,
-    for-credit, real-world internship experiences in the entertainment, tech, sports,
-    news and media industries. We offer career-defining opportunities to learn valuable
-    skills that will help you prepare for a successful future.
-
-
-    Ready to learn more? Here’s what we offer:
-
-    Hands-on work with passionate, talented team members in your field
-
-    Mentorship from some of the industry’s kindest and most passionate entertainment
-    veterans
-
-    Engaging events including professional development seminars, panels with recruiters
-    and former interns, intern-exclusive events, and so much more
-
-    Access to top-level executives and employees through our Speaker Series and Roundtables
-
-    Incredible networking opportunities with industry-leading professionals and a
-    robust intern alumni network
-
-    A creative, collaborative, and inclusive company culture
-
-    What you can expect to take away from the semester:
-
-    Opportunities to develop professionally and uncover skills you didn’t know you
-    had
-
-    The insider scoop on the entertainment industry and what happens behind the scenes
-
-    Relationships that will go beyond your collegiate career
-
-    Real-life experiences that will provide you with the confidence to delve into
-    your next adventure
-
-    In compliance with local law, we are disclosing compensation for roles in locations
-    where legally required. Pay Rate: $23 per hour USD for undergrad interns.
-
-
-    On June 9, 2025, Warner Bros. Discovery announced plans to separate into two publicly
-    traded companies, Warner Bros. and Discovery Global, with an expected completion
-    in mid-2026. For more details, including leadership appointments and information
-    on individual brands, please visit our newsroom here.
-
-    Although you will be hired by Warner Bros. Discovery, upon the planned separation
-    in 2026, your employment likely will transition to Warner Bros. Company or transition
-    to Discovery Global. During this period of transformation, you’ll have an exciting
-    opportunity to lay the foundation at one of the world’s premier entertainment
-    brands.
-
-    How We Get Things Done…
-
-    This last bit is probably the most important! Here at WBD, our guiding principles
-    are the core values by which we operate and are central to how we get things done.
-    You can find them at www.wbd.com/guiding-principles/ along with some insights
-    from the team on what they mean and how they show up in their day to day. We hope
-    they resonate with you and look forward to discussing them during your interview.
-
-    Championing Inclusion at WBD
-
-    Warner Bros. Discovery embraces the opportunity to build a workforce that reflects
-    a wide array of perspectives, backgrounds and experiences. Being an equal opportunity
-    employer means that we take seriously our responsibility to consider qualified
-    candidates on the basis of merit, without regard to race, color, religion, national
-    origin, gender, sexual orientation, gender identity or expression, age, mental
-    or physical disability, and genetic information, marital status, citizenship status,
-    military status, protected veteran status or any other category protected by law.
-    If you’re a qualified candidate with a disability and you require adjustments
-    or accommodations during the job application and/or recruitment process, please
-    visit our accessibility page for instructions to submit your request.
-
-    '
-- job_id: G78230576405848774
-  job_title: Software Engineer II, Site Reliability
-  company_name: Google
-  status: processed
-  job_description: ' Minimum qualifications: Bachelor’s degree in Computer Science,
-    a related field, or equivalent practical experience. 1 year of experience with
-    software development in one or more programming languages during coursework/projects,
-    research, internships, or practical experience in school, work, or Open Source
-    projects. 1 year of experience with data structures or algorithms.
-
-    Preferred qualifications: Master''s degree in Computer Science or Engineering,
-    or a related field. About the job Site Reliability Development combines software
-    and systems development to build and run large-scale, massively distributed, fault-tolerant
-    systems. Site Reliability Development ensures that Google''s services—both our
-    internally critical and our externally-visible systems—have reliability, uptime
-    appropriate to users'' needs and a fast rate of improvement. Additionally Site
-    Reliability Developers will keep an ever-watchful eye on our systems capacity
-    and performance. Much of our software development focuses on optimizing existing
-    systems, building infrastructure and eliminating work through automation.
-
-    On the Site Reliability Development team, you’ll have the opportunity to manage
-    the complex challenges of scale which are unique to Google, while using your expertise
-    in coding, algorithms, complexity analysis and large-scale system design.
-
-    Site Reliability Development''s culture of intellectual curiosity, problem solving
-    and openness is key to its success. Our organization brings together people with
-    a wide variety of backgrounds, experiences and perspectives. We encourage them
-    to collaborate, think big and take risks in a blame-free environment. We promote
-    self-direction to work on meaningful projects, while we also strive to create
-    an environment that provides the support and mentorship needed to learn and grow.
-
-    To learn more: check out our books on Site Reliability Development, watch a recorded
-    Hangout on Air to meet some of our Site Reliability Developers, or read a career
-    profile about why a Software Developer chose to join Site Reliability Development.
-
-    In this role, you will manage project priorities, deadlines, and deliverables.
-    You will design, develop, test, deploy, maintain, and enhance software solutions.
-
-    The US base salary range for this full-time position is $118,000-$170,000 + bonus
-    + equity + benefits. Our salary ranges are determined by role, level, and location.
-    Within the range, individual pay is determined by work location and additional
-    factors, including job-related skills, experience, and relevant education or training.
-    Your recruiter can share more about the specific salary range for your preferred
-    location during the hiring process.
-
-    Please note that the compensation details listed in US role postings reflect the
-    base salary only, and do not include bonus, equity, or benefits. Learn more about
-    benefits at Google. Responsibilities Write product or system development code.
-    Review code developed by other developers and provide feedback to ensure best
-    practices (e.g., style guidelines, checking code in, accuracy, testability, and
-    efficiency). Contribute to existing documentation or educational content and adapt
-    content based on product/program updates and user feedback. Triage product or
-    system issues and debug/track/resolve by analyzing the sources of issues and the
-    impact on hardware, network, or service operations and quality. Participate in,
-    or lead design reviews with peers and stakeholders to decide amongst available
-    technologies.
-
-    '
-- job_id: intelJR0276771
-  job_title: Semiconductor Research, Intern Graduate
-  company_name: Intel
-  status: processed
-  job_description: ' Job Description: Embark with us on a journey of growth and transformation
-    as we create exceptionally engineered technology and bring AI everywhere. As a
-    valued team member, your adaptability and attention to detail will contribute
-    to our drive for results and relentless pursuit of quality, ensuring we meet our
-    customers'' needs with precision.
-
-
-
-    Join us and build on our legacy of innovation and collaboration as we deliver
-    world-changing technology that improves the life of every person on the planet.
-
-
-
-    As a multifaceted research engineer/scientist, you will drive innovation across
-    software, hardware, and semiconductor domains, supporting the development of cutting-edge
-    artificial intelligence, machine learning, and deep learning technologies. Your
-    role involves initiating and executing scientific research projects to fuel growth
-    in computing, communication, memory, and networking, while applying advanced knowledge
-    of hardware/software co-design principles to optimize system implementations.
-    You will collaborate with industry and academia, influence external research,
-    and contribute to scientific publications and patents, ensuring product relevancy
-    and supporting revenue growth. Additionally, you will architect secure designs,
-    conduct vulnerability assessments, and develop tools to enhance security, while
-    exploring novel device physics and process innovations to advance Intel''s roadmap
-    of future technologies. Your expertise will be pivotal in solving complex engineering
-    problems, developing strategic software applications, and recommending strategic
-    product enhancements to meet evolving customer needs.
-
-
-
-    In addition to the qualifications listed below, the ideal candidate will demonstrate
-    or be developing skills in the following areas:
-
-    Algorithm Research and Development
-
-    Circuit Design
-
-    Code Review
-
-    Design of Experiments Principles
-
-    Design for Manufacturing Knowledge
-
-    External Collaborations and Research
-
-    Failure Analysis
-
-    Materials Characterization
-
-    Microarchitecture Fundamentals
-
-    Programming Languages
-
-    Research and Development
-
-    Semiconductor Processing
-
-    Software Architecture Input and Feedback
-
-    Software Research Methodology
-
-    Technical Documentation
-
-
-
-    By applying to this prescreen posting, you are expressing interest in other job
-    opportunities with Intel.
-
-    Opportunities you may be considered for include:
-
-    AI Research Engineer/Scientist
-
-    Hardware Research Engineer/Scientist
-
-    Security Research Engineer/Scientist
-
-    Semicconductor Research Engineer
-
-    Software Research Engineer/Scientist
-
-    Qualifications: This is an entry-level position and will be compensated accordingly.
-    You must possess the below minimum qualifications to be initially considered for
-    this position. Experience would be obtained through a combination of prior education
-    level classes, and current level school classes, projects, research, and relevant
-    previous job and/or internship experience.
-
-
-
-    Education: Candidate must be enrolled/pursuing a Master''s degree OR Ph.D degree
-    in Chemical Engineering, Computer Engineering, Computer Science, Data Science,
-    Electrical Engineering, Material Science, Chemistry, Physics, or related STEM
-    field with 3+ months of education or industry experience.
-
-
-
-    Preferred Qualification: A GPA of 3.0 or higher.
-
-
-
-    Location & Immigration Information
-
-    As you consider the exciting opportunity to join Intel, we want to ensure you
-    are aware that you may receive support for your transition through available relocation
-    benefits. Eligibility for these benefits depends on factors such as the current
-    location and the specifics of the job role.
-
-
-
-    Note: Job location and modality of work will be communicated at time of offer.
-    This position is not available in the state of Colorado.
+  posting_link: https://careers-sas.icims.com/jobs/40406/software-developer-(emerging-career)-java---spring-boot/job?hub=9&mobile=false&width=1200&height=500&bga=true&needsRedirect=false&jan1offset=-300&jun1offset=-240
+  job_description: ' Software Developer - (Emerging Career) Hybrid, Cary, North Carolina
+
+
+
+    We’re a leader in data and AI. Through our software and services, we inspire customers
+    around the world to transform data into intelligence - and questions into answers.
+
+
+
+    If you''re looking for a dynamic, fulfilling career with flexibility and a world-class
+    employee experience, you''ll find it here. We''re recognized around the world
+    for our inclusive, meaningful culture and innovative technologies by organizations
+    like Fast Company, Forbes, Newsweek and more.
+
+
+
+    About the job
+
+    As a Software Developer in the SAS Platform Services Division R&D organization,
+    you will join a team of talented engineers working collaboratively to ideate and
+    deliver leading edge, innovative products and solutions that enable SAS customers
+    to deploy analytics with business rules in new ways. You will contribute to projects
+    spanning a diverse set of technologies and industries.
+
+
+
+    Are you passionate about software development and are looking for a position that
+    will allow you to contribute on all levels of the software development stack?
+    We are looking for developers who want to get involved with the next generation
+    of SAS platform mid-tier services which act as the building blocks for the SAS
+    Viya Solutions suites. In this role, you will have the opportunity to contribute
+    new feature development along updates to strengthen our security policy and improve
+    the performance of our platform. You will also have the opportunity to grow your
+    technical skills with contributions to Java based microservices along with learning
+    and/or deepening your knowledge of containerization and Azure cloud technologies.
+    In this position you will not be limited because at SAS, your curiosity matters
+    – whether you’re developing algorithms, creating customer experiences, or answering
+    critical questions. Curiosity is our code, and the opportunities here are endless
+
+
+
+    As a Software Developer (Emerging Career), you will:
+
+    Be encouraged to participate in open-source projects on behalf of SAS. Design
+    and develop high quality, testable and scalable software solutions in the connectivity
+    space, within established timelines while adhering to R&D best practices and processes.
+    Actively involve other project stakeholders (e.g. managers, developers, user interface
+    and visual designers, product managers) to ensure implementation satisfies functional
+    requirements and is consistent with established R&D standards. Participate in
+    project scoping and scheduling; tracks progress of individual tasks and alerts
+    stakeholders of issues blocking or preventing completion of task. Ensure quality
+    through functional, unit and performance testing Work closely with testing by
+    providing thorough reviews of the test plan and communicate when updates to the
+    plan should be made to cover code changes related to enhancements, redesigns and/or
+    bug fixes. Maintain accountability for the entire life cycle of the code including
+    support for both internal and external consumers. Embrace curiosity, passion,
+    authenticity and accountability. These are our values and influence everything
+    we do. Required qualifications
+
+
+
+    Bachelor’s degree in Computer Science or a related quantitative field 2-5 years
+    of demonstratable Java programming experience as a software developer Experience
+    with CI/CD tools such as Git/Gerrit/Jenkins, Github, Gitlab, or similar Experience
+    with Linux Experience with Agile SDLC practices Excellent interpersonal communication
+    skills Equivalent combination of related education, training and experience may
+    be considered in place of the above qualifications.
+
+
+    Additional competencies, knowledge and skills
+
+    Adaptability: Maintaining effectiveness when experiencing major changes in work
+    responsibilities or environment (e.g., people, processes, structure, or culture);
+    adjusting effectively to change by exploring the benefits, trying new approaches,
+    and collaborating with others to make the change successful. Collaborating: Working
+    cooperatively with others to help a team or work group achieve its goals. Communication:
+    Conveying information and ideas clearly and concisely to individuals or groups
+    in an engaging manner that helps them understand and retain the message; listening
+    actively to others. Experience with Spring Boot
+
+    Experience with REST APIs design and implementation
+
+    Experience building and orchestrating containers using technologies such as Docker
+    and Kubernetes
+
+    Experience with cloud architecture and at least one major public cloud provider
+
+    Experience using IDE’s such as IntelliJ or VSCode
+
+    Experience with collaboration tools such as Jira and Confluence
+
+    Exceptional aptitude for problem solving and debugging of complex multitiered
+    software applications
+
+    World-class benefits
+
+    Highlights include...
+
+    Comprehensive medical, prescription, dental and vision plans. Medical plan options
+    include: PPO with low annual deductible and copays. HDHP combined with a health
+    savings account with a contribution from SAS (no access to on-site health care
+    center). Onsite Health Care Center (HQ) that’s free to employees and family members
+    enrolled in the PPO plan. There''s a pharmacy too! Not local to HQ? The pharmacy
+    will ship prescriptions for no additional charge! An industry-leading 401k plan.
+    Tuition Assistance Program and programs and resources to support your development
+    Generous time away including vacation time, a variety of paid holidays, and our
+    much-loved U.S. Winter Wellness Break between December 25 and January 1. Volunteer
+    Time Off, parental leave and unlimited paid sick days. Generous childcare benefits
+    for all full-time employees. You are welcome here.
+
+    At SAS, it’s not about fitting into our culture – it’s about adding to it. We
+    believe our people make the difference. Our inclusive workforce brings together
+    unique talents and inspires teams to create amazing software that reflects the
+    diversity of our users and customers.
 
 
 
     Additional Information:
 
-    This application is for internship starts in Spring 2026 and Summer 2026, with
-    consideration also given to candidates interested in year-long internship or co-op
-    opportunities. You must be available to start work during this time frame.
+    To qualify, applicants must be legally authorized to work in the United States,
+    and should not require, now or in the future, sponsorship for employment visa
+    status. SAS is an equal opportunity employer. All qualified applicants are considered
+    for employment without regard to any characteristic protected by law. Read more:
+    Know Your Rights.
 
 
 
-    For information on Intel''s immigration sponsorship guidelines, please see:
-
-    https://www.intel.com/content/www/us/en/jobs/hiring.html
-
-
-
-    Life at Intel: https://jobs.intel.com/en/life-at-intel
-
+    Resumes may be considered in the order they are received. SAS employees performing
+    certain job functions may require access to technology or software subject to
+    export or import regulations. To comply with these regulations, SAS may obtain
+    nationality or citizenship information from applicants for employment. SAS collects
+    this information solely for trade law compliance purposes and does not use it
+    to discriminate unfairly in the hiring process.
 
 
-    Job Type: Student / Intern Shift: Shift 1 (United States of America) Primary Location:
-    US, Oregon, Hillsboro Additional Locations: US, Arizona, Phoenix, US, California,
-    Folsom, US, California, Santa Clara Business group: Intel makes possible the most
-    amazing experiences of the future. You may know us for our processors. But we
-    do so much more. Intel invents at the boundaries of technology to make amazing
-    experiences possible for business and society, and for every person on Earth.
-    Harnessing the capability of the cloud, the ubiquity of the Internet of Things,
-    the latest advances in memory and programmable solutions, and the promise of always-on
-    5G connectivity, Intel is disrupting industries and solving global challenges.
-    Leading on policy, diversity, inclusion, education and sustainability, we create
-    value for our stockholders, customers, and society. Posting Statement: All qualified
-    applicants will receive consideration for employment without regard to race, color,
-    religion, religious creed, sex, national origin, ancestry, age, physical or mental
-    disability, medical condition, genetic information, military and veteran status,
-    marital status, pregnancy, gender, gender expression, gender identity, sexual
-    orientation, or any other characteristic protected by local law, regulation, or
-    ordinance. Position of Trust N/A Benefits:
 
-    We offer a total compensation package that ranks among the best in the industry.
-    It consists of competitive pay, stock, bonuses, as well as, benefit programs which
-    include health, retirement, and vacation.  Find more information about all of
-    our Amazing Benefits here:
+    SAS only sends emails from verified “sas.com” email addresses and never asks for
+    sensitive, personal information or money. If you have any doubts about the authenticity
+    of any type of communication from, or on behalf of SAS, please contact Recruitingsupport@sas.com.
 
-    https://intel.wd1.myworkdayjobs.com/External/page/1025c144664a100150b4b1665c750003
 
-    Annual Salary Range for jobs which could be performed in the US:
 
-    $63,000.00-$166,000.00 Salary range dependent on a number of factors including
-    location and experience.
+    Let''s stay in touch! Join our Talent Community to stay up to date on company
+    news, job updates and more. '
+- job_id: SPEC87255637744
+  job_title: Software Engineer I
+  company_name: Spectrum
+  status: pending
+  posting_link: https://jobs.spectrum.com/job/-/-/4673/87255637744?utm_source=linkedIn&utm_medium=job-listings&utm_campaign=brand&utm_term=RD-TA
+  job_description: ' This role requires the ability to work lawfully in the U.S. without
+    employment-based immigration sponsorship, now or in the future.
 
-    Work Model for this Role
+    This position is not eligible for immigration sponsorship.
 
-    This role will require an on-site presence. * Job posting details (such as work
-    model, location or time type) are subject to change.
+    Are you ready to collaborate with technical teams to create software solutions
+    that leverage prevailing technologies and enhance the Spectrum customer experience?
+    As a Software Engineer I on the Enterprise Data Services team, you’ll play a key
+    role in developing and supporting applications that power platforms. This position
+    is ideal for someone looking to grow their skills in Java, Spring Boot, and PL/SQL
+    development while gaining exposure to advanced technologies such as Elasticsearch,
+    Kubernetes, Cloud, Redis, and microservices. You will learn from experienced engineers
+    in a collaborative, hands-on environment.
 
-    '
-- job_id: notion3e56e35b-f35b-4b1a-ba2b-0ccdc6f60421
-  job_title: Software Engineer, Mobile Intern (Winter 2026)
-  company_name: Notion
-  status: processed
-  job_description: 'About Us: Notion helps you build beautiful tools for your life’s
-    work. In today''s world of endless apps and tabs, Notion provides one place for
-    teams to get everything done, seamlessly connecting docs, notes, projects, calendar,
-    and email—with AI built in to find answers and automate work. Millions of users,
-    from individuals to large organizations like Toyota, Figma, and OpenAI, love Notion
-    for its flexibility and choose it because it helps them save time and money.
 
-    In-person collaboration is essential to Notion''s culture. We require all team
-    members to work from our offices on Mondays and Thursdays, our designated Anchor
-    Days. Certain teams or positions may require additional in-office workdays. This
-    internship will take place from Jan 26 - Apr 17 and you will need to be able to
-    work out of our NY or SF office during this time.
+    How You’ll Make an Impact
 
-    About The Role: Mobile devices have reshaped personal computing—the power of a
-    desktop now fits in our pockets. By giving everyone the building blocks to create
-    their own tools, we''ll solve more problems wherever we go. A delightful, intuitive
-    mobile experience: that''s our guiding light, and we need Android engineers to
-    make it a reality.
+    Understand and code basic features, functions and definitions Write clean, maintainable,
+    and efficient code following established coding standards under the supervision
+    of senior developers Implement pre-designed solutions per team lead instructions,
+    best practices and approved code patterns Implement basic functionality from a
+    provided design with team guidance Understand technical requirements and technical
+    design documents Utilize code branching strategies and change control methodologies
+    Code as per the Spectrum standards and guidelines; assist in fixes to defects
+    raised Complete assigned tasks within a given timeframe Test and validate code;
+    submit code for code review and apply feedback Provide LOE on a capability level
+    Collaborate with other teams, within a feature team, and/or a focus group Adhere
+    to Spectrum’s legal, regulatory, process, and security requirements
 
-    During your 12-week internship, you will be paired with a mentor that will help
-    guide you as you work closely with our team to build and ship impactful projects.
-    These projects will drive valuable impact to our customers and engineers. From
-    product engineering, mobile, to infrastructure and security, we have opportunities
-    available on different teams. Take a look at what our past intern cohort worked
-    on with our Blog post here and here and TikTok post.
+    What You’ll Bring to Spectrum
 
-    What You''ll Achieve: Write clean, secure, tested, and documented code.
 
-    You''ll collaborate with the team to strategize, mold, and develop innovative
-    features for our Android application.
+    Required Qualifications
 
-    At our core, we prioritize crafting top-tier applications. Your role could involve
-    enhancing the Android app''s performance, reliability, and overall refinement.
-    Additionally, you''ll have the opportunity to optimize aspects of the app within
-    the web stack.
 
-    Qualifications: Pursuing a bachelor''s or master’s degree in computer science,
-    engineering, or another related field. Must graduate before December 2026.
+    Education
 
-    Previous mobile internship experience.
+    BA/BS in Information Technology, Computer Science, or equivalent combination of
+    education and experience Experience
 
-    Working towards a proficiency of one or more programming languages such as Kotlin,
-    Java, Typescript, Node.js, Swift, Go, Python, or Rust.
+    1+ years of coding, testing and designing software experience 1+ years of software
+    development methodologies experience 1+ years of database management systems experience
+    Preferred Qualifications:
 
-    You find large challenges exciting and enjoy discovering problems as much as solving
-    them.
+    Bachelor’s degree in Computer Science, IT, or related field (recent graduates
+    encouraged to apply) Exposure to Java/JEE, Spring Boot, Kubernetes, and Docker
+    Familiarity with RESTful web services, microservices, and database concepts (SQL/PLSQL,
+    Oracle) Experience with tools such as Swagger, Postman, GitLab, and exposure to
+    monitoring tools like Splunk or AppDynamics Skills
 
-    You are able to problem-solve and adapt to changing priorities in a fast-paced,
-    dynamic environment.
+    Experience with Java/JEE development and exposure to Spring Boot frameworks Familiarity
+    with Python or Unix scripting Understanding of SQL / PL-SQL and relational database
+    concepts (Oracle preferred) Exposure to RESTful APIs, GitLab, and Postman Ability
+    to read, write, speak and understand English Basic knowledge of coding principles
+    Knowledge of coding language and syntax, usage of functions and object-oriented
+    patterns Understanding of applicable technical systems and programming in a general
+    sense Ability to follow standard practices and procedures in analyzing situations
+    or data from which answers can be readily obtained and work on problems of limited
+    scope Working Conditions
 
-    This internship will take place from Jan - Apr and you will need to be able to
-    work out of our SF or NY office during this time.
+    Office environment
 
-    Skills You''ll Need to Bring: Thoughtful problem-solving: For you, problem-solving
-    starts with a clear and accurate understanding of the context. You can decompose
-    tricky problems and work towards a clean solution, by yourself or with teammates.
-    You''re comfortable asking for help when you get stuck.
 
-    For a android internship: You have a passion for Android development and are excited
-    to work on large scale challenges with cutting-edge technology.
 
-    Put users first: You think critically about the implications of what you''re building,
-    and how it shapes real people''s lives. You understand that reach comes with responsibility
-    for our impact—good and bad.
+    Here, our employees don’t just have jobs, they''re building careers. That’s why
+    we offer a comprehensive pay and benefits package that rewards employees for their
+    contributions to our success, supporting all aspects of their well-being at every
+    stage of life.
 
-    Not ideological about technology: To you, technologies and programming languages
-    are about tradeoffs. You may be opinionated, but you''re not ideological and can
-    learn new technologies as you go.
 
-    Empathetic communication: You communicate nuanced ideas clearly, whether you''re
-    explaining technical decisions in writing or brainstorming in real time. In disagreements,
-    you engage thoughtfully with other perspectives and compromise when needed.
+    A qualified applicant’s criminal history, if any, will be considered in a manner
+    consistent with applicable laws, including local ordinances.
 
-    Team player: For you, work isn''t a solo endeavor. You enjoy collaborating cross-functionally
-    to accomplish shared goals, and you care about learning, growing, and helping
-    others to do the same.
 
-    Nice to Haves: You''re proficient with any part of our technology stack: Kotlin,
-    Jetpack Compose, Android SDK, Dagger, Swift, React, TypeScript, Postgres.
+    Get to Know Us Charter Communications is known by our Spectrum products and services,
+    including: Spectrum Internet®, TV, Mobile and Voice, Spectrum Networks, Spectrum
+    Business and Spectrum Reach. When you join our team, you’ll be keeping our customers
+    connected to what matters most in 41 states across the U.S. Watch this video to
+    learn more.
 
-    You''ve heard of computing pioneers like Ada Lovelace, Douglas Engelbart, Alan
-    Kay, and others—and understand why we''re big fans of their work.
+    Grow Your Career Here We’re committed to growing a workforce that reflects the
+    customers and communities we serve – providing opportunities for employment and
+    advancement to all team members. Spectrum is an Equal Opportunity Employer, including
+    job seekers with disabilities and veterans. Learn about Life at Spectrum. '
+- job_id: META602185522792581
+  job_title: Software Engineer, Product
+  company_name: Meta
+  status: pending
+  posting_link: https://www.metacareers.com/jobs/602185522792581
+  job_description: ' Meta Platforms, Inc. (Meta), formerly known as Facebook Inc.,
+    builds technologies that help people connect, find communities, and grow businesses.
+    When Facebook launched in 2004, it changed the way people connect. Apps and services
+    like Messenger, Instagram, and WhatsApp further empowered billions around the
+    world. Now, Meta is moving beyond 2D screens toward immersive experiences like
+    augmented and virtual reality to help build the next evolution in social technology.
+    To apply, click “Apply to Job” online on this web page. Software Engineer, Product
+    Responsibilities Develop full stack web/mobile application development with a
+    variety of coding languages. Create consumer products and features using internal
+    programming language Hack. Work closely with our PM and design teams to define
+    feature specifications and build products leveraging frameworks such as React
+    & React Native. Work closely with operations and infrastructure to build and scale
+    back-end services. Build report interfaces and data feeds. Establish self as an
+    owner of a particular component, feature or system with expert end-to-end understanding.
+    Successfully complete projects at large scope while maintaining a consistent high
+    level of productivity. Minimum Qualifications Requires a Bachelor''s degree in
+    Computer Science, Computer Engineering or a related field and 6 months of experience
+    in the job offered or in a computer-related occupation. Experience must include
+    6 months of experience in the following: 1. Coding in at least one of the following
+    industry-standard languages: C, C++, Java, or C# 2. Experience in software development
+    tools: Code editors (VIM or Emacs), and version control systems (Subversion, GIT,
+    or Perforce) 3. Experience in Linux, Unix OS as evidenced by file manipulation,
+    advanced commands, and shell scripting 4. Experience with scripting languages
+    such as Python, Javascript or Hack 5. Experience building large-scale applications
+    or similar experience 6. Experience as an owner of a particular component, feature
+    or system 7. Experience completing projects at large scope 8. Experience building
+    and shipping high quality work and achieving high reliability 9. Track record
+    of setting technical direction for a team, driving consensus and successful cross-functional
+    partnerships 10. Experience improving quality through thoughtful code reviews,
+    appropriate testing, proper rollout, monitoring, and proactive changes 11. Experience
+    with relational databases and SQL 12. Experience implementing web interfaces using
+    at least one of the following: JavaScript, HTML, or CSS 13. Distributed systems.
+    For those who live in or expect to work from California if hired for this position,
+    please click here for additional information. About Meta Meta builds technologies
+    that help people connect, find communities, and grow businesses. When Facebook
+    launched in 2004, it changed the way people connect. Apps like Messenger, Instagram
+    and WhatsApp further empowered billions around the world. Now, Meta is moving
+    beyond 2D screens toward immersive experiences like augmented and virtual reality
+    to help build the next evolution in social technology. People who choose to build
+    their careers by building with us at Meta help shape a future that will take us
+    beyond what digital connection makes possible today—beyond the constraints of
+    screens, the limits of distance, and even the rules of physics.
 
-    You have interests outside of technology, such as in art, history, or social sciences.
+    $217,260/year to $240,240/year + bonus + equity + benefits
 
-    Our customers come from all walks of life and so do we. We hire great people from
-    a wide variety of backgrounds, not just because it''s the right thing to do, but
-    because it makes our company stronger. If you share our values and our enthusiasm
-    for small businesses, you will find a home at Notion.
+    Individual compensation is determined by skills, qualifications, experience, and
+    location. Compensation details listed in this posting reflect the base hourly
+    rate, monthly rate, or annual salary only, and do not include bonus, equity or
+    sales incentives, if applicable. In addition to base compensation, Meta offers
+    benefits. Learn more about benefits at Meta.
 
-    Notion is proud to be an equal opportunity employer. We do not discriminate in
-    hiring or any employment decision based on race, color, religion, national origin,
-    age, sex (including pregnancy, childbirth, or related medical conditions), marital
-    status, ancestry, physical or mental disability, genetic information, veteran
-    status, gender identity or expression, sexual orientation, or other applicable
-    legally protected characteristic. Notion considers qualified applicants with criminal
-    histories, consistent with applicable federal, state and local law. Notion is
-    also committed to providing reasonable accommodations for qualified individuals
+    Equal Employment Opportunity Meta is proud to be an Equal Employment Opportunity
+    employer. We do not discriminate based upon race, religion, color, national origin,
+    sex (including pregnancy, childbirth, reproductive health decisions, or related
+    medical conditions), sexual orientation, gender identity, gender expression, age,
+    status as a protected veteran, status as an individual with a disability, genetic
+    information, political views or activity, or other applicable legally protected
+    characteristics. You may view our Equal Employment Opportunity notice here. Meta
+    is committed to providing reasonable accommodations for qualified individuals
     with disabilities and disabled veterans in our job application procedures. If
-    you need assistance or an accommodation due to a disability, please let your recruiter
-    know.
-
-    Notion is committed to providing highly competitive cash compensation, equity,
-    and benefits. The compensation offered for this role will be based on multiple
-    factors such as location, the role’s scope and complexity, and the candidate’s
-    experience and expertise, and may vary from the range provided below. For roles
-    based in San Francisco or New York City, the estimated hourly range for this role
-    is $57/hr for Bachelors or $61/hr for Master’s.
-
-    #LI-Onsite
-
-    '
-- job_id: NXDR6978039
-  job_title: Software Engineer - New Grad 2026
-  company_name: NextDoor
-  status: processed
-  job_description: 'Software Engineer - New Grad 2026 Dallas, TX #TeamNextdoor Nextdoor
-    (NYSE: NXDR) is the essential neighborhood network. Neighbors, public agencies,
-    and businesses use Nextdoor to connect around local information that matters in
-    more than 340,000 neighborhoods across 11 countries. Nextdoor builds innovative
-    technology to foster local community, share important news, and create neighborhood
-    connections at scale. Download the app and join the neighborhood at nextdoor.com.
-
-    Meet Your Future Neighbors As a Software Engineer at Nextdoor, you’ll join a team
-    that is passionate about using technology to cultivate a kinder world where everyone
-    has a neighbor they can rely on. We are a close-knit team of engineers who wear
-    multiple hats and work across different languages and services to deliver value
-    to our members. We care about moving fast and delivering impact, without compromising
-    on quality and reliability. You will have the opportunity to learn from your co-workers
-    and teach them. As a team, we will make each other better and build great software.
-    Learn more about the experiences of our new grads here.
-
-    At Nextdoor, we offer a warm and inclusive work environment that embraces a hybrid
-    employment model in Dallas, TX, blending an in-office presence and work-from-home
-    experience for our valued employees.
-
-    The Impact You’ll Make
-
-    We empower our teams to own all aspects of bringing Nextdoor to life. As such,
-    you’ll get the opportunity to make key contributions across our engineering stack
-    and exciting problems with our engineering teams. Our New Grads dive in quickly,
-    pushing code to production in their first week.
-
-    In addition to writing code, you’ll have the opportunity to help define the features
-    that we build through internal collaboration and incorporating customer feedback.
-    You’ll also work with product managers and designers to ensure products are easily
-    usable, benefit our customers, and align with the Nextdoor platform experience.
-    We believe engineers have a stake in all aspects of product development - from
-    conception, to planning and roadmap building,  shipping, and measuring performance
-    that informs future iterations of those services.
-
-    What You’ll Bring To The Team Bachelor''s or Master''s in a technical discipline;
-    graduating between Fall 2025 and Summer 2026 Fundamental understanding of data
-    structures and algorithms An understanding of programming principles, with an
-    appetite to learn more A willingness to communicate and collaborate — we want
-    to hear your ideas Ability to be flexible and adaptable in a fast-paced startup
-    environment Desire to learn about new technologies and systems Strong time management
-    and prioritization skills Experience with software design and development Passion
-    for Nextdoor’s mission and purpose Eagerness to explore and apply AI and emerging
-    technologies to reimagine how work gets done Rewards
-
-    Compensation, benefits, perks, and recognition programs at Nextdoor come together
-    to create one overall rewards package. The starting salary for this role is expected
-    to be $140,000 on an annualized basis.
-
-    We also expect to award a meaningful equity grant for this role. With equal quarterly
-    vesting, your first vest date would be within the first 3 months of your start
-    date.
-
-    Perks & Benefits
-
-    We’ve got you covered! We are dedicated to supporting your personal and professional
-    growth with a comprehensive benefits package that includes:
-
-    Access to benefits (including mental health benefits, commuter benefits, wellness
-    benefits, gender affirming care,  etc) Flexible paid time off Dedicated volunteer
-    days Stocked micro-kitchens and lunches at our offices Ability to join any of
-    our Employee Resource Groups (ERGs) Applications for this position will be accepted
-    until October 10, 2025.
-
-    At Nextdoor, we empower our employees to build stronger local communities. To
-    create a platform where all feel welcome, we want our workforce to reflect the
-    diversity of the neighbors we seek to serve. We encourage everyone interested
-    in our purpose to apply. We do not discriminate on the basis of race, gender,
-    religion, sexual orientation, age, or any other trait that unfairly targets a
-    group of people. In accordance with the Fair Chance Ordinance, we always consider
-    qualified applicants with arrest and conviction records.
-
-    '
-- job_id: CRB744000067320269
-  job_title: Control Systems Developer I
-  company_name: CRB
-  status: processed
-  job_description: 'Control Systems Developer I Omaha, NE, USA Full-time Company Description
-    Company Description
-
-    CRB''s over 1,100 expert professionals drive innovative, life-changing and life-saving
-    solutions for manufacturers in the life sciences and food and beverage industries.
-    Our mission, vision, and core values put client satisfaction and employee experience
-    at the center of everything we do.
-
-    As an AEC Firm we proudly specialize in industries that inherently carry important
-    social responsibility - we recognize our impact and influence in the communities
-    we serve and pursue corporate responsibility through the lens of people, community,
-    and planet. From oncology and rare disorders to COVID-19 or alternative proteins,
-    our design and construction projects are pioneering solutions addressing important
-    issues such as food scarcity and global health.
-
-    Job Description ob Description
-
-    Control Systems Developer I
-
-
-    Location: Any U.S. CRB office (Preferred: Kansas City, Omaha, or St. Louis) Travel
-    Requirement: Up to 35% (including occasional overnight stays)
-
-    We’re seeking a Control Systems Developer I to join our growing automation team.
-    This entry-level position is ideal for recent graduates or professionals who are
-    passionate about applying automation and control technologies in complex, fast-paced
-    project environments.
-
-    As a Control Systems Developer I, you’ll be involved in the design, development,
-    and commissioning of industrial automation systems. You’ll work under the guidance
-    of experienced engineers and project managers as part of multidisciplinary project
-    teams serving clients in the life sciences, food & beverage, and other advanced
-    manufacturing sectors.
-
-    What You’ll Do:
-
-    Assist in the programming, implementation, and testing of PC/PLC-based control
-    systems.
-
-    Support configuration and troubleshooting of control hardware, software, and industrial
-    networks.
-
-    Help install and commission systems at client sites, ensuring operational readiness
-    and performance.
-
-    Contribute to the development of system documentation including IO lists, sequence
-    of operations, and wiring diagrams.
-
-    Participate in in-house and on-site training sessions for client operators and
-    maintenance staff.
-
-    Provide occasional after-hours client support as part of project commissioning
-    or support.
-
-    Collaborate with engineers, architects, designers, and clients to deliver integrated
-    project solutions.
-
-    Travel Expectations:
-
-    Travel up to 35% may be required for system installation, testing, and startup
-    at client facilities.
-
-    Some assignments may require working overnight shifts during commissioning phases.
-
-    What You’ll Bring:
-
-    Bachelor’s degree in Electrical Engineering, Computer Engineering, Mechanical
-    Engineering, or a related field.
-
-    0–5 years of experience in industrial automation, controls, or related technical
-    fields (internship/co-op experience counts!).
-
-    Exposure to or interest in PLC/HMI programming is a plus.
-
-    Willingness to learn and grow in a collaborative, project-based environment.
-
-    Strong communication and teamwork skills.
-
-    Qualifications Qualifications
-
-    Associate degree in Computer Studies; Instrumentation and Controls; or equivalent
-    combination of education and experience Ability to multi-task and handle multiple
-    concurrent projects Passionate about problem solving and developing solutions
-    Proficiency in the Microsoft Office software suite required Excellent organizational
-    skills and mechanical inclination. Excellent written and verbal communication
-    skills
-
-
-    Additional Information CRB is committed to hiring and retaining a diverse workforce.
-    We are proud to be an Equal Opportunity/Affirmative Action Employer and it is
-    our policy to provide equal opportunity to all people without regard to race,
-    color, religion, national origin, ancestry, marital status, veteran status, age,
-    disability, pregnancy, genetic information, citizenship status, sex, sexual orientation,
-    gender identity or any other legally protected category. Employment is contingent
-    on background screening.
-
-    CRB does not accept unsolicited resumes from search firms or agencies. Any resume
-    submitted to any employee of CRB without a prior written search agreement will
-    be considered unsolicited and the property of CRB. Please, no phone calls or emails.
-
-    CRB offers a complete and competitive benefit package designed to meet individual
-    and family needs.
-
-    If you are unable to complete this application due to a di
-
-    '
-- job_id: AMZ26535.1
-  job_title: Software Dev Engineer II
-  company_name: Amazon Web Services
-  status: processed
-  job_description: 'Description Employer: Amazon Web Services, Inc. Position: Software
-    Dev Engineer II Location: Arlington, VA
-
-    Multiple Positions Available:
-
-    Design, develop, implement, test, and document embedded or distributed software
-    applications, tools, systems and services. Translate functional requirements into
-    robust, efficient, supportable solutions that work well within the overall system
-    architecture. Participate in the full development cycle, end-to-end, from design,
-    implementation, and testing to documentation, delivery and maintenance. Produce
-    comprehensive, usable software documentation. Evaluate and make decisions around
-    the use of new or existing software products and tools. Mentor junior development
-    engineers.
-
-
-    Basic Qualifications Bachelor''s degree or foreign equivalent degree in Computer
-    Science, Engineering, Mathematics, or a related field and one year of experience
-    in the job offered or a related occupation. Must have one year of experience in
-    the following skill(s): (1) designing and developing large-scale, multi-tiered,
-    multi-threaded, embedded or distributed software applications, tools, systems,
-    and services using: (i.) C#, C++, Java, or Perl; and (ii.) Object Oriented Design.
-
-
-    Preferred Qualifications All applicants must meet all the above listed requirements.
-
-    Amazon is an equal opportunity employer and does not discriminate on the basis
-    of protected veteran status, disability, or other legally protected status.
-
-    Our inclusive culture empowers Amazonians to deliver the best results for our
-    customers. If you have a disability and need a workplace accommodation or adjustment
-    during the application and hiring process, including support for the interview
-    or onboarding process, please visit https://amazon.jobs/content/en/how-we-hire/accommodations
-    for more information. If the country/region you’re applying in isn’t listed, please
-    contact your Recruiting Partner.
-
-    '
-- job_id: nokia24918
-  job_title: AI R&D Engineer Co-op
-  company_name: Nokia
-  status: processed
-  job_description: 'About Us:
-
-    United States (On-site) Position: AI R&D Engineer Co-op Number of Position(s):
-    1 Duration: 4 Months Date: January 12–May 22, 2026 Location:  Onsite
-
-
-    Education Recommendations:
-
-    Currently a candidate for a Master’s or PhD degree in Computer Science or Engineering,
-    Mathematics, or a related field with an accredited school in the US.
-
-    HOW YOU WILL CONTRIBUTE AND WHAT YOU WILL LEARN As part of our team, you will:
-
-    Design, develop, and deploy advanced AI/ML models and algorithms to analyze and
-    interpret complex data. Design and implement machine learning models to improve
-    a wide range of applications, including search, forecasting, text mining, and
-    more. Develop and implement agentic-based systems for a wide range of applications,
-    including anomaly detection, root-cause analysis, and more. Optimize existing
-    machine learning models and pipelines for performance, scalability, and resource
-    efficiency. Qualifications Experience with: Machine learning, optimization algorithms,
-    and deep-learning techniques. Machine learning frameworks (e.g., TensorFlow, PyTorch).
-    Search engines and vector databases, along with their underlying algorithms. Big
-    data frameworks and technologies such as Spark, Kafka, and Cassandra. Excellent
-    communication skills and is a team player. About Us Come create the technology
-    that helps the world act together
-
-    Nokia is committed to innovation and technology leadership across mobile, fixed
-    and cloud networks. Your career here will have a positive impact on people’s lives
-    and will help us build the capabilities needed for a more productive, sustainable,
-    and inclusive world. We challenge ourselves to create an inclusive way of working
-    where we are open to new ideas, empowered to take risks and fearless to bring
-    our authentic selves to work
-
-    What we offer
-
-    Nokia offers continuous learning opportunities, well-being programs to support
-    you mentally and physically, opportunities to join and get supported by employee
-    resource groups, mentoring programs and highly diverse teams with an inclusive
-    culture where people thrive and are empowered.
-
-    Nokia is committed to inclusion and is an equal opportunity employer
-
-    Nokia has received the following recognitions for its commitment to inclusion
-    & equality:
-
-    One of the World’s Most Ethical Companies by Ethisphere Gender-Equality Index
-    by Bloomberg Workplace Pride Global Benchmark At Nokia, we act inclusively and
-    respect the uniqueness of people. Nokia’s employment decisions are made regardless
-    of race, color, national or ethnic origin, religion, gender, sexual orientation,
-    gender identity or expression, age, marital status, disability, protected veteran
-    status or other characteristics protected by law. We are committed to a culture
-    of inclusion built upon our core value of respect. Join us and be part of a company
-    where you will feel included and empowered to succeed.
-
-    Additional Information
-
-    US/Canada Nokia Offers a comprehensive benefits package that includes but is not
-    limited to: Corporate Retirement Savings Plan Health and dental benefits Short-term
-    disability, and long-term disability Life insurance, and AD&D – Company paid 2x
-    base pay Optional or Supplemental life and AD&D insurance (Employee/Spouse/Child)
-    Paid time off for holidays and Vacation Employee Stock Purchase Plan Tuition Assistance
-    Plan Adoption assistance Employee Assistance Program/Work Life Resource Program
-    The above benefits exclude students. Disclaimer for US/Canada
-
-    Nokia Maintains broad annual base salary ranges for its roles in order to account
-    for variations in knowledge, skills, experience and market conditions, and with
-    consideration to internal peer equity.(Check the salary ranges in the job info
-    section for this role)
-
-    All North America job posts will post for a minimum of 7 calendar days and up
-    to 180 days or until candidate/s identified. About the Team As Nokia''s growth
-    engine, we create value for communication service providers and enterprise customers
-    by leading the transition to cloud-native software and as-a-service delivery models.
-    Our inclusive team of dreamers, doers and disruptors push the limits from impossible
-    to possible.
-
-    '
-- job_id: add58865-8b9f-4cf7-9720-2908ba5f4d80
-  job_title: Software Engineer, Infrastructure, Early Career
-  company_name: Notion
-  status: processed
-  job_description: 'About Us:
-
-    Notion helps you build beautiful tools for your life’s work. In today''s world
-    of endless apps and tabs, Notion provides one place for teams to get everything
-    done, seamlessly connecting docs, notes, projects, calendar, and email—with AI
-    built in to find answers and automate work. Millions of users, from individuals
-    to large organizations like Toyota, Figma, and OpenAI, love Notion for its flexibility
-    and choose it because it helps them save time and money.
-
-
-    In-person collaboration is essential to Notion''s culture. We require all team
-    members to work from our offices on Mondays and Thursdays, our designated Anchor
-    Days. Certain teams or positions may require additional in-office workdays.
-
-
-    About the Role:
-
-    As a Software Engineer, Infrastructure (Early Career), you’ll help build and operate
-    the platform that powers Notion for millions of users. You’ll work on services,
-    storage, data, networking, observability, CI/CD, and developer experience to make
-    our systems reliable, scalable, and efficient. You’ll collaborate with senior
-    engineers to design and implement high‑leverage infrastructure that enables product
-    teams to ship quickly and safely.
-
-
-    What You''ll Achieve:
-
-    Ship improvements to core infrastructure that increase reliability, performance,
-    scalability, and cost efficiency.
-
-
-    Contribute to backend systems that meet the needs of over 100 million global users,
-    large enterprise customers, and our rapidly growing business.
-
-
-    Build and maintain observability, alerting, and incident tooling to reduce MTTR
-    and improve on‑call experience.
-
-
-    Develop the skills and confidence to debug live production systems with minimal
-    disruption. You will participate in an on-call rotation, responding to incidents
-    to uphold service reliability and quickly restore normal operations.
-
-
-    Automate operations with tooling and infrastructure‑as‑code to make our systems
-    easy to run and evolve.
-
-
-    Partner with our security teams to implement best practices for hardening, secrets,
-    access, and compliance.
-
-
-    Areas You Might Work On:
-
-    Storage and databases: schema design, migrations, performance tuning, caching.
-
-
-    Compute and orchestration: service frameworks, containerization, CI/CD, rollout
-    safety.
-
-
-    Observability: metrics, tracing, logging, SLOs, dashboards.
-
-
-    Networking and edge: APIs, rate limiting, load balancing, traffic shaping, CDN.
-
-
-    Platform foundations: developer tooling, local dev ergonomics, SDKs, testing infra.
-
-
-    Reliability engineering: capacity planning, failover, disaster recovery, chaos
-    testing.
-
-
-    Skills You''ll Need to Bring:
-
-    BS or MS in Computer Science or related field, or equivalent practical experience.
-
-
-    Proficiency in at least one general‑purpose programming language such as Typescript,
-    Python, Rust, Go, Java, Python, or C++.
-
-
-    Solid CS fundamentals in data structures, algorithms, systems, and networking.
-
-
-    Experience from internships or projects building backend services , infrastructure,
-    or full stack products.
-
-
-    Strong communication skills and a collaborative, product‑minded approach.
-
-
-    Nice to Haves:
-
-    Familiarity with distributed systems, databases, and concurrency.
-
-
-    Familiarity with Linux, cloud platforms (e.g., AWS or GCP), and containers.
-
-
-    Exposure to Infrastructure‑as‑Code (e.g., Terraform), container orchestration,
-    or service meshes.
-
-
-    Hands‑on with observability stacks (e.g., Prometheus, OpenTelemetry, Grafana).
-
-
-    We hire talented and passionate people from a variety of backgrounds because we
-    want our global employee base to represent the wide diversity of our customers.
-    If you’re excited about a role but your past experience doesn’t align perfectly
-    with every bullet point listed in the job description, we still encourage you
-    to apply. If you’re a builder at heart, share our company values, and enthusiastic
-    about making software toolmaking ubiquitous, we want to hear from you.
-
-
-    Notion is proud to be an equal opportunity employer. We do not discriminate in
-    hiring or any employment decision based on race, color, religion, national origin,
-    age, sex (including pregnancy, childbirth, or related medical conditions), marital
-    status, ancestry, physical or mental disability, genetic information, veteran
-    status, gender identity or expression, sexual orientation, or other applicable
-    legally protected characteristic. Notion considers qualified applicants with criminal
-    histories, consistent with applicable federal, state and local law. Notion is
-    also committed to providing reasonable accommodations for qualified individuals
-    with disabilities and disabled veterans in our job application procedures. If
-    you need assistance or an accommodation due to a disability, please let your recruiter
-    know.
-
-
-    Notion is committed to providing highly competitive cash compensation, equity,
-    and benefits. The compensation offered for this role will be based on multiple
-    factors such as location, the role’s scope and complexity, and the candidate’s
-    experience and expertise, and may vary from the range provided below. For roles
-    based in San Francisco or New York City, the estimated base salary range for this
-    role is $126k - $155k per year.
-
-
-
-    By clicking “Submit Application”, I understand and agree that Notion and its affiliates
-    and subsidiaries will collect and process my information in accordance with Notion’s
-    Global Recruiting Privacy Policy.
-
-
-    #LI-Onsite
-
-    '
+    you need assistance or an accommodation due to a disability, fill out the Accommodations
+    request form. '
