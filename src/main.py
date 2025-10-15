@@ -357,8 +357,17 @@ class ResumeOptimizationPipeline:
         resume_path = save_resume(output_dir, tailored_resume, job_title, company_name)
         print(f"Resume saved: {resume_path}")
 
+        # Get name from master resume for PDF metadata
+        first_name = self.master_resume["contact_info"]["first_name"]
+        last_name = self.master_resume["contact_info"]["last_name"]
+
         cover_letter_path = save_cover_letter(
-            output_dir, cover_letter_text, job_title, company_name
+            output_dir,
+            cover_letter_text,
+            job_title,
+            company_name,
+            first_name,
+            last_name,
         )
         print(f"Cover letter saved as PDF: {cover_letter_path}")
 
@@ -400,8 +409,8 @@ class ResumeOptimizationPipeline:
         latex_path = save_latex_resume(output_dir, latex_text, job_title, company_name)
         print(f"✓ LaTeX resume saved: {latex_path}")
 
-        # Step 4d: Compile LaTeX to PDF
-        print(f"\n📄 Step 4d: Compiling LaTeX to PDF...")
+        # Step 4d: Compile LaTeX to PDF (Regular Version)
+        print(f"\n📄 Step 4d: Compiling LaTeX to PDF (Regular Version)...")
         try:
             from utils import compile_latex_to_pdf
 
@@ -414,16 +423,34 @@ class ResumeOptimizationPipeline:
             )
             raise
 
-        # Step 4d-ii: Flatten PDF with Ghostscript
-        print(f"\n📄 Step 4d-ii: Flattening PDF with Ghostscript...")
+        # Step 4d-ii: Generate Referral Version
+        print(f"\n📄 Step 4d-ii: Generating Referral Resume Version...")
         try:
-            from utils import flatten_pdf_with_ghostscript
+            from utils import create_referral_latex
 
-            resume_pdf_path = flatten_pdf_with_ghostscript(resume_pdf_path)
-            print(f"✓ Resume PDF flattened: {resume_pdf_path}")
+            # Referral contact information
+            referral_email = "srmanda.compsci@gmail.com"
+            referral_phone = "+1 919-526-0631"
+
+            # Create referral LaTeX
+            referral_latex = create_referral_latex(
+                latex_text, referral_email, referral_phone
+            )
+
+            # Save referral LaTeX
+            referral_latex_filename = f"{company_name}_{job_title}_Referral_Resume.tex"
+            referral_latex_path = os.path.join(output_dir, referral_latex_filename)
+            with open(referral_latex_path, "w", encoding="utf-8") as f:
+                f.write(referral_latex)
+            print(f"✓ Referral LaTeX saved: {referral_latex_path}")
+
+            # Compile referral LaTeX to PDF
+            referral_pdf_path = compile_latex_to_pdf(referral_latex_path, output_dir)
+            print(f"✓ Referral Resume PDF generated: {referral_pdf_path}")
+
         except Exception as e:
-            print(f"\n❌ PDF flattening failed: {e}")
-            raise
+            print(f"\n❌ Referral resume generation failed: {e}")
+            print("Continuing with regular resume only...")
 
         # Step 4e: Organize files and rename with proper convention
         print(f"\n📁 Step 4e: Organizing output files...")

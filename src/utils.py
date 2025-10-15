@@ -121,7 +121,12 @@ def save_resume(
 
 
 def save_cover_letter(
-    output_dir: str, cover_letter_text: str, job_title: str, company_name: str
+    output_dir: str,
+    cover_letter_text: str,
+    job_title: str,
+    company_name: str,
+    first_name: str,
+    last_name: str,
 ) -> str:
     """Save the cover letter to the output directory as both TXT and PDF."""
     # Save as TXT
@@ -142,7 +147,8 @@ def save_cover_letter(
     from reportlab.lib.enums import TA_LEFT
     from html import escape
 
-    # Create PDF
+    # Create PDF with proper metadata
+    full_name = f"{first_name} {last_name}"
     doc = SimpleDocTemplate(
         pdf_filepath,
         pagesize=letter,
@@ -150,6 +156,9 @@ def save_cover_letter(
         leftMargin=0.75 * inch,
         topMargin=0.75 * inch,
         bottomMargin=0.75 * inch,
+        title=f"{full_name} Cover Letter",
+        author=full_name,
+        subject="Cover Letter",
     )
 
     # Container for the 'Flowable' objects
@@ -306,73 +315,35 @@ def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
     return pdf_path
 
 
-def flatten_pdf_with_ghostscript(pdf_path: str) -> str:
+def create_referral_latex(
+    latex_text: str, referral_email: str, referral_phone: str
+) -> str:
     """
-    Flatten PDF using Ghostscript to ensure compatibility.
-    Returns the path to the flattened PDF.
+    Create a referral version of the LaTeX resume by replacing contact information.
+
+    Args:
+        latex_text: Original LaTeX content
+        referral_email: Email address for referral version
+        referral_phone: Phone number for referral version
+
+    Returns:
+        Modified LaTeX with referral contact information
     """
-    import subprocess
+    import re
 
-    # Use gswin64c for Windows (assume Ghostscript is installed)
-    gs_command = "gswin64c"
+    # Create a copy of the LaTeX text
+    referral_latex = latex_text
 
-    # Create output path for flattened PDF
-    pdf_dir = os.path.dirname(pdf_path)
-    pdf_basename = os.path.basename(pdf_path)
-    pdf_name_no_ext = os.path.splitext(pdf_basename)[0]
+    # Replace phone number - matches the actual phone format in \address{+1 919-672-2226 \\ Raleigh, NC}
+    phone_pattern = r"\+1 919-672-2226"
+    referral_latex = re.sub(phone_pattern, referral_phone, referral_latex)
 
-    flattened_pdf_path = os.path.join(pdf_dir, f"{pdf_name_no_ext}_clean.pdf")
+    # Replace email - matches srmanda.cs@gmail.com in both mailto: and display text
+    # This will replace both occurrences in: \href{mailto:srmanda.cs@gmail.com}{srmanda.cs@gmail.com}
+    email_pattern = r"srmanda\.cs@gmail\.com"
+    referral_latex = re.sub(email_pattern, referral_email, referral_latex)
 
-    print(f"  Flattening PDF with Ghostscript...")
-
-    try:
-        result = subprocess.run(
-            [
-                gs_command,
-                "-sDEVICE=pdfwrite",
-                "-dCompatibilityLevel=1.4",
-                "-dPDFSETTINGS=/printer",
-                "-dNOPAUSE",
-                "-dQUIET",
-                "-dBATCH",
-                "-dSAFER",
-                "-dNOOUTERSAVE",
-                "-dNoOutputFonts",
-                "-dPrinted=false",
-                "-dEmbedAllFonts=true",
-                "-dSubsetFonts=true",
-                "-dCompressFonts=true",
-                "-dNOPLATFONTS",
-                "-dMaxSubsetPct=100",
-                "-dPDFX",
-                f"-sOutputFile={flattened_pdf_path}",
-                pdf_path,
-            ],
-            capture_output=True,
-            text=True,
-            timeout=60,
-        )
-
-        if result.returncode != 0:
-            error_msg = f"Ghostscript flattening failed.\nError: {result.stderr}"
-            raise RuntimeError(error_msg)
-
-    except subprocess.TimeoutExpired:
-        raise RuntimeError("Ghostscript flattening timed out after 60 seconds.")
-
-    # Verify the flattened PDF was created
-    if not os.path.exists(flattened_pdf_path):
-        raise RuntimeError(
-            f"Flattened PDF was not generated. Expected at: {flattened_pdf_path}"
-        )
-
-    # Replace the original PDF with the flattened version
-    os.remove(pdf_path)
-    os.rename(flattened_pdf_path, pdf_path)
-
-    print(f"  ✓ PDF flattened successfully")
-
-    return pdf_path
+    return referral_latex
 
 
 def organize_output_files(
@@ -415,7 +386,15 @@ def organize_output_files(
 
         # Rename PDFs with proper naming convention
         elif filename.endswith(".pdf"):
-            if "Resume" in filename:
+            if "Referral" in filename and "Resume" in filename:
+                # Handle referral resume PDF
+                new_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+                new_path = os.path.join(output_dir, new_name)
+                shutil.move(filepath, new_path)
+                print(f"  Renamed referral resume PDF to: {new_name}")
+
+            elif "Resume" in filename:
+                # Handle regular resume PDF
                 new_name = (
                     f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
                 )

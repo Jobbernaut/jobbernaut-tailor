@@ -1,3 +1,104 @@
+- job_id: ncra_R1150457
+  job_title: Site Reliability Engineer I
+  company_name: NCR Atleos
+  status: processed
+  job_description: ' About NCR Atleos
+
+    NCR Atleos, headquartered in Atlanta, is a leader in expanding financial access.
+    Our dedicated 20,000 employees optimize the branch, improve operational efficiency
+    and maximize self-service availability for financial institutions and retailers
+    across the globe. NCR Atleos was ranked #12 in Newsweek’s prestigious 2025 Top
+    100 Global Most Loved Workplaces® list.
+
+    Title: Site Reliability Engineer I Location: Atlanta, GA (May consider Frisco,
+    TX)
+
+    Eligibility: Please note that this position is not eligible for Visa sponsorship
+    now or in the future. This restriction applies to all candidates for this position.
+
+    Job Description We are seeking a Site Reliability Engineer (SRE) to join our team,
+    with an initial focus on supporting production operations (AppOps). This is a
+    great opportunity for recent graduates or early-career professionals who are eager
+    to grow in a fast-paced Cloud/SaaS environment.
+
+    As part of the SRE team, you’ll work alongside experienced engineers to help maintain
+    and improve the reliability, scalability, and performance of our cloud-based services.
+    You’ll gain hands-on experience with automation, monitoring, and incident response,
+    while learning best practices in modern infrastructure and DevOps.
+
+    Key Responsibilities: Assist in supporting and scaling production services and
+    servers that power cloud-based applications, under the guidance of senior engineers.
+    Collaborate across development, quality, security, and operations teams to support
+    reliable service delivery. Help monitor and analyze SaaS services to improve scalability,
+    reliability, and performance. Contribute to automation tasks for provisioning
+    and managing infrastructure, with opportunities to learn scripting and infrastructure-as-code
+    tools. Develop foundational skills in software engineering practices focused on
+    reliability and scalability. Participate in continuous improvement initiatives
+    for software delivery processes within cross-functional teams. Support configuration,
+    monitoring, and management of systems used by product development teams. Learn
+    and assist in disaster recovery planning and execution. Help with patching and
+    maintenance of Windows and Linux servers in private data centers and cloud environments
+    (e.g., Azure). Collaborate with DevOps teams to promote code using CI/CD pipelines
+    and integrate application security tooling. Work with senior engineers to define
+    and implement Service Level Indicators (SLIs), Objectives (SLOs), and Agreements
+    (SLAs). Assist in implementing monitoring alerts, building dashboards, and understanding
+    escalation paths. Participate in incident response activities, including Post-Incident
+    Reviews (PIRs) and Root Cause Analyses (RCAs), with mentorship. Join on-call rotations
+    with support and supervision, assisting during off-hours as needed. Preferred
+    Qualifications: Bachelor’s or Master’s degree in Computer Science, Software Engineering,
+    Information Technology, or a related technical field. Basic understanding of cloud
+    platforms such as Azure, AWS, or GCP, with a strong interest in learning more.
+    Exposure to programming or scripting languages like Python, Bash, PowerShell,
+    JavaScript, or Java. Familiarity with CI/CD tools such as Azure DevOps, GitHub
+    Actions, or Jenkins. Introductory knowledge of container technologies like Docker
+    and Kubernetes. Comfortable working with Linux and Windows systems; basic shell
+    scripting experience is a plus. Understanding of networking fundamentals, TLS/SSL,
+    firewalls, and load balancers. Exposure to monitoring and logging tools such as
+    Prometheus, ELK stack, or Azure Monitor. Awareness of infrastructure automation
+    tools like Terraform, Ansible, or Helm. Strong analytical and troubleshooting
+    skills with a willingness to learn root cause analysis. Ability to work collaboratively
+    in cross-functional teams and communicate technical ideas clearly. Eagerness to
+    learn new technologies and grow into a reliable engineer in cloud and SaaS operations.
+    Any hands-on experience with distributed systems (e.g., Kafka, Elasticsearch,
+    Cassandra) is a plus. Cloud certifications (e.g., Azure Fundamentals, AWS Cloud
+    Practitioner) are a bonus but not required. #LI-AD1
+
+    #LI-HYBRID
+
+    Offers of employment are conditional upon passage of screening criteria applicable
+    to the job.
+
+    Full time employee benefits include:
+
+    Medical Insurance
+
+    Dental Insurance
+
+    Life Insurance
+
+    Vision Insurance
+
+    Short/Long Term Disability
+
+    Paid Vacation
+
+    401k
+
+    EEO Statement NCR Atleos is an equal-opportunity employer. It is NCR Atleos policy
+    to hire, train, promote, and pay associates based on their job-related qualifications,
+    ability, and performance, without regard to race, color, creed, religion, national
+    origin, citizenship status, sex, sexual orientation, gender identity/expression,
+    pregnancy, marital status, age, mental or physical disability, genetic information,
+    medical condition, military or veteran status, or any other factor protected by
+    law.
+
+
+    Statement to Third Party Agencies
+
+    To ALL recruitment agencies: NCR Atleos only accepts resumes from agencies on
+    the NCR Atleos preferred supplier list. Please do not forward resumes to our applicant
+    tracking system, NCR Atleos employees, or any NCR Atleos facility. NCR Atleos
+    is not responsible for any fees or charges associated with unsolicited resumes. '
 - job_id: esri_4728895007
   job_title: Java Software Engineer I
   company_name: esri
