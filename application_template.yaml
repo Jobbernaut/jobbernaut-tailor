@@ -1,6 +1,7 @@
 # - job_id: <insert_job_id>
 #   job_title: <insert_job_title>
 #   company_name: <insert_company_name>
+#   location: <insert_location_or_country>
 #   status: pending
 #   posting_link: <insert_posting_link>
 #   job_description: "

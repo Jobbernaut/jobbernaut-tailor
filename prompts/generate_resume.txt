@@ -67,8 +67,8 @@ This is the most critical step. You will rewrite the content for the selected ex
 
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, transform the raw, narrative `bullet_points` into professional, impact-focused statements.
-    -   **WORK EXPERIENCE:** Select and rewrite the 3 MOST IMPACTFUL bullet points per position. Do not include more than 3 bullets per work experience entry. Per bullet cannot exceed two lines at any cost (40 words max). Each bullet has to fit fully in two lines.
-    -   **PROJECTS:** For each of the 2 selected projects, combine the description and bullet_points into a flowing narrative paragraph (not individual bullets). Keep it concise but informative. Cannot exceed four to five lines (80 words max) at any cost. It all has to fit fully in four to five lines.
+    -   **WORK EXPERIENCE:** Select and rewrite the 3 MOST IMPACTFUL bullet points per position. Do not include more than 3 bullets per work experience entry. Per bullet cannot exceed two lines at any cost (35 words max). Each bullet has to fit fully in two lines at any cost.
+    -   **PROJECTS:** For each of the 2 selected projects, combine the description and bullet_points into a flowing narrative paragraph (not individual bullets). Keep it concise but informative. Cannot exceed four to five lines (70 words max) at any cost. It all has to fit fully in four to five lines.
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     -   **MANDATORY:** Start every bullet point with a strong action verb (e.g., Architected, Engineered, Reduced, Accelerated, Spearheaded).
     -   **MANDATORY:** Quantify the **Result** with specific metrics (%, $, time, volume) whenever possible, drawing from the narrative context. If a number isn't present, describe the tangible impact.
@@ -78,8 +78,9 @@ This is the most critical step. You will rewrite the content for the selected ex
 
 -   **Skills Section:**
     -   Generate a new, tailored `skills` object.
-    -   From the master `skills` object, select ONLY the skills and technologies that are directly mentioned in or highly relevant to the [JOB_DESCRIPTION].
+    -   From the master `skills` object, select ONLY the skills and technologies that are directly mentioned in or highly relevant to the [JOB_DESCRIPTION] and can be reasonably aligned (little bit marketing style resume stretch is fine for example React in resume but Angular in JD), but outright fabrications of categories and entirely new skills are completely UNACCEPTABLE.
     -   Maintain the same categorization (`programming_languages`, `frameworks_and_libraries`, etc.).
+    -   **Critical Directive**: You cannot include more than 7 skills per category. If its really needed, create a new category for skills that NEED to be added, but no more than 7 skills per category.
 
 ### OUTPUT FORMAT: STRICT JSON
 -   Your final output MUST be a single, valid JSON object.

@@ -40,7 +40,16 @@
       "type": "Logistical",
       "point_text": "I am authorized for full-time employment in the U.S. without requiring any sponsorship now or in the foreseeable future. My availability begins with full-time CPT in January 2026, transitioning seamlessly into my 3-year F-1 OPT/STEM work authorization in June 2026, which extends through June 2029.",
       "keywords": [],
-      "default": true
+      "default": true,
+      "location_type": "US"
+    },
+    {
+      "id": "international_availability_detailed",
+      "type": "Logistical",
+      "point_text": "I am available to start full-time from June 2026 upon completion of my Master's degree in Computer Science from UNC Chapel Hill.",
+      "keywords": [],
+      "default": true,
+      "location_type": "International"
     }
   ]
 }

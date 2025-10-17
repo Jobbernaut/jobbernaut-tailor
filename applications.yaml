@@ -1,305 +1,254 @@
-- job_id: SAS40406
-  job_title: Software Developer (Emerging Career)
-  company_name: SAS
+- job_id: OPJOPEUS49046
+  job_title: Associate Software Engineer
+  company_name: OpenText
+  location: India
   status: processed
-  posting_link: https://careers-sas.icims.com/jobs/40406/software-developer-(emerging-career)-java---spring-boot/job?hub=9&mobile=false&width=1200&height=500&bga=true&needsRedirect=false&jan1offset=-300&jun1offset=-240
-  job_description: ' Software Developer - (Emerging Career) Hybrid, Cary, North Carolina
+  posting_link: https://careers.opentext.com/us/en/job/OPJOPEUS49046EXTERNALENUS/Associate-Software-Engineer
+  job_description: ' Description OPENTEXT - THE INFORMATION COMPANY
+
+    OpenText is a global leader in information management, where innovation, creativity,
+    and collaboration are the key components of our corporate culture. As a member
+    of our team, you will have the opportunity to partner with the most highly regarded
+    companies in the world, tackle complex issues, and contribute to projects that
+    shape the future of digital transformation.
 
 
 
-    We’re a leader in data and AI. Through our software and services, we inspire customers
-    around the world to transform data into intelligence - and questions into answers.
+    AI-First. Future-Driven. Human-Centered.
+
+    At OpenText, AI is at the heart of everything we do—powering innovation, transforming
+    work, and empowering digital knowledge workers. We''re hiring talent that AI can''t
+    replace to help us shape the future of information management. Join us.
 
 
 
-    If you''re looking for a dynamic, fulfilling career with flexibility and a world-class
-    employee experience, you''ll find it here. We''re recognized around the world
-    for our inclusive, meaningful culture and innovative technologies by organizations
-    like Fast Company, Forbes, Newsweek and more.
+
+    YOUR IMPACT :
+
+    We are looking for a passionate and driven Associate Software Engineer to join
+    our dynamic Digital Solutions team. In this role, you will be involved in designing,
+    developing, and deploying scalable full-stack applications using modern technologies
+    and frameworks. You will collaborate closely with senior engineers, architects,
+    and product managers to build solutions that make a meaningful impact.
+
+    This is a fantastic opportunity for early-career professionals who are eager to
+    grow, learn, and contribute to complex and impactful software development projects
+    in a fast-paced, collaborative environment.
 
 
+    WHAT THE ROLE OFFERS :
 
-    About the job
+    Deliver high-quality, production-ready code under the guidance of senior team
+    members. Participate in design, development, testing, and deployment of software
+    applications. Execute assigned tasks effectively and contribute to solving real
+    customer problems. Work closely with team members to understand business requirements
+    and customer pain points. Translate design ideas and business logic into clean,
+    maintainable, and well-documented code. Adhere to coding standards, participate
+    in code reviews, and follow software engineering best practices. Engage in Agile
+    ceremonies and contribute to iterative development cycles. Take ownership of assigned
+    work, follow through on commitments, and meet delivery timelines. Continuously
+    learn and stay up to date with new technologies, frameworks, and industry trends.
 
-    As a Software Developer in the SAS Platform Services Division R&D organization,
-    you will join a team of talented engineers working collaboratively to ideate and
-    deliver leading edge, innovative products and solutions that enable SAS customers
-    to deploy analytics with business rules in new ways. You will contribute to projects
-    spanning a diverse set of technologies and industries.
+    WHAT YOU NEED TO SUCCEED :
 
-
-
-    Are you passionate about software development and are looking for a position that
-    will allow you to contribute on all levels of the software development stack?
-    We are looking for developers who want to get involved with the next generation
-    of SAS platform mid-tier services which act as the building blocks for the SAS
-    Viya Solutions suites. In this role, you will have the opportunity to contribute
-    new feature development along updates to strengthen our security policy and improve
-    the performance of our platform. You will also have the opportunity to grow your
-    technical skills with contributions to Java based microservices along with learning
-    and/or deepening your knowledge of containerization and Azure cloud technologies.
-    In this position you will not be limited because at SAS, your curiosity matters
-    – whether you’re developing algorithms, creating customer experiences, or answering
-    critical questions. Curiosity is our code, and the opportunities here are endless
-
-
-
-    As a Software Developer (Emerging Career), you will:
-
-    Be encouraged to participate in open-source projects on behalf of SAS. Design
-    and develop high quality, testable and scalable software solutions in the connectivity
-    space, within established timelines while adhering to R&D best practices and processes.
-    Actively involve other project stakeholders (e.g. managers, developers, user interface
-    and visual designers, product managers) to ensure implementation satisfies functional
-    requirements and is consistent with established R&D standards. Participate in
-    project scoping and scheduling; tracks progress of individual tasks and alerts
-    stakeholders of issues blocking or preventing completion of task. Ensure quality
-    through functional, unit and performance testing Work closely with testing by
-    providing thorough reviews of the test plan and communicate when updates to the
-    plan should be made to cover code changes related to enhancements, redesigns and/or
-    bug fixes. Maintain accountability for the entire life cycle of the code including
-    support for both internal and external consumers. Embrace curiosity, passion,
-    authenticity and accountability. These are our values and influence everything
-    we do. Required qualifications
-
-
-
-    Bachelor’s degree in Computer Science or a related quantitative field 2-5 years
-    of demonstratable Java programming experience as a software developer Experience
-    with CI/CD tools such as Git/Gerrit/Jenkins, Github, Gitlab, or similar Experience
-    with Linux Experience with Agile SDLC practices Excellent interpersonal communication
-    skills Equivalent combination of related education, training and experience may
-    be considered in place of the above qualifications.
-
-
-    Additional competencies, knowledge and skills
-
-    Adaptability: Maintaining effectiveness when experiencing major changes in work
-    responsibilities or environment (e.g., people, processes, structure, or culture);
-    adjusting effectively to change by exploring the benefits, trying new approaches,
-    and collaborating with others to make the change successful. Collaborating: Working
-    cooperatively with others to help a team or work group achieve its goals. Communication:
-    Conveying information and ideas clearly and concisely to individuals or groups
-    in an engaging manner that helps them understand and retain the message; listening
-    actively to others. Experience with Spring Boot
-
-    Experience with REST APIs design and implementation
-
-    Experience building and orchestrating containers using technologies such as Docker
-    and Kubernetes
-
-    Experience with cloud architecture and at least one major public cloud provider
-
-    Experience using IDE’s such as IntelliJ or VSCode
-
-    Experience with collaboration tools such as Jira and Confluence
-
-    Exceptional aptitude for problem solving and debugging of complex multitiered
-    software applications
-
-    World-class benefits
-
-    Highlights include...
-
-    Comprehensive medical, prescription, dental and vision plans. Medical plan options
-    include: PPO with low annual deductible and copays. HDHP combined with a health
-    savings account with a contribution from SAS (no access to on-site health care
-    center). Onsite Health Care Center (HQ) that’s free to employees and family members
-    enrolled in the PPO plan. There''s a pharmacy too! Not local to HQ? The pharmacy
-    will ship prescriptions for no additional charge! An industry-leading 401k plan.
-    Tuition Assistance Program and programs and resources to support your development
-    Generous time away including vacation time, a variety of paid holidays, and our
-    much-loved U.S. Winter Wellness Break between December 25 and January 1. Volunteer
-    Time Off, parental leave and unlimited paid sick days. Generous childcare benefits
-    for all full-time employees. You are welcome here.
-
-    At SAS, it’s not about fitting into our culture – it’s about adding to it. We
-    believe our people make the difference. Our inclusive workforce brings together
-    unique talents and inspires teams to create amazing software that reflects the
-    diversity of our users and customers.
-
-
-
-    Additional Information:
-
-    To qualify, applicants must be legally authorized to work in the United States,
-    and should not require, now or in the future, sponsorship for employment visa
-    status. SAS is an equal opportunity employer. All qualified applicants are considered
-    for employment without regard to any characteristic protected by law. Read more:
-    Know Your Rights.
-
-
-
-    Resumes may be considered in the order they are received. SAS employees performing
-    certain job functions may require access to technology or software subject to
-    export or import regulations. To comply with these regulations, SAS may obtain
-    nationality or citizenship information from applicants for employment. SAS collects
-    this information solely for trade law compliance purposes and does not use it
-    to discriminate unfairly in the hiring process.
-
-
-
-    SAS only sends emails from verified “sas.com” email addresses and never asks for
-    sensitive, personal information or money. If you have any doubts about the authenticity
-    of any type of communication from, or on behalf of SAS, please contact Recruitingsupport@sas.com.
-
-
-
-    Let''s stay in touch! Join our Talent Community to stay up to date on company
-    news, job updates and more. '
-- job_id: SPEC87255637744
-  job_title: Software Engineer I
-  company_name: Spectrum
-  status: pending
-  posting_link: https://jobs.spectrum.com/job/-/-/4673/87255637744?utm_source=linkedIn&utm_medium=job-listings&utm_campaign=brand&utm_term=RD-TA
-  job_description: ' This role requires the ability to work lawfully in the U.S. without
-    employment-based immigration sponsorship, now or in the future.
-
-    This position is not eligible for immigration sponsorship.
-
-    Are you ready to collaborate with technical teams to create software solutions
-    that leverage prevailing technologies and enhance the Spectrum customer experience?
-    As a Software Engineer I on the Enterprise Data Services team, you’ll play a key
-    role in developing and supporting applications that power platforms. This position
-    is ideal for someone looking to grow their skills in Java, Spring Boot, and PL/SQL
-    development while gaining exposure to advanced technologies such as Elasticsearch,
-    Kubernetes, Cloud, Redis, and microservices. You will learn from experienced engineers
-    in a collaborative, hands-on environment.
-
-
-    How You’ll Make an Impact
-
-    Understand and code basic features, functions and definitions Write clean, maintainable,
-    and efficient code following established coding standards under the supervision
-    of senior developers Implement pre-designed solutions per team lead instructions,
-    best practices and approved code patterns Implement basic functionality from a
-    provided design with team guidance Understand technical requirements and technical
-    design documents Utilize code branching strategies and change control methodologies
-    Code as per the Spectrum standards and guidelines; assist in fixes to defects
-    raised Complete assigned tasks within a given timeframe Test and validate code;
-    submit code for code review and apply feedback Provide LOE on a capability level
-    Collaborate with other teams, within a feature team, and/or a focus group Adhere
-    to Spectrum’s legal, regulatory, process, and security requirements
-
-    What You’ll Bring to Spectrum
+    1–3 years of hands-on experience in Java / Java EE and backend development. Proficiency
+    with front-end technologies: HTML, CSS, JavaScript, and frameworks like Angular
+    (12+) or Ext JS. Solid understanding of RESTful API design and development. Experience
+    with frameworks such as Spring, Spring Boot, Hibernate, iBATIS, and JPA. Familiarity
+    with application servers (e.g., Tomcat, WebLogic Server). Hands-on experience
+    using IDEs like Eclipse, IntelliJ, or JBuilder. Version control expertise with
+    tools such as Git or Mercurial. Working knowledge of Red Hat Linux, Shell scripting,
+    and build/integration tools like Maven. Exposure to Ansible, Docker containers,
+    and CI/CD concepts is a plus. Understanding of design patterns, database modeling,
+    and service-oriented architectures. Awareness of Agile methodologies (Scrum) and
+    ability to thrive in a collaborative, cross-functional team setup.
 
 
     Required Qualifications
 
 
-    Education
-
-    BA/BS in Information Technology, Computer Science, or equivalent combination of
-    education and experience Experience
-
-    1+ years of coding, testing and designing software experience 1+ years of software
-    development methodologies experience 1+ years of database management systems experience
-    Preferred Qualifications:
-
-    Bachelor’s degree in Computer Science, IT, or related field (recent graduates
-    encouraged to apply) Exposure to Java/JEE, Spring Boot, Kubernetes, and Docker
-    Familiarity with RESTful web services, microservices, and database concepts (SQL/PLSQL,
-    Oracle) Experience with tools such as Swagger, Postman, GitLab, and exposure to
-    monitoring tools like Splunk or AppDynamics Skills
-
-    Experience with Java/JEE development and exposure to Spring Boot frameworks Familiarity
-    with Python or Unix scripting Understanding of SQL / PL-SQL and relational database
-    concepts (Oracle preferred) Exposure to RESTful APIs, GitLab, and Postman Ability
-    to read, write, speak and understand English Basic knowledge of coding principles
-    Knowledge of coding language and syntax, usage of functions and object-oriented
-    patterns Understanding of applicable technical systems and programming in a general
-    sense Ability to follow standard practices and procedures in analyzing situations
-    or data from which answers can be readily obtained and work on problems of limited
-    scope Working Conditions
-
-    Office environment
+    BE/BS/BTech or ME/MS/MTech in Computer Science, Computer Engineering, or a closely
+    related technical field. Strong analytical and problem-solving skills with a proactive
+    mindset. Excellent communication skills—both verbal and written. Ability to work
+    independently as well as in a fast-paced team-oriented environment. Eagerness
+    to learn, take feedback constructively, and grow within the organization.
 
 
 
-    Here, our employees don’t just have jobs, they''re building careers. That’s why
-    we offer a comprehensive pay and benefits package that rewards employees for their
-    contributions to our success, supporting all aspects of their well-being at every
-    stage of life.
 
 
-    A qualified applicant’s criminal history, if any, will be considered in a manner
-    consistent with applicable laws, including local ordinances.
+
+    OpenText''s efforts to build an inclusive work environment go beyond simply complying
+    with applicable laws. Our Employment Equity and Diversity Policy provides direction
+    on maintaining a working environment that is inclusive of everyone, regardless
+    of culture, national origin, race, color, gender, gender identification, sexual
+    orientation, family status, age, veteran status, disability, religion, or other
+    basis protected by applicable laws.
+
+    If you need assistance and/or a reasonable accommodation due to a disability during
+    the application or recruiting process, please contact us at hr@opentext.com. Our
+    proactive approach fosters collaboration, innovation, and personal growth, enriching
+    OpenText''s vibrant workplace. '
+- job_id: JR263074
+  job_title: Software Engineering AMTS
+  company_name: Salesforce
+  location: India
+  status: processed
+  posting_link: https://salesforce.wd12.myworkdayjobs.com/External_Career_Site/job/India---Hyderabad/Software-Engineering-AMTS_JR263074
+  job_description: '
+
+    About Futureforce University Recruiting
+
+    Our Futureforce University Recruiting program is dedicated to attracting, retaining
+    and cultivating talent. Our interns and new graduates work on real projects that
+    affect how our business runs, giving them the opportunity to make a tangible impact
+    on the future of our company. With offices all over the world, our recruits have
+    the chance to collaborate and connect with fellow employees on a global scale.
+    We offer job shadowing, mentorship programs, talent development courses, and much
+    more.
+
+    Job Category
+
+    Software Engineering Job Details
+
+    About Salesforce
+
+    Salesforce is the #1 AI CRM, where humans with agents drive customer success together.
+    Here, ambition meets action. Tech meets trust. And innovation isn’t a buzzword
+    — it’s a way of life. The world of work as we know it is changing and we''re looking
+    for Trailblazers who are passionate about bettering business and the world through
+    AI, driving innovation, and keeping Salesforce''s core values at the heart of
+    it all.
+
+    Ready to level-up your career at the company leading workforce transformation
+    in the agentic era? You’re in the right place! Agentforce is the future of AI,
+    and you are the future of Salesforce.
+
+    Job Description
+
+    About Salesforce
+
+    We’re Salesforce, the Customer Company, inspiring the future of business with
+    AI+ Data +CRM. Leading with our core values, we help companies across every industry
+    blaze new trails and connect with customers in a whole new way. And, we empower
+    you to be a Trailblazer, too — driving your performance and career growth, charting
+    new paths, and improving the state of the world. If you believe in business as
+    the greatest platform for change and in companies doing well and doing good –
+    you’ve come to the right place.
+
+    Want your line of code to have a significant and measurable positive impact on
+    users, the company’s bottom line, and industry? Join Salesforce and define the
+    future of cloud computing. We deliver a scalable, high performance cloud computing
+    platform that delights our customers, and is used by millions of people around
+    the world each day for their business. You will be working with a group of world-class
+    engineers to build breakthrough features that our customers will love, adopt and
+    use while keeping our trusted platform stable and scalable. The software engineer
+    role at Salesforce encompasses architecture, design, implementation, and testing
+    to ensure we build products right and release them with high quality.
 
 
-    Get to Know Us Charter Communications is known by our Spectrum products and services,
-    including: Spectrum Internet®, TV, Mobile and Voice, Spectrum Networks, Spectrum
-    Business and Spectrum Reach. When you join our team, you’ll be keeping our customers
-    connected to what matters most in 41 states across the U.S. Watch this video to
-    learn more.
+    From Marketing Cloud to Service Cloud, Platform to IoT, Einstein Platform, Security
+    and everything in between we have many opportunities available across various
+    applications and platforms. Apply now and we look forward to reaching out to you
+    with opportunities that fit your background and interests!
 
-    Grow Your Career Here We’re committed to growing a workforce that reflects the
-    customers and communities we serve – providing opportunities for employment and
-    advancement to all team members. Spectrum is an Equal Opportunity Employer, including
-    job seekers with disabilities and veterans. Learn about Life at Spectrum. '
-- job_id: META602185522792581
-  job_title: Software Engineer, Product
-  company_name: Meta
-  status: pending
-  posting_link: https://www.metacareers.com/jobs/602185522792581
-  job_description: ' Meta Platforms, Inc. (Meta), formerly known as Facebook Inc.,
-    builds technologies that help people connect, find communities, and grow businesses.
-    When Facebook launched in 2004, it changed the way people connect. Apps and services
-    like Messenger, Instagram, and WhatsApp further empowered billions around the
-    world. Now, Meta is moving beyond 2D screens toward immersive experiences like
-    augmented and virtual reality to help build the next evolution in social technology.
-    To apply, click “Apply to Job” online on this web page. Software Engineer, Product
-    Responsibilities Develop full stack web/mobile application development with a
-    variety of coding languages. Create consumer products and features using internal
-    programming language Hack. Work closely with our PM and design teams to define
-    feature specifications and build products leveraging frameworks such as React
-    & React Native. Work closely with operations and infrastructure to build and scale
-    back-end services. Build report interfaces and data feeds. Establish self as an
-    owner of a particular component, feature or system with expert end-to-end understanding.
-    Successfully complete projects at large scope while maintaining a consistent high
-    level of productivity. Minimum Qualifications Requires a Bachelor''s degree in
-    Computer Science, Computer Engineering or a related field and 6 months of experience
-    in the job offered or in a computer-related occupation. Experience must include
-    6 months of experience in the following: 1. Coding in at least one of the following
-    industry-standard languages: C, C++, Java, or C# 2. Experience in software development
-    tools: Code editors (VIM or Emacs), and version control systems (Subversion, GIT,
-    or Perforce) 3. Experience in Linux, Unix OS as evidenced by file manipulation,
-    advanced commands, and shell scripting 4. Experience with scripting languages
-    such as Python, Javascript or Hack 5. Experience building large-scale applications
-    or similar experience 6. Experience as an owner of a particular component, feature
-    or system 7. Experience completing projects at large scope 8. Experience building
-    and shipping high quality work and achieving high reliability 9. Track record
-    of setting technical direction for a team, driving consensus and successful cross-functional
-    partnerships 10. Experience improving quality through thoughtful code reviews,
-    appropriate testing, proper rollout, monitoring, and proactive changes 11. Experience
-    with relational databases and SQL 12. Experience implementing web interfaces using
-    at least one of the following: JavaScript, HTML, or CSS 13. Distributed systems.
-    For those who live in or expect to work from California if hired for this position,
-    please click here for additional information. About Meta Meta builds technologies
-    that help people connect, find communities, and grow businesses. When Facebook
-    launched in 2004, it changed the way people connect. Apps like Messenger, Instagram
-    and WhatsApp further empowered billions around the world. Now, Meta is moving
-    beyond 2D screens toward immersive experiences like augmented and virtual reality
-    to help build the next evolution in social technology. People who choose to build
-    their careers by building with us at Meta help shape a future that will take us
-    beyond what digital connection makes possible today—beyond the constraints of
-    screens, the limits of distance, and even the rules of physics.
 
-    $217,260/year to $240,240/year + bonus + equity + benefits
+    Key Responsibilities:
 
-    Individual compensation is determined by skills, qualifications, experience, and
-    location. Compensation details listed in this posting reflect the base hourly
-    rate, monthly rate, or annual salary only, and do not include bonus, equity or
-    sales incentives, if applicable. In addition to base compensation, Meta offers
-    benefits. Learn more about benefits at Meta.
+    Architect, design, implement, test and deliver highly scalable products
 
-    Equal Employment Opportunity Meta is proud to be an Equal Employment Opportunity
-    employer. We do not discriminate based upon race, religion, color, national origin,
-    sex (including pregnancy, childbirth, reproductive health decisions, or related
-    medical conditions), sexual orientation, gender identity, gender expression, age,
-    status as a protected veteran, status as an individual with a disability, genetic
-    information, political views or activity, or other applicable legally protected
-    characteristics. You may view our Equal Employment Opportunity notice here. Meta
-    is committed to providing reasonable accommodations for qualified individuals
-    with disabilities and disabled veterans in our job application procedures. If
-    you need assistance or an accommodation due to a disability, fill out the Accommodations
-    request form. '
+    Master our development process, culture and code base, then improve it
+
+    Work closely with a team of engineers, product managers, user experience experts
+    and performance engineers to build new features our customers will love, adopt
+    and use while keeping our trusted platform stable and scalable
+
+    Develop test strategies, design automation frameworks, write unit/functional tests
+    to drive up code coverage and automation metrics
+
+    Analyze, design and develop test cases and implement automated test suites
+
+    Desired Skills:
+
+    Strong analytical and problem-solving skills
+
+    Team-player with the ability to work effectively and efficiently with others
+
+    Be a self-starter and possess strong sense of self-motivation
+
+    Experience using telemetry and metrics to drive operational excellence
+
+    Eligibility criteria:
+
+    B.E/ B.Tech graduating in 2025 in Computer Science, Electrical, Electronics, or
+    equivalent fields with specialization in computer science. ​
+
+    7 CGPA and above with no backlogs.
+
+    About Futureforce University Recruiting
+
+    Our Futureforce University Recruiting program is dedicated to attracting, retaining
+    and cultivating talent. Our interns and new graduates work on real projects that
+    affect how our business runs, giving them the opportunity to make a tangible impact
+    on the future of our company. With offices all over the world, our recruits have
+    the chance to collaborate and connect with fellow employees on a global scale.
+    We offer job shadowing, mentorship programs, talent development courses, and much
+    more.
+
+    Accommodations
+
+    If you require assistance due to a disability applying for open positions please
+    submit a request via this Accommodations Request Form.
+
+    Posting Statement
+
+    At Salesforce we believe that the business of business is to improve the state
+    of our world. Each of us has a responsibility to drive Equality in our communities
+    and workplaces. We are committed to creating a workforce that reflects society
+    through inclusive programs and initiatives such as equal pay, employee resource
+    groups, inclusive benefits, and more. Learn more about Equality at www.equality.com
+    and explore our company benefits at www.salesforcebenefits.com.
+
+    Salesforce is an Equal Employment Opportunity and Affirmative Action Employer.
+    Qualified applicants will receive consideration for employment without regard
+    to race, color, religion, sex, sexual orientation, gender perception or identity,
+    national origin, age, marital status, protected veteran status, or disability
+    status. Salesforce does not accept unsolicited headhunter and agency resumes.
+    Salesforce will not pay any third-party agency or company that does not have a
+    signed agreement with Salesforce. Salesforce welcomes all.
+
+    Unleash Your Potential
+
+    When you join Salesforce, you’ll be limitless in all areas of your life. Our benefits
+    and resources support you to find balance and be your best, and our AI agents
+    accelerate your impact so you can do your best. Together, we’ll bring the power
+    of Agentforce to organizations of all sizes and deliver amazing experiences that
+    customers love. Apply today to not only shape the future — but to redefine what’s
+    possible — for yourself, for AI, and the world.
+
+    Accommodations
+
+    If you require assistance due to a disability applying for open positions please
+    submit a request via this Accommodations Request Form.
+
+    Posting Statement
+
+    Salesforce is an equal opportunity employer and maintains a policy of non-discrimination
+    with all employees and applicants for employment. What does that mean exactly?
+    It means that at Salesforce, we believe in equality for all. And we believe we
+    can lead the path to equality in part by creating a workplace that’s inclusive,
+    and free from discrimination. Know your rights: workplace discrimination is illegal.
+    Any employee or potential employee will be assessed on the basis of merit, competence
+    and qualifications – without regard to race, religion, color, national origin,
+    sex, sexual orientation, gender expression or identity, transgender status, age,
+    disability, veteran or marital status, political viewpoint, or other classifications
+    protected by law. This policy applies to current and prospective employees, no
+    matter where they are in their Salesforce employment journey. It also applies
+    to recruiting, hiring, job assignment, compensation, promotion, benefits, training,
+    assessment of job performance, discipline, termination, and everything in between.
+    Recruiting, hiring, and promotion decisions at Salesforce are fair and based on
+    merit. The same goes for compensation, benefits, promotions, transfers, reduction
+    in workforce, recall, training, and education.
+
+
+    '

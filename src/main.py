@@ -127,15 +127,64 @@ class ResumeOptimizationPipeline:
 
         return ""
 
-    def build_resume_prompt(self, job_description: str, company_name: str) -> str:
+    def is_us_location(self, location: str) -> bool:
+        """
+        Check if the job location is in the United States.
+        If location is empty or None, assume it's in the US.
+        Otherwise, check if location contains "United States" or common US indicators.
+        """
+        if not location or not location.strip():
+            return True
+        
+        location_lower = location.lower()
+        
+        # Simple check for US indicators
+        us_indicators = ["united states", "usa", "u.s.a", "u.s.", "us"]
+        
+        return any(indicator in location_lower for indicator in us_indicators)
+
+    def build_resume_prompt(self, job_description: str, company_name: str, location: str = "") -> str:
         """Build the prompt for resume generation."""
         prompt = self.resume_prompt_template
+        
+        # Create a modified version of master_resume based on location
+        modified_resume = self.master_resume.copy()
+        
+        # Check if this is a US job
+        if self.is_us_location(location):
+            # For US jobs, merge professional_summaries and work_authorization
+            summary = modified_resume.get("professional_summaries", "")
+            authorization = modified_resume.get("work_authorization", "")
+            
+            # Merge with a space between them
+            if summary and authorization:
+                modified_resume["professional_summaries"] = f"{summary} {authorization}"
+            
+            # Remove the work_authorization and international_availability fields
+            if "work_authorization" in modified_resume:
+                del modified_resume["work_authorization"]
+            if "international_availability" in modified_resume:
+                del modified_resume["international_availability"]
+        else:
+            # For non-US jobs, use international_availability instead of work_authorization
+            summary = modified_resume.get("professional_summaries", "")
+            international_availability = modified_resume.get("international_availability", "")
+            
+            # Merge with a space between them
+            if summary and international_availability:
+                modified_resume["professional_summaries"] = f"{summary} {international_availability}"
+            
+            # Remove both authorization fields
+            if "work_authorization" in modified_resume:
+                del modified_resume["work_authorization"]
+            if "international_availability" in modified_resume:
+                del modified_resume["international_availability"]
 
         # Replace placeholders
         prompt = prompt.replace("[JOB_DESCRIPTION]", f"```\n{job_description}\n```")
         prompt = prompt.replace(
             "[MASTER_RESUME_JSON]",
-            f"```json\n{json.dumps(self.master_resume, indent=2)}\n```",
+            f"```json\n{json.dumps(modified_resume, indent=2)}\n```",
         )
         prompt = prompt.replace("[COMPANY_NAME]", company_name)
 
@@ -298,23 +347,26 @@ class ResumeOptimizationPipeline:
         job_title = job.get("job_title")
         company_name = job.get("company_name")
         job_description = job.get("job_description")
+        location = job.get("location", "")
 
         print(f"\n{'='*60}")
         print(f"📋 Processing: {job_title} at {company_name}")
         print(f"🆔 Job ID: {job_id}")
+        if location:
+            print(f"📍 Location: {location}")
         print(f"{'='*60}\n")
 
         # Step 1: Select best cover letter point
         print("📌 Step 1: Selecting best cover letter point...")
         best_point, default_point = select_best_cover_letter_point(
-            job_description, self.cover_letter_points
+            job_description, self.cover_letter_points, location
         )
         print(f"Best point: {best_point.get('id') if best_point else 'None'}")
         print(f"Default point: {default_point.get('id') if default_point else 'None'}")
 
         # Step 2: Generate tailored resume
         print(f"\n📝 Step 2: Generating tailored resume using {self.resume_bot}...")
-        resume_prompt = self.build_resume_prompt(job_description, company_name)
+        resume_prompt = self.build_resume_prompt(job_description, company_name, location)
         resume_response = await self.call_poe_api(resume_prompt, self.resume_bot)
         tailored_resume = self.extract_json_from_response(resume_response)
 
@@ -438,7 +490,14 @@ class ResumeOptimizationPipeline:
             )
 
             # Save referral LaTeX
-            referral_latex_filename = f"{company_name}_{job_title}_Referral_Resume.tex"
+            # Sanitize filename components
+            safe_company = "".join(
+                c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
+            )
+            safe_title = "".join(
+                c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
+            )
+            referral_latex_filename = f"{safe_company}_{safe_title}_Referral_Resume.tex"
             referral_latex_path = os.path.join(output_dir, referral_latex_filename)
             with open(referral_latex_path, "w", encoding="utf-8") as f:
                 f.write(referral_latex)

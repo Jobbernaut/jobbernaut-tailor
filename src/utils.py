@@ -55,24 +55,40 @@ def update_job_status(filepath: str, job_id: str, new_status: str) -> None:
 
 
 def select_best_cover_letter_point(
-    job_description: str, cover_letter_points: List[Dict]
+    job_description: str, cover_letter_points: List[Dict], location: str = ""
 ) -> tuple:
     """
     Select the best cover letter point based on keyword matching.
     Returns a tuple of (best_point, default_point).
-    The best_point has the most keyword matches, default_point is always included.
+    The best_point has the most keyword matches, default_point is selected based on location.
+    
+    Args:
+        job_description: The job description text
+        cover_letter_points: List of cover letter points
+        location: Job location (empty = US, otherwise check for US indicators)
     """
     job_desc_lower = job_description.lower()
     best_point = None
     max_matches = 0
     default_point = None
+    
+    # Determine if this is a US job
+    is_us = True
+    if location and location.strip():
+        location_lower = location.lower()
+        us_indicators = ["united states", "usa", "u.s.a", "u.s.", "us"]
+        is_us = any(indicator in location_lower for indicator in us_indicators)
 
     for point in cover_letter_points:
-        # Track the default point
+        # Track the appropriate default point based on location
         if point.get("default", False):
-            default_point = point
+            point_location_type = point.get("location_type", "US")
+            if is_us and point_location_type == "US":
+                default_point = point
+            elif not is_us and point_location_type == "International":
+                default_point = point
 
-        # Count keyword matches (skip default point from keyword matching)
+        # Count keyword matches (skip default points from keyword matching)
         if not point.get("default", False):
             keywords = point.get("keywords", [])
             matches = sum(
@@ -114,7 +130,14 @@ def save_resume(
     output_dir: str, resume_json: Dict, job_title: str, company_name: str
 ) -> str:
     """Save the tailored resume to the output directory."""
-    filename = f"{company_name}_{job_title}_Resume.json"
+    # Sanitize filename components
+    safe_company = "".join(
+        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
+    )
+    safe_title = "".join(
+        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
+    )
+    filename = f"{safe_company}_{safe_title}_Resume.json"
     filepath = os.path.join(output_dir, filename)
     save_json(filepath, resume_json)
     return filepath
@@ -129,15 +152,23 @@ def save_cover_letter(
     last_name: str,
 ) -> str:
     """Save the cover letter to the output directory as both TXT and PDF."""
+    # Sanitize filename components
+    safe_company = "".join(
+        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
+    )
+    safe_title = "".join(
+        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
+    )
+    
     # Save as TXT
-    txt_filename = f"{company_name}_{job_title}_CoverLetter.txt"
+    txt_filename = f"{safe_company}_{safe_title}_CoverLetter.txt"
     txt_filepath = os.path.join(output_dir, txt_filename)
 
     with open(txt_filepath, "w", encoding="utf-8") as f:
         f.write(cover_letter_text)
 
     # Save as PDF
-    pdf_filename = f"{company_name}_{job_title}_CoverLetter.pdf"
+    pdf_filename = f"{safe_company}_{safe_title}_CoverLetter.pdf"
     pdf_filepath = os.path.join(output_dir, pdf_filename)
 
     from reportlab.lib.pagesizes import letter
@@ -197,7 +228,14 @@ def save_latex_resume(
     output_dir: str, latex_text: str, job_title: str, company_name: str
 ) -> str:
     """Save the LaTeX resume to the output directory."""
-    filename = f"{company_name}_{job_title}_Resume.tex"
+    # Sanitize filename components
+    safe_company = "".join(
+        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
+    )
+    safe_title = "".join(
+        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
+    )
+    filename = f"{safe_company}_{safe_title}_Resume.tex"
     filepath = os.path.join(output_dir, filename)
 
     with open(filepath, "w", encoding="utf-8") as f:

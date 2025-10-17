@@ -5,16 +5,18 @@
     "phone": "+1 919-672-2226",
     "email": "srmanda.cs@gmail.com",
     "location": "Raleigh, NC",
-    "linkedin_url": "https://www.linkedin.com/in/srmanda-cs/",
+    "linkedin_url": "https://linkedin.com/in/srmanda-cs",
     "github_url": "https://github.com/srmanda-cs",
-    "portfolio_url": "https://srmanda.com/",
-    "kaggle_url": "https://www.kaggle.com/ashishreddy9000"
+    "portfolio_url": "https://srmanda.com",
+    "kaggle_url": "https://kaggle.com/ashishreddy9000"
   },
-  "professional_summaries": "Graduate-level Software Engineer experienced in delivering production-grade solutions that enabled $1M+ investments, reduced asset-tracking costs by 37% across a 10K-employee organization, and eliminated months of manual workflows. Currently seeking full-time roles. Authorized to work without sponsorship. Available for CPT in Jan 2026 and OPT from June 2026 through 2029.",
+  "professional_summaries": "Graduate-level Software Engineer experienced in delivering production-grade solutions that enabled $1M+ investments, reduced asset-tracking costs by 37% across a 10K-employee organization, and eliminated months of manual workflows. Currently seeking full-time roles.",
+  "work_authorization": "Authorized to work without sponsorship. Available for CPT in Jan 2026 and OPT from June 2026 through 2029.",
+  "international_availability": "Available to start full-time from June 2026.",
   "education": [
     {
       "institution": "UNC Chapel Hill",
-      "degree": "Master of Science in Computer Science",
+      "degree": "Master of Science in Computer Science (GPA: 4.0/4.0)",
       "graduation_date": "2026-05",
       "gpa": "",
       "relevant_coursework": [],
@@ -22,7 +24,7 @@
     },
     {
       "institution": "Amrita University",
-      "degree": "Bachelor of Technology in Computer Science",
+      "degree": "Bachelor of Technology in Computer Science (GPA: 8.86/10.0)",
       "graduation_date": "2024-06",
       "gpa": "",
       "relevant_coursework": [],
