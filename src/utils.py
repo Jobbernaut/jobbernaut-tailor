@@ -150,8 +150,9 @@ def save_cover_letter(
     company_name: str,
     first_name: str,
     last_name: str,
+    contact_info: Dict = None,
 ) -> str:
-    """Save the cover letter to the output directory as both TXT and PDF."""
+    """Save the cover letter to the output directory as both TXT and PDF with professional formatting."""
     # Sanitize filename components
     safe_company = "".join(
         c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
@@ -167,15 +168,16 @@ def save_cover_letter(
     with open(txt_filepath, "w", encoding="utf-8") as f:
         f.write(cover_letter_text)
 
-    # Save as PDF
+    # Save as PDF with professional formatting
     pdf_filename = f"{safe_company}_{safe_title}_CoverLetter.pdf"
     pdf_filepath = os.path.join(output_dir, pdf_filename)
 
     from reportlab.lib.pagesizes import letter
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.styles import ParagraphStyle
     from reportlab.lib.units import inch
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-    from reportlab.lib.enums import TA_LEFT
+    from reportlab.lib.enums import TA_LEFT, TA_CENTER
+    from datetime import datetime
     from html import escape
 
     # Create PDF with proper metadata
@@ -195,28 +197,153 @@ def save_cover_letter(
     # Container for the 'Flowable' objects
     elements = []
 
-    # Define styles
-    styles = getSampleStyleSheet()
-    normal_style = ParagraphStyle(
-        "CustomNormal",
-        parent=styles["Normal"],
-        fontSize=10,
-        leading=14,
+    # Define styles using Helvetica
+    name_style = ParagraphStyle(
+        "NameStyle",
+        fontName="Helvetica-Bold",
+        fontSize=14,
+        leading=16,
+        alignment=TA_CENTER,
+        spaceAfter=4,
+    )
+
+    contact_style = ParagraphStyle(
+        "ContactStyle",
+        fontName="Helvetica",
+        fontSize=9,
+        leading=11,
+        alignment=TA_CENTER,
+        spaceAfter=16,
+    )
+
+    date_style = ParagraphStyle(
+        "DateStyle",
+        fontName="Helvetica",
+        fontSize=11,
+        leading=13,
         alignment=TA_LEFT,
         spaceAfter=12,
     )
 
-    # Split text into paragraphs and add to PDF
-    paragraphs = cover_letter_text.split("\n\n")
-    for para_text in paragraphs:
-        if para_text.strip():
-            # Escape special characters for reportlab using html.escape
-            para_text = escape(para_text)
-            # Replace single newlines with <br/> tags for reportlab
-            para_text = para_text.replace("\n", "<br/>")
-            para = Paragraph(para_text, normal_style)
-            elements.append(para)
-            elements.append(Spacer(1, 0.1 * inch))
+    recipient_style = ParagraphStyle(
+        "RecipientStyle",
+        fontName="Helvetica",
+        fontSize=11,
+        leading=13,
+        alignment=TA_LEFT,
+        spaceAfter=16,
+    )
+
+    body_style = ParagraphStyle(
+        "BodyStyle",
+        fontName="Helvetica",
+        fontSize=11,
+        leading=14.3,  # 1.3x line spacing
+        alignment=TA_LEFT,
+        spaceAfter=11,  # Space between paragraphs
+    )
+
+    # Add header with name
+    name_para = Paragraph(full_name, name_style)
+    elements.append(name_para)
+
+    # Add contact information if provided
+    if contact_info:
+        contact_parts = []
+        
+        if contact_info.get("phone"):
+            contact_parts.append(contact_info["phone"])
+        
+        if contact_info.get("email"):
+            email = contact_info["email"]
+            contact_parts.append(f'<a href="mailto:{email}">{email}</a>')
+        
+        if contact_info.get("linkedin_url"):
+            linkedin = contact_info["linkedin_url"]
+            # Extract display text (e.g., "linkedin.com/in/username")
+            display = linkedin.replace("https://", "").replace("http://", "")
+            contact_parts.append(f'<a href="{linkedin}">{display}</a>')
+        
+        if contact_info.get("github_url"):
+            github = contact_info["github_url"]
+            display = github.replace("https://", "").replace("http://", "")
+            contact_parts.append(f'<a href="{github}">{display}</a>')
+        
+        if contact_info.get("portfolio_url"):
+            portfolio = contact_info["portfolio_url"]
+            display = portfolio.replace("https://", "").replace("http://", "")
+            contact_parts.append(f'<a href="{portfolio}">{display}</a>')
+        
+        if contact_parts:
+            contact_line = " • ".join(contact_parts)
+            contact_para = Paragraph(contact_line, contact_style)
+            elements.append(contact_para)
+    else:
+        # Add spacing if no contact info
+        elements.append(Spacer(1, 0.2 * inch))
+
+    # Add date
+    current_date = datetime.now().strftime("%B %d, %Y")
+    date_para = Paragraph(current_date, date_style)
+    elements.append(date_para)
+
+    # Parse the cover letter text to extract greeting and body
+    lines = cover_letter_text.strip().split("\n")
+    
+    # Find the greeting line (starts with "Dear")
+    greeting_line = None
+    body_start_idx = 0
+    
+    for i, line in enumerate(lines):
+        if line.strip().startswith("Dear"):
+            greeting_line = line.strip()
+            body_start_idx = i + 1
+            break
+    
+    # If no greeting found, assume first line is greeting
+    if greeting_line is None and lines:
+        greeting_line = lines[0].strip()
+        body_start_idx = 1
+    
+    # Add recipient (extract from greeting or use default)
+    if greeting_line:
+        # Add the greeting as recipient
+        recipient_para = Paragraph(greeting_line.rstrip(","), recipient_style)
+        elements.append(recipient_para)
+    else:
+        # Default recipient
+        recipient_text = f"{job_title} Hiring Team<br/>{company_name}"
+        recipient_para = Paragraph(recipient_text, recipient_style)
+        elements.append(recipient_para)
+
+    # Process the body paragraphs
+    current_paragraph = []
+    
+    for line in lines[body_start_idx:]:
+        line = line.strip()
+        
+        # Skip the greeting if it appears again
+        if line.startswith("Dear"):
+            continue
+            
+        # Empty line indicates paragraph break
+        if not line:
+            if current_paragraph:
+                para_text = " ".join(current_paragraph)
+                # Escape special characters
+                para_text = escape(para_text)
+                para = Paragraph(para_text, body_style)
+                elements.append(para)
+                current_paragraph = []
+        else:
+            current_paragraph.append(line)
+    
+    # Add the last paragraph if exists
+    if current_paragraph:
+        para_text = " ".join(current_paragraph)
+        para_text = escape(para_text)
+        para = Paragraph(para_text, body_style)
+        elements.append(para)
 
     # Build PDF
     doc.build(elements)

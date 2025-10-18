@@ -97,6 +97,7 @@ This is the most critical step. You will rewrite the content for the selected ex
 -   No use of em dashes anywhere to join sentences or show impact. Use alternative grammatical tools, but no em dashes or dashes.
 -   This JSON object must contain the complete, tailored resume.
 -   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, work_authorization, education, skills, work_experience, projects).
+-   **CRITICAL - Education Field:** The `degree` field in the education section already contains the GPA (e.g., "Master of Science in Computer Science (GPA: 4.0/4.0)"). Keep this EXACTLY as provided in the master resume. Do NOT extract or separate the GPA into the separate `gpa` field. Leave the `gpa` field empty ("").
 -   Do not include any explanations, apologies, or text outside of this final JSON object.
 
 ### CRITICAL DIRECTIVES:

@@ -582,9 +582,10 @@ class ResumeOptimizationPipeline:
         resume_path = save_resume(output_dir, tailored_resume, job_title, company_name)
         print(f"Resume saved: {resume_path}")
 
-        # Get name from master resume for PDF metadata
+        # Get name and contact info from master resume for PDF metadata
         first_name = self.master_resume["contact_info"]["first_name"]
         last_name = self.master_resume["contact_info"]["last_name"]
+        contact_info = self.master_resume["contact_info"]
 
         cover_letter_path = save_cover_letter(
             output_dir,
@@ -593,6 +594,7 @@ class ResumeOptimizationPipeline:
             company_name,
             first_name,
             last_name,
+            contact_info,
         )
         print(f"Cover letter saved as PDF: {cover_letter_path}")
 
