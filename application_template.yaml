@@ -7,3 +7,5 @@
 #   job_description: "
 #     <insert job description here>
 #     "
+
+# Note: If the location is empty, it will default to US
