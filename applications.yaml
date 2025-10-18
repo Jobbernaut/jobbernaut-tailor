@@ -1,254 +1,468 @@
-- job_id: OPJOPEUS49046
-  job_title: Associate Software Engineer
-  company_name: OpenText
-  location: India
+- job_id: 1882261
+  job_title: Software Engineer
+  company_name: Microsoft
+  location: Australia
   status: processed
-  posting_link: https://careers.opentext.com/us/en/job/OPJOPEUS49046EXTERNALENUS/Associate-Software-Engineer
-  job_description: ' Description OPENTEXT - THE INFORMATION COMPANY
+  posting_link: https://jobs.careers.microsoft.com/us/en/job/1882261/SOFTWARE-ENGINEER
+  job_description: ' SOFTWARE ENGINEER Multiple Locations, Australia
 
-    OpenText is a global leader in information management, where innovation, creativity,
-    and collaboration are the key components of our corporate culture. As a member
-    of our team, you will have the opportunity to partner with the most highly regarded
-    companies in the world, tackle complex issues, and contribute to projects that
-    shape the future of digital transformation.
+    Save
 
+    Share job
 
-
-    AI-First. Future-Driven. Human-Centered.
-
-    At OpenText, AI is at the heart of everything we do—powering innovation, transforming
-    work, and empowering digital knowledge workers. We''re hiring talent that AI can''t
-    replace to help us shape the future of information management. Join us.
-
-
-
-
-    YOUR IMPACT :
-
-    We are looking for a passionate and driven Associate Software Engineer to join
-    our dynamic Digital Solutions team. In this role, you will be involved in designing,
-    developing, and deploying scalable full-stack applications using modern technologies
-    and frameworks. You will collaborate closely with senior engineers, architects,
-    and product managers to build solutions that make a meaningful impact.
-
-    This is a fantastic opportunity for early-career professionals who are eager to
-    grow, learn, and contribute to complex and impactful software development projects
-    in a fast-paced, collaborative environment.
+    Date posted Oct 17, 2025 Job number 1882261 Work site 0 days / week in-office
+    - remote Travel 0-25 % Role type Individual Contributor Profession Software Engineering
+    Discipline Software Engineering Employment type Full-Time Overview Software Defined
+    Networking (SDN) enables customers to realize and control the network they desire
+    for their workload in the cloud. This includes traditional enterprise network
+    functions like ACLs, firewalls, load balancers, IPS/IDS, DoS protection, that
+    customers want to realize in the network for their VMs in the cloud. All these
+    need to be delivered on a shared, very high speed but low-complexity physical
+    network based on merchant silicon. And that is where the software comes in - all
+    these can be realized and delivered in software by building a virtual network
+    on top of physical network, using the virtualized host as the scale-out engine
+    for all our policy, allowing the underlying physical network to be cheap and extremely
+    fast. Creating a new, software controlled virtualized network, optimized for the
+    cloud, represents a once-in-ten-years technological shift. The entire industry
+    is realizing the SDN vision and jumping into it.
 
 
-    WHAT THE ROLE OFFERS :
+    With tremendous growth comes the pressure to build regions and datacenters faster
+    than ever. There is call for innovation and technological shift on how we build
+    and operate multiple different Azure clouds with efficiency and agility. If you
+    like to deal with broad array of technical challenges across multiple services
+    for bringing up services at scale, then this is the place you need to be in.
 
-    Deliver high-quality, production-ready code under the guidance of senior team
-    members. Participate in design, development, testing, and deployment of software
-    applications. Execute assigned tasks effectively and contribute to solving real
-    customer problems. Work closely with team members to understand business requirements
-    and customer pain points. Translate design ideas and business logic into clean,
-    maintainable, and well-documented code. Adhere to coding standards, participate
-    in code reviews, and follow software engineering best practices. Engage in Agile
-    ceremonies and contribute to iterative development cycles. Take ownership of assigned
-    work, follow through on commitments, and meet delivery timelines. Continuously
-    learn and stay up to date with new technologies, frameworks, and industry trends.
+    As a Software Engineer on the team, you''ll have the unique opportunity to design,
+    build, and deliver a seamless, reliable, and high-performance cloud infrastructure.
+    This is an opportunity to be part of an exciting set of challenges and solutions
+    in an ever-evolving landscape.
 
-    WHAT YOU NEED TO SUCCEED :
+    Microsoft’s mission is to empower every person and every organization on the planet
+    to achieve more. As employees we come together with a growth mindset, innovate
+    to empower others, and collaborate to realize our shared goals. Each day we build
+    on our values of respect, integrity, and accountability to create a culture of
+    inclusion where everyone can thrive at work and beyond.
 
-    1–3 years of hands-on experience in Java / Java EE and backend development. Proficiency
-    with front-end technologies: HTML, CSS, JavaScript, and frameworks like Angular
-    (12+) or Ext JS. Solid understanding of RESTful API design and development. Experience
-    with frameworks such as Spring, Spring Boot, Hibernate, iBATIS, and JPA. Familiarity
-    with application servers (e.g., Tomcat, WebLogic Server). Hands-on experience
-    using IDEs like Eclipse, IntelliJ, or JBuilder. Version control expertise with
-    tools such as Git or Mercurial. Working knowledge of Red Hat Linux, Shell scripting,
-    and build/integration tools like Maven. Exposure to Ansible, Docker containers,
-    and CI/CD concepts is a plus. Understanding of design patterns, database modeling,
-    and service-oriented architectures. Awareness of Agile methodologies (Scrum) and
-    ability to thrive in a collaborative, cross-functional team setup.
+    Qualifications Required Qualifications:
+
+    • Bachelor''s Degree in Computer Science, or related technical discipline with
+    proven experience coding in languages including, but not limited to, C, C++, C#,
+    Java, JavaScript, or Python o OR equivalent experience.
 
 
-    Required Qualifications
+
+    Other Requirements:
 
 
-    BE/BS/BTech or ME/MS/MTech in Computer Science, Computer Engineering, or a closely
-    related technical field. Strong analytical and problem-solving skills with a proactive
-    mindset. Excellent communication skills—both verbal and written. Ability to work
-    independently as well as in a fast-paced team-oriented environment. Eagerness
-    to learn, take feedback constructively, and grow within the organization.
+
+    Ability to meet Microsoft, customer and/or government security screening requirements
+    are required for this role. These requirements include, but are not limited to
+    the following specialized security screenings: Microsoft Cloud Background Check:
+    This position will be required to pass the Microsoft Cloud Background Check upon
+    hire/transfer and every two years thereafter.
+
+    Preferred Qualifications:
+
+    • Bachelor''s Degree in Computer Science o OR related technical field AND 1+ year(s)
+    technical engineering experience with coding in languages including, but not limited
+    to, C, C++, C#, Java, JavaScript, o OR Python o OR Master''s Degree in Computer
+    Science or related technical field with proven experience coding in languages
+    including, but not limited to, C, C++, C#, Java, JavaScript, or Python o OR equivalent
+    experience.
 
 
 
 
 
+    azurecorejobs
 
-    OpenText''s efforts to build an inclusive work environment go beyond simply complying
-    with applicable laws. Our Employment Equity and Diversity Policy provides direction
-    on maintaining a working environment that is inclusive of everyone, regardless
-    of culture, national origin, race, color, gender, gender identification, sexual
-    orientation, family status, age, veteran status, disability, religion, or other
-    basis protected by applicable laws.
+    Responsibilities Learns to review code and helps to review code of others to ensure
+    it meets team standards. Participates in code review processes for self-development,
+    gathers feedback, and learns about coding standards and the team''s features.
+    Applies coding patterns and best practices. Learns how and begins to use automated
+    source code analysis tools that are incorporated into the build/development process
+    with minimal supervision.
 
+    Develops and applies knowledge of debugging tools, tests, logs, telemetry, and
+    other methods to begin supporting efforts to proactively flag issues before they
+    occur for product features in production. Learns to conduct incident retrospectives
+    to identify root causes of problems, and begins to implement repair actions with
+    direct supervision. Grows understanding of and begins to apply least-access principles
+    and uses logging, telemetry, and other appropriate mechanisms with direct supervision
+    to investigate issues while retaining privacy and security.
+
+    With guidance, learns how and creates and implements code for a product, service,
+    or feature reusing code as applicable. Writes and learns to create code that is
+    extensible and maintainable. Learns about and applies diagnosability, reliability,
+    and maintainability, and understands when the code is ready to be shared and delivered.
+    Applies coding patterns and best practices to write code (e.g., leveraging state-of-the-art
+    generative artificial intelligence [GenAI], approaches to source code organization,
+    naming conventions). With guidance from more experienced colleagues, identifies
+    and escalates blockers or unknowns during the development process, and communicates
+    how they will impact timelines.
+
+
+    Acts as a Designated Responsible Individual (DRI) in monitoring system/product
+    feature/service for degradation, downtime, or interruptions for simple problems,
+    and recommends actions to restore system/product/service by following the playbook.
+
+
+    Reviews current developments and proactively seeks new knowledge that will improve
+    the availability, reliability, efficiency, observability, and performance of products
+    while also driving consistency in monitoring and operations.
+
+    Develops knowledge of and learns to apply best practices to build code based on
+    well-established methods and secure design principles. Learns about customer scaling
+    requirements and application of best practices for meeting scaling needs and performance
+    expectations and security promises.
+
+
+    Benefits/perks listed below may vary depending on the nature of your employment
+    with Microsoft and the country where you work. Industry leading healthcareEducational
+    resourcesDiscounts on products and servicesSavings and investmentsMaternity
+    and paternity leaveGenerous time awayGiving programsOpportunities to network
+    and connect Microsoft is an equal opportunity employer. All qualified applicants
+    will receive consideration for employment without regard to age, ancestry, citizenship,
+    color, family or medical care leave, gender identity or expression, genetic information,
+    immigration status, marital status, medical condition, national origin, physical
+    or mental disability, political affiliation, protected veteran or military status,
+    race, ethnicity, religion, sex (including pregnancy), sexual orientation, or any
+    other characteristic protected by applicable local laws, regulations and ordinances.
     If you need assistance and/or a reasonable accommodation due to a disability during
-    the application or recruiting process, please contact us at hr@opentext.com. Our
-    proactive approach fosters collaboration, innovation, and personal growth, enriching
-    OpenText''s vibrant workplace. '
-- job_id: JR263074
-  job_title: Software Engineering AMTS
-  company_name: Salesforce
-  location: India
+    the application process, read more about requesting accommodations. '
+- job_id: DO7184043
+  job_title: UI Engineer I
+  company_name: DigitalOcean
+  location: US
   status: processed
-  posting_link: https://salesforce.wd12.myworkdayjobs.com/External_Career_Site/job/India---Hyderabad/Software-Engineering-AMTS_JR263074
-  job_description: '
+  posting_link: https://www.digitalocean.com/careers/position/apply?gh_jid=7184043&gh_src=312a08e31us
+  job_description: ' UI Engineer I San Francisco Dive in and do the best work of your
+    career at DigitalOcean. Journey alongside a strong community of top talent who
+    are relentless in their drive to build the simplest scalable cloud. If you have
+    a growth mindset, naturally like to think big and bold, and are energized by the
+    fast-paced environment of a true industry disruptor, you’ll find your place here.  We
+    value winning together—while learning, having fun, and making a profound difference
+    for the dreamers and builders in the world.
 
-    About Futureforce University Recruiting
+    We are looking for an enthusiastic and motivated Software Engineer to join our
+    Security Products team. In this role, you will play a key part in helping to design,
+    build, and maintain the security products and infrastructure that protect DigitalOcean''s
+    platform and our customers'' data. This is a fantastic opportunity for an early-career
+    engineer who is passionate about technology and eager to learn and tackle security
+    challenges in a fast-paced, collaborative environment.
 
-    Our Futureforce University Recruiting program is dedicated to attracting, retaining
-    and cultivating talent. Our interns and new graduates work on real projects that
-    affect how our business runs, giving them the opportunity to make a tangible impact
-    on the future of our company. With offices all over the world, our recruits have
-    the chance to collaborate and connect with fellow employees on a global scale.
-    We offer job shadowing, mentorship programs, talent development courses, and much
-    more.
+    What you’ll do Build high-performance security APIs and microservices using Go.
+    Experience with Python and JavaScript/Node.js is a plus. Assist in developing
+    and maintaining event correlation engines, anomaly detection, threat intelligence.
+    Deploy and manage security solutions running on Kubernetes at scale. Participate
+    in the technical design process for new features and systems, from concept to
+    production. Collaborate with security researchers, threat analysts, and cloud
+    platform teams. What we’ll expect from you 1-2+ years of experience in software
+    engineering. Solid programming skills in Go. Python/Node.js are a plus. Experience
+    with or strong desire to learn full stack development in React.js and GraphQL.
+    Familiarity with database engines like mySQL, Redis Familiarity with containerization
+    and Kubernetes. Excellent problem-solving, analytical, and communication skills.
+    Ability to thrive in a fast-paced, dynamic, and rapidly evolving environment.
+    Nice to Have Experience with major cloud platforms (e.g., AWS, GCP, Azure) and
+    Infrastructure as Code tools (like Terraform, Helm, Pulumi) is a plus. Knowledge
+    of cryptography and secure communication protocols. Contributions to open-source
+    security projects. Why You’ll Like Working for DigitalOcean: We innovate with
+    purpose. You’ll be a part of a cutting-edge technology company with an upward
+    trajectory, who are proud to simplify cloud and AI so builders can spend more
+    time creating software that changes the world. As a member of the team, you will
+    be a Shark who thinks big, bold, and scrappy, like an owner with a bias for action
+    and a powerful sense of responsibility for customers, products, employees, and
+    decisions. We prioritize career development. At DO, you’ll do the best work of
+    your career. You will work with some of the smartest and most interesting people
+    in the industry. We are a high-performance organization that will always challenge
+    you to think big. Our organizational development team will provide you with resources
+    to ensure you keep growing. We provide employees with reimbursement for relevant
+    conferences, training, and education. All employees have access to LinkedIn Learning''s
+    10,000+ courses to support their continued growth and development. We care about
+    your well-being. Regardless of your location, we will provide you with a competitive
+    array of benefits to support you from our Employee Assistance Program to Local
+    Employee Meetups to flexible time off policy, to name a few. While the philosophy
+    around our benefits is the same worldwide, specific benefits may vary based on
+    local regulations and preferences. We reward our employees. The salary range for
+    this position is $84,720 - $105,960 based on market data, relevant years of experience,
+    and skills. You may qualify for a bonus in addition to base salary; bonus amounts
+    are determined based on company and individual performance. We also provide equity
+    compensation to eligible employees, including equity grants upon hire and the
+    option to participate in our Employee Stock Purchase Program. We value diversity
+    and inclusion. We are an equal-opportunity employer, and recognize that diversity
+    of thought and background builds stronger teams and products to serve our customers.
+    We approach diversity and inclusion seriously and thoughtfully. We do not discriminate
+    on the basis of race, religion, color, ancestry, national origin, caste, sex,
+    sexual orientation, gender, gender identity or expression, age, disability, medical
+    condition, pregnancy, genetic makeup, marital status, or military service. *This
+    is a remote role
 
-    Job Category
+    #LI-Remote
 
-    Software Engineering Job Details
+    #LI-AS1 '
+- job_id: 69605
+  job_title: Java Developer
+  company_name: Task Impetus
+  location: US
+  status: pending
+  posting_link: https://www.taskimpetusinc.com/jobs/java-developer-69605/
+  job_description: ' Java Developer #69605 345 E 24th St, New York, NY, USA, 10010
+    Full-time Per year $65000 -- $85000 Overview }
 
-    About Salesforce
+    Java developers are developers who work on Java to create dynamic applications
+    and websites. There are approximately nine million Java developers around the
+    world. Some of the Java developers, design interfaces and some are assigned to
+    work that is completely behind the scenes. One of the basic duties of a Java developer
+    is writing class files. Java developers work at all stages of the development
+    process, starting from requirements collections and designing prototypes to configuring
+    products as per the customer needs.
 
-    Salesforce is the #1 AI CRM, where humans with agents drive customer success together.
-    Here, ambition meets action. Tech meets trust. And innovation isn’t a buzzword
-    — it’s a way of life. The world of work as we know it is changing and we''re looking
-    for Trailblazers who are passionate about bettering business and the world through
-    AI, driving innovation, and keeping Salesforce''s core values at the heart of
-    it all.
-
-    Ready to level-up your career at the company leading workforce transformation
-    in the agentic era? You’re in the right place! Agentforce is the future of AI,
-    and you are the future of Salesforce.
-
-    Job Description
-
-    About Salesforce
-
-    We’re Salesforce, the Customer Company, inspiring the future of business with
-    AI+ Data +CRM. Leading with our core values, we help companies across every industry
-    blaze new trails and connect with customers in a whole new way. And, we empower
-    you to be a Trailblazer, too — driving your performance and career growth, charting
-    new paths, and improving the state of the world. If you believe in business as
-    the greatest platform for change and in companies doing well and doing good –
-    you’ve come to the right place.
-
-    Want your line of code to have a significant and measurable positive impact on
-    users, the company’s bottom line, and industry? Join Salesforce and define the
-    future of cloud computing. We deliver a scalable, high performance cloud computing
-    platform that delights our customers, and is used by millions of people around
-    the world each day for their business. You will be working with a group of world-class
-    engineers to build breakthrough features that our customers will love, adopt and
-    use while keeping our trusted platform stable and scalable. The software engineer
-    role at Salesforce encompasses architecture, design, implementation, and testing
-    to ensure we build products right and release them with high quality.
-
-
-    From Marketing Cloud to Service Cloud, Platform to IoT, Einstein Platform, Security
-    and everything in between we have many opportunities available across various
-    applications and platforms. Apply now and we look forward to reaching out to you
-    with opportunities that fit your background and interests!
-
-
-    Key Responsibilities:
-
-    Architect, design, implement, test and deliver highly scalable products
-
-    Master our development process, culture and code base, then improve it
-
-    Work closely with a team of engineers, product managers, user experience experts
-    and performance engineers to build new features our customers will love, adopt
-    and use while keeping our trusted platform stable and scalable
-
-    Develop test strategies, design automation frameworks, write unit/functional tests
-    to drive up code coverage and automation metrics
-
-    Analyze, design and develop test cases and implement automated test suites
-
-    Desired Skills:
-
-    Strong analytical and problem-solving skills
-
-    Team-player with the ability to work effectively and efficiently with others
-
-    Be a self-starter and possess strong sense of self-motivation
-
-    Experience using telemetry and metrics to drive operational excellence
-
-    Eligibility criteria:
-
-    B.E/ B.Tech graduating in 2025 in Computer Science, Electrical, Electronics, or
-    equivalent fields with specialization in computer science. ​
-
-    7 CGPA and above with no backlogs.
-
-    About Futureforce University Recruiting
-
-    Our Futureforce University Recruiting program is dedicated to attracting, retaining
-    and cultivating talent. Our interns and new graduates work on real projects that
-    affect how our business runs, giving them the opportunity to make a tangible impact
-    on the future of our company. With offices all over the world, our recruits have
-    the chance to collaborate and connect with fellow employees on a global scale.
-    We offer job shadowing, mentorship programs, talent development courses, and much
-    more.
-
-    Accommodations
-
-    If you require assistance due to a disability applying for open positions please
-    submit a request via this Accommodations Request Form.
-
-    Posting Statement
-
-    At Salesforce we believe that the business of business is to improve the state
-    of our world. Each of us has a responsibility to drive Equality in our communities
-    and workplaces. We are committed to creating a workforce that reflects society
-    through inclusive programs and initiatives such as equal pay, employee resource
-    groups, inclusive benefits, and more. Learn more about Equality at www.equality.com
-    and explore our company benefits at www.salesforcebenefits.com.
-
-    Salesforce is an Equal Employment Opportunity and Affirmative Action Employer.
-    Qualified applicants will receive consideration for employment without regard
-    to race, color, religion, sex, sexual orientation, gender perception or identity,
-    national origin, age, marital status, protected veteran status, or disability
-    status. Salesforce does not accept unsolicited headhunter and agency resumes.
-    Salesforce will not pay any third-party agency or company that does not have a
-    signed agreement with Salesforce. Salesforce welcomes all.
-
-    Unleash Your Potential
-
-    When you join Salesforce, you’ll be limitless in all areas of your life. Our benefits
-    and resources support you to find balance and be your best, and our AI agents
-    accelerate your impact so you can do your best. Together, we’ll bring the power
-    of Agentforce to organizations of all sizes and deliver amazing experiences that
-    customers love. Apply today to not only shape the future — but to redefine what’s
-    possible — for yourself, for AI, and the world.
-
-    Accommodations
-
-    If you require assistance due to a disability applying for open positions please
-    submit a request via this Accommodations Request Form.
-
-    Posting Statement
-
-    Salesforce is an equal opportunity employer and maintains a policy of non-discrimination
-    with all employees and applicants for employment. What does that mean exactly?
-    It means that at Salesforce, we believe in equality for all. And we believe we
-    can lead the path to equality in part by creating a workplace that’s inclusive,
-    and free from discrimination. Know your rights: workplace discrimination is illegal.
-    Any employee or potential employee will be assessed on the basis of merit, competence
-    and qualifications – without regard to race, religion, color, national origin,
-    sex, sexual orientation, gender expression or identity, transgender status, age,
-    disability, veteran or marital status, political viewpoint, or other classifications
-    protected by law. This policy applies to current and prospective employees, no
-    matter where they are in their Salesforce employment journey. It also applies
-    to recruiting, hiring, job assignment, compensation, promotion, benefits, training,
-    assessment of job performance, discipline, termination, and everything in between.
-    Recruiting, hiring, and promotion decisions at Salesforce are fair and based on
-    merit. The same goes for compensation, benefits, promotions, transfers, reduction
-    in workforce, recall, training, and education.
+    Responsibilities The entry-level Java developer defines the site objectives by
+    analyzing the user requirements.
 
 
-    '
+    Throughout the development life cycle entry-level, Java developer designs and
+    develops user interfaces to internet or intranet applications. It is done by setting
+    expectations and keeping the functions and features as a priority.
+
+
+    The entry-level Java developer completes the programming using languages and software
+    products.
+
+
+    Designing and testing are the basic codes done by the entry-level Java developer.
+
+
+    The developer is expected to demonstrate expertise and add valuable input throughout
+    the development lifecycle.
+
+
+    He integrates applications by designing database architecture and does server
+    scripting.
+
+
+    Java developer performs studies and establishes connectivity with network systems,
+    search engines, and with information servers.
+
+
+    By using multimedia tools, the Java developer creates multimedia applications.
+
+
+    The entry-level Java developer completes the development of applications by contributing
+    to team meetings. Review of current systems and is expected suggestions of updates
+    as needed.
+
+
+    Resolve the reported issues and reply to queries in a timely manner.
+
+
+    Improve the code quality by implementing the above-mentioned best practices.
+
+
+    Troubleshooting and production problems are done by the entry-level Java developer.
+
+
+    Supports the end users by providing documentation and by developing assistant.
+
+    Qualifications BSc/BA in Computer Science, Engineering or relevant field; graduate
+    degree in Data Science or other quantitative field is preferred Organization Taskimpetus
+    Inc. Industry Information Technology Benefits Increment would be at least a minimum
+    of 15% every six months. Relocation charges will be provided to you during your
+    project Medicinal, Dental and Vision benefits following 60 days of business. Medical
+    coverage qualified following 60 days of business. Present moment and long-haul
+    handicap following 60 days of work. 401k retirement benefits plan qualified following
+    half a year of work.
+
+    Only for international candidates on OPT/CPT:
+
+    Employer’s Confirmation Letter/CPT Letter/Offer Letter will be provided, which
+    you need to submit to your university within 90 days of the start of your OPT.
+    OPT Extension Letter will be provided to those candidates who are qualified for
+    STEM extension. H1B Sponsorship will be provided to OPT and CPT candidates only
+    once they join our client’s project.
+
+    Other Benefits:
+
+    Pre-job Training with Experienced Trainers. Assignments & Case Studies provided
+    during training. Mock sessions before interviews Multiple interview rounds with
+    different clients. Visa Sponsorship Training completing certificates '
+- job_id: CRAWCO3122
+  job_title: Junior Frontend Engineer
+  company_name: Crawford & Company
+  location: US
+  status: processed
+  posting_link: https://fa-esau-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/crawco-jobs/job/3122
+  job_description: ' Junior Frontend Engineer United States and 1 more (Remote) Trending
+    Job Description Under strong supervision, is responsible for the designing, coding,
+    testing, debugging and documenting of basic software systems programming applications.
+
+
+
+
+
+    Responsibilities Makes basic modifications to existing software to fit specialized
+    needs and configurations. Learns to design and develop basic programs to fit specialized
+    needs and configurations. Provides technical software support. Researches software
+    problems and coding issues and implements software solutions. Performs systems
+    analysis and programming as required. Writes program specifications for new projects.
+    Maintains existing systems and programs. Tests all new systems, programming changes
+    and patches. Supports implementation of software updates, patches and the migration
+    to new software platforms. Confers with systems analysts, engineers, programmers
+    and others to design system, to obtain information on project limitations and
+    capabilities, performance requirements and interfaces. Maintains program libraries
+    and technical documentations. Assists in implementations. Assists with users concerning
+    maintenance of the software system. Assists with business analysts, project managers
+    and other stake holders in the development of new software. Upholds the Crawford
+    Code of Business Conduct at all times. Participates in clearly defined projects
+    involving a limited amount of complexity, with regular review of output. Performs
+    other duties as requested. Qualifications Bachelor''s degree in computer engineering
+    or computer science or an equivalent combination of education and experience.
+    Requires 0-2 years of experience working on large and complex business systems.
+    Hands-on experience using React preferred. Knowledge of insurance industry is
+    a plus. Possesses knowledge on maintaining and developing basic to potentially
+    large, complex systems. Strong analytical, problem-solving and organizational
+    skills. Must be proactive, self-motivated and able to work well under pressure.
+    A strong aptitude in IT and the interest and drive to expand your IT skill set.
+    Excellent communication and interpersonal skills. A problem solver with a keen
+    eye for detail. Able to engage yourself in a project and enjoy the challenges
+    and processes involved. Eager, ambitious, and adaptable to change. Applies basic
+    knowledge of established systems software development principles and best practices
+    to independently resolve problems and make minor changes to existing processes/systems.
+    This position may require travel at various times for conferences, education,
+    etc. This position requires the ability to train in new software development languages
+    and methodologies and to follow the direction and advice of more senior development
+    staff. #LI-EC1
+
+    About Us Why Crawford?
+
+    Because a claim is more than a number — it’s a person, a child, a friend. It’s
+    anyone who looks to Crawford on their worst days. And by helping to restore their
+    lives, we are helping to restore our community – one claim at a time.
+
+    At Crawford, employees are empowered to grow, emboldened to act and inspired to
+    innovate. Our industry-leading team pioneers new solutions for the industries
+    and customers we serve. We’re looking for the next generation of leaders to take
+    this journey with us.
+
+    We hail from more than 70 countries and speak dozens of languages, reflecting
+    the global fabric of the audience we serve. Though our reach is vast, we proudly
+    operate as One Crawford: united in purpose, vision and values. Learn more at www.crawco.com.
+
+    When you accept a job with Crawford, you become a part of the One Crawford family.
+
+    Our total compensation plans provide each of our employees with far more than
+    just a great salary Pay and incentive plans that recognize performance excellence
+    Benefit programs that empower financial, physical, and mental wellness Training
+    programs that promote continuous learning and career progression while enhancing
+    job performance Sustainability programs that give back to the communities in which
+    we live and work A culture of respect, collaboration, entrepreneurial spirit and
+    inclusion Crawford & Company participates in E-Verify and is an Equal Opportunity
+    Employer. M/F/D/V Crawford & Company is not accepting unsolicited assistance from
+    search firms for this employment opportunity. All resumes submitted by search
+    firms to any employee at Crawford via-email, the Internet or in any form and/or
+    method without a valid written Statement of Work in place for this position from
+    Crawford HR/Recruitment will be deemed the sole property of Crawford. No fee will
+    be paid in the event the candidate is hired by Crawford as a result of the referral
+    or through other means. '
+- job_id: MSFT1891711
+  job_title: Software Engineer
+  company_name: Microsoft
+  location: United States
+  status: processed
+  posting_link: https://jobs.careers.microsoft.com/us/en/job/1891711/Software-Engineer
+  job_description: ' Overview Microsoft Intune is one of the fastest growing cloud-based
+    enterprise services at Microsoft, touching over 200 million endpoints and users
+    around the world every day. We provide powerful tools which enable IT and Security
+    professionals to manage productivity of their employee base in a secure manner
+    across multiple platforms (Windows, iOS, Android, Web). In today’s ever-increasing
+    mobile workspace, distributed workforce and hybrid-work era, IT and Security professionals
+    rely on solutions such as Intune to solve their productivity and corporate asset
+    & data protection needs. All the while giving users confidence that their personal
+    data stays private and secure. We operate a service-at-scale today that is vital
+    for tens-of-thousands of organizations with hundreds of millions of users
+
+    We are seeking a highly motivated software engineer with strong fundamentals and
+    a growth mindset. To succeed in this role, you’ll need experience in software
+    development and servicing, the ability to tackle complex problems, and a passion
+    for learning quickly and independently.
+
+    You’ll join the Information Worker Services (IWS) team, which focuses on delivering
+    secure, intuitive access to devices, applications and organizational content across
+    Windows, Web, and Mobile platforms. This role involves designing, implementing,
+    servicing, and maintaining full-stack applications that power these experiences.
+
+    Our team thrives on collaboration—working closely with partner teams across Microsoft
+    and with external partners such as Entra, Azure, Apple, and Google. If you enjoy
+    solving challenging problems, building impactful solutions, and working in a highly
+    collaborative environment, we’d love to hear from you.
+
+    Microsoft’s mission is to empower every person and every organization on the planet
+    to achieve more. As employees we come together with a growth mindset, innovate
+    to empower others, and collaborate to realize our shared goals. Each day we build
+    on our values of respect, integrity, and accountability to create a culture of
+    inclusion where everyone can thrive at work and beyond.
+
+    Qualifications Required Qualifications:
+
+    Bachelor''s Degree in Computer Science or related technical discipline OR equivalent
+    experience. Proven experience coding in languages including, but not limited to,
+    C, C++, C#,or Java and in data querying language (SQL, KQL). Reliable understanding
+    of how service to service protocols work (REST, OData, etc.). Dependable technical
+    abilities around design, coding, rapid prototyping, debugging, and problem solving.
+    Other Requirements:
+
+    Ability to meet Microsoft, customer and/or government security screening requirements
+    are required for this role. These requirements include, but are not limited to
+    the following specialized security screenings: Microsoft Cloud Background Check:
+    This position will be required to pass the Microsoft Cloud Background Check upon
+    hire/transfer and every two years thereafter.
+
+
+    Preferred Qualifications:
+
+    Bachelor''s Degree in Computer Science or related technical field AND 1+ years
+    technical engineering experience with coding in languages including, but not limited
+    to, C, C++, C#, or Java. OR Master''s Degree in Computer Science or related technical
+    field with proven experience coding in languages including, but not limited to,
+    C, C++, C#, or Java OR equivalent experience. Experience designing highly performant
+    microservice web services. Knowledge of cloud security fundamentals Experience
+    in developing distributed services with high scalability in a team environment
+
+
+    Software Engineering IC2 - The typical base pay range for this role across the
+    U.S. is USD $84,200 - $165,200 per year. There is a different range applicable
+    to specific work locations, within the San Francisco Bay area and New York City
+    metropolitan area, and the base pay range for this role in those locations is
+    USD $109,000 - $180,400 per year.
+
+
+
+    Certain roles may be eligible for benefits and other compensation. Find additional
+    benefits and pay information here: https://careers.microsoft.com/us/en/us-corporate-pay
+
+
+
+    Microsoft will accept applications for the role until Oct 23, 2025.
+
+
+
+
+
+
+    #EiP #IC2SWE #MSFTSECURITY #MSFTManagementEngineering
+
+    Responsibilities Designs, implements, tests, deploys, and maintains high quality
+    end-to-end solutions in a distributed, high scale, high availability environment
+    Solves complex problems in a collaborative fashion, driven by customer obsession,
+    to deliver a solid delightful experience to all our features Incorporates security
+    considerations throughout the development lifecycle, consulting with the experts
+    and addressing security issues with priority Improves our processes and tooling
+    to increase our productivity, leveraging AI assistants as appropriate Identifies
+    blocking issues and resolves them in a timely manner. Debugs and analyzes logs
+    to investigate issues in production to diagnose the root cause and provide long-term
+    fixes Participates in the On-Call Engineering service rotation for all our services
+    to ensure high availability and prompt resolution of emergent issues Contributes
+    to our knowledge base by adding high quality technical documentation and improving
+    our existing content Fosters an environment of inclusion and belonging within
+    the team and across our partnerships. Embody our culture and values. '

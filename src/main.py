@@ -36,39 +36,52 @@ class ResumeOptimizationPipeline:
         # Load configuration
         self.config = load_json("config.json")
 
+        # Get defaults
+        defaults = self.config.get("defaults", {})
+
         # Resume generation config
         self.resume_config = self.config.get("resume_generation", {})
-        self.resume_bot = self.resume_config.get("bot_name", "Gemini-2.5-Pro")
-        self.resume_thinking_budget = self.resume_config.get("thinking_budget", "4096")
+        self.resume_bot = self.resume_config.get("bot_name", defaults.get("resume_bot", "Gemini-2.5-Pro"))
+        self.resume_thinking_budget = self.resume_config.get("thinking_budget", defaults.get("resume_thinking_budget", "4096"))
         self.resume_web_search = self.resume_config.get("web_search", True)
 
         # LaTeX conversion config
         self.latex_config = self.config.get("latex_conversion", {})
-        self.latex_bot = self.latex_config.get("bot_name", "Gemini-2.5-Pro")
-        self.latex_thinking_budget = self.latex_config.get("thinking_budget", "2048")
+        self.latex_bot = self.latex_config.get("bot_name", defaults.get("latex_bot", "Gemini-2.5-Pro"))
+        self.latex_thinking_budget = self.latex_config.get("thinking_budget", defaults.get("latex_thinking_budget", "2048"))
         self.latex_web_search = self.latex_config.get("web_search", False)
 
         # LaTeX verification config
         self.latex_verification_config = self.config.get("latex_verification", {})
-        self.latex_verification_bot = self.latex_verification_config.get(
-            "bot_name", "Gemini-2.5-Pro"
-        )
+        self.latex_verification_bot = self.latex_verification_config.get("bot_name")
         self.latex_verification_thinking_budget = self.latex_verification_config.get(
-            "thinking_budget", "4096"
+            "thinking_budget"
         )
         self.latex_verification_web_search = self.latex_verification_config.get(
-            "web_search", False
+            "web_search"
         )
+
+        # LaTeX fix config
+        self.latex_fix_config = self.config.get("latex_fix", {})
+        self.latex_fix_bot = self.latex_fix_config.get("bot_name")
+        self.latex_fix_thinking_budget = self.latex_fix_config.get("thinking_budget")
+        self.latex_fix_web_search = self.latex_fix_config.get("web_search")
+        self.latex_fix_max_retries = self.latex_fix_config.get("max_retries", 5)
 
         # Cover letter generation config
         self.cover_letter_config = self.config.get("cover_letter_generation", {})
         self.cover_letter_bot = self.cover_letter_config.get(
-            "bot_name", "Claude-3.7-Sonnet"
+            "bot_name", defaults.get("cover_letter_bot", "Claude-3.7-Sonnet")
         )
         self.cover_letter_thinking_budget = self.cover_letter_config.get(
-            "thinking_budget", "2048"
+            "thinking_budget", defaults.get("cover_letter_thinking_budget", "2048")
         )
         self.cover_letter_web_search = self.cover_letter_config.get("web_search", False)
+
+        # Referral resume config
+        self.referral_config = self.config.get("referral_resume", {})
+        self.referral_email = self.referral_config.get("email", "srmanda.compsci@gmail.com")
+        self.referral_phone = self.referral_config.get("phone", "+1 919-526-0631")
 
         # Global settings
         self.reasoning_trace = self.config.get("reasoning_trace", False)
@@ -93,6 +106,9 @@ class ResumeOptimizationPipeline:
         )
         self.latex_verification_prompt_template = load_prompt_template(
             "verify_latex_resume.txt"
+        )
+        self.latex_fix_prompt_template = load_prompt_template(
+            "fix_latex_resume.txt"
         )
 
     async def call_poe_api(
@@ -252,6 +268,112 @@ class ResumeOptimizationPipeline:
 
         return prompt
 
+    def build_latex_fix_prompt(
+        self, tailored_resume_json: dict, failed_latex: str, issues: list
+    ) -> str:
+        """Build the prompt for fixing LaTeX resume based on verification issues."""
+        prompt = self.latex_fix_prompt_template
+
+        # Filter to only include major and critical issues
+        major_critical_issues = [
+            issue
+            for issue in issues
+            if issue.get("severity") in ["major", "critical"]
+        ]
+
+        # Format issues for the prompt
+        issues_text = ""
+        if major_critical_issues:
+            for i, issue in enumerate(major_critical_issues, 1):
+                severity = issue.get("severity", "unknown")
+                category = issue.get("category", "unknown")
+                description = issue.get("description", "No description")
+                location = issue.get("location", "Unknown location")
+
+                issues_text += f"{i}. [{severity.upper()}] {category}\n"
+                issues_text += f"   Description: {description}\n"
+                issues_text += f"   Location: {location}\n\n"
+        else:
+            issues_text = "No major or critical issues found."
+
+        # Replace placeholders
+        prompt = prompt.replace(
+            "[TAILORED_RESUME_JSON]",
+            f"```json\n{json.dumps(tailored_resume_json, indent=2)}\n```",
+        )
+        prompt = prompt.replace(
+            "[FAILED_LATEX]", f"```latex\n{failed_latex}\n```"
+        )
+        prompt = prompt.replace("[VERIFICATION_ISSUES]", issues_text)
+
+        return prompt
+
+    async def verify_and_fix_latex_resume(
+        self, tailored_resume_json: dict, initial_latex_text: str
+    ) -> tuple:
+        """
+        Verify LaTeX resume and attempt to fix issues if verification fails.
+        Retries up to max_retries times.
+        Returns (final_latex_text: str, verification_passed: bool, verification_result: dict)
+        """
+        latex_text = initial_latex_text
+        max_retries = self.latex_fix_max_retries
+
+        for attempt in range(1, max_retries + 1):
+            # Verify the LaTeX
+            verification_passed, verification_result = await self.verify_latex_resume(
+                latex_text
+            )
+
+            if verification_passed:
+                print(f"✓ Verification passed on attempt {attempt}!")
+                return latex_text, verification_passed, verification_result
+
+            # Verification failed
+            issues = verification_result.get("issues", [])
+
+            # Check if there are any major/critical issues
+            major_critical_issues = [
+                issue
+                for issue in issues
+                if issue.get("severity") in ["major", "critical"]
+            ]
+
+            if not major_critical_issues:
+                print(
+                    f"✓ Only minor issues found on attempt {attempt}. Accepting LaTeX."
+                )
+                return latex_text, True, verification_result
+
+            # We have major/critical issues and haven't exhausted retries
+            if attempt < max_retries:
+                print(
+                    f"\n🔧 Attempt {attempt}/{max_retries}: Found {len(major_critical_issues)} major/critical issues. Attempting to fix..."
+                )
+
+                # Build fix prompt
+                fix_prompt = self.build_latex_fix_prompt(
+                    tailored_resume_json, latex_text, issues
+                )
+
+                # Call API to fix the LaTeX
+                print(f"🔍 Calling {self.latex_fix_bot} to fix LaTeX issues...")
+                fix_response = await self.call_poe_api(fix_prompt, self.latex_fix_bot)
+
+                # Extract fixed LaTeX using the helper method
+                latex_text = self.extract_latex_from_response(fix_response)
+
+                print(f"✓ Fixed LaTeX received. Verifying again...")
+            else:
+                # Exhausted all retries
+                print(
+                    f"\n❌ Failed to fix LaTeX after {max_retries} attempts. {len(major_critical_issues)} major/critical issues remain."
+                )
+                return latex_text, False, verification_result
+
+        # Should not reach here, but return the last state
+        return latex_text, False, verification_result
+
     async def verify_latex_resume(self, latex_text: str) -> tuple:
         """
         Verify the LaTeX resume against the master resume.
@@ -341,6 +463,65 @@ class ResumeOptimizationPipeline:
             print(f"Response: {response[:500]}...")
             raise
 
+    def extract_latex_from_response(self, response: str) -> str:
+        """
+        Extract LaTeX code from the API response, filtering out reasoning traces.
+        Handles responses with markdown code blocks and reasoning traces.
+        """
+        # First, try to extract from code blocks
+        latex_text = response.strip()
+        
+        if "```latex" in latex_text:
+            start = latex_text.find("```latex") + 8
+            end = latex_text.find("```", start)
+            if end != -1:
+                latex_text = latex_text[start:end].strip()
+        elif "```" in latex_text:
+            start = latex_text.find("```") + 3
+            end = latex_text.find("```", start)
+            if end != -1:
+                latex_text = latex_text[start:end].strip()
+        
+        # If no code blocks found, try to find \documentclass directly
+        if "\\documentclass" not in latex_text:
+            # Look for \documentclass in the original response
+            doc_start = response.find("\\documentclass")
+            if doc_start != -1:
+                latex_text = response[doc_start:].strip()
+        
+        # Now filter out reasoning traces if reasoning_trace is disabled
+        if not self.reasoning_trace and latex_text:
+            lines = latex_text.split("\n")
+            filtered_lines = []
+            in_thinking_block = False
+            found_documentclass = False
+            
+            for line in lines:
+                # Once we find \documentclass, we're in the actual LaTeX
+                if "\\documentclass" in line:
+                    found_documentclass = True
+                
+                # If we haven't found \documentclass yet, skip reasoning traces
+                if not found_documentclass:
+                    if "*Thinking*" in line or "Thinking..." in line:
+                        in_thinking_block = True
+                        continue
+                    
+                    if line.strip().startswith(">"):
+                        continue
+                    
+                    if in_thinking_block:
+                        continue
+                
+                # Once we're in the LaTeX document, keep everything
+                if found_documentclass:
+                    filtered_lines.append(line)
+            
+            if filtered_lines:
+                latex_text = "\n".join(filtered_lines)
+        
+        return latex_text.strip()
+
     async def process_job(self, job: dict) -> None:
         """Process a single job application."""
         job_id = job.get("job_id")
@@ -428,33 +609,26 @@ class ResumeOptimizationPipeline:
         latex_prompt = self.build_latex_conversion_prompt(tailored_resume)
         latex_response = await self.call_poe_api(latex_prompt, self.latex_bot)
 
-        # Extract LaTeX from response (remove any markdown code blocks)
-        latex_text = latex_response.strip()
-        if "```latex" in latex_text:
-            start = latex_text.find("```latex") + 8
-            end = latex_text.find("```", start)
-            latex_text = latex_text[start:end].strip()
-        elif "```" in latex_text:
-            start = latex_text.find("```") + 3
-            end = latex_text.find("```", start)
-            latex_text = latex_text[start:end].strip()
+        # Extract LaTeX from response using the helper method
+        latex_text = self.extract_latex_from_response(latex_response)
 
-        # Step 4c: Verify LaTeX resume
-        verification_passed, verification_result = await self.verify_latex_resume(
-            latex_text
+        # Step 4c: Verify and fix LaTeX resume (with retry loop)
+        print(f"\n🔍 Step 4c: Verifying LaTeX resume (with auto-fix retry)...")
+        latex_text, verification_passed, verification_result = await self.verify_and_fix_latex_resume(
+            tailored_resume, latex_text
         )
 
         if not verification_passed:
             print("\n" + "=" * 60)
-            print("❌ VERIFICATION FAILED")
+            print("❌ VERIFICATION FAILED AFTER ALL RETRIES")
             print("=" * 60)
             print(
-                "The LaTeX resume contains blatant lies, major misrepresentations, or critical quality issues."
+                "The LaTeX resume still contains major/critical issues after all fix attempts."
             )
             print("The process has been halted. Please review the issues above.")
             print("=" * 60 + "\n")
             raise ValueError(
-                "LaTeX verification failed. Resume contains critical issues that must be addressed."
+                "LaTeX verification failed after all retry attempts. Resume contains critical issues that must be addressed."
             )
 
         # Verification passed - save the LaTeX file
@@ -480,13 +654,9 @@ class ResumeOptimizationPipeline:
         try:
             from utils import create_referral_latex
 
-            # Referral contact information
-            referral_email = "srmanda.compsci@gmail.com"
-            referral_phone = "+1 919-526-0631"
-
-            # Create referral LaTeX
+            # Create referral LaTeX using configured contact information
             referral_latex = create_referral_latex(
-                latex_text, referral_email, referral_phone
+                latex_text, self.referral_email, self.referral_phone
             )
 
             # Save referral LaTeX
