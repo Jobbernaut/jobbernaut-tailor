@@ -1,29 +1,34 @@
 {
   "resume_generation": {
-    "bot_name": "Gemini-2.5-Pro",
+    "bot_name": "Claude-Sonnet-4.5",
     "thinking_budget": "4096",
-    "web_search": false
+    "web_search": false,
+    "comment": "Premium model for complex reasoning, web search, keyword optimization"
   },
   "latex_conversion": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "4096",
-    "web_search": false
+    "bot_name": "Claude-Haiku-4.5",
+    "thinking_budget": "0",
+    "web_search": false,
+    "comment": "Fast model for pure JSON->LaTeX transformation, no reasoning needed"
   },
   "cover_letter_generation": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "4096",
-    "web_search": true
-  },
-  "latex_verification": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "4096",
-    "web_search": false
-  },
-  "latex_fix": {
-    "bot_name": "Gemini-2.5-Pro",
+    "bot_name": "Claude-Haiku-4.5",
     "thinking_budget": "2048",
     "web_search": false,
-    "max_retries": 5
+    "comment": "Best for creative writing with strict word count constraints"
+  },
+  "latex_verification": {
+    "bot_name": "Claude-Haiku-4.5",
+    "thinking_budget": "2048",
+    "web_search": false,
+    "comment": "Fast model for structured validation tasks"
+  },
+  "latex_fix": {
+    "bot_name": "Claude-Haiku-4.5",
+    "thinking_budget": "2048",
+    "web_search": false,
+    "max_retries": 5,
+    "comment": "Fast model with moderate reasoning for guided fixes"
   },
   "referral_resume": {
     "email": "srmanda.compsci@gmail.com",

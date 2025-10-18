@@ -41,14 +41,14 @@ class ResumeOptimizationPipeline:
 
         # Resume generation config
         self.resume_config = self.config.get("resume_generation", {})
-        self.resume_bot = self.resume_config.get("bot_name", defaults.get("resume_bot", "Gemini-2.5-Pro"))
-        self.resume_thinking_budget = self.resume_config.get("thinking_budget", defaults.get("resume_thinking_budget", "4096"))
+        self.resume_bot = self.resume_config.get("bot_name") or defaults.get("resume_bot")
+        self.resume_thinking_budget = self.resume_config.get("thinking_budget") or defaults.get("resume_thinking_budget")
         self.resume_web_search = self.resume_config.get("web_search", True)
 
         # LaTeX conversion config
         self.latex_config = self.config.get("latex_conversion", {})
-        self.latex_bot = self.latex_config.get("bot_name", defaults.get("latex_bot", "Gemini-2.5-Pro"))
-        self.latex_thinking_budget = self.latex_config.get("thinking_budget", defaults.get("latex_thinking_budget", "2048"))
+        self.latex_bot = self.latex_config.get("bot_name") or defaults.get("latex_bot")
+        self.latex_thinking_budget = self.latex_config.get("thinking_budget") or defaults.get("latex_thinking_budget")
         self.latex_web_search = self.latex_config.get("web_search", False)
 
         # LaTeX verification config
@@ -70,12 +70,8 @@ class ResumeOptimizationPipeline:
 
         # Cover letter generation config
         self.cover_letter_config = self.config.get("cover_letter_generation", {})
-        self.cover_letter_bot = self.cover_letter_config.get(
-            "bot_name", defaults.get("cover_letter_bot", "Claude-3.7-Sonnet")
-        )
-        self.cover_letter_thinking_budget = self.cover_letter_config.get(
-            "thinking_budget", defaults.get("cover_letter_thinking_budget", "2048")
-        )
+        self.cover_letter_bot = self.cover_letter_config.get("bot_name") or defaults.get("cover_letter_bot")
+        self.cover_letter_thinking_budget = self.cover_letter_config.get("thinking_budget") or defaults.get("cover_letter_thinking_budget")
         self.cover_letter_web_search = self.cover_letter_config.get("web_search", False)
 
         # Referral resume config
@@ -252,14 +248,14 @@ class ResumeOptimizationPipeline:
 
         return prompt
 
-    def build_latex_verification_prompt(self, latex_text: str) -> str:
-        """Build the prompt for verifying LaTeX resume against master resume."""
+    def build_latex_verification_prompt(self, latex_text: str, tailored_resume_json: dict) -> str:
+        """Build the prompt for verifying LaTeX resume against tailored resume."""
         prompt = self.latex_verification_prompt_template
 
-        # Replace placeholders
+        # Replace placeholders - use TAILORED resume instead of master resume
         prompt = prompt.replace(
             "[MASTER_RESUME_JSON]",
-            f"```json\n{json.dumps(self.master_resume, indent=2)}\n```",
+            f"```json\n{json.dumps(tailored_resume_json, indent=2)}\n```",
         )
         prompt = prompt.replace(
             "[LATEX_RESUME]",
@@ -322,7 +318,7 @@ class ResumeOptimizationPipeline:
         for attempt in range(1, max_retries + 1):
             # Verify the LaTeX
             verification_passed, verification_result = await self.verify_latex_resume(
-                latex_text
+                latex_text, tailored_resume_json
             )
 
             if verification_passed:
@@ -374,16 +370,16 @@ class ResumeOptimizationPipeline:
         # Should not reach here, but return the last state
         return latex_text, False, verification_result
 
-    async def verify_latex_resume(self, latex_text: str) -> tuple:
+    async def verify_latex_resume(self, latex_text: str, tailored_resume_json: dict) -> tuple:
         """
-        Verify the LaTeX resume against the master resume.
+        Verify the LaTeX resume against the tailored resume.
         Returns (verification_passed: bool, verification_result: dict)
         """
         print(
             f"\n🔍 Step 4c: Verifying LaTeX resume using {self.latex_verification_bot}..."
         )
 
-        verification_prompt = self.build_latex_verification_prompt(latex_text)
+        verification_prompt = self.build_latex_verification_prompt(latex_text, tailored_resume_json)
         verification_response = await self.call_poe_api(
             verification_prompt, self.latex_verification_bot
         )
@@ -491,34 +487,31 @@ class ResumeOptimizationPipeline:
         
         # Now filter out reasoning traces if reasoning_trace is disabled
         if not self.reasoning_trace and latex_text:
-            lines = latex_text.split("\n")
-            filtered_lines = []
-            in_thinking_block = False
-            found_documentclass = False
+            # Find the start of actual LaTeX content
+            doc_start = latex_text.find("\\documentclass")
             
-            for line in lines:
-                # Once we find \documentclass, we're in the actual LaTeX
-                if "\\documentclass" in line:
-                    found_documentclass = True
+            if doc_start != -1:
+                # Extract everything from \documentclass onwards
+                latex_text = latex_text[doc_start:].strip()
+            else:
+                # If no \documentclass found, filter line by line
+                lines = latex_text.split("\n")
+                filtered_lines = []
                 
-                # If we haven't found \documentclass yet, skip reasoning traces
-                if not found_documentclass:
-                    if "*Thinking*" in line or "Thinking..." in line:
-                        in_thinking_block = True
-                        continue
-                    
+                for line in lines:
+                    # Skip lines that are clearly thinking traces
                     if line.strip().startswith(">"):
                         continue
-                    
-                    if in_thinking_block:
+                    if "**Thinking" in line or "*Thinking*" in line or "Thinking..." in line:
                         continue
-                
-                # Once we're in the LaTeX document, keep everything
-                if found_documentclass:
+                    if line.strip().startswith("**") and "**" in line[2:]:
+                        # Skip markdown headers that are part of thinking
+                        continue
+                    
                     filtered_lines.append(line)
-            
-            if filtered_lines:
-                latex_text = "\n".join(filtered_lines)
+                
+                if filtered_lines:
+                    latex_text = "\n".join(filtered_lines)
         
         return latex_text.strip()
 

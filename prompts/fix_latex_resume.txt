@@ -63,7 +63,6 @@ Remember that a resume is a **marketing tool**. Minor embellishments, strategic 
    - Do NOT modify, condense, or rewrite this text
 
 3. **Education:**
-   - Format graduation_date as "Expected YYYY" if future, or "YYYY" if past
    - Do NOT include blank lines between education entries
    - Omit relevant_coursework and honors to save space
 

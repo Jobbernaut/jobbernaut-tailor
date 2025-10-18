@@ -6,7 +6,7 @@ You will be given:
 1. **[TAILORED_RESUME_JSON]:** A complete, tailored resume in JSON format with the following structure:
    - contact_info (first_name, last_name, phone, email, location, linkedin_url, github_url, portfolio_url, kaggle_url)
    - professional_summaries (string containing the OBJECTIVE section text)
-   - education (array with institution, degree, graduation_date, gpa, relevant_coursework, honors)
+   - education (array with institution, degree, start_date, graduation_date, gpa, relevant_coursework, honors)
    - skills (object with categorized skill arrays)
    - work_experience (array with job_title, company, start_date, end_date, bullet_points)
    - projects (array with project_name, description, bullet_points, project_url)
@@ -61,7 +61,7 @@ Convert the JSON resume into a complete, ready-to-compile LaTeX document using t
 \begin{rSection}{Education}
 
 [FOR EACH EDUCATION ENTRY - NO \\ ON LAST LINE:]
-{\bf [DEGREE]}, [INSTITUTION] \hfill {[GRADUATION_DATE]}\\
+{\bf [DEGREE]}, [INSTITUTION] \hfill {[START_DATE] - [GRADUATION_DATE]}\\
 
 \end{rSection}
 
@@ -93,7 +93,9 @@ Convert the JSON resume into a complete, ready-to-compile LaTeX document using t
 
 \begin{rSection}{PROJECTS}
 [FOR EACH PROJECT:]
-\textbf{[PROJECT_NAME].} {[DESCRIPTION] [IF BULLET_POINTS EXIST: COMBINE_INTO_DESCRIPTION] [IF PROJECT_URL EXISTS: \href{[PROJECT_URL]}{(Link)}]}
+[IF PROJECT_URL EXISTS: \href{[PROJECT_URL]}{\textbf{[PROJECT_NAME]}.}]
+[IF PROJECT_URL DOES NOT EXIST: \textbf{[PROJECT_NAME].}]
+{[DESCRIPTION] [IF BULLET_POINTS EXIST: COMBINE_INTO_DESCRIPTION]}
 
 \end{rSection}
 
@@ -116,7 +118,8 @@ Convert the JSON resume into a complete, ready-to-compile LaTeX document using t
    - It must appear word-for-word as given
 
 3. **Education:**
-   - Format graduation_date as "Expected YYYY" if future, or "YYYY" if past
+   - Format both start_date and graduation_date as "MMM YYYY" (e.g., "Aug 2024")
+   - Display format: "MMM YYYY - MMM YYYY" or "MMM YYYY - Expected MMM YYYY"
    - Do NOT include blank lines between education entries
    - Omit relevant_coursework and honors to save space
 
@@ -146,7 +149,9 @@ Convert the JSON resume into a complete, ready-to-compile LaTeX document using t
 6. **Projects:**
    - Include ALL projects from the JSON exactly as provided
    - Combine project description and bullet_points into a flowing narrative
-   - If project_url exists, add it as a hyperlink at the end
+   - **If project_url exists:** Make the project name itself a clickable hyperlink using \href{[PROJECT_URL]}{\textbf{[PROJECT_NAME]}.}
+   - **If project_url does NOT exist:** Display project name as plain bold text using \textbf{[PROJECT_NAME].}
+   - Do NOT add a separate "(Link)" text at the end
    - Keep descriptions concise but informative
 
 ### CRITICAL DIRECTIVES:
