@@ -42,6 +42,5 @@
     "latex_thinking_budget": "2048",
     "cover_letter_thinking_budget": "2048"
   },
-  "reasoning_trace": false,
-  "dry_run": false
+  "reasoning_trace": false
 }

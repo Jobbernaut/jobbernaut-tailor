@@ -81,7 +81,6 @@ class ResumeOptimizationPipeline:
 
         # Global settings
         self.reasoning_trace = self.config.get("reasoning_trace", False)
-        self.dry_run = self.config.get("dry_run", False)
 
         # Load master profile data
         self.master_resume = load_json("profile/master_resume.json")
