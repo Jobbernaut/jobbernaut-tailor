@@ -1,6 +1,6 @@
 {
   "resume_generation": {
-    "bot_name": "Claude-Sonnet-4.5",
+    "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "4096",
     "web_search": false,
     "comment": "Premium model for complex reasoning, web search, keyword optimization"
