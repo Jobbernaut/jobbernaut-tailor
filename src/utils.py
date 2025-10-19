@@ -54,8 +54,6 @@ def update_job_status(filepath: str, job_id: str, new_status: str) -> None:
     save_yaml(filepath, applications)
 
 
-
-
 def create_output_directory(job_id: str, job_title: str, company_name: str) -> str:
     """
     Create an output directory for the job application.
@@ -79,155 +77,6 @@ def create_output_directory(job_id: str, job_title: str, company_name: str) -> s
     return dir_path
 
 
-def save_resume(
-    output_dir: str, resume_json: Dict, job_title: str, company_name: str
-) -> str:
-    """Save the tailored resume to the output directory."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    filename = f"{safe_company}_{safe_title}_Resume.json"
-    filepath = os.path.join(output_dir, filename)
-    save_json(filepath, resume_json)
-    return filepath
-
-
-def save_cover_letter(
-    output_dir: str,
-    cover_letter_text: str,
-    job_title: str,
-    company_name: str,
-) -> str:
-    """Save the cover letter text to the output directory as TXT file."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    
-    # Save as TXT only (PDF generation now uses LaTeX)
-    txt_filename = f"{safe_company}_{safe_title}_CoverLetter.txt"
-    txt_filepath = os.path.join(output_dir, txt_filename)
-
-    with open(txt_filepath, "w", encoding="utf-8") as f:
-        f.write(cover_letter_text)
-
-    return txt_filepath
-
-
-def save_latex_resume(
-    output_dir: str, latex_text: str, job_title: str, company_name: str
-) -> str:
-    """Save the LaTeX resume to the output directory."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    filename = f"{safe_company}_{safe_title}_Resume.tex"
-    filepath = os.path.join(output_dir, filename)
-
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(latex_text)
-
-    return filepath
-
-
-def save_latex_cover_letter(
-    output_dir: str, latex_text: str, job_title: str, company_name: str
-) -> str:
-    """Save the LaTeX cover letter to the output directory."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    filename = f"{safe_company}_{safe_title}_CoverLetter.tex"
-    filepath = os.path.join(output_dir, filename)
-
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(latex_text)
-
-    return filepath
-
-
-def save_referral_cover_letter(
-    output_dir: str,
-    cover_letter_text: str,
-    job_title: str,
-    company_name: str,
-) -> str:
-    """Save the referral cover letter text to the output directory as TXT file."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    
-    # Save as TXT with "Referral" prefix to distinguish from regular cover letter
-    txt_filename = f"Referral_{safe_company}_{safe_title}_CoverLetter.txt"
-    txt_filepath = os.path.join(output_dir, txt_filename)
-
-    with open(txt_filepath, "w", encoding="utf-8") as f:
-        f.write(cover_letter_text)
-
-    return txt_filepath
-
-
-def save_referral_latex_cover_letter(
-    output_dir: str, latex_text: str, job_title: str, company_name: str
-) -> str:
-    """Save the referral LaTeX cover letter to the output directory."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    # Use "Referral" prefix to distinguish from regular cover letter
-    filename = f"Referral_{safe_company}_{safe_title}_CoverLetter.tex"
-    filepath = os.path.join(output_dir, filename)
-
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(latex_text)
-
-    return filepath
-
-
-def save_referral_latex_resume(
-    output_dir: str, latex_text: str, job_title: str, company_name: str
-) -> str:
-    """Save the referral LaTeX resume to the output directory."""
-    # Sanitize filename components
-    safe_company = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
-    )
-    safe_title = "".join(
-        c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-    )
-    # Use "Referral" prefix to distinguish from regular resume
-    filename = f"Referral_{safe_company}_{safe_title}_Resume.tex"
-    filepath = os.path.join(output_dir, filename)
-
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(latex_text)
-
-    return filepath
-
-
 def load_prompt_template(prompt_file: str) -> str:
     """Load a prompt template from the prompts directory."""
     filepath = os.path.join("prompts", prompt_file)
@@ -235,9 +84,19 @@ def load_prompt_template(prompt_file: str) -> str:
         return f.read()
 
 
-def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
+def compile_latex_to_pdf(
+    tex_file_path: str,
+    output_dir: str,
+    document_type: str = "resume"
+) -> str:
     """
     Compile LaTeX file to PDF using pdflatex.
+    
+    Args:
+        tex_file_path: Path to the .tex file to compile
+        output_dir: Directory where the PDF should be generated
+        document_type: Type of document ("resume" or "cover_letter")
+    
     Returns the path to the generated PDF file.
     """
     import subprocess
@@ -250,26 +109,29 @@ def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
             "Download MiKTeX from: https://miktex.org/download"
         )
 
-    # Copy resume.cls to the output directory (required for compilation)
-    resume_cls_source = "resume.cls"
-    resume_cls_dest = os.path.join(output_dir, "resume.cls")
+    # Determine which .cls file to use based on document type
+    if document_type == "cover_letter":
+        cls_source = "coverletter.cls"
+    else:
+        cls_source = "resume.cls"
 
-    if not os.path.exists(resume_cls_source):
+    # Copy the .cls file to the output directory
+    cls_dest = os.path.join(output_dir, os.path.basename(cls_source))
+    if not os.path.exists(cls_source):
         raise FileNotFoundError(
-            f"resume.cls not found in the project root. "
-            f"Please ensure resume.cls exists at: {resume_cls_source}"
+            f"{cls_source} not found in the project root. "
+            f"Please ensure {cls_source} exists."
         )
-
-    shutil.copy2(resume_cls_source, resume_cls_dest)
+    shutil.copy2(cls_source, cls_dest)
 
     # Get the base name without extension
     tex_basename = os.path.basename(tex_file_path)
     tex_name_no_ext = os.path.splitext(tex_basename)[0]
 
-    # Set environment variables for MiKTeX to auto-install packages without prompting
+    # Set environment variables for MiKTeX to auto-install packages
     env = os.environ.copy()
-    env["MIKTEX_AUTOINSTALL"] = "1"  # Enable automatic package installation
-    env["MIKTEX_ENABLEINSTALLER"] = "t"  # Enable the package installer
+    env["MIKTEX_AUTOINSTALL"] = "1"
+    env["MIKTEX_ENABLEINSTALLER"] = "t"
 
     # Run pdflatex twice (standard practice for proper references)
     for run in range(1, 3):
@@ -285,20 +147,17 @@ def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
                 ],
                 capture_output=True,
                 text=True,
-                timeout=120,  # Increased timeout to allow for package installation
-                env=env,  # Pass environment variables
+                timeout=120,
+                env=env,
             )
 
-            # Check for errors in the output
             if result.returncode != 0:
-                # Extract relevant error information from log
                 log_file = os.path.join(output_dir, f"{tex_name_no_ext}.log")
                 error_msg = "LaTeX compilation failed."
 
                 if os.path.exists(log_file):
                     with open(log_file, "r", encoding="utf-8", errors="ignore") as f:
                         log_content = f.read()
-                        # Look for error lines
                         error_lines = [
                             line
                             for line in log_content.split("\n")
@@ -321,9 +180,6 @@ def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
         if os.path.exists(aux_file):
             os.remove(aux_file)
 
-    # Keep resume.cls in the output directory for subsequent operations
-    # (e.g., cover letter compilation may need it)
-
     # Return the path to the generated PDF
     pdf_path = os.path.join(output_dir, f"{tex_name_no_ext}.pdf")
 
@@ -337,117 +193,78 @@ def compile_latex_to_pdf(tex_file_path: str, output_dir: str) -> str:
 
 
 def create_referral_latex(
-    latex_text: str, referral_email: str, referral_phone: str, document_type: str = "resume"
+    latex_text: str, referral_email: str, referral_phone: str
 ) -> str:
     """
     Create a referral version of the LaTeX document by replacing contact information.
 
     Args:
-        latex_text: Original LaTeX content (resume or cover letter)
+        latex_text: Original LaTeX content
         referral_email: Email address for referral version
         referral_phone: Phone number for referral version
-        document_type: Type of document ("resume" or "cover_letter")
 
     Returns:
         Modified LaTeX with referral contact information
     """
     import re
 
-    # Create a copy of the LaTeX text
     referral_latex = latex_text
 
     # Replace phone number - handle various phone formats
-    # Pattern matches: +1 919-672-2226, 919-672-2226, (919) 672-2226, etc.
     phone_patterns = [
-        r"\+1\s*919-672-2226",  # +1 919-672-2226
-        r"919-672-2226",        # 919-672-2226
-        r"\(919\)\s*672-2226",  # (919) 672-2226
+        r"\+1\s*919-672-2226",
+        r"919-672-2226",
+        r"\(919\)\s*672-2226",
     ]
     
     for pattern in phone_patterns:
         referral_latex = re.sub(pattern, referral_phone, referral_latex)
 
-    # Replace email - matches srmanda.cs@gmail.com in both mailto: and display text
-    # This will replace both occurrences in: \href{mailto:srmanda.cs@gmail.com}{srmanda.cs@gmail.com}
+    # Replace email
     email_pattern = r"srmanda\.cs@gmail\.com"
     referral_latex = re.sub(email_pattern, referral_email, referral_latex)
-
-    # Debug: Print replacement info
-    print(f"  Creating referral {document_type}:")
-    print(f"    Email: srmanda.cs@gmail.com → {referral_email}")
-    print(f"    Phone: original → {referral_phone}")
 
     return referral_latex
 
 
-def organize_output_files(
-    output_dir: str,
-    first_name: str,
-    last_name: str,
-    company_name: str,
-    job_id: str,
-) -> None:
+def cleanup_output_directory(output_dir: str, first_name: str, last_name: str, company_name: str, job_id: str) -> None:
     """
-    Organize output files into final structure:
-    - Create debug/ subdirectory
-    - Move .tex, .json, .txt files to debug/
-    - Rename PDFs with proper naming convention
+    Clean up output directory by moving all non-PDF files to debug/ folder.
+    Keep only the 4 final PDFs in the main directory.
     """
     import shutil
 
-    # Create debug subdirectory
+    # Create debug directory
     debug_dir = os.path.join(output_dir, "debug")
     os.makedirs(debug_dir, exist_ok=True)
 
-    # Sanitize names for filenames (replace spaces with underscores)
+    # Sanitize names for filenames
     safe_first = first_name.replace(" ", "_")
     safe_last = last_name.replace(" ", "_")
     safe_company = company_name.replace(" ", "_")
 
-    # Find and move files to debug/
+    # Define the 4 PDFs that should stay in main directory
+    final_pdfs = {
+        f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf",
+        f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf",
+        f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf",
+        f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf",
+    }
+
+    # Move everything else to debug/
     for filename in os.listdir(output_dir):
         filepath = os.path.join(output_dir, filename)
+
+        # Skip if it's the debug directory itself
+        if filename == "debug":
+            continue
 
         # Skip if it's a directory
         if os.path.isdir(filepath):
             continue
 
-        # Move .tex, .json, .txt files to debug/
-        if filename.endswith((".tex", ".json", ".txt")):
+        # Keep final PDFs, move everything else
+        if filename not in final_pdfs:
             dest_path = os.path.join(debug_dir, filename)
             shutil.move(filepath, dest_path)
             print(f"  Moved {filename} to debug/")
-
-        # Rename PDFs with proper naming convention
-        elif filename.endswith(".pdf"):
-            if "Referral" in filename and "CoverLetter" in filename:
-                # Handle referral cover letter PDF
-                new_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-                new_path = os.path.join(output_dir, new_name)
-                shutil.move(filepath, new_path)
-                print(f"  Renamed referral cover letter PDF to: {new_name}")
-
-            elif "Referral" in filename and "Resume" in filename:
-                # Handle referral resume PDF
-                new_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-                new_path = os.path.join(output_dir, new_name)
-                shutil.move(filepath, new_path)
-                print(f"  Renamed referral resume PDF to: {new_name}")
-
-            elif "Resume" in filename:
-                # Handle regular resume PDF
-                new_name = (
-                    f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-                )
-                new_path = os.path.join(output_dir, new_name)
-                shutil.move(filepath, new_path)
-                print(f"  Renamed resume PDF to: {new_name}")
-
-            elif "CoverLetter" in filename or "Cover_Letter" in filename:
-                # Handle regular cover letter PDF
-                new_name = (
-                    f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-                )
-                new_path = os.path.join(output_dir, new_name)
-                shutil.move(filepath, new_path)
-                print(f"  Renamed cover letter PDF to: {new_name}")
