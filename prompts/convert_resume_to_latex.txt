@@ -80,7 +80,7 @@ Convert the JSON resume into a complete, ready-to-compile LaTeX document using t
 \begin{rSection}{PROJECTS}
 
 [FOR EACH PROJECT:]
-{\textbf{[PROJECT_NAME]}} | [COMMA_SEPARATED_TECHNOLOGIES] \hfill \href{[PROJECT_URL]}{\textbf{[View Project]}}
+{\textbf{[PROJECT_NAME]}} | [COMMA_SEPARATED_TECHNOLOGIES] \hfill \href{[PROJECT_URL]}{\textbf{(View Project)}}
  \begin{itemize}
     \itemsep -3pt {}
     [FOR EACH BULLET_POINT:]
