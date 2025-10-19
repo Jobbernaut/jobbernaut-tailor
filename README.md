@@ -10,6 +10,20 @@ The design of this project is guided by three core principles:
 2.  **Hassle-Free Data Entry:** Using the YAML format allows for raw, multi-line text blocks (`job_description: |`). You can copy and paste a job description directly from a website without any manual formatting or escaping of special characters.
 3.  **Intelligent Automation, Not Just Generation:** The system doesn't just generate generic documents. It intelligently selects the most relevant personal story for each cover letter by analyzing the job description for keywords. This provides strategic personalization without requiring manual intervention for each job.
 
+## 📚 Comprehensive Documentation
+
+For detailed information about the system architecture, evolution, and technical implementation, please refer to the comprehensive documentation in the [`docs/`](docs/) folder:
+
+- **[Documentation Index](docs/README.md)** - Start here for navigation and quick start guides
+- **[Architecture](docs/ARCHITECTURE.md)** - System design, components, and data flow
+- **[Evolution](docs/EVOLUTION.md)** - Version history from V1 → V2 → V3 with deprecated features
+- **[Pipeline](docs/PIPELINE.md)** - Detailed breakdown of all 10 pipeline steps
+- **[Models](docs/MODELS.md)** - Pydantic validation system and schema documentation
+- **[Templates](docs/TEMPLATES.md)** - Jinja2 template architecture and customization
+- **[Configuration](docs/CONFIGURATION.md)** - Configuration hierarchy and settings
+
+The documentation below provides a quick start guide and overview. For in-depth technical details, architectural decisions, and the complete evolution journey, please consult the comprehensive documentation.
+
 ## Features
 
 - **Queue-Based Processing:** The script automatically finds the next job with `status: "pending"` and processes it.
