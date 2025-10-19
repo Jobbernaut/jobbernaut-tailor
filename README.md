@@ -1,6 +1,6 @@
 # Jobbernaut Job Automation Pipeline
 
-This project is a more powerful version of Jobbernaut, automating the tedious process of creating tailored resumes and cover letters for job applications. It is designed as a robust pipeline that uses a single master file as its database, processes jobs one by one, and leverages AI to generate high-quality, personalized application materials. Project currently pulled from Jobbernaut's deployment due to misuse concerns.
+This project is the tailoring backend of Jobbernaut, automating the tedious process of creating tailored resumes and cover letters for job applications. It is designed as a robust pipeline that uses a single master file as its database, processes jobs one by one, and leverages AI to generate high-quality, personalized application materials. Project currently pulled from Jobbernaut's deployment due to misuse concerns.
 
 ## Core Philosophy
 

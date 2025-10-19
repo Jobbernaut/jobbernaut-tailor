@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Medium Length Professional CV - RESUME CLASS FILE
+% Medium Length Professional CV - COVER LETTER CLASS FILE
 %
 % This template has been downloaded from:
 % http://www.LaTeXTemplates.com
@@ -18,9 +18,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesClass{resume}[2010/07/10 v0.9 Resume class]
+\ProvidesClass{coverletter}[2010/07/10 v0.9 Cover Letter class]
 
-\LoadClass[10pt,letterpaper]{article} % Font size and paper type
+\LoadClass[11pt,letterpaper]{article} % Font size and paper type (11pt for cover letters)
 
 \usepackage[parfill]{parskip} % Remove paragraph indentation
 \usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns

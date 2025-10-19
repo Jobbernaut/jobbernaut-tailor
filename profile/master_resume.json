@@ -4,86 +4,29 @@
     "last_name": "Manda",
     "phone": "+1 919-672-2226",
     "email": "srmanda.cs@gmail.com",
-    "location": "Raleigh, NC",
-    "linkedin_url": "https://www.linkedin.com/in/srmanda-cs/",
+    "location": "Chapel Hill, NC",
+    "linkedin_url": "https://linkedin.com/in/srmanda-cs",
     "github_url": "https://github.com/srmanda-cs",
-    "portfolio_url": "https://srmanda.com/",
-    "kaggle_url": "https://www.kaggle.com/ashishreddy9000"
+    "portfolio_url": "https://srmanda.com"
   },
-  "professional_summaries": "Graduate-level Software Engineer experienced in delivering production-grade solutions that enabled $1M+ investments, reduced asset-tracking costs by 37% across a 10K-employee organization, and eliminated months of manual workflows. Currently seeking full-time roles. Authorized to work without sponsorship. Available for CPT in Jan 2026 and OPT from June 2026 through 2029.",
   "education": [
     {
-      "institution": "UNC Chapel Hill",
-      "degree": "Master of Science in Computer Science",
-      "graduation_date": "2026-05",
-      "gpa": "",
-      "relevant_coursework": [],
-      "honors": []
+      "institution": "University of North Carolina at Chapel Hill",
+      "degree": "Master of Science in Computer Science (GPA: 4.0/4.0)",
+      "start_date": "2024-08",
+      "graduation_date": "2026-05"
     },
     {
-      "institution": "Amrita University",
-      "degree": "Bachelor of Technology in Computer Science",
-      "graduation_date": "2024-06",
-      "gpa": "",
-      "relevant_coursework": [],
-      "honors": []
+      "institution": "Amrita Vishwa Vidyapeetham",
+      "degree": "Bachelor of Technology in Computer Science (GPA: 8.86/10.0)",
+      "start_date": "2020-10",
+      "graduation_date": "2024-06"
     }
   ],
-  "skills": {
-    "programming_languages": [
-      "Python",
-      "TypeScript",
-      "JavaScript",
-      "Java",
-      "SQL",
-      "Dart"
-    ],
-    "frameworks_and_libraries": [
-      "Next.js",
-      "React",
-      "Flask",
-      "FastAPI",
-      "Spring Boot",
-      "Fluent UI",
-      "Pandas",
-      "NumPy",
-      "Tensorflow",
-      "Keras",
-      "scikit-learn",
-      "Sentence Transformers",
-      "PuLP",
-      "OR-Tools"
-    ],
-    "databases": ["PostgreSQL", "MySQL", "AWS OpenSearch", "Firebase"],
-    "cloud_and_devops": [
-      "AWS (S3, Lambda, EC2)",
-      "Azure",
-      "Docker",
-      "Kubernetes",
-      "Git",
-      "GitHub Actions",
-      "CI/CD"
-    ],
-    "ai_and_ml": [
-      "LLMs",
-      "RAG (Retrieval-Augmented Generation)",
-      "NLP",
-      "Tesseract OCR",
-      "UMAP",
-      "Computer Vision"
-    ],
-    "tools_and_project_management": [
-      "JIRA",
-      "Trello",
-      "Agile Methodologies",
-      "PollEverywhere API",
-      "Postman"
-    ]
-  },
   "work_experience": [
     {
-      "job_title": "Instructional Assistant (Course Infrastructure)",
-      "company": "Department of Neuroscience in UNC-CH",
+      "job_title": "Software Development Engineer (Platform)",
+      "company": "UNC Arts and Sciences",
       "start_date": "2025-08",
       "end_date": "Present",
       "bullet_points": [
@@ -98,38 +41,12 @@
         "Shows just how fast I can learn and pick up skills.",
         "The department leadership noticed my contributions, which were way above the scope of a GTA.",
         "Upon request for additional scholarship, they awarded me $5,000 which their policies usually do not allow for my exceptional technical contributions"
-      ],
-      "keywords": [
-        "Python",
-        "NLP",
-        "LLMs",
-        "Sentence Transformers",
-        "JIRA",
-        "Trello",
-        "PollEverywhere API",
-        "Project Management Software",
-        "System Design",
-        "Process Automation",
-        "Agile Methodologies",
-        "Process Improvement",
-        "Workflow Optimization",
-        "Educational Technology",
-        "Prompt Engineering",
-        "Team Coordination",
-        "Mentorship",
-        "Team Leadership",
-        "Change Management",
-        "Persuasion",
-        "Rapid Learning",
-        "Public Speaking",
-        "Stakeholder Engagement",
-        "Negotiation",
-        "Initiative"
       ]
     },
     {
-      "job_title": "Software Development Engineer",
+      "job_title": "Software Development Engineer (Internal Systems)",
       "company": "Tally",
+      "location": "Bengaluru, KA, IN",
       "start_date": "2024-01",
       "end_date": "2024-05",
       "bullet_points": [
@@ -158,47 +75,14 @@
         "Aided in enabling a $1M+ investment for an enterprise-wide Performance Management System by developing and delivering a key proof-of-concept in ReactJS, and Fluent UI.",
         "Minimized asset-tracking costs by 37% by building a full-stack Next.js portal that integrated with Azure AD, Graph API, and internal inventory systems for 10,000+ employees.",
         "Shrank manual deployment effort by 25% by enhancing the team’s CI/CD pipeline with automated build triggers and deployment scripts, improving release stability for critical internal services."
-      ],
-      "keywords": [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Flask",
-        "Python",
-        "MySQL",
-        "Docker",
-        "Kubernetes",
-        "Git",
-        "Azure",
-        "Azure Graph API",
-        "Fluent UI",
-        "Full-Stack Development",
-        "System Architecture",
-        "Proof-of-Concept (PoC) Development",
-        "System Modernization",
-        "Security Enhancement",
-        "Process Automation",
-        "Algorithm Design",
-        "API Integration",
-        "Database Management",
-        "DevOps",
-        "Project Ownership",
-        "Leadership",
-        "Rapid Learning",
-        "Initiative",
-        "Problem Solving",
-        "Business Acumen",
-        "Stakeholder Presentation",
-        "Team Coordination",
-        "Impact Delivery",
-        "Trust and Reliability"
       ]
     },
     {
-      "job_title": "Software Development Engineer",
+      "job_title": "Software Development Engineer (Financial Systems)",
       "company": "Vivriti Capital",
-      "start_date": "2024-07",
-      "end_date": "2024-08",
+      "location": "Chennai, KA, IN",
+      "start_date": "2023-07",
+      "end_date": "2023-08",
       "bullet_points": [
         "They didn't have a project for us on arrival, so we were very surprised.",
         "We were a team of 5 interns with one manager. 4 as SDEs, and 1 as MLE.",
@@ -233,47 +117,14 @@
         "Contributed towards decreasing credit report processing time by 99%+ (from 3 months to 4 minutes) by building an automated document-processing pipeline using AWS Lambda, ECS, and Spring Boot microservices.",
         "Cut analyst data lookup time by 80% by engineering an indexing solution in Amazon OpenSearch, featuring faceted search and on-demand CSV export capabilities for multi-gigabyte datasets.",
         "Verified data against a rule set of 40+ business logic checks programmatically, by architecting a validation pipeline, eliminating previously common data corruption errors."
-      ],
-      "keywords": [
-        "Java",
-        "Spring Boot",
-        "Python",
-        "ReactJS",
-        "AWS S3",
-        "AWS Lambda",
-        "AWS EC2",
-        "AWS OpenSearch",
-        "Tesseract OCR",
-        "LLM",
-        "RAG",
-        "REST APIs",
-        "System Architecture",
-        "Event-Driven Architecture",
-        "Microservices",
-        "Process Automation",
-        "Data Engineering (ETL)",
-        "Cloud Architecture (AWS)",
-        "Full-Stack Development",
-        "NLP",
-        "Data Integrity Management",
-        "Workflow Optimization",
-        "Initiative",
-        "Proactive Problem-Solving",
-        "Business Acumen",
-        "Leadership",
-        "Vision",
-        "Persuasion",
-        "Ownership Mentality",
-        "Strategic Thinking",
-        "Rapid Execution",
-        "Stakeholder Management"
       ]
     }
   ],
   "projects": [
     {
       "project_name": "Jobbernaut",
-      "description": "A full-stack application designed to streamline the job search process by tracking applications, providing analytics, and automatically tailoring resumes and cover letters using agentic AI.",
+      "skills": [],
+      "project_url": "https://jobbernaut.srmanda.com/",
       "bullet_points": [
         "Designed Jobbernaut, which helps job seekers keep track of their job applications.",
         "It also automatically tailors their resumes and cover letters according to the Job Description, and public company knowledge.",
@@ -288,74 +139,27 @@
         "This project demonstrates a full lifecycle of product development: from ideation and rapid prototyping with AI tools to strategic analysis and intellectual property management.",
         "The tool itself is enterprise-grade, with every line of code written with future maintenance in mind.",
         "The tool is also End-to-End rapid. From noticing a job to having a fully tailored resume (in PDF format too) and cover letter is about 30 seconds."
-      ],
-      "keywords": [
-        "Python",
-        "Agentic APIs",
-        "Next.js",
-        "TypeScript",
-        "PostgreSQL",
-        "System Design",
-        "Database Architecture",
-        "Project Planning",
-        "Agile Methodologies",
-        "Business Need Identification",
-        "Marketing",
-        "Continuous Iteration (Kaizen)"
-      ],
-      "project_url": "https://jobbernaut.srmanda.com/"
+      ]
     },
     {
       "project_name": "MatchWise",
+      "skills": [],
+      "project_url": "https://github.com/orgs/yashas-hm-unc/teams/523/repositories",
       "description": "An optimization tool featuring a Python backend and Flutter frontend to solve the NP-hard Resource-to-Task assignment problem using Integer Linear Programming, drastically reducing manual allocation time.",
       "bullet_points": [
         "Achieved a 90% reduction in manual allocation time by designing and backtesting an Integer Linear Programming (ILP) optimization model to solve the NP-hard Resource-to-Task assignment problem.",
         "Delivered sub-200ms API response times by engineering the model’s backend service using Python (FastAPI), enabling real-time interaction with the ILP solver from the Flutter frontend."
-      ],
-      "keywords": [
-        "Python",
-        "FastAPI",
-        "PuLP",
-        "OR-Tools",
-        "Flutter",
-        "Dart",
-        "Firebase",
-        "GitHub Actions",
-        "CI/CD",
-        "Algorithmic Thinking",
-        "API Design",
-        "Collaboration",
-        "Initiative",
-        "Communication",
-        "Client Interaction"
-      ],
-      "project_url": "https://github.com/orgs/yashas-hm-unc/teams/523/repositories"
+      ]
     },
     {
       "project_name": "Cervical Cancer Detection",
+      "skills": [],
+      "project_url": "https://www.kaggle.com/code/ashishreddy9000/fyp-track-2-darknet-feat-ext-svm-quadri",
       "description": "A machine learning research project that developed a novel CNN-UMAP-SVM pipeline for medical image classification, significantly improving F1 score and reducing false negatives on public health datasets.",
       "bullet_points": [
         "Increased F1 score by 12% and drove false negatives below 2% by designing a novel CNN-UMAP-SVM pipeline for medical image classification on public health datasets."
-      ],
-      "keywords": [
-        "Python",
-        "Tensorflow",
-        "Keras",
-        "scikit-learn",
-        "UMAP",
-        "OpenCV",
-        "Pandas",
-        "NumPy",
-        "Jupyter",
-        "Kaggle",
-        "Darknet",
-        "Research",
-        "Feature Extraction",
-        "Machine Learning",
-        "Computer Vision",
-        "Sensitive Data Handling"
-      ],
-      "project_url": "https://www.kaggle.com/code/ashishreddy9000/fyp-track-2-darknet-feat-ext-svm-quadri"
+      ]
     }
-  ]
+  ],
+  "skills": []
 }
