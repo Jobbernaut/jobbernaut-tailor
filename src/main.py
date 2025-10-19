@@ -87,7 +87,7 @@ class ResumeOptimizationPipeline:
         return json.loads(json_str)
 
     def extract_latex_from_response(self, response: str) -> str:
-        """Extract LaTeX code from API response."""
+        """Extract LaTeX code from API response and sanitize thinking output."""
         latex_text = response.strip()
         
         if "```latex" in latex_text:
@@ -106,6 +106,26 @@ class ResumeOptimizationPipeline:
             doc_start = response.find("\\documentclass")
             if doc_start != -1:
                 latex_text = response[doc_start:].strip()
+        
+        # Sanitize: Remove thinking output lines (lines starting with > or containing *Thinking*)
+        lines = latex_text.split('\n')
+        clean_lines = []
+        found_documentclass = False
+        
+        for line in lines:
+            stripped = line.strip()
+            # Skip thinking output markers
+            if stripped.startswith('>') or '*Thinking*' in stripped:
+                continue
+            # Once we find \documentclass, start collecting lines
+            if '\\documentclass' in line:
+                found_documentclass = True
+            if found_documentclass:
+                clean_lines.append(line)
+        
+        # If we found clean content, use it; otherwise return original
+        if clean_lines:
+            latex_text = '\n'.join(clean_lines)
         
         return latex_text.strip()
 

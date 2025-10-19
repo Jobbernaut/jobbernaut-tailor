@@ -1,3 +1,67 @@
+- job_id: 1606353
+  job_title: Data Engineer I
+  company_name: Centene
+  location: US
+  status: processed
+  posting_link: https://jobs.centene.com/us/en/jobs/1606353/data-engineer-i
+  job_description: ' Description You could be the one who changes everything for our
+    28 million members by using technology to improve health outcomes around the world.
+    As a diversified, national organization, Centene''s technology professionals have
+    access to competitive benefits including a fresh perspective on workplace flexibility.
+
+    Position Purpose: Develops and operationalizes data pipelines to make data available
+    for consumption (reports and advanced analytics). This includes data ingestion,
+    data transformation, data validation/quality, data pipeline optimization, orchestration,
+    and engaging with DevSecOps Engineer during continuous integration and continuous
+    deployment. Designs and implements standardized data management procedures around
+    data staging, data ingestion, data preparation, data provisioning, and data destruction
+    (scripts, programs, automation, assisted by automation, etc.) Designs, develops,
+    implements, tests, documents, and operates large-scale, high-volume, high-performance
+    data structures for business intelligence analytics Designs, develops, and maintains
+    real-time processing applications and real-time data pipelines Ensures quality
+    of technical solutions as data moves across Centene’s environments Provides insight
+    into the changing data environment, data processing, data storage, and utilization
+    requirements for the company and offer suggestions for solutions Develops, constructs,
+    tests, and maintains architectures using programming language and tools Identifies
+    ways to improve data reliability, efficiency, and quality; use data to discover
+    tasks that can be automated Helps maintain the integrity and security of company
+    data Performs other duties as assigned Complies with all policies and standards
+    Education/Experience: A Bachelor''s degree in a quantitative or business field
+    (e.g., statistics, mathematics, engineering, computer science) and requires 0
+    – 2 years of related experience. Or equivalent experience acquired through accomplishments
+    of applicable knowledge, duties, scope and skill reflective of the level of this
+    position. Or completion of a Centene-sponsored emerging talent program.
+
+    Technical Skills:
+
+    One or more of the following skills are desired. ETL
+
+    Snowflake
+
+    Informatica
+
+    Talend
+
+    SQL
+
+    Pay Range: $26.50 - $47.59 per hour Centene offers a comprehensive benefits package
+    including: competitive pay, health insurance, 401K and stock purchase plans, tuition
+    reimbursement, paid time off plus holidays, and a flexible approach to work with
+    remote, hybrid, field or office work schedules. Actual pay will be adjusted based
+    on an individual''s skills, experience, education, and other job-related factors
+    permitted by law, including full-time or part-time status. Total compensation
+    may also include additional forms of incentives. Benefits may be subject to program
+    eligibility.
+
+    Centene is an equal opportunity employer that is committed to diversity, and values
+    the ways in which we are different. All qualified applicants will receive consideration
+    for employment without regard to race, color, religion, sex, sexual orientation,
+    gender identity, national origin, disability, veteran status, or other characteristic
+    protected by applicable law.
+
+
+    Qualified applicants with arrest or conviction records will be considered in accordance
+    with the LA County Ordinance and the California Fair Chance Act '
 - job_id: 1882261
   job_title: Software Engineer
   company_name: Microsoft
