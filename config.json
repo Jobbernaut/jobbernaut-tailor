@@ -2,37 +2,32 @@
   "resume_generation": {
     "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "4096",
-    "web_search": false,
-    "comment": "Premium model for complex reasoning, web search, keyword optimization"
+    "web_search": true
   },
   "latex_conversion": {
-    "bot_name": "Claude-Haiku-4.5",
+    "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "0",
-    "web_search": false,
-    "comment": "Fast model for pure JSON->LaTeX transformation, no reasoning needed"
+    "web_search": false
   },
   "cover_letter_generation": {
     "bot_name": "Claude-Haiku-4.5",
     "thinking_budget": "2048",
-    "web_search": false,
-    "comment": "Best for creative writing with strict word count constraints"
+    "web_search": true
   },
   "latex_verification": {
-    "bot_name": "Claude-Haiku-4.5",
+    "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "2048",
-    "web_search": false,
-    "comment": "Fast model for structured validation tasks"
+    "web_search": false
   },
   "latex_fix": {
-    "bot_name": "Claude-Haiku-4.5",
+    "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "2048",
     "web_search": false,
-    "max_retries": 5,
-    "comment": "Fast model with moderate reasoning for guided fixes"
+    "max_retries": 5
   },
   "referral_resume": {
     "email": "srmanda.compsci@gmail.com",
-    "phone": "919-526-0631"
+    "phone": "+1 919-526-0631"
   },
   "defaults": {
     "resume_bot": "Gemini-2.5-Pro",

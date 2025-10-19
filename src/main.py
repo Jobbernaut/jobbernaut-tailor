@@ -12,11 +12,11 @@ from utils import (
     load_json,
     find_pending_job,
     update_job_status,
-    select_best_cover_letter_point,
     create_output_directory,
     save_resume,
     save_cover_letter,
     save_latex_resume,
+    save_latex_cover_letter,
     load_prompt_template,
 )
 
@@ -84,12 +84,6 @@ class ResumeOptimizationPipeline:
 
         # Load master profile data
         self.master_resume = load_json("profile/master_resume.json")
-        self.cover_letter_points_data = load_json(
-            "profile/master_cover_letter_points.json"
-        )
-        self.cover_letter_points = self.cover_letter_points_data.get(
-            "cover_letter_points", []
-        )
 
         # Load prompt templates
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
@@ -98,6 +92,9 @@ class ResumeOptimizationPipeline:
         )
         self.latex_conversion_prompt_template = load_prompt_template(
             "convert_resume_to_latex.txt"
+        )
+        self.cover_letter_latex_prompt_template = load_prompt_template(
+            "convert_cover_letter_to_latex.txt"
         )
         self.latex_verification_prompt_template = load_prompt_template(
             "verify_latex_resume.txt"
@@ -138,64 +135,15 @@ class ResumeOptimizationPipeline:
 
         return ""
 
-    def is_us_location(self, location: str) -> bool:
-        """
-        Check if the job location is in the United States.
-        If location is empty or None, assume it's in the US.
-        Otherwise, check if location contains "United States" or common US indicators.
-        """
-        if not location or not location.strip():
-            return True
-        
-        location_lower = location.lower()
-        
-        # Simple check for US indicators
-        us_indicators = ["united states", "usa", "u.s.a", "u.s.", "us"]
-        
-        return any(indicator in location_lower for indicator in us_indicators)
-
-    def build_resume_prompt(self, job_description: str, company_name: str, location: str = "") -> str:
+    def build_resume_prompt(self, job_description: str, company_name: str) -> str:
         """Build the prompt for resume generation."""
         prompt = self.resume_prompt_template
-        
-        # Create a modified version of master_resume based on location
-        modified_resume = self.master_resume.copy()
-        
-        # Check if this is a US job
-        if self.is_us_location(location):
-            # For US jobs, merge professional_summaries and work_authorization
-            summary = modified_resume.get("professional_summaries", "")
-            authorization = modified_resume.get("work_authorization", "")
-            
-            # Merge with a space between them
-            if summary and authorization:
-                modified_resume["professional_summaries"] = f"{summary} {authorization}"
-            
-            # Remove the work_authorization and international_availability fields
-            if "work_authorization" in modified_resume:
-                del modified_resume["work_authorization"]
-            if "international_availability" in modified_resume:
-                del modified_resume["international_availability"]
-        else:
-            # For non-US jobs, use international_availability instead of work_authorization
-            summary = modified_resume.get("professional_summaries", "")
-            international_availability = modified_resume.get("international_availability", "")
-            
-            # Merge with a space between them
-            if summary and international_availability:
-                modified_resume["professional_summaries"] = f"{summary} {international_availability}"
-            
-            # Remove both authorization fields
-            if "work_authorization" in modified_resume:
-                del modified_resume["work_authorization"]
-            if "international_availability" in modified_resume:
-                del modified_resume["international_availability"]
 
-        # Replace placeholders
+        # Replace placeholders - use master resume directly (no modifications needed)
         prompt = prompt.replace("[JOB_DESCRIPTION]", f"```\n{job_description}\n```")
         prompt = prompt.replace(
             "[MASTER_RESUME_JSON]",
-            f"```json\n{json.dumps(modified_resume, indent=2)}\n```",
+            f"```json\n{json.dumps(self.master_resume, indent=2)}\n```",
         )
         prompt = prompt.replace("[COMPANY_NAME]", company_name)
 
@@ -206,22 +154,9 @@ class ResumeOptimizationPipeline:
         tailored_resume_json: dict,
         job_description: str,
         company_name: str,
-        best_point: dict,
-        default_point: dict,
     ) -> str:
         """Build the prompt for cover letter generation."""
         prompt = self.cover_letter_prompt_template
-
-        # Combine both points - default point is mandatory, best point is optional
-        personal_notes = []
-
-        if default_point:
-            personal_notes.append(default_point.get("point_text", ""))
-
-        if best_point and best_point != default_point:
-            personal_notes.append(best_point.get("point_text", ""))
-
-        combined_notes = "\n\n".join(filter(None, personal_notes))
 
         # Replace placeholders
         prompt = prompt.replace(
@@ -230,8 +165,6 @@ class ResumeOptimizationPipeline:
         )
         prompt = prompt.replace("[JOB_DESCRIPTION]", f"```\n{job_description}\n```")
         prompt = prompt.replace("[COMPANY_NAME]", company_name)
-        prompt = prompt.replace("[HIRING_MANAGER_NAME]", "N/A")
-        prompt = prompt.replace("[USER_PERSONAL_NOTE]", combined_notes)
 
         return prompt
 
@@ -244,6 +177,19 @@ class ResumeOptimizationPipeline:
             "[TAILORED_RESUME_JSON]",
             f"```json\n{json.dumps(tailored_resume_json, indent=2)}\n```",
         )
+
+        return prompt
+
+    def build_cover_letter_latex_prompt(self, contact_info: dict, cover_letter_text: str) -> str:
+        """Build the prompt for converting cover letter text to LaTeX."""
+        prompt = self.cover_letter_latex_prompt_template
+
+        # Replace placeholders
+        prompt = prompt.replace(
+            "[CONTACT_INFO_JSON]",
+            f"```json\n{json.dumps(contact_info, indent=2)}\n```",
+        )
+        prompt = prompt.replace("[COVER_LETTER_TEXT]", cover_letter_text)
 
         return prompt
 
@@ -425,7 +371,6 @@ class ResumeOptimizationPipeline:
         """Validate resume has required fields."""
         required_keys = [
             "contact_info",
-            "professional_summaries",
             "work_experience",
             "skills",
         ]
@@ -520,26 +465,15 @@ class ResumeOptimizationPipeline:
         job_title = job.get("job_title")
         company_name = job.get("company_name")
         job_description = job.get("job_description")
-        location = job.get("location", "")
 
         print(f"\n{'='*60}")
         print(f"📋 Processing: {job_title} at {company_name}")
         print(f"🆔 Job ID: {job_id}")
-        if location:
-            print(f"📍 Location: {location}")
         print(f"{'='*60}\n")
 
-        # Step 1: Select best cover letter point
-        print("📌 Step 1: Selecting best cover letter point...")
-        best_point, default_point = select_best_cover_letter_point(
-            job_description, self.cover_letter_points, location
-        )
-        print(f"Best point: {best_point.get('id') if best_point else 'None'}")
-        print(f"Default point: {default_point.get('id') if default_point else 'None'}")
-
-        # Step 2: Generate tailored resume
-        print(f"\n📝 Step 2: Generating tailored resume using {self.resume_bot}...")
-        resume_prompt = self.build_resume_prompt(job_description, company_name, location)
+        # Step 1: Generate tailored resume
+        print(f"\n📝 Step 1: Generating tailored resume using {self.resume_bot}...")
+        resume_prompt = self.build_resume_prompt(job_description, company_name)
         resume_response = await self.call_poe_api(resume_prompt, self.resume_bot)
         tailored_resume = self.extract_json_from_response(resume_response)
 
@@ -549,10 +483,10 @@ class ResumeOptimizationPipeline:
         else:
             print("⚠️  Resume generated but may be incomplete")
 
-        # Step 3: Generate cover letter
-        print(f"\n✉️  Step 3: Generating cover letter using {self.cover_letter_bot}...")
+        # Step 2: Generate cover letter
+        print(f"\n✉️  Step 2: Generating cover letter using {self.cover_letter_bot}...")
         cover_letter_prompt = self.build_cover_letter_prompt(
-            tailored_resume, job_description, company_name, best_point, default_point
+            tailored_resume, job_description, company_name
         )
         cover_letter_response = await self.call_poe_api(
             cover_letter_prompt, self.cover_letter_bot
@@ -572,42 +506,34 @@ class ResumeOptimizationPipeline:
             ]
             cover_letter_text = "\n".join(filtered_lines).strip()
 
-        print("Cover letter generated successfully!")
+        print("✓ Cover letter generated successfully!")
 
-        # Step 4: Create output directory and save files
-        print("\nStep 4: Saving outputs...")
+        # Step 3: Create output directory and save files
+        print("\n📁 Step 3: Creating output directory and saving initial files...")
         output_dir = create_output_directory(job_id, job_title, company_name)
         print(f"Output directory: {output_dir}")
 
         resume_path = save_resume(output_dir, tailored_resume, job_title, company_name)
-        print(f"Resume saved: {resume_path}")
-
-        # Get name and contact info from master resume for PDF metadata
-        first_name = self.master_resume["contact_info"]["first_name"]
-        last_name = self.master_resume["contact_info"]["last_name"]
-        contact_info = self.master_resume["contact_info"]
+        print(f"✓ Resume JSON saved: {resume_path}")
 
         cover_letter_path = save_cover_letter(
             output_dir,
             cover_letter_text,
             job_title,
             company_name,
-            first_name,
-            last_name,
-            contact_info,
         )
-        print(f"Cover letter saved as PDF: {cover_letter_path}")
+        print(f"✓ Cover letter TXT saved: {cover_letter_path}")
 
-        # Step 4b: Convert resume JSON to LaTeX
-        print(f"\n📄 Step 4b: Converting resume to LaTeX using {self.latex_bot}...")
+        # Step 4: Convert resume JSON to LaTeX
+        print(f"\n📄 Step 4: Converting resume to LaTeX using {self.latex_bot}...")
         latex_prompt = self.build_latex_conversion_prompt(tailored_resume)
         latex_response = await self.call_poe_api(latex_prompt, self.latex_bot)
 
         # Extract LaTeX from response using the helper method
         latex_text = self.extract_latex_from_response(latex_response)
 
-        # Step 4c: Verify and fix LaTeX resume (with retry loop)
-        print(f"\n🔍 Step 4c: Verifying LaTeX resume (with auto-fix retry)...")
+        # Step 5: Verify and fix LaTeX resume (with retry loop)
+        print(f"\n🔍 Step 5: Verifying LaTeX resume (with auto-fix retry)...")
         latex_text, verification_passed, verification_result = await self.verify_and_fix_latex_resume(
             tailored_resume, latex_text
         )
@@ -629,59 +555,126 @@ class ResumeOptimizationPipeline:
         latex_path = save_latex_resume(output_dir, latex_text, job_title, company_name)
         print(f"✓ LaTeX resume saved: {latex_path}")
 
-        # Step 4d: Compile LaTeX to PDF (Regular Version)
-        print(f"\n📄 Step 4d: Compiling LaTeX to PDF (Regular Version)...")
+        # Step 6: Compile LaTeX to PDF (Regular Resume)
+        print(f"\n📄 Step 6: Compiling resume LaTeX to PDF...")
         try:
             from utils import compile_latex_to_pdf
 
             resume_pdf_path = compile_latex_to_pdf(latex_path, output_dir)
             print(f"✓ Resume PDF generated: {resume_pdf_path}")
         except Exception as e:
-            print(f"\n❌ LaTeX compilation failed: {e}")
+            print(f"\n❌ Resume LaTeX compilation failed: {e}")
             print(
                 "The process has been halted. Please fix the LaTeX errors and try again."
             )
             raise
 
-        # Step 4d-ii: Generate Referral Version
-        print(f"\n📄 Step 4d-ii: Generating Referral Resume Version...")
+        # Step 7: Convert cover letter to LaTeX
+        print(f"\n📄 Step 7: Converting cover letter to LaTeX using {self.latex_bot}...")
+        contact_info = tailored_resume.get("contact_info", {})
+        cover_letter_latex_prompt = self.build_cover_letter_latex_prompt(
+            contact_info, cover_letter_text
+        )
+        cover_letter_latex_response = await self.call_poe_api(
+            cover_letter_latex_prompt, self.latex_bot
+        )
+
+        # Extract LaTeX from response
+        cover_letter_latex = self.extract_latex_from_response(cover_letter_latex_response)
+
+        # Save cover letter LaTeX
+        cover_letter_latex_path = save_latex_cover_letter(
+            output_dir, cover_letter_latex, job_title, company_name
+        )
+        print(f"✓ Cover letter LaTeX saved: {cover_letter_latex_path}")
+
+        # Step 8: Compile cover letter LaTeX to PDF
+        print(f"\n📄 Step 8: Compiling cover letter LaTeX to PDF...")
         try:
-            from utils import create_referral_latex
+            from utils import compile_latex_to_pdf
+            import shutil
 
-            # Create referral LaTeX using configured contact information
-            referral_latex = create_referral_latex(
-                latex_text, self.referral_email, self.referral_phone
+            # Ensure resume.cls is available in output directory for cover letter compilation
+            resume_cls_source = "resume.cls"
+            resume_cls_dest = os.path.join(output_dir, "resume.cls")
+            
+            if not os.path.exists(resume_cls_dest):
+                if not os.path.exists(resume_cls_source):
+                    raise FileNotFoundError(
+                        f"resume.cls not found in the project root. "
+                        f"Please ensure resume.cls exists at: {resume_cls_source}"
+                    )
+                shutil.copy2(resume_cls_source, resume_cls_dest)
+                print("✓ resume.cls copied to output directory")
+
+            cover_letter_pdf_path = compile_latex_to_pdf(
+                cover_letter_latex_path, output_dir
+            )
+            print(f"✓ Cover letter PDF generated: {cover_letter_pdf_path}")
+        except Exception as e:
+            print(f"\n❌ Cover letter LaTeX compilation failed: {e}")
+            print(
+                "The process has been halted. Please fix the LaTeX errors and try again."
+            )
+            raise
+
+        # Step 9: Generate Referral Resume Version
+        print(f"\n📄 Step 9: Generating Referral Resume Version...")
+        try:
+            from utils import create_referral_latex, save_referral_latex_resume, compile_latex_to_pdf
+
+            # Create referral resume LaTeX using configured contact information
+            referral_resume_latex = create_referral_latex(
+                latex_text, self.referral_email, self.referral_phone, "resume"
             )
 
-            # Save referral LaTeX
-            # Sanitize filename components
-            safe_company = "".join(
-                c if c.isalnum() or c in (" ", "-", "_") else "_" for c in company_name
+            # Save referral resume LaTeX using the utility function
+            referral_resume_latex_path = save_referral_latex_resume(
+                output_dir, referral_resume_latex, job_title, company_name
             )
-            safe_title = "".join(
-                c if c.isalnum() or c in (" ", "-", "_") else "_" for c in job_title
-            )
-            referral_latex_filename = f"{safe_company}_{safe_title}_Referral_Resume.tex"
-            referral_latex_path = os.path.join(output_dir, referral_latex_filename)
-            with open(referral_latex_path, "w", encoding="utf-8") as f:
-                f.write(referral_latex)
-            print(f"✓ Referral LaTeX saved: {referral_latex_path}")
+            print(f"✓ Referral resume LaTeX saved: {referral_resume_latex_path}")
 
-            # Compile referral LaTeX to PDF
-            referral_pdf_path = compile_latex_to_pdf(referral_latex_path, output_dir)
-            print(f"✓ Referral Resume PDF generated: {referral_pdf_path}")
+            # Compile referral resume LaTeX to PDF
+            referral_resume_pdf_path = compile_latex_to_pdf(referral_resume_latex_path, output_dir)
+            print(f"✓ Referral Resume PDF generated: {referral_resume_pdf_path}")
 
         except Exception as e:
             print(f"\n❌ Referral resume generation failed: {e}")
-            print("Continuing with regular resume only...")
+            print("Continuing without referral resume...")
 
-        # Step 4e: Organize files and rename with proper convention
-        print(f"\n📁 Step 4e: Organizing output files...")
+        # Step 10: Generate Referral Cover Letter Version
+        print(f"\n📄 Step 10: Generating Referral Cover Letter Version...")
+        try:
+            from utils import create_referral_latex, save_referral_latex_cover_letter, compile_latex_to_pdf
+
+            # Create referral cover letter LaTeX using configured contact information
+            referral_cover_letter_latex = create_referral_latex(
+                cover_letter_latex, self.referral_email, self.referral_phone, "cover_letter"
+            )
+
+            # Save referral cover letter LaTeX using the utility function
+            referral_cover_letter_latex_path = save_referral_latex_cover_letter(
+                output_dir, referral_cover_letter_latex, job_title, company_name
+            )
+            print(f"✓ Referral cover letter LaTeX saved: {referral_cover_letter_latex_path}")
+
+            # Compile referral cover letter LaTeX to PDF
+            referral_cover_letter_pdf_path = compile_latex_to_pdf(
+                referral_cover_letter_latex_path, output_dir
+            )
+            print(f"✓ Referral Cover Letter PDF generated: {referral_cover_letter_pdf_path}")
+
+        except Exception as e:
+            print(f"\n❌ Referral cover letter generation failed: {e}")
+            print("Continuing without referral cover letter...")
+
+        # Step 11: Organize files and rename with proper convention
+        print(f"\n📁 Step 11: Organizing output files...")
         try:
             from utils import organize_output_files
 
-            first_name = self.master_resume["contact_info"]["first_name"]
-            last_name = self.master_resume["contact_info"]["last_name"]
+            first_name = tailored_resume["contact_info"]["first_name"]
+            last_name = tailored_resume["contact_info"]["last_name"]
             organize_output_files(
                 output_dir, first_name, last_name, company_name, job_id
             )
@@ -690,8 +683,8 @@ class ResumeOptimizationPipeline:
             print(f"\n⚠️  File organization failed: {e}")
             print("Files were generated but may not be in the expected structure.")
 
-        # Step 5: Update job status
-        print("\nStep 5: Updating job status...")
+        # Step 12: Update job status
+        print("\n📝 Step 12: Updating job status...")
         update_job_status("applications.yaml", job_id, "processed")
         print("Job status updated to 'processed'")
 
