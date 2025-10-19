@@ -2,7 +2,7 @@
   "contact_info": {
     "first_name": "Snehashish Reddy",
     "last_name": "Manda",
-    "phone": "+1 919-672-2226",
+    "phone": "9196722226",
     "email": "srmanda.cs@gmail.com",
     "location": "Chapel Hill, NC",
     "linkedin_url": "https://linkedin.com/in/srmanda-cs",
@@ -11,7 +11,7 @@
   },
   "education": [
     {
-      "institution": "University of North Carolina at Chapel Hill",
+      "institution": "UNC Chapel Hill",
       "degree": "Master of Science in Computer Science (GPA: 4.0/4.0)",
       "start_date": "2024-08",
       "graduation_date": "2026-05"
@@ -26,21 +26,20 @@
   "work_experience": [
     {
       "job_title": "Software Development Engineer (Platform)",
-      "company": "UNC Arts and Sciences",
+      "company": "UNC Chapel Hill",
+      "location": "Chapel Hill, NC",
       "start_date": "2025-08",
       "end_date": "Present",
       "bullet_points": [
-        "Designed a PollEv auto grading platform that used to take per instructor 3 hours a week.",
-        "Now, this system is being used by 12+ instructors, and there are talks to integrate this platform university wide",
-        "Tightened up a lot of the NSCI 175 course infrastructure, modernizing it introducing Trello and Jira to the team.",
-        "Helping run the course like a software team which has made us a lot more efficient.",
-        "I have to co-ordinate with the professor (my manager), three other GTAs (my colleagues), and five ULAs (my juniors)",
-        "We are supposed to work 10 hours a week, but my systems help us cut down the work to just 5 hours a week.",
-        "Initially they were reluctant to use these tools as they thought it would just be extra work, so I had to prove the value of them first.",
-        "Learnt an unknown field, that is neuroscience, and gave a lecture to 200 students on a topic they knew better than me, and still was commended.",
-        "Shows just how fast I can learn and pick up skills.",
-        "The department leadership noticed my contributions, which were way above the scope of a GTA.",
-        "Upon request for additional scholarship, they awarded me $5,000 which their policies usually do not allow for my exceptional technical contributions"
+        "Spearheaded the creation of a Python-based autograding platform to automate participation tracking for 240 students across two course sections, addressing a highly inefficient and manual process.",
+        "Engineered a robust student name-matching algorithm using Sentence-Transformers (NLP) and statistical analysis to reconcile inconsistent PollEv data with official Canvas rosters, achieving high-accuracy matches.",
+        "Architected an atomic grade-update process using Pandas that prevented data corruption by only modifying empty fields, ensuring data integrity across thousands of weekly grade entries.",
+        "Developed and implemented business logic to automatically award credit based on participation thresholds (e.g., >50% of polls answered), standardizing the grading policy.",
+        "Championed and integrated Jira and Trello into the 10-person instructional team's workflow, replacing a monolithic document, reducing excessive meetings, and saving an estimated 8-9 hours of logistical overhead weekly.",
+        "Designed and deployed standardized, decision-optimized grading rubrics for written assignments, slashing the grading time per assignment from ~6 minutes to just 30 seconds.",
+        "The combined automation and process optimization initiatives reduced the total weekly workload for the instructional team from a required 20 hours to just 8 hours, a 60% reduction in time commitment.",
+        "Ensured system resilience by implementing version control for the automation scripts and establishing automated backups for the Canvas gradebook, safeguarding against data loss.",
+        "Successfully piloted the tool, which led to its adoption by an additional university course and positioned it for a potential university-wide deployment as a serverless AWS Lambda function."
       ]
     },
     {
@@ -50,31 +49,14 @@
       "start_date": "2024-01",
       "end_date": "2024-05",
       "bullet_points": [
-        "Developed a Proof-of-Concept for a new Performance Management System using React, Fluent UI, and Flask",
-        "Their PMS was 40 years old, and employees were very unsatisfied.",
-        "No sane person was gonna tackle this task, so it was handed over to us.",
-        "We were an intern team of my manager, and 3 other interns.",
-        "We were trained in React, and I proved my worth very quickly.",
-        "I was put in charge of the PoC development now, and my manager would provide me high level guidance.",
-        "We put forward a PoC, which the management really liked.",
-        "Eventually, they approved a $1M+ investment into the new PMS.",
-        "The project was handed off to a highly senior team as it was now too high profile for me.",
-        "Seeing my success, I was quickly put in charge of another production project.",
-        "The company was having a headache with Azure Graph, assets, inventory, devices and onPrems.",
-        "Old devices still had access to top secret information, and they couldn't track which device was where or why. It was a big mess.",
-        "I developed a Next.js portal (in TypeScript), using MySQL, Docker, Kubernetes, Git, and Azure.",
-        "I was given full ownership of the project and integrating it into their HR admin portal.",
-        "Through my manager, I got access to a DevOps person, a tester, a database person, and we were now a team.",
-        "Aggregating information from multiple databases, using algorithms to determine what all devices were currently active.",
-        "Integrated it into the HR flow, as now when a person is fired or leaves, their devices automatically are removed.",
-        "Then, notifications are sent to both parties to collect the devices back.",
-        "Since deploying this system, they have not reported a single lost device or internal breach because of old devices.",
-        "The position that was responsible for doing this job was now made redundant, and in general a lot of time was saved for everyone.",
-        "The internship was supposed to be for 6 months, but they said go finish your degree properly, ended it in 5 months.",
-        "They offered a PPO, with competitive salary, and asked me to immediately return after graduation.",
-        "Aided in enabling a $1M+ investment for an enterprise-wide Performance Management System by developing and delivering a key proof-of-concept in ReactJS, and Fluent UI.",
-        "Minimized asset-tracking costs by 37% by building a full-stack Next.js portal that integrated with Azure AD, Graph API, and internal inventory systems for 10,000+ employees.",
-        "Shrank manual deployment effort by 25% by enhancing the team’s CI/CD pipeline with automated build triggers and deployment scripts, improving release stability for critical internal services."
+        "Led a 3-engineer team to develop a Proof-of-Concept (PoC) for a modern Performance Management System (PMS) to replace a 24-year-old legacy platform that was causing high employee turnover.",
+        "Architected the PMS PoC as a Microsoft Teams application using React, Fluent UI, and a Node.js/Flask backend, ensuring seamless integration with the existing MySQL database for data compatibility.",
+        "The PoC's success in demonstrating a transparent, feedback-driven workflow directly convinced senior management to approve a ₹7 Cr (~$1M) budget for a full-scale production system.",
+        "Solely engineered a critical internal security portal using Next.js to automate IT asset management and employee offboarding, addressing a major security vulnerability.",
+        "Designed and implemented a system that integrated Azure AD Graph and on-premise MySQL data to create a unified, real-time dashboard of all company-issued devices for HR and IT admins.",
+        "Developed a key automation that instantly revoked network access (via MAC address) for devices of offboarded or on-leave employees, completely eliminating the security risk of unauthorized access.",
+        "Transformed the complex, multi-step manual employee offboarding process into a single-click action for HR, dramatically reducing administrative overhead and the potential for human error.",
+        "The asset management portal is estimated to save the company ₹27 lakh (~$40,000) annually by preventing asset loss (~₹15 lakh) and reducing operational overhead (~₹12 lakh)."
       ]
     },
     {
@@ -84,82 +66,84 @@
       "start_date": "2023-07",
       "end_date": "2023-08",
       "bullet_points": [
-        "They didn't have a project for us on arrival, so we were very surprised.",
-        "We were a team of 5 interns with one manager. 4 as SDEs, and 1 as MLE.",
-        "We had a meeting where we were trying to decide what project to take on.",
-        "I got bored and asked them what problems were the higher ups bringing up to the software team.",
-        "Manager among a few other things, mentioned that they were bleeding time and resources processing Credit Information Reports.",
-        "This report was very critical for them, the company gave out loans without needing collateral.",
-        "Right now, they needed 5-30 people to process a single report, based on company size, to generate insights to the management.",
-        "This meant they needed massive manpower, and made decisions very slowly.",
-        "Manager mentioned that it's an AI team problem, and they're looking to solve it once multimodal AI comes out.",
-        "I said that the business needs a solution yesterday, and since they didn't have a project in mind anyways, let us tackle this.",
-        "This was the pipeline. They contracting an external agency to conduct audits on every company that approached them for loans.",
-        "They delivered a PDF report (non-parsable) to the company's S3 bucket. They refused to give API access.",
-        "A team of consultants was then assigned to this report based on its size.",
-        "They would decode this report, enter all details into Excel spreadsheets, use formulas to extract insights.",
-        "After a month or two, they would generate another report with all this spreadsheet information to the management.",
-        "I realized all these are tasks that can be quickly automated.",
-        "It was a monumental undertaking, and a very long story, but we reduced the flow from 3 months to 4 minutes.",
-        "The second a report arrived in the S3 bucket, within 4 minutes a final report would be ready for the management to review.",
-        "We used S3 onAdd hook to run a Springboot microservice that was running on EC2.",
-        "This microservice would forward the report to the Python Lambda function, which decomposed the report.",
-        "The decomposed report would come back to the microservice, which fed it into AWS OpenSearch.",
-        "Once, OpenSearch was populated, we built a LLM-based RAG and OpenSearch query portal in ReactJS where employees could quickly verify certain information.",
-        "Earlier it used to take 5-6 minutes to find the right spreadsheet and verify information. Now just a few seconds and highly accurate.",
-        "We prevented data corruption from the Tesseract OCR extraction, by running some business logic checks to ensure data integrity.",
-        "Once, OpenSearch was populated the microservice would verify, and proceed to call another Lambda function, which would generate the final report.",
-        "All of this in just 2 months. We went above and beyond because I felt if this was my business I would want it solved immediately.",
-        "It was a massive success. I later found out from friends, that now they're making decisions within weeks and hundreds of roles were made redundant.",
-        "However at the time, the internship was structured as a 6-month co-op.",
-        "They told me that they're very impressed with my work, and would like me to join them full-time, so they offered PPO.",
-        "I asked them for an exception to not continue my internship and focus on my degree, which they immediately granted.",
-        "Contributed towards decreasing credit report processing time by 99%+ (from 3 months to 4 minutes) by building an automated document-processing pipeline using AWS Lambda, ECS, and Spring Boot microservices.",
-        "Cut analyst data lookup time by 80% by engineering an indexing solution in Amazon OpenSearch, featuring faceted search and on-demand CSV export capabilities for multi-gigabyte datasets.",
-        "Verified data against a rule set of 40+ business logic checks programmatically, by architecting a validation pipeline, eliminating previously common data corruption errors."
+        "Initiated and led an engineering team to develop an automated data extraction pipeline for unstructured, 1000+ page PDF credit reports, reducing the loan analysis lifecycle from over 3 months to less than one day.",
+        "Architected a scalable, event-driven system using AWS S3, Lambda, and a Spring Boot orchestrator to manage the ingestion and processing of financial documents, solving the company's primary operational bottleneck.",
+        "Designed a novel parallel processing strategy, deploying distinct Python Lambda functions with custom PDFPlumber logic for each report section, enabling modularity and rapid, targeted data extraction.",
+        "Structured and indexed the extracted financial data into OpenSearch, building a searchable repository that eliminated months of manual data entry for dozens of associates.",
+        "Developed a verification portal that allowed employees to validate extracted data against the source PDF, ensuring 100% data integrity while simultaneously creating a high-quality, human-verified dataset for future ML model training.",
+        "Delivered a fully functional prototype in 2 months, proving the problem was solvable with current technology despite skepticism from senior leadership, which led to the full productionization of the system.",
+        "My pivotal role and the project's massive success in transforming the business's core workflow resulted in a Pre-Placement Offer (PPO) for a full-time role."
       ]
     }
   ],
   "projects": [
     {
       "project_name": "Jobbernaut",
-      "skills": [],
+      "technologies": [
+        "Python",
+        "OpenAI API",
+        "Jinja2",
+        "LaTeX",
+        "Pydantic",
+        "YAML",
+        "CLI"
+      ],
       "project_url": "https://jobbernaut.srmanda.com/",
       "bullet_points": [
-        "Designed Jobbernaut, which helps job seekers keep track of their job applications.",
-        "It also automatically tailors their resumes and cover letters according to the Job Description, and public company knowledge.",
-        "It also provides job seekers with a lot of insights into their job search, like referral rate, applications that worked within <24 hrs, etc.",
-        "50+ people exhibited interest, and are actively used it.",
-        "I am currently working on a production-ready version, as the original one was just a PoC which worked too well.",
-        "Jobbernaut also automatically tailors the applicant's resume to the Job Description and the company, guaranteeing at least a 90% fit.",
-        "Architected and developed an AI-driven automation engine to dynamically tailor application materials, using a Python-based agentic workflow, multiple LLM APIs, and a structured data approach (JSON/YAML).",
-        "Initially integrated the engine as a core feature within the Jobbernaut application tracker. The feature demonstrated extremely high efficacy in user testing.",
-        "Conducted a strategic product review and made the executive decision to pivot the feature into a private, proprietary build. This decision was based on its overwhelming effectiveness, which represented a core intellectual property asset too valuable for a free-to-public release.",
-        "The private engine reduces application tailoring time by over 99.99% (from ~30 mins to 30 seconds) while measurably improving keyword alignment with job descriptions.",
-        "This project demonstrates a full lifecycle of product development: from ideation and rapid prototyping with AI tools to strategic analysis and intellectual property management.",
-        "The tool itself is enterprise-grade, with every line of code written with future maintenance in mind.",
-        "The tool is also End-to-End rapid. From noticing a job to having a fully tailored resume (in PDF format too) and cover letter is about 30 seconds."
+        "Conceived and single-handedly developed Jobbernaut, an AI-powered CLI tool that automates the generation of tailored resumes and cover letters, reducing application creation time from over 30 minutes to just 30 seconds.",
+        "Engineered a novel 12-step generation pipeline that grounds an LLM with a master resume JSON, intelligently selects relevant experiences, and rewrites them for a specific job description to eliminate hallucinations and ensure relevance.",
+        "Implemented a system using Jinja and LaTeX to produce highly optimized (<30 KiB), ATS-native PDFs, achieving perfect, zero-correction parsing on major platforms like Workday.",
+        "Developed a crucial verification step where an LLM cross-references the generated content against the source data to guarantee factual accuracy and content integrity before final output.",
+        "The tool proved so effective in generating 'Must Interview' tier application materials that its public release was revoked due to ethical considerations and its potential to disrupt the job application market."
       ]
     },
     {
       "project_name": "MatchWise",
-      "skills": [],
+      "technologies": [
+        "Python",
+        "PuLP",
+        "FastAPI",
+        "Flutter",
+        "Integer Linear Programming",
+        "REST API"
+      ],
       "project_url": "https://github.com/orgs/yashas-hm-unc/teams/523/repositories",
-      "description": "An optimization tool featuring a Python backend and Flutter frontend to solve the NP-hard Resource-to-Task assignment problem using Integer Linear Programming, drastically reducing manual allocation time.",
       "bullet_points": [
-        "Achieved a 90% reduction in manual allocation time by designing and backtesting an Integer Linear Programming (ILP) optimization model to solve the NP-hard Resource-to-Task assignment problem.",
-        "Delivered sub-200ms API response times by engineering the model’s backend service using Python (FastAPI), enabling real-time interaction with the ILP solver from the Flutter frontend."
+        "Architected the core backend for MatchWise, an optimization tool that automates the assignment of ~100 graduate students to ~40 professors, reducing a 5-day manual process to under 200 milliseconds.",
+        "Formulated the complex, multi-factor assignment challenge as an Integer Linear Programming (ILP) problem, implementing the solution with Python's PuLP library to find the optimal matches.",
+        "Designed and implemented a custom objective function to maximize a 'best fit' probability score based on mutual professor-student rankings and shared research interests.",
+        "Engineered a decoupled architecture with a FastAPI backend and a Flutter frontend, enabling independent development and ensuring rapid, scalable performance for the core matching algorithm.",
+        "Successfully delivered the software as part of a client-facing project, demonstrating proficiency in translating ambiguous client requirements into a robust, high-performance technical solution."
       ]
     },
     {
       "project_name": "Cervical Cancer Detection",
-      "skills": [],
+      "technologies": [
+        "Python",
+        "DarkNet",
+        "UMAP",
+        "SVM",
+        "Scikit-learn",
+        "Image Processing",
+        "ML"
+      ],
       "project_url": "https://www.kaggle.com/code/ashishreddy9000/fyp-track-2-darknet-feat-ext-svm-quadri",
-      "description": "A machine learning research project that developed a novel CNN-UMAP-SVM pipeline for medical image classification, significantly improving F1 score and reducing false negatives on public health datasets.",
       "bullet_points": [
-        "Increased F1 score by 12% and drove false negatives below 2% by designing a novel CNN-UMAP-SVM pipeline for medical image classification on public health datasets."
+        "Co-developed a multi-stage machine learning pipeline to accelerate the diagnosis of cervical cancer from pap smear slides, designed to reduce a 12-hour manual analysis to a rapid, computer-assisted process.",
+        "Engineered a pipeline specifically optimized for speed and real-world clinical application, utilizing a pre-trained DarkNet model for feature extraction, UMAP for dimensionality reduction, and an SVM for final classification.",
+        "The model was intentionally biased towards high recall (favoring false positives over false negatives) to minimize the risk of missed cases, ensuring its viability as a pre-screening tool for medical specialists.",
+        "Validated the approach using image augmentation on public datasets, demonstrating a potential miss rate of less than 0.02% (1-2 slides per 10,000), proving the concept's value for large-scale screening programs."
       ]
     }
   ],
-  "skills": []
+  "skills": {
+    "Programming Languages": "Python, JavaScript, TypeScript, Java, SQL, KQL, C++, C#",
+    "Frontend Technologies": "React, Next.js, Fluent UI, HTML/CSS, Flutter, Jinja2",
+    "Backend & APIs": "Node.js, Flask, FastAPI, Spring Boot, REST API, GraphQL, Microservices",
+    "Cloud & DevOps": "AWS Lambda, AWS S3, Azure AD, Kubernetes, Docker, Serverless, CI/CD",
+    "Databases & Storage": "MySQL, PostgreSQL, Redis, OpenSearch, MongoDB, Database Design",
+    "Data & ML": "Pandas, NumPy, Scikit-learn, PyTorch, NLP, ETL, Data Pipelines, UMAP",
+    "Tools & Platforms": "Git, Jira, Trello, LaTeX, Linux, Agile, Microsoft Teams",
+    "Specialized Skills": "Algorithm Design, System Architecture, Performance Optimization, Security"
+  }
 }

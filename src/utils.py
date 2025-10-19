@@ -151,17 +151,22 @@ def compile_latex_to_pdf(
                 env=env,
             )
 
-            if result.returncode != 0:
+            # Check if PDF was generated (more reliable than return code)
+            # pdflatex can return non-zero even when PDF is successfully created
+            pdf_path_check = os.path.join(output_dir, f"{tex_name_no_ext}.pdf")
+            
+            if result.returncode != 0 and not os.path.exists(pdf_path_check):
                 log_file = os.path.join(output_dir, f"{tex_name_no_ext}.log")
                 error_msg = "LaTeX compilation failed."
 
                 if os.path.exists(log_file):
                     with open(log_file, "r", encoding="utf-8", errors="ignore") as f:
                         log_content = f.read()
+                        # Look for actual errors (not warnings)
                         error_lines = [
                             line
                             for line in log_content.split("\n")
-                            if line.startswith("!")
+                            if line.startswith("!") and "Error" in line
                         ]
                         if error_lines:
                             error_msg += f"\n\nErrors found:\n" + "\n".join(

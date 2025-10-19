@@ -58,7 +58,7 @@ You MUST generate a complete, compelling cover letter WITHOUT asking for additio
 **PARAGRAPH 6: CLOSING (2 sentences)**
 - Express confidence and enthusiasm
 - Call to action: "I'm excited to contribute to [COMPANY_NAME]'s mission and look forward to discussing how my experience aligns with your team's goals."
-- Sign off: "Best regards, [First Name] [Last Name]"
+- Sign off with "Best regards," on its own line, followed by a blank line, then the candidate's full name on a new line
 
 ### CRITICAL WRITING PRINCIPLES
 
@@ -89,6 +89,14 @@ You MUST generate a complete, compelling cover letter WITHOUT asking for additio
 - Reference company's specific mission, products, or engineering challenges
 - If you could swap the company name and it still works, it's too generic
 
+**7. NO EM DASHES**
+- NEVER use em dashes (—) to join sentences, show impact, or create emphasis
+- Use alternative punctuation: commas for pauses, semicolons for related clauses, periods for separate thoughts
+- Use conjunctions (and, but, while) for connecting ideas
+- Example: 
+  - BAD: "Reduced processing time by 99%—from 3 months to 4 minutes"
+  - GOOD: "Reduced processing time by 99%, from 3 months to 4 minutes"
+
 ### OUTPUT FORMAT: PLAIN TEXT ONLY
 
 Return ONLY the cover letter body text - NO analysis, NO explanations, NO meta-commentary.
@@ -96,10 +104,11 @@ Return ONLY the cover letter body text - NO analysis, NO explanations, NO meta-c
 Your response should:
 - Start with "Dear [Company Name] Hiring Team," (or "Dear Hiring Manager,")
 - Be exactly 6 paragraphs separated by blank lines
-- End with "Best regards," followed by candidate's first and last name from the resume
+- End with "Best regards," on one line, then a blank line, then the candidate's full name ([First Name] [Last Name]) on the next line
 - Include NO date, location, email, or phone number
 - Be between 350-400 words total (STRICT LIMIT)
 - Be ready to copy and paste directly into an application
+- CRITICAL: NEVER use em dashes (—) anywhere in the cover letter. Use commas, semicolons, periods, or conjunctions instead.
 
 ### MANDATORY PRE-OUTPUT VALIDATION
 

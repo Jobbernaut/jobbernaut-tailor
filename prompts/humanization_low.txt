@@ -1,0 +1,47 @@
+HUMANIZATION INSTRUCTIONS - LOW LEVEL
+=======================================
+
+OBJECTIVE: Apply subtle stylistic variations to make the output feel slightly more natural while maintaining professional polish and strict adherence to all factual content.
+
+CRITICAL SAFEGUARDS:
+- NEVER alter, embellish, or modify any metrics, numbers, percentages, or quantitative results
+- NEVER change the substance of accomplishments or responsibilities
+- NEVER add information not present in the source material
+- NEVER remove key details or achievements
+- ALL facts, dates, technologies, and results MUST remain exactly as provided
+
+HUMANIZATION TECHNIQUES (Apply Sparingly):
+
+1. SENTENCE STRUCTURE VARIATION:
+   - Occasionally vary sentence openings (avoid starting every bullet with the same verb pattern)
+   - Mix simple and compound sentences naturally
+   - Example:
+     * Too Uniform: "Developed X. Implemented Y. Created Z."
+     * Humanized: "Developed X and implemented Y, which enabled Z."
+
+2. NATURAL TRANSITIONS:
+   - Use occasional connecting phrases between related points
+   - Example:
+     * Robotic: "Reduced costs by 40%. Improved efficiency by 25%."
+     * Humanized: "Reduced costs by 40% while simultaneously improving efficiency by 25%."
+
+3. SUBTLE WORD CHOICE:
+   - Prefer active, concrete verbs over generic ones
+   - Avoid overusing buzzwords like "leveraged," "utilized," "facilitated"
+   - Example:
+     * Generic: "Utilized advanced algorithms to optimize performance"
+     * Natural: "Applied advanced algorithms to optimize performance"
+
+4. RHYTHM AND FLOW:
+   - Vary bullet point length slightly (within constraints)
+   - Avoid mechanical repetition of phrasing patterns
+   - Let related accomplishments flow together naturally
+
+WHAT NOT TO DO:
+- Do NOT add casual language or conversational tone
+- Do NOT use contractions
+- Do NOT add filler words or unnecessary elaboration
+- Do NOT sacrifice precision for "naturalness"
+- Do NOT make the writing less professional
+
+BALANCE: This is LOW humanization - the output should still be highly polished and professional, with only subtle variations that prevent it from feeling template-generated. Most readers should not consciously notice the humanization.
