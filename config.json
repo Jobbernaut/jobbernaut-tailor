@@ -1,6 +1,6 @@
 {
   "resume_generation": {
-    "bot_name": "Claude-Sonnet-4.5",
+    "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "8192",
     "web_search": true
   },
@@ -16,10 +16,10 @@
   },
   "referral_resume": {
     "email": "srmanda.compsci@gmail.com",
-    "phone": "+1 919-526-0631"
+    "phone": "9195260631"
   },
   "defaults": {
-    "resume_bot": "Claude-Sonnet-4.5",
+    "resume_bot": "Gemini-2.5-Pro",
     "cover_letter_bot": "Claude-Sonnet-4.5"
   },
   "reasoning_trace": false

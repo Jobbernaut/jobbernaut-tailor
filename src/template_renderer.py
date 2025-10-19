@@ -107,13 +107,13 @@ class TemplateRenderer:
     @staticmethod
     def format_phone(phone_str: str) -> str:
         """
-        Format phone number to xxx-xxx-xxxx format (removing +1 prefix).
+        Format phone number to xxxxxxxxxx format (removing +1 prefix and dashes).
         
         Args:
             phone_str: Phone number string (e.g., "+1 919-672-2226" or "919-672-2226")
             
         Returns:
-            Formatted phone number as xxx-xxx-xxxx
+            Formatted phone number as xxxxxxxxxx (10 digits, no dashes)
         """
         if not phone_str:
             return ""
@@ -125,9 +125,9 @@ class TemplateRenderer:
         if len(digits) == 11 and digits.startswith('1'):
             digits = digits[1:]
         
-        # Format as xxx-xxx-xxxx
+        # Return 10-digit number without formatting
         if len(digits) == 10:
-            return f"{digits[0:3]}-{digits[3:6]}-{digits[6:10]}"
+            return digits
         
         # If not 10 digits, return original
         return phone_str
