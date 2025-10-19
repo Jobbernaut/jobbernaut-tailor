@@ -4,26 +4,10 @@
     "thinking_budget": "8192",
     "web_search": true
   },
-  "latex_conversion": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "0",
-    "web_search": false
-  },
   "cover_letter_generation": {
     "bot_name": "Claude-Sonnet-4.5",
     "thinking_budget": "2048",
     "web_search": true
-  },
-  "latex_verification": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "2048",
-    "web_search": false
-  },
-  "latex_fix": {
-    "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "2048",
-    "web_search": false,
-    "max_retries": 5
   },
   "referral_resume": {
     "email": "srmanda.compsci@gmail.com",
@@ -31,11 +15,7 @@
   },
   "defaults": {
     "resume_bot": "Gemini-2.5-Pro",
-    "latex_bot": "Gemini-2.5-Pro",
-    "cover_letter_bot": "Claude-3.7-Sonnet",
-    "resume_thinking_budget": "4096",
-    "latex_thinking_budget": "2048",
-    "cover_letter_thinking_budget": "2048"
+    "cover_letter_bot": "Claude-3.7-Sonnet"
   },
   "reasoning_trace": false
 }

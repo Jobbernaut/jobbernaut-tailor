@@ -1,0 +1,97 @@
+\documentclass{resume}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[left=0.4 in,top=0.4in,right=0.4 in,bottom=0.4in]{geometry}
+\usepackage[pdftex,
+    pdfauthor={\VAR{contact_info.first_name|latex_escape} \VAR{contact_info.last_name|latex_escape}},
+    pdftitle={\VAR{contact_info.first_name|latex_escape} \VAR{contact_info.last_name|latex_escape} Resume},
+    pdfsubject={\VAR{contact_info.first_name|latex_escape} \VAR{contact_info.last_name|latex_escape} Resume},
+    pdfkeywords={Software Development Engineer, Resume},
+    pdfproducer={LaTeX},
+    pdfcreator={pdflatex}
+]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+    pdfencoding=auto,
+    unicode=true
+}
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\name{\VAR{contact_info.first_name|latex_escape} \VAR{contact_info.last_name|latex_escape}}
+\address{\VAR{contact_info.phone|format_phone} \\ \VAR{contact_info.location|latex_escape}}
+\address{\href{mailto:\VAR{contact_info.email|latex_escape}}{\VAR{contact_info.email|latex_escape}} \\ \href{\VAR{contact_info.linkedin_url|latex_escape}}{\VAR{contact_info.linkedin_url|latex_escape|replace('https://', '')|replace('http://', '')}} \\ \href{\VAR{contact_info.portfolio_url|latex_escape}}{\VAR{contact_info.portfolio_url|latex_escape|replace('https://', '')|replace('http://', '')}} \\ \href{\VAR{contact_info.github_url|latex_escape}}{\VAR{contact_info.github_url|latex_escape|replace('https://', '')|replace('http://', '')}}}
+
+\begin{document}
+
+\vspace{-6pt}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Education}
+
+\BLOCK{for edu in education}
+{\bf \VAR{edu.institution|latex_escape}}, \VAR{edu.degree|latex_escape} \hfill {\VAR{edu.start_date|format_date} - \VAR{edu.graduation_date|format_date}}
+\BLOCK{if not loop.last}\\
+\BLOCK{endif}
+\BLOCK{endfor}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{EXPERIENCE}
+
+\BLOCK{for job in work_experience}
+\textbf{\VAR{job.job_title|latex_escape} | \VAR{job.company|latex_escape}}, \VAR{job.location|latex_escape} \hfill \VAR{job.start_date|format_date} - \VAR{job.end_date|format_date}
+ \begin{itemize}
+    \itemsep -3pt {}
+\BLOCK{for bullet in job.bullet_points}
+     \item \VAR{bullet|latex_escape}
+\BLOCK{endfor}
+ \end{itemize}
+\BLOCK{if not loop.last}
+
+\BLOCK{endif}
+\BLOCK{endfor}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	PROJECTS SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{PROJECTS}
+
+\BLOCK{for project in projects}
+{\textbf{\VAR{project.project_name|latex_escape}}}\BLOCK{if project.technologies} | \VAR{project.technologies|join(', ')|latex_escape}\BLOCK{endif} \hfill \href{\VAR{project.project_url|latex_escape}}{\textbf{(View Project)}}
+ \begin{itemize}
+    \itemsep -3pt {}
+\BLOCK{for bullet in project.bullet_points}
+     \item \VAR{bullet|latex_escape}
+\BLOCK{endfor}
+ \end{itemize}
+\BLOCK{if not loop.last}
+
+\BLOCK{endif}
+\BLOCK{endfor}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+% TECHNICAL STRENGTHS
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{SKILLS}
+\begin{tabular}{ll}
+\BLOCK{for category, skills_list in skills.items()}
+\textbf{\VAR{category|latex_escape}:} & \VAR{skills_list|latex_escape} \\
+\BLOCK{endfor}
+\end{tabular}
+\end{rSection}
+
+\end{document}
