@@ -222,18 +222,18 @@ class ResumeOptimizationPipeline:
             
             error_detail = f"❌ Field: '{field_path}'\n   Error: {error_msg}\n   Type: {error_type}"
             
-            # Add specific guidance based on common error patterns
-            if 'graduation_date' in field_path and 'required' in error_msg.lower():
+            # Add specific guidance based on error 'type' codes for robust categorization
+            if 'graduation_date' in field_path and error_type == 'value_error.missing':
                 error_detail += "\n   💡 FIX: Use 'graduation_date' NOT 'end_date' in education entries"
                 missing_errors.append(error_detail)
-            elif 'technologies' in field_path and ('list' in error_msg.lower() or 'array' in error_msg.lower()):
+            elif 'technologies' in field_path and error_type == 'type_error.list':
                 error_detail += '\n   💡 FIX: Format as array: ["Tech1", "Tech2", "Tech3"] NOT "Tech1, Tech2, Tech3"'
                 error_detail += '\n   💡 EXAMPLE: "technologies": ["Python", "PyTorch", "Scikit-learn"]'
                 type_errors.append(error_detail)
-            elif 'required' in error_msg.lower():
+            elif error_type == 'value_error.missing':
                 error_detail += f"\n   💡 FIX: This field is REQUIRED and cannot be omitted"
                 missing_errors.append(error_detail)
-            elif 'type' in error_msg.lower() or 'valid' in error_msg.lower():
+            elif error_type.startswith('type_error'):
                 error_detail += f"\n   💡 FIX: Check the data type - ensure it matches the schema"
                 type_errors.append(error_detail)
             else:
