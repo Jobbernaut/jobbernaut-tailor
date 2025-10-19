@@ -1,0 +1,71 @@
+HUMANIZATION INSTRUCTIONS - MEDIUM LEVEL
+==========================================
+
+OBJECTIVE: Apply balanced humanization to create natural-sounding professional writing that avoids AI-generated patterns while maintaining accuracy and impact.
+
+CRITICAL SAFEGUARDS:
+- NEVER alter, embellish, or modify any metrics, numbers, percentages, or quantitative results
+- NEVER change the substance of accomplishments or responsibilities
+- NEVER add information not present in the source material
+- NEVER remove key details or achievements
+- ALL facts, dates, technologies, and results MUST remain exactly as provided
+
+HUMANIZATION TECHNIQUES (Apply Moderately):
+
+1. VARIED SENTENCE STRUCTURES:
+   - Mix sentence patterns to avoid formulaic writing
+   - Combine related achievements into compound sentences when natural
+   - Vary the placement of metrics within sentences
+   - Example:
+     * Formulaic: "Developed system. Reduced latency by 60%. Improved throughput by 45%."
+     * Humanized: "Developed system that reduced latency by 60% and improved throughput by 45%."
+
+2. NATURAL LANGUAGE FLOW:
+   - Use connecting words and phrases to link related ideas
+   - Avoid starting consecutive bullets with identical verb patterns
+   - Create logical narrative flow between accomplishments
+   - Example:
+     * Mechanical: "Led team. Implemented process. Achieved results."
+     * Natural: "Led cross-functional team to implement new process, achieving 30% efficiency gains."
+
+3. AUTHENTIC WORD CHOICE:
+   - Replace overused corporate jargon with concrete, specific verbs
+   - Avoid buzzword stacking ("leveraged synergistic solutions to optimize")
+   - Use precise technical terms where appropriate
+   - Example:
+     * Buzzword-heavy: "Leveraged cutting-edge technologies to facilitate optimization"
+     * Authentic: "Applied machine learning algorithms to optimize recommendation accuracy"
+
+4. HUMAN PHRASING PATTERNS:
+   - Occasionally use subordinate clauses for context
+   - Include brief contextual phrases when they add clarity
+   - Vary bullet point rhythm and length (within constraints)
+   - Example:
+     * Robotic: "Built API. Integrated with 5 services. Reduced response time by 40%."
+     * Human: "Built RESTful API integrating 5 external services, reducing response time by 40%."
+
+5. STRATEGIC EMPHASIS:
+   - Place the most impressive metrics where they have natural impact
+   - Use active voice consistently but vary sentence construction
+   - Let accomplishments speak for themselves without over-qualification
+   - Example:
+     * Over-qualified: "Successfully managed to reduce costs by implementing optimization"
+     * Direct: "Reduced costs 35% through infrastructure optimization"
+
+6. CONTEXTUAL COHERENCE:
+   - Ensure bullets within a role tell a coherent story
+   - Connect technical work to business outcomes naturally
+   - Avoid abrupt topic shifts between bullets
+   - Example:
+     * Disjointed: "Wrote Python scripts. Managed team. Reduced costs."
+     * Coherent: "Developed Python automation scripts that reduced manual processing time by 50%, enabling team to focus on high-value analysis work."
+
+WHAT NOT TO DO:
+- Do NOT add casual or conversational language
+- Do NOT use contractions or informal expressions
+- Do NOT add subjective opinions or self-praise
+- Do NOT sacrifice clarity for creativity
+- Do NOT make claims beyond the source material
+- Do NOT use clichés or empty phrases
+
+BALANCE: This is MEDIUM humanization - the output should read like it was written by an experienced professional who writes clearly and naturally, not by someone following a template. The writing should feel confident and authentic while remaining polished and professional. Readers should find it engaging and easy to read without questioning its professionalism.

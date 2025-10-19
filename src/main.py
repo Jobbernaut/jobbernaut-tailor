@@ -56,9 +56,74 @@ class ResumeOptimizationPipeline:
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
         self.cover_letter_prompt_template = load_prompt_template("generate_cover_letter.txt")
         
+        # Load humanization configuration
+        humanization_config = self.config.get("humanization", {})
+        self.humanization_enabled = humanization_config.get("enabled", False)
+        self.humanization_level = humanization_config.get("level", "medium")
+        self.humanization_targets = humanization_config.get("apply_to", ["resume", "cover_letter"])
+        
+        # Load humanization prompt if enabled
+        self.humanization_prompt = None
+        if self.humanization_enabled:
+            self.humanization_prompt = self._load_humanization_prompt(self.humanization_level)
+            print(f"✓ Humanization enabled: {self.humanization_level} level")
+            print(f"  Applying to: {', '.join(self.humanization_targets)}\n")
+        
         # Initialize template renderer
         self.renderer = TemplateRenderer()
 
+    def _load_humanization_prompt(self, level: str) -> str:
+        """
+        Load the humanization prompt for the specified level.
+        
+        Args:
+            level: The humanization level (low, medium, high)
+            
+        Returns:
+            The humanization prompt text
+        """
+        valid_levels = ["low", "medium", "high"]
+        if level not in valid_levels:
+            print(f"⚠️  Invalid humanization level '{level}', defaulting to 'medium'")
+            level = "medium"
+        
+        prompt_file = f"humanization_{level}.txt"
+        try:
+            humanization_prompt = load_prompt_template(prompt_file)
+            print(f"  Loaded humanization prompt: {prompt_file}")
+            return humanization_prompt
+        except FileNotFoundError:
+            print(f"⚠️  Humanization prompt file not found: {prompt_file}")
+            print(f"  Humanization will be disabled for this run")
+            return None
+    
+    def _apply_humanization(self, prompt: str, target: str) -> str:
+        """
+        Apply humanization instructions to a prompt if enabled and applicable.
+        
+        Args:
+            prompt: The base prompt to enhance
+            target: The target type ('resume' or 'cover_letter')
+            
+        Returns:
+            The prompt with humanization instructions appended (if applicable)
+        """
+        # Check if humanization is enabled and applies to this target
+        if not self.humanization_enabled:
+            return prompt
+        
+        if target not in self.humanization_targets:
+            return prompt
+        
+        if not self.humanization_prompt:
+            return prompt
+        
+        # Append humanization instructions to the prompt
+        separator = "\n\n" + "="*80 + "\n"
+        humanized_prompt = prompt + separator + self.humanization_prompt + separator
+        
+        return humanized_prompt
+    
     async def call_poe_api(self, prompt: str, bot_name: str, max_retries: int = 3) -> str:
         """
         Call the Poe API with retry logic.
@@ -258,6 +323,9 @@ class ResumeOptimizationPipeline:
             "[COMPANY_NAME]", company_name
         )
         
+        # Apply humanization if enabled for resume
+        resume_prompt = self._apply_humanization(resume_prompt, "resume")
+        
         # Retry loop for resume generation with Pydantic validation
         max_validation_retries = 3
         tailored_resume = None
@@ -376,6 +444,9 @@ class ResumeOptimizationPipeline:
         ).replace(
             "[COMPANY_NAME]", company_name
         )
+        
+        # Apply humanization if enabled for cover letter
+        cover_letter_prompt = self._apply_humanization(cover_letter_prompt, "cover_letter")
         
         cover_letter_response = await self.call_poe_api(cover_letter_prompt, self.cover_letter_bot)
         cover_letter_text = cover_letter_response.strip()

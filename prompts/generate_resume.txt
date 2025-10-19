@@ -32,7 +32,7 @@ You will be given the following data, clearly delineated:
     - **CRITICAL FORMAT:** `"technologies": ["Tech1", "Tech2", "Tech3"]` (array of strings)
     - **WRONG FORMAT:** `"technologies": "Tech1, Tech2, Tech3"` (comma-separated string) ❌
     - Prioritized based on relevance to the job description (most relevant first)
-    - Limited to a maximum of 90 characters when joined with ", " (e.g., ["React", "TypeScript", "AWS Lambda", "Docker"])
+    - Limited to a maximum of 100 characters when joined with ", " (e.g., ["React", "TypeScript", "AWS Lambda", "Docker"])
     - Specific and technical (e.g., "React" not "frontend", "PostgreSQL" not "database")
     - Extracted from the actual project content, not invented
 
@@ -77,7 +77,7 @@ This is the most critical step. You will rewrite the content for the selected ex
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, transform the raw, narrative `bullet_points` into professional, impact-focused statements.
     -   **WORK EXPERIENCE:** You MUST include EXACTLY 4 bullet points per position. Each bullet cannot exceed 110 characters and must fit in one line at any cost.
-    -   **PROJECTS:** For each of the 3 selected projects, you MUST include EXACTLY 4 bullet points. Each bullet cannot exceed 20 word and must fit in one line at any cost.
+    -   **PROJECTS:** For each of the 3 selected projects, you MUST include EXACTLY 4 bullet points. Each bullet cannot exceed 110 characters and must fit in one line at any cost.
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     -   **MANDATORY:** Start every bullet point with a strong action verb (e.g., Architected, Engineered, Reduced, Accelerated, Spearheaded).
     -   **MANDATORY:** Quantify the **Result** with specific metrics (%, $, time, volume) whenever possible, drawing from the narrative context. If a number isn't present, describe the tangible impact.
@@ -88,11 +88,11 @@ This is the most critical step. You will rewrite the content for the selected ex
 -   **Skills Section - Intelligent Category Utilization:**
     -   Generate a comprehensive, tailored `skills` object that maximizes the candidate's technical breadth.
     -   **USE ALL SIX AVAILABLE CATEGORIES**: Examine the master `skills` object and populate six different categories that contain relevant skills for the role.
-    -   **Smart Skill Selection**: For each category, intelligently select 8-90 characters worth of skills that create the best alignment between the candidate's authentic background and the job requirements.
+    -   **Smart Skill Selection**: For each category, intelligently select 8-100 characters worth of skills that create the best alignment between the candidate's authentic background and the job requirements.
     -   **Natural Relevance**: Skills should feel organic to the candidate's experience while naturally aligning with role requirements. Avoid forced keyword stuffing.
     -   **Technical Sophistication**: Prioritize skills that demonstrate depth and expertise relevant to the role's complexity level.
     -   **CRITICAL ONE-LINE CONSTRAINT**: Each skill category MUST fit on a single line when formatted as "\textbf{Category:} skill1, skill2, skill3, etc."
-    -   **MAXIMUM 90 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
+    -   **MAXIMUM 100 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
     -   **Category Strategy**: Use descriptive category names that showcase technical breadth (e.g., "Cloud & DevOps", "Data & Analytics", "Frontend Technologies").
 
 ### OUTPUT FORMAT: STRICT JSON
@@ -164,8 +164,8 @@ If any answer is "no", revise that bullet point.
 For EVERY skill category in the skills object:
 - Count the number of skills in the array
 - Write down: "[Category name]: X skills"
-- If ANY category > 90 characters worth of skills: STOP IMMEDIATELY and revise
-  - Either remove the least relevant skills to get to 90 characters
+- If ANY category > 100 characters worth of skills: STOP IMMEDIATELY and revise
+  - Either remove the least relevant skills to get to 100 characters
   - OR split into two categories with different names
 - Recount after revision
 
@@ -186,13 +186,13 @@ For EVERY project in the projects array:
 - Join the technologies array with ", "
 - Count the characters in the joined string
 - Write down: "Project [name] technologies: X characters"
-- If ANY project > 90 characters: STOP IMMEDIATELY and remove the least relevant technologies
+- If ANY project > 100 characters: STOP IMMEDIATELY and remove the least relevant technologies
 - Recount after revision
-- Confirm: ALL project technologies ≤ 90 characters when joined with ", "
+- Confirm: ALL project technologies ≤ 100 characters when joined with ", "
 
 **STEP 8: FINAL SKILL COUNT VERIFICATION**
 - Recount skills in ALL categories one final time
-- Confirm: ALL categories ≤ 90 characters worth of skills
+- Confirm: ALL categories ≤ 100 characters worth of skills
 - Only proceed if TRUE
 
 **STEP 9: VERIFY JSON STRUCTURE**

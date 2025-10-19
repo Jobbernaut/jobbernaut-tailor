@@ -147,6 +147,27 @@ class TemplateRenderer:
         Returns:
             Rendered LaTeX document as string
         """
+        # Sort education by graduation_date (descending - most recent first)
+        if 'education' in resume_data and len(resume_data['education']) > 1:
+            resume_data['education'] = sorted(
+                resume_data['education'],
+                key=lambda x: x.get('graduation_date', ''),
+                reverse=True
+            )
+        
+        # Sort work experience by start_date (descending - most recent first)
+        # Handle "Present" as a special case (treat as future date for sorting)
+        if 'work_experience' in resume_data and len(resume_data['work_experience']) > 1:
+            def get_sort_key(exp: Dict[str, Any]) -> str:
+                start_date = exp.get('start_date', '')
+                return "9999-99" if start_date.lower() == "present" else start_date
+            
+            resume_data['work_experience'] = sorted(
+                resume_data['work_experience'],
+                key=get_sort_key,
+                reverse=True
+            )
+        
         template = self.env.get_template('resume.jinja2')
         return template.render(**resume_data)
     
