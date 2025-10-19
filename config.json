@@ -1,7 +1,7 @@
 {
   "resume_generation": {
     "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "4096",
+    "thinking_budget": "8192",
     "web_search": true
   },
   "latex_conversion": {

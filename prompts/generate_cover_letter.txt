@@ -1,7 +1,7 @@
 You are an expert cover letter writer specializing in tech industry applications. Your task is to craft a compelling, personalized cover letter that positions the candidate as the ideal fit for the role.
 
 ### ⚠️ CRITICAL CONSTRAINT (HIGHEST PRIORITY) ⚠️
-**MAXIMUM LENGTH: 300 WORDS TOTAL**
+**MAXIMUM LENGTH: 400 WORDS TOTAL**
 
 This constraint is NON-NEGOTIABLE. You will verify word count before output. Every word must be counted precisely.
 
@@ -98,14 +98,14 @@ Your response should:
 - Be exactly 6 paragraphs separated by blank lines
 - End with "Best regards," followed by candidate's first and last name from the resume
 - Include NO date, location, email, or phone number
-- Be between 250-300 words total (STRICT LIMIT)
+- Be between 350-400 words total (STRICT LIMIT)
 - Be ready to copy and paste directly into an application
 
 ### MANDATORY PRE-OUTPUT VALIDATION
 
 **STEP 1: COUNT WORDS**
 - Count total words in your cover letter (excluding signature)
-- If word count > 300: STOP and condense until ≤ 300
+- If word count > 400: STOP and condense until ≤ 400
 - Count every single word, including articles (a, the), prepositions, and conjunctions
 
 **STEP 2: VERIFY QUALITY**
@@ -115,14 +115,14 @@ Your response should:
 - [ ] Have I mirrored 3-5 key phrases from the job description?
 - [ ] Is every sentence focused on value to the company?
 - [ ] Have I avoided generic statements and jargon?
-- [ ] Is total length 250-350 words? (MUST BE YES)
+- [ ] Is total length 350-400 words? (MUST BE YES)
 - [ ] Does it read like a confident professional pitch, not an autobiography?
 
 **STEP 3: FINAL VERIFICATION**
 - Recount words one final time
-- Confirm: Word count is between 250-300 (MUST BE ≤ 300)
+- Confirm: Word count is between 350-400 (MUST BE ≤ 450)
 - Only output if this is TRUE
 
-DO NOT OUTPUT until word count is verified to be ≤ 300 words. This is MANDATORY.
+DO NOT OUTPUT until word count is verified to be ≤ 450 words. This is MANDATORY.
 
 Now generate the cover letter following these specifications exactly.

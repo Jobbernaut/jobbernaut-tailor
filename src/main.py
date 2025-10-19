@@ -15,6 +15,7 @@ from utils import (
     create_output_directory,
     save_resume,
     save_cover_letter,
+    save_referral_cover_letter,
     save_latex_resume,
     save_latex_cover_letter,
     load_prompt_template,
@@ -523,6 +524,15 @@ class ResumeOptimizationPipeline:
             company_name,
         )
         print(f"✓ Cover letter TXT saved: {cover_letter_path}")
+
+        # Save referral cover letter text (same content, different filename)
+        referral_cover_letter_path = save_referral_cover_letter(
+            output_dir,
+            cover_letter_text,
+            job_title,
+            company_name,
+        )
+        print(f"✓ Referral cover letter TXT saved: {referral_cover_letter_path}")
 
         # Step 4: Convert resume JSON to LaTeX
         print(f"\n📄 Step 4: Converting resume to LaTeX using {self.latex_bot}...")
