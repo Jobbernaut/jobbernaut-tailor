@@ -264,9 +264,9 @@ For EVERY project in the projects array:
 - Count the characters in the joined string
 - Write down: "Project [name] technologies: X characters"
 - Verify that technologies include priority keywords from Step 1 where applicable
-- If ANY project > 100 characters: STOP IMMEDIATELY and remove the least relevant technologies (those NOT in keyword list)
-- Recount after revision
-- Confirm: ALL project technologies ≤ 100 characters when joined with ", "
+- If ANY project > 100 characters: STOP IMMEDIATELY and iteratively remove the least relevant technologies (those NOT in the keyword list), starting with those least related to the job description, until the joined string is ≤ 100 characters.
+- After each removal, recount the characters in the joined technologies string.
+- Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 100 characters when joined with ", ". This is a non-negotiable constraint.
 
 **STEP 9: VERIFY JSON STRUCTURE**
 - Confirm the JSON is valid and complete
