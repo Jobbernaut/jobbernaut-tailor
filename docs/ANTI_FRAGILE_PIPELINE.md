@@ -1,8 +1,8 @@
-# Anti-Fragile Pipeline Architecture
+# Anti-Fragile Pipeline Architecture (V4)
 
 ## Overview
 
-The Jobbernaut pipeline has been enhanced with robust validation, self-healing retry logic, and deterministic error handling to ensure reliable operation without over-engineering.
+The Jobbernaut V4 pipeline features robust validation, self-healing retry logic, and deterministic error handling across all 13 pipeline steps. The intelligence gathering phase introduces three new validation models with quality thresholds that go beyond schema compliance to ensure meaningful, actionable content.
 
 ## Key Features
 
@@ -24,29 +24,32 @@ The Jobbernaut pipeline has been enhanced with robust validation, self-healing r
 
 **Location**: `src/main.py` lines 243-333
 
-**Purpose**: Ensures intelligence outputs meet quality thresholds
+**Purpose**: Ensures intelligence outputs meet quality thresholds beyond Pydantic schema validation
 
 **Quality Thresholds**:
 
 #### JobResonanceAnalysis
-- `emotional_keywords`: 3-15 items, no empty strings
-- `cultural_values`: 2+ items, no empty strings
-- `hidden_requirements`: 2+ items, no empty strings
-- `power_verbs`: 3+ items, no empty strings
-- `technical_keywords`: 3+ items, no empty strings
+- `key_requirements`: 3-15 items, each 10-200 characters, no generic content
+- `nice_to_have_skills`: 2-10 items, each 10-150 characters, no generic content
+- `cultural_indicators`: 2-8 items, each 10-150 characters, no generic content
+- `experience_level`: 10-100 characters, meaningful content
+- `technical_stack`: 3-20 items, each 2-50 characters
+- `soft_skills_emphasis`: 2-8 items, each 10-100 characters, no generic content
 
 #### CompanyResearch
-- `mission_statement`: 20+ characters
-- `core_values`: 2-10 items, no empty strings
-- `tech_stack`: No empty strings
-- `culture_keywords`: No empty strings
+- `company_mission`: 20-300 characters, specific and meaningful
+- `company_values`: 3-8 items, each 10-100 characters, no generic values
+- `recent_news`: 2-6 items, each 20-200 characters, recent and specific
+- `industry_position`: 20-200 characters, concrete positioning
+- `work_culture_indicators`: 3-10 items, each 10-150 characters, specific signals
+- `growth_stage`: 10-100 characters, clear assessment
 
 #### StorytellingArc
-- `hook`: 50+ characters
-- `bridge`: 50+ characters
-- `vision`: 50+ characters
-- `call_to_action`: 20+ characters
-- `proof_points`: 2-3 items, each 30+ characters
+- `opening_hook`: 50-400 characters, compelling and specific
+- `background_bridge`: 100-500 characters, meaningful connection
+- `value_proposition`: 100-500 characters, concrete value
+- `cultural_alignment`: 50-400 characters, authentic alignment
+- `closing_vision`: 50-400 characters, forward-looking and specific
 
 ### 3. Self-Healing Retry Wrapper (`_call_intelligence_step_with_retry`)
 
@@ -86,56 +89,126 @@ All three intelligence methods now use the retry wrapper:
 - Validates with `StorytellingArc` model
 - 3 retry attempts with progressive feedback
 
-### 5. Pipeline Execution Flow
+### 5. V4 Pipeline Execution Flow (13 Steps)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ 1. VALIDATE JOB INPUTS                                      │
-│    - Check job_id, job_title, company_name, job_description│
+│ STEP 1: LOAD MASTER RESUME                                  │
+│    - Load profile/master_resume.json                        │
+│    - Parse candidate's complete background                  │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 2: INPUT VALIDATION (V4)                               │
+│    - Validate job_id, job_title, company_name               │
+│    - Validate job_description (100-50,000 chars)            │
 │    - Fail fast if invalid                                   │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ 2. INTELLIGENCE GATHERING PHASE                             │
-│                                                             │
-│    Step 1: Job Resonance Analysis (with retry)             │
+│ STEP 3: JOB RESONANCE ANALYSIS (V4 Intelligence)            │
 │    ├─ Attempt 1: Base prompt                               │
 │    ├─ Attempt 2: + JSON error feedback (if needed)         │
 │    ├─ Attempt 3: + Pydantic/quality feedback (if needed)   │
-│    └─ Validate: Pydantic + Quality thresholds              │
+│    └─ Validate: JobResonanceAnalysis model + quality        │
 │                                                             │
-│    Step 2: Company Research (with retry)                   │
-│    ├─ Attempt 1: Base prompt                               │
-│    ├─ Attempt 2: + JSON error feedback (if needed)         │
-│    ├─ Attempt 3: + Pydantic/quality feedback (if needed)   │
-│    └─ Validate: Pydantic + Quality thresholds              │
+│    Extracts:                                                │
+│    - key_requirements (3-15 items)                          │
+│    - nice_to_have_skills (2-10 items)                       │
+│    - cultural_indicators (2-8 items)                        │
+│    - experience_level                                       │
+│    - technical_stack (3-20 items)                           │
+│    - soft_skills_emphasis (2-8 items)                       │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ 3. RESUME GENERATION (with retry)                           │
+│ STEP 4: COMPANY RESEARCH (V4 Intelligence)                  │
+│    ├─ Attempt 1: Base prompt                               │
+│    ├─ Attempt 2: + JSON error feedback (if needed)         │
+│    ├─ Attempt 3: + Pydantic/quality feedback (if needed)   │
+│    └─ Validate: CompanyResearch model + quality             │
+│                                                             │
+│    Extracts:                                                │
+│    - company_mission (20-300 chars)                         │
+│    - company_values (3-8 items)                             │
+│    - recent_news (2-6 items)                                │
+│    - industry_position (20-200 chars)                       │
+│    - work_culture_indicators (3-10 items)                   │
+│    - growth_stage (10-100 chars)                            │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 5: STORYTELLING ARC GENERATION (V4 Intelligence)       │
+│    ├─ Attempt 1: Base prompt                               │
+│    ├─ Attempt 2: + JSON error feedback (if needed)         │
+│    ├─ Attempt 3: + Pydantic/quality feedback (if needed)   │
+│    └─ Validate: StorytellingArc model + quality             │
+│                                                             │
+│    Creates:                                                 │
+│    - opening_hook (50-400 chars)                            │
+│    - background_bridge (100-500 chars)                      │
+│    - value_proposition (100-500 chars)                      │
+│    - cultural_alignment (50-400 chars)                      │
+│    - closing_vision (50-400 chars)                          │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 6: RESUME GENERATION (V4 Enhanced)                     │
+│    - Inject job resonance analysis context                  │
+│    - 3 retry attempts with TailoredResume validation        │
+│    - Progressive error feedback on failures                 │
+│    - Validates all resume fields and constraints            │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 7: RESUME VALIDATION (V4)                              │
+│    - Pydantic schema validation (TailoredResume)            │
+│    - Character limit validation                             │
+│    - Array size validation                                  │
+│    - Required field validation                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 8: COVER LETTER GENERATION (V4 Enhanced)               │
+│    - Inject storytelling arc + company research             │
 │    - Inject job resonance analysis                          │
-│    - 3 retry attempts with Pydantic validation              │
+│    - 3 retry attempts with CoverLetter validation           │
 │    - Progressive error feedback on failures                 │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ 4. STORYTELLING ARC GENERATION (with retry)                 │
-│    - Uses resume + company research + job resonance         │
-│    - 3 retry attempts with validation                       │
-│    - Progressive error feedback on failures                 │
+│ STEP 9: COVER LETTER VALIDATION (V4)                        │
+│    - Pydantic schema validation (CoverLetter)               │
+│    - Paragraph structure validation                         │
+│    - Character limit validation                             │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ 5. COVER LETTER GENERATION                                  │
-│    - Inject storytelling arc + company research + resonance │
-│    - Single attempt (text output, no validation needed)     │
+│ STEP 10: RESUME LATEX RENDERING                             │
+│    - Render resume.jinja2 template                          │
+│    - Generate LaTeX source                                  │
+│    - Save to output directory                               │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│ 6. LATEX RENDERING & PDF COMPILATION                        │
-│    - Resume LaTeX → PDF                                     │
-│    - Cover Letter LaTeX → PDF                               │
-│    - Referral versions                                      │
+│ STEP 11: COVER LETTER LATEX RENDERING                       │
+│    - Render cover_letter.jinja2 template                    │
+│    - Generate LaTeX source                                  │
+│    - Save to output directory                               │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 12: RESUME PDF COMPILATION                             │
+│    - Compile LaTeX to PDF (pdflatex)                        │
+│    - Generate standard and referral versions                │
+│    - Handle compilation errors                              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 13: COVER LETTER PDF COMPILATION                       │
+│    - Compile LaTeX to PDF (pdflatex)                        │
+│    - Generate standard and referral versions                │
+│    - Handle compilation errors                              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -183,23 +256,33 @@ All three intelligence methods now use the retry wrapper:
 2. **API Connection Failures**: Retry at API level (3 attempts)
 3. **All Retries Exhausted**: Fail with detailed error context
 
-## Validation Layers
+## V4 Validation Layers
 
 ```
-Layer 1: Input Validation
+Layer 1: Input Validation (Step 2)
 ├─ Type checking (string, int, etc.)
-├─ Length constraints
-└─ Required field presence
+├─ Length constraints (job_title: 3-200, company_name: 2-100, etc.)
+├─ Required field presence (job_id, job_title, company_name, job_description)
+└─ Character limits (job_description: 100-50,000 characters)
 
-Layer 2: Pydantic Schema Validation
-├─ Field types match schema
-├─ Required fields present
-└─ Nested object structure correct
+Layer 2: Pydantic Schema Validation (Steps 3-9)
+├─ Field types match schema (string, array, etc.)
+├─ Required fields present in all models
+├─ Nested object structure correct
+├─ Array size constraints (min/max items)
+└─ Character limits per field
 
-Layer 3: Quality Threshold Validation
-├─ Minimum content length
-├─ Array size constraints
-└─ No empty strings in arrays
+Layer 3: Quality Threshold Validation (Steps 3-5)
+├─ Minimum content length (no trivial content)
+├─ Array size constraints (meaningful number of items)
+├─ No empty strings in arrays
+├─ No generic phrases (e.g., "good communication skills")
+└─ Meaningful, specific, actionable content
+
+Layer 4: Content Quality Validation (V4 Intelligence Models)
+├─ JobResonanceAnalysis: Specific requirements, not generic
+├─ CompanyResearch: Recent, verifiable information
+└─ StorytellingArc: Compelling narrative, not boilerplate
 ```
 
 ## Benefits
