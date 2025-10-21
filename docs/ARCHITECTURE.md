@@ -109,7 +109,7 @@ Once a job is marked as "processed," the pipeline ignores it on subsequent runs,
 - `TailoredResume`: Complete resume structure
 
 **Validation Rules**:
-- Character limits (bullet points ≤ 115 chars, skills ≤ 105 chars)
+- Character limits (bullet points ≤ 100 chars, skills ≤ 100 chars, technologies ≤ 100 chars)
 - Array length constraints (exactly 4 bullet points, exactly 3 work experiences)
 - Required vs optional fields
 - Field name enforcement (e.g., `graduation_date` not `end_date`)

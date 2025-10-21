@@ -4,8 +4,7 @@ Ensures type safety and correct field names before template rendering.
 """
 
 from typing import List, Dict, Optional
-from datetime import datetime
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class ContactInfo(BaseModel):
@@ -41,11 +40,11 @@ class WorkExperience(BaseModel):
     @field_validator('bullet_points')
     @classmethod
     def validate_bullet_length(cls, v: List[str]) -> List[str]:
-        """Ensure each bullet point is <= 115 characters."""
+        """Ensure each bullet point is <= 110 characters."""
         for i, bullet in enumerate(v):
-            if len(bullet) > 115:
+            if len(bullet) > 110:
                 raise ValueError(
-                    f"Bullet point {i+1} exceeds 115 characters ({len(bullet)} chars): {bullet[:50]}..."
+                    f"Bullet point {i+1} exceeds 110 characters ({len(bullet)} chars): {bullet[:50]}..."
                 )
         return v
 
@@ -61,22 +60,22 @@ class Project(BaseModel):
     @field_validator('bullet_points')
     @classmethod
     def validate_bullet_length(cls, v: List[str]) -> List[str]:
-        """Ensure each bullet point is <= 115 characters."""
+        """Ensure each bullet point is <= 110 characters."""
         for i, bullet in enumerate(v):
-            if len(bullet) > 115:
+            if len(bullet) > 110:
                 raise ValueError(
-                    f"Bullet point {i+1} exceeds 115 characters ({len(bullet)} chars): {bullet[:50]}..."
+                    f"Bullet point {i+1} exceeds 110 characters ({len(bullet)} chars): {bullet[:50]}..."
                 )
         return v
     
     @field_validator('technologies')
     @classmethod
     def validate_technologies_length(cls, v: List[str]) -> List[str]:
-        """Ensure technologies joined with ', ' is <= 100 characters."""
+        """Ensure technologies joined with ', ' is <= 95 characters."""
         joined = ", ".join(v)
-        if len(joined) > 100:
+        if len(joined) > 95:
             raise ValueError(
-                f"Technologies exceed 100 characters when joined ({len(joined)} chars): {joined}"
+                f"Technologies exceed 95 characters when joined ({len(joined)} chars): {joined}"
             )
         return v
 
@@ -94,11 +93,11 @@ class TailoredResume(BaseModel):
     @field_validator('skills')
     @classmethod
     def validate_skills_length(cls, v: Dict[str, str]) -> Dict[str, str]:
-        """Ensure each skill category value is <= 105 characters."""
+        """Ensure each skill category value is <= 95 characters."""
         for category, skills_str in v.items():
-            if len(skills_str) > 105:
+            if len(skills_str) > 95:
                 raise ValueError(
-                    f"Skills in category '{category}' exceed 105 characters ({len(skills_str)} chars): {skills_str[:50]}..."
+                    f"Skills in category '{category}' exceed 95 characters ({len(skills_str)} chars): {skills_str[:50]}..."
                 )
         return v
     

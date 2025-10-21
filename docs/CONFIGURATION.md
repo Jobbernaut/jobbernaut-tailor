@@ -1,711 +1,431 @@
-# Configuration System
+# Configuration Guide
 
 ## Overview
 
-Jobbernaut Tailor uses a hierarchical configuration system that allows flexible customization while maintaining sensible defaults. This document explains the configuration architecture, available settings, precedence rules, and best practices.
+Jobbernaut Tailor uses a combination of environment variables and a JSON configuration file to control its behavior. This document explains all configuration options and how to set them up correctly.
 
-## Configuration Hierarchy
+## Configuration Files
 
-The system loads configuration from multiple sources in order of precedence:
+### 1. Environment Variables (.env)
 
-### Precedence Order (Highest to Lowest)
+The `.env` file stores sensitive credentials that should never be committed to version control.
 
-1. **Command-line Arguments**: Runtime parameters override all other settings
-2. **Environment Variables**: System-level configuration for sensitive data
-3. **config.json**: User-specific settings and preferences
-4. **Default Values**: Built-in fallback values
+#### Required Variables
 
-### Why This Hierarchy?
+**POE_API_KEY**
+- **Purpose**: Authentication for Poe API access
+- **How to Get**: 
+  1. Visit [poe.com](https://poe.com)
+  2. Log in to your account
+  3. Go to Settings → API Keys
+  4. Generate a new API key
+- **Format**: String (typically starts with `poe-`)
+- **Example**: `POE_API_KEY=poe-abcdef1234567890`
 
-#### Security
-Sensitive credentials stay in environment variables, never committed to version control.
+#### Creating the .env File
 
-#### Flexibility
-Users can override settings without modifying code or configuration files.
+Create a file named `.env` in the project root directory:
 
-#### Portability
-Configuration files can be shared across environments while environment variables handle environment-specific values.
+```bash
+# .env file
+POE_API_KEY=your_actual_api_key_here
+```
 
-#### Maintainability
-Default values ensure the system works out of the box with minimal configuration.
+**Security Note**: The `.env` file is listed in `.gitignore` to prevent accidental commits. Never share your API key publicly.
 
 ---
 
-## Environment Variables
+### 2. Configuration File (config.json)
 
-### Purpose
-Store sensitive credentials and environment-specific settings that should not be committed to version control.
+The `config.json` file controls AI model selection, humanization settings, and referral contact information.
 
-### Required Variables
+#### Complete Configuration Structure
 
-#### ANTHROPIC_API_KEY
-- **Purpose**: API key for Claude models
-- **Format**: String (sk-ant-...)
-- **Required**: Yes (if using Claude)
-- **Example**: `sk-ant-api03-xxx`
-
-#### OPENAI_API_KEY
-- **Purpose**: API key for OpenAI models
-- **Format**: String (sk-...)
-- **Required**: Yes (if using GPT models)
-- **Example**: `sk-xxx`
-
-### Optional Variables
-
-#### OUTPUT_DIR
-- **Purpose**: Override default output directory
-- **Format**: File path
-- **Default**: `./output`
-- **Example**: `/home/user/resumes`
-
-#### LOG_LEVEL
-- **Purpose**: Control logging verbosity
-- **Format**: DEBUG, INFO, WARNING, ERROR
-- **Default**: INFO
-- **Example**: `DEBUG`
-
-### Setting Environment Variables
-
-#### Windows
-```
-set ANTHROPIC_API_KEY=sk-ant-xxx
-set OPENAI_API_KEY=sk-xxx
-```
-
-#### Linux/Mac
-```
-export ANTHROPIC_API_KEY=sk-ant-xxx
-export OPENAI_API_KEY=sk-xxx
-```
-
-#### .env File (Development)
-```
-ANTHROPIC_API_KEY=sk-ant-xxx
-OPENAI_API_KEY=sk-xxx
-OUTPUT_DIR=./output
-LOG_LEVEL=DEBUG
-```
-
----
-
-## config.json
-
-### Purpose
-Store user preferences and system settings that can be version controlled and shared across environments.
-
-### File Location
-Root directory of the project: `config.json`
-
-### Structure
-
-The configuration file is organized into logical sections:
-
-```
+```json
 {
-  "api": { ... },
-  "resume_generation": { ... },
-  "cover_letter_generation": { ... },
-  "humanization": { ... },
-  "referral_resume": { ... },
-  "output": { ... }
+  "resume_generation": {
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "8192",
+    "web_search": true
+  },
+  "cover_letter_generation": {
+    "bot_name": "Claude-Sonnet-4.5",
+    "thinking_budget": "2048",
+    "web_search": true
+  },
+  "humanization": {
+    "enabled": false,
+    "level": "low",
+    "apply_to": ["resume", "cover_letter"]
+  },
+  "referral_resume": {
+    "email": "alternative@email.com",
+    "phone": "555-0123"
+  }
 }
 ```
 
 ---
 
-## API Configuration
+## Configuration Sections
 
-### Purpose
-Configure AI model selection and API settings.
+### resume_generation
 
-### Settings
+Controls the AI model used for generating tailored resume JSON.
 
-#### model
-- **Purpose**: Select AI model for generation
+#### bot_name
 - **Type**: String
-- **Options**: "claude-3-5-sonnet-20241022", "gpt-4", "gpt-4-turbo"
-- **Default**: "claude-3-5-sonnet-20241022"
-- **Example**: `"model": "claude-3-5-sonnet-20241022"`
+- **Purpose**: Specifies which Poe AI bot to use for resume generation
+- **Available Options**:
+  - `"Claude-Sonnet-4.5"` - Anthropic's Claude Sonnet 4.5 (excellent reasoning)
+  - `"Gemini-2.5-Pro"` - Google's Gemini 2.5 Pro (strong technical understanding)
+  - `"GPT-4o"` - OpenAI's GPT-4o (balanced performance)
+  - `"GPT-4o-Mini"` - OpenAI's GPT-4o Mini (faster, cost-effective)
+- **Recommendation**: `"Gemini-2.5-Pro"` for technical resumes
+- **Default**: `"Gemini-2.5-Pro"`
 
-#### max_tokens
-- **Purpose**: Maximum tokens for AI responses
-- **Type**: Integer
-- **Range**: 1000-8000
-- **Default**: 4000
-- **Example**: `"max_tokens": 4000`
+#### thinking_budget
+- **Type**: String (number as string)
+- **Purpose**: Maximum tokens allocated for AI reasoning/thinking
+- **Range**: "0" to "32768"
+- **Recommendation**: "8192" for complex resume tailoring
+- **Default**: "8192"
+- **Note**: Higher values allow more thorough analysis but may increase latency
 
-#### temperature
-- **Purpose**: Control AI creativity/randomness
-- **Type**: Float
-- **Range**: 0.0-1.0
-- **Default**: 0.7
-- **Example**: `"temperature": 0.7`
-- **Note**: Lower = more deterministic, Higher = more creative
-
-#### timeout
-- **Purpose**: API request timeout in seconds
-- **Type**: Integer
-- **Default**: 60
-- **Example**: `"timeout": 60`
-
-#### max_retries
-- **Purpose**: Maximum retry attempts for failed API calls
-- **Type**: Integer
-- **Default**: 3
-- **Example**: `"max_retries": 3`
-
-### Design Rationale
-Separating API configuration allows easy model switching and parameter tuning without code changes.
+#### web_search
+- **Type**: Boolean
+- **Purpose**: Enable/disable web search for company research
+- **Options**: `true` or `false`
+- **Recommendation**: `true` to research company details and industry trends
+- **Default**: `true`
+- **Note**: Helps AI understand company culture and tailor content accordingly
 
 ---
 
-## Resume Generation Configuration
+### cover_letter_generation
 
-### Purpose
-Control resume generation behavior and validation settings.
+Controls the AI model used for generating cover letters.
 
-### Settings
-
-#### enabled
-- **Purpose**: Enable/disable resume generation
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"enabled": true`
-- **Use Case**: Disable when only generating cover letters
-
-#### max_validation_retries
-- **Purpose**: Maximum attempts to fix validation errors
-- **Type**: Integer
-- **Default**: 3
-- **Example**: `"max_validation_retries": 3`
-
-#### include_projects
-- **Purpose**: Include projects section in resume
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"include_projects": true`
-
-#### include_certifications
-- **Purpose**: Include certifications section
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"include_certifications": true`
-
-#### max_work_experiences
-- **Purpose**: Maximum work experiences to include
-- **Type**: Integer
-- **Default**: 10
-- **Example**: `"max_work_experiences": 5`
-- **Use Case**: Limit resume length for recent graduates
-
-#### max_skills
-- **Purpose**: Maximum skills to list
-- **Type**: Integer
-- **Default**: 30
-- **Example**: `"max_skills": 20`
-
-### Design Rationale
-Fine-grained control over resume content allows customization for different career stages and industries.
-
----
-
-## Cover Letter Generation Configuration
-
-### Purpose
-Control cover letter generation and formatting.
-
-### Settings
-
-#### enabled
-- **Purpose**: Enable/disable cover letter generation
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"enabled": true`
-
-#### max_validation_retries
-- **Purpose**: Maximum attempts to fix validation errors
-- **Type**: Integer
-- **Default**: 3
-- **Example**: `"max_validation_retries": 3`
-
-#### include_recipient_info
-- **Purpose**: Include hiring manager details if available
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"include_recipient_info": true`
-
-#### tone
-- **Purpose**: Overall tone of cover letter
+#### bot_name
 - **Type**: String
-- **Options**: "professional", "enthusiastic", "formal"
-- **Default**: "professional"
-- **Example**: `"tone": "enthusiastic"`
+- **Purpose**: Specifies which Poe AI bot to use for cover letter writing
+- **Available Options**: Same as resume_generation
+- **Recommendation**: `"Claude-Sonnet-4.5"` for natural, persuasive writing
+- **Default**: `"Claude-Sonnet-4.5"`
+- **Note**: Claude excels at creative writing and persuasive communication
 
-### Design Rationale
-Cover letter configuration allows tone adjustment for different company cultures and industries.
+#### thinking_budget
+- **Type**: String (number as string)
+- **Purpose**: Maximum tokens for AI reasoning when writing cover letters
+- **Range**: "0" to "32768"
+- **Recommendation**: "2048" (cover letters require less complex reasoning)
+- **Default**: "2048"
+
+#### web_search
+- **Type**: Boolean
+- **Purpose**: Enable/disable web search for company research
+- **Options**: `true` or `false`
+- **Recommendation**: `true` to personalize cover letters with company details
+- **Default**: `true`
 
 ---
 
-## Humanization Configuration
+### humanization
 
-### Purpose
-Control the humanization process that makes AI-generated content sound more natural.
-
-### Settings
+Controls post-processing to make AI-generated content sound more natural.
 
 #### enabled
-- **Purpose**: Enable/disable humanization
 - **Type**: Boolean
-- **Default**: true
-- **Example**: `"enabled": true`
+- **Purpose**: Enable/disable humanization processing
+- **Options**: `true` or `false`
+- **Recommendation**: `false` (AI models are already quite natural)
+- **Default**: `false`
+- **Note**: When enabled, adds an extra AI pass to "humanize" the content
 
 #### level
-- **Purpose**: Intensity of humanization
 - **Type**: String
-- **Options**: "none", "low", "medium", "high"
-- **Default**: "medium"
-- **Example**: `"level": "medium"`
+- **Purpose**: Intensity of humanization when enabled
+- **Options**:
+  - `"low"` - Minimal changes, subtle improvements
+  - `"medium"` - Moderate changes, more conversational tone
+  - `"high"` - Significant changes, very casual tone
+- **Recommendation**: `"low"` if enabled (maintains professionalism)
+- **Default**: `"low"`
+- **Note**: Only applies when `enabled: true`
 
-#### apply_to_resume
-- **Purpose**: Apply humanization to resume
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"apply_to_resume": true`
-
-#### apply_to_cover_letter
-- **Purpose**: Apply humanization to cover letter
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"apply_to_cover_letter": true`
-
-### Humanization Levels
-
-#### none
-- No humanization applied
-- AI-generated content used as-is
-- Most formal and technical
-- Best for: Technical roles, academic positions
-
-#### low
-- Minimal changes to preserve accuracy
-- Slight sentence structure variation
-- Maintains formal professional tone
-- Best for: Corporate roles, conservative industries
-
-#### medium
-- Balanced natural and professional
-- Varied sentence structures
-- Occasional conversational elements
-- Best for: Most professional roles
-
-#### high
-- Maximum naturalness
-- Conversational tone
-- Varied sentence lengths
-- Best for: Startups, creative roles
-
-### Design Rationale
-Configurable humanization allows users to balance naturalness with professionalism based on target industry and role.
+#### apply_to
+- **Type**: Array of strings
+- **Purpose**: Which documents to humanize
+- **Options**: `["resume"]`, `["cover_letter"]`, or `["resume", "cover_letter"]`
+- **Recommendation**: `["resume", "cover_letter"]` if humanization is enabled
+- **Default**: `["resume", "cover_letter"]`
+- **Note**: Only applies when `enabled: true`
 
 ---
 
-## Referral Resume Configuration
+### referral_resume
 
-### Purpose
-Configure generation of referral-specific resumes with alternative contact information.
+Alternate contact information for referral versions of documents.
 
-### Settings
+#### email
+- **Type**: String
+- **Purpose**: Alternative email address for referral documents
+- **Use Case**: When applying through a referral, you might want to use a different email
+- **Example**: `"alternative@email.com"`
+- **Default**: `"alternative@email.com"`
+- **Note**: Referral PDFs are generated automatically with this contact info
 
-#### enabled
-- **Purpose**: Enable referral resume generation
-- **Type**: Boolean
-- **Default**: false
-- **Example**: `"enabled": true`
+#### phone
+- **Type**: String
+- **Purpose**: Alternative phone number for referral documents
+- **Use Case**: Separate phone number for referral applications
+- **Example**: `"555-0123"`
+- **Default**: `"555-0123"`
+- **Note**: Update this to your actual alternative contact information
 
-#### contact_info
-- **Purpose**: Alternative contact information for referrals
-- **Type**: Object
-- **Fields**: name, email, phone, location
-- **Example**:
+---
+
+## Available AI Models (Poe Bots)
+
+### Claude-Sonnet-4.5
+- **Provider**: Anthropic
+- **Strengths**: Excellent reasoning, natural writing, strong instruction following
+- **Best For**: Cover letters, creative content, persuasive writing
+- **Speed**: Moderate
+- **Cost**: Higher tier
+
+### Gemini-2.5-Pro
+- **Provider**: Google
+- **Strengths**: Technical understanding, structured output, web search integration
+- **Best For**: Resume generation, technical content, research-heavy tasks
+- **Speed**: Fast
+- **Cost**: Mid tier
+
+### GPT-4o
+- **Provider**: OpenAI
+- **Strengths**: Balanced performance, versatile, reliable
+- **Best For**: General purpose, when you need consistency
+- **Speed**: Moderate
+- **Cost**: Higher tier
+
+### GPT-4o-Mini
+- **Provider**: OpenAI
+- **Strengths**: Fast, cost-effective, good for simple tasks
+- **Best For**: Quick iterations, testing, budget-conscious usage
+- **Speed**: Very fast
+- **Cost**: Lower tier
+
+---
+
+## Configuration Examples
+
+### Example 1: High-Quality, Research-Focused
+
 ```json
-"contact_info": {
-  "name": "John Smith",
-  "email": "referral@email.com",
-  "phone": "+1 (555) 999-8888",
-  "location": "San Francisco, CA"
+{
+  "resume_generation": {
+    "bot_name": "Gemini-2.5-Pro",
+    "thinking_budget": "16384",
+    "web_search": true
+  },
+  "cover_letter_generation": {
+    "bot_name": "Claude-Sonnet-4.5",
+    "thinking_budget": "8192",
+    "web_search": true
+  },
+  "humanization": {
+    "enabled": false,
+    "level": "low",
+    "apply_to": ["resume", "cover_letter"]
+  },
+  "referral_resume": {
+    "email": "referral@email.com",
+    "phone": "555-9999"
+  }
 }
 ```
 
-### Use Case
-When applying through employee referrals, some companies prefer alternative contact information to route applications correctly.
-
-### Design Rationale
-Separate referral configuration allows maintaining both standard and referral contact information without manual editing.
+**Use Case**: Maximum quality, thorough company research, willing to wait longer for results.
 
 ---
 
-## Output Configuration
+### Example 2: Fast, Cost-Effective
 
-### Purpose
-Control output file generation and organization.
+```json
+{
+  "resume_generation": {
+    "bot_name": "GPT-4o-Mini",
+    "thinking_budget": "2048",
+    "web_search": false
+  },
+  "cover_letter_generation": {
+    "bot_name": "GPT-4o-Mini",
+    "thinking_budget": "1024",
+    "web_search": false
+  },
+  "humanization": {
+    "enabled": false,
+    "level": "low",
+    "apply_to": ["resume", "cover_letter"]
+  },
+  "referral_resume": {
+    "email": "alternative@email.com",
+    "phone": "555-0123"
+  }
+}
+```
 
-### Settings
-
-#### directory
-- **Purpose**: Base output directory
-- **Type**: String (file path)
-- **Default**: "./output"
-- **Example**: `"directory": "./output"`
-
-#### create_subdirectories
-- **Purpose**: Create company-specific subdirectories
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"create_subdirectories": true`
-
-#### subdirectory_format
-- **Purpose**: Format for subdirectory names
-- **Type**: String
-- **Options**: "{company}_{position}", "{company}", "{position}"
-- **Default**: "{company}_{position}"
-- **Example**: `"subdirectory_format": "{company}_{position}"`
-
-#### save_json
-- **Purpose**: Save intermediate JSON files
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"save_json": true`
-- **Use Case**: Useful for debugging and manual editing
-
-#### save_latex
-- **Purpose**: Save LaTeX source files
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"save_latex": true`
-
-#### save_pdf
-- **Purpose**: Generate PDF files
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"save_pdf": true`
-
-#### cleanup_auxiliary_files
-- **Purpose**: Remove LaTeX auxiliary files after compilation
-- **Type**: Boolean
-- **Default**: true
-- **Example**: `"cleanup_auxiliary_files": true`
-
-### Design Rationale
-Flexible output configuration supports different workflows and debugging needs.
+**Use Case**: Quick iterations, testing, or when applying to many jobs rapidly.
 
 ---
 
-## master_resume.json
+### Example 3: Humanized Output
 
-### Purpose
-Store complete professional profile that serves as source data for tailored resumes.
+```json
+{
+  "resume_generation": {
+    "bot_name": "Claude-Sonnet-4.5",
+    "thinking_budget": "8192",
+    "web_search": true
+  },
+  "cover_letter_generation": {
+    "bot_name": "Claude-Sonnet-4.5",
+    "thinking_budget": "4096",
+    "web_search": true
+  },
+  "humanization": {
+    "enabled": true,
+    "level": "medium",
+    "apply_to": ["resume", "cover_letter"]
+  },
+  "referral_resume": {
+    "email": "referral@email.com",
+    "phone": "555-7777"
+  }
+}
+```
 
-### File Location
-`profile/master_resume.json`
-
-### Structure
-
-#### contact_info
-Complete contact information including all social links.
-
-#### summary
-Comprehensive professional summary covering all aspects of career.
-
-#### work_experience
-Complete work history with detailed descriptions and achievements.
-
-#### education
-All educational background including degrees, certifications, and honors.
-
-#### skills
-Comprehensive list of technical and soft skills.
-
-#### projects
-All personal and professional projects.
-
-#### certifications
-Professional certifications and licenses.
-
-### Best Practices
-
-#### Completeness
-Include all experiences, even if not always relevant. The AI will select appropriate content.
-
-#### Detail
-Provide detailed descriptions. The AI can condense but cannot expand missing information.
-
-#### Accuracy
-Ensure all information is factually accurate. The AI will not fact-check.
-
-#### Updates
-Keep master resume current with new experiences and skills.
-
-### Design Rationale
-A comprehensive master resume allows the AI to select and tailor the most relevant information for each application.
+**Use Case**: When you want extra-natural sounding content with a conversational tone.
 
 ---
 
-## Prompt Templates
+## Troubleshooting
 
-### Purpose
-Store AI instruction templates that guide content generation.
+### "POE_API_KEY not found in environment"
 
-### File Locations
-- `prompts/generate_resume.txt`
-- `prompts/generate_cover_letter.txt`
-- `prompts/humanization_low.txt`
-- `prompts/humanization_medium.txt`
-- `prompts/humanization_high.txt`
+**Problem**: The `.env` file is missing or the API key is not set.
 
-### Structure
+**Solution**:
+1. Create a `.env` file in the project root
+2. Add `POE_API_KEY=your_actual_key_here`
+3. Ensure there are no spaces around the `=` sign
+4. Restart the application
 
-#### Instructions Section
-Clear, specific instructions for the AI on what to generate.
+---
 
-#### Context Section
-Job description, master resume, and other relevant context.
+### "Invalid bot name"
 
-#### Schema Section
-Expected JSON structure and validation rules.
+**Problem**: The specified bot name doesn't exist or is misspelled.
 
-#### Examples Section (Optional)
-Sample outputs to guide the AI.
+**Solution**:
+1. Check the bot name spelling in `config.json`
+2. Ensure it matches one of the available options exactly
+3. Bot names are case-sensitive
 
-### Customization
+---
 
-#### Tone Adjustment
-Modify instructions to change output tone and style.
+### "Thinking budget must be a string"
 
-#### Content Focus
-Emphasize different aspects (technical skills, leadership, etc.).
+**Problem**: The thinking_budget is set as a number instead of a string.
 
-#### Format Preferences
-Specify preferred phrasing and structure.
+**Solution**:
+Change `"thinking_budget": 8192` to `"thinking_budget": "8192"` (with quotes)
 
-### Design Rationale
-Separate prompt templates allow easy customization of AI behavior without code changes.
+---
+
+### Web search not working
+
+**Problem**: Web search is enabled but not providing results.
+
+**Solution**:
+1. Verify your Poe API key has web search permissions
+2. Check if the selected bot supports web search
+3. Try a different bot that explicitly supports web search
+
+---
+
+### Referral documents have wrong contact info
+
+**Problem**: Referral PDFs show default placeholder contact information.
+
+**Solution**:
+Update the `referral_resume` section in `config.json` with your actual alternative contact details.
+
+---
+
+## Best Practices
+
+### Model Selection
+- **Resume Generation**: Use Gemini-2.5-Pro for technical accuracy
+- **Cover Letters**: Use Claude-Sonnet-4.5 for persuasive writing
+- **Testing**: Use GPT-4o-Mini for quick iterations
+
+### Thinking Budget
+- **Complex Tasks**: 8192+ tokens for thorough analysis
+- **Simple Tasks**: 2048 tokens for straightforward generation
+- **Balance**: Higher budgets = better quality but slower processing
+
+### Web Search
+- **Enable** when applying to specific companies (research culture, values)
+- **Disable** for generic applications or when speed is critical
+
+### Humanization
+- **Disable** by default (modern AI is already natural)
+- **Enable** only if you notice overly formal or robotic language
+- **Use "low" level** to maintain professionalism
+
+### Referral Contact Info
+- Keep a separate email/phone for referral applications
+- Update immediately when you get new contact information
+- Test by generating a referral document and verifying the contact details
 
 ---
 
 ## Configuration Validation
 
-### Startup Validation
-The system validates configuration at startup:
+The system validates configuration on startup:
+- Checks for required fields
+- Validates data types
+- Warns about deprecated settings
+- Provides helpful error messages
 
-#### Required Fields
-- Checks for required configuration fields
-- Validates field types
-- Ensures valid value ranges
-
-#### File Existence
-- Verifies configuration files exist
-- Checks template files are present
-- Validates master resume file
-
-#### API Credentials
-- Confirms API keys are set
-- Tests API connectivity (optional)
-- Validates key format
-
-### Error Handling
-
-#### Missing Configuration
-Clear error messages indicate missing required settings.
-
-#### Invalid Values
-Validation errors specify expected vs actual values.
-
-#### File Not Found
-Helpful messages indicate which files are missing and where they should be located.
+If configuration is invalid, the system will:
+1. Display a clear error message
+2. Indicate which field is problematic
+3. Suggest the correct format
+4. Exit before processing any jobs
 
 ---
 
-## Configuration Best Practices
+## Security Considerations
 
-### Security
+### API Key Protection
+- Never commit `.env` file to version control
+- Don't share your API key in screenshots or logs
+- Rotate keys periodically for security
+- Use environment-specific keys for different deployments
 
-#### Never Commit Secrets
-- Use environment variables for API keys
-- Add .env to .gitignore
-- Use separate credentials for different environments
-
-#### Rotate Keys Regularly
-- Change API keys periodically
-- Use different keys for development and production
-- Revoke compromised keys immediately
-
-### Organization
-
-#### Logical Grouping
-- Group related settings together
-- Use consistent naming conventions
-- Document non-obvious settings
-
-#### Version Control
-- Commit config.json to version control
-- Document configuration changes
-- Use separate configs for different environments
-
-### Maintenance
-
-#### Regular Review
-- Review configuration periodically
-- Remove unused settings
-- Update defaults as system evolves
-
-#### Documentation
-- Document custom settings
-- Explain non-standard values
-- Provide examples for complex settings
+### Configuration File
+- `config.json` can be committed (no sensitive data)
+- Review before committing to avoid exposing personal info
+- Use placeholder values in shared configurations
 
 ---
 
-## Environment-Specific Configuration
+## Version History
 
-### Development Environment
-```json
-{
-  "api": {
-    "model": "claude-3-5-sonnet-20241022",
-    "temperature": 0.7
-  },
-  "output": {
-    "save_json": true,
-    "save_latex": true,
-    "cleanup_auxiliary_files": false
-  }
-}
-```
-
-### Production Environment
-```json
-{
-  "api": {
-    "model": "claude-3-5-sonnet-20241022",
-    "temperature": 0.5
-  },
-  "output": {
-    "save_json": false,
-    "save_latex": false,
-    "cleanup_auxiliary_files": true
-  }
-}
-```
-
-### Testing Environment
-```json
-{
-  "api": {
-    "model": "claude-3-5-sonnet-20241022",
-    "max_tokens": 2000,
-    "temperature": 0.0
-  },
-  "resume_generation": {
-    "max_validation_retries": 1
-  }
-}
-```
-
----
-
-## Configuration Migration
-
-### Version Updates
-When updating Jobbernaut Tailor:
-
-#### Check Changelog
-Review configuration changes in release notes.
-
-#### Backup Current Config
-Save current configuration before updating.
-
-#### Merge New Settings
-Add new configuration options while preserving customizations.
-
-#### Test Configuration
-Validate configuration works with new version.
-
-### Schema Changes
-If configuration schema changes:
-
-#### Migration Scripts
-Use provided migration scripts to update configuration.
-
-#### Manual Updates
-Follow migration guide for manual updates.
-
-#### Validation
-Run configuration validation after migration.
-
----
-
-## Troubleshooting Configuration
-
-### Common Issues
-
-#### API Key Not Found
-**Symptom**: Error about missing API key
-**Solution**: Set environment variable or check variable name
-
-#### Invalid Configuration Format
-**Symptom**: JSON parsing error
-**Solution**: Validate JSON syntax, check for trailing commas
-
-#### File Not Found
-**Symptom**: Cannot find configuration file
-**Solution**: Verify file path and location
-
-#### Invalid Setting Value
-**Symptom**: Validation error for configuration value
-**Solution**: Check allowed values and types in documentation
-
-### Debugging
-
-#### Enable Debug Logging
-Set LOG_LEVEL=DEBUG to see detailed configuration loading.
-
-#### Validate JSON
-Use JSON validator to check configuration file syntax.
-
-#### Check Precedence
-Verify which configuration source is being used.
-
----
-
-## Future Enhancements
-
-### Potential Improvements
-
-#### Configuration UI
-Web interface for configuration management.
-
-#### Profile Management
-Multiple configuration profiles for different use cases.
-
-#### Dynamic Configuration
-Runtime configuration updates without restart.
-
-#### Configuration Templates
-Pre-built configurations for common scenarios.
-
-### Extensibility
-
-#### Plugin Configuration
-Configuration for third-party plugins and extensions.
-
-#### Custom Validators
-User-defined configuration validation rules.
-
-#### Configuration Hooks
-Callbacks for configuration changes.
-
----
-
-## Conclusion
-
-The hierarchical configuration system provides flexibility and security while maintaining ease of use. Environment variables protect sensitive data, config.json enables customization, and sensible defaults ensure the system works out of the box. Understanding the configuration hierarchy and available settings allows users to tailor Jobbernaut Tailor to their specific needs.
+- **v3.0** (October 2025): Current configuration system
+  - Poe API integration
+  - Separate resume/cover letter model selection
+  - Humanization controls
+  - Referral document support

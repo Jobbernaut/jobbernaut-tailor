@@ -567,22 +567,64 @@ class ResumeOptimizationPipeline:
         print(f"{'='*60}\n")
 
     async def run(self) -> None:
-        """Run the pipeline to process pending jobs."""
+        """Run the pipeline to process all pending jobs."""
         print("\n" + "=" * 60)
         print("RESUME OPTIMIZATION PIPELINE")
         print("=" * 60 + "\n")
 
         applications = load_yaml("applications.yaml")
-        pending_job = find_pending_job(applications)
-
-        if not pending_job:
+        
+        # Find all pending jobs
+        pending_jobs = [job for job in applications if job.get("status") == "pending"]
+        
+        if not pending_jobs:
             print("No pending jobs found. All jobs are processed!")
             return
 
-        await self.process_job(pending_job)
+        print(f"Found {len(pending_jobs)} pending job(s) to process.\n")
+        
+        # Process each pending job
+        processed_count = 0
+        failed_count = 0
+        
+        for idx, pending_job in enumerate(pending_jobs, 1):
+            job_title = pending_job.get("job_title", "Unknown")
+            company_name = pending_job.get("company_name", "Unknown")
+            
+            print(f"\n{'='*60}")
+            print(f"Processing job {idx}/{len(pending_jobs)}")
+            print(f"{'='*60}\n")
+            
+            try:
+                await self.process_job(pending_job)
+                processed_count += 1
+                print(f"\n✓ Successfully processed job {idx}/{len(pending_jobs)}: {job_title} at {company_name}")
+            except Exception as e:
+                failed_count += 1
+                job_id = pending_job.get("job_id", "Unknown")
+                print(f"\n{'='*60}")
+                print(f"❌ ERROR processing job {idx}/{len(pending_jobs)}")
+                print(f"{'='*60}")
+                print(f"Job: {job_title} at {company_name}")
+                print(f"Job ID: {job_id}")
+                print(f"Error: {str(e)}")
+                print(f"{'='*60}\n")
+                print(f"Continuing to next job...\n")
+                continue
 
-        print("\nPipeline completed successfully!")
-        print("Run the script again to process the next pending job.\n")
+        # Print summary
+        print(f"\n{'='*60}")
+        print(f"PIPELINE SUMMARY")
+        print(f"{'='*60}")
+        print(f"Total pending jobs: {len(pending_jobs)}")
+        print(f"Successfully processed: {processed_count}")
+        print(f"Failed: {failed_count}")
+        print(f"{'='*60}\n")
+        
+        if processed_count > 0:
+            print("Pipeline completed successfully!")
+        if failed_count > 0:
+            print(f"⚠️  {failed_count} job(s) failed. Check the error messages above for details.\n")
 
 
 async def main():
