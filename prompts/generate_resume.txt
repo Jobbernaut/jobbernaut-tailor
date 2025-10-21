@@ -193,6 +193,11 @@ For EACH work experience and project, order bullets as follows:
 
 ### OUTPUT FORMAT: STRICT JSON
 -   Your final output MUST be a single, valid JSON object.
+-   **CRITICAL ATS COMPATIBILITY**: NEVER use these characters anywhere in the JSON output: `<` `>` `[` `]` `{` `}` `\` `|` `~` `^`
+    - These characters break ATS parsing systems like Workday
+    - Use parentheses `()` instead of brackets/braces where needed
+    - Use commas or semicolons instead of pipes
+    - Avoid special symbols entirely in names, titles, companies, locations, bullet points, skills, and technologies
 -   No use of em dashes anywhere to join sentences or show impact. Use alternative grammatical tools, but no em dashes or dashes.
 -   This JSON object must contain the complete, tailored resume.
 -   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, work_authorization, education, skills, work_experience, projects).

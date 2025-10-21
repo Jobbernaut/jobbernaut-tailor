@@ -97,6 +97,13 @@ You MUST generate a complete, compelling cover letter WITHOUT asking for additio
   - BAD: "Reduced processing time by 99%—from 3 months to 4 minutes"
   - GOOD: "Reduced processing time by 99%, from 3 months to 4 minutes"
 
+**8. CRITICAL ATS COMPATIBILITY**
+- NEVER use these characters anywhere in the cover letter: `<` `>` `[` `]` `{` `}` `\` `|` `~` `^`
+- These characters break ATS parsing systems like Workday
+- Use parentheses `()` instead of brackets/braces where needed
+- Use commas or semicolons instead of pipes
+- Avoid special symbols entirely in all text
+
 ### OUTPUT FORMAT: PLAIN TEXT ONLY
 
 Return ONLY the cover letter body text - NO analysis, NO explanations, NO meta-commentary.

@@ -107,21 +107,21 @@ class TemplateRenderer:
     @staticmethod
     def format_phone(phone_str: str) -> str:
         """
-        Format a phone number to a 10-digit string (xxxxxxxxxx), removing country code, spaces, and dashes.
+        Format a phone number to ATS-compatible format: (XXX) XXX-XXXX
         
         Args:
-            phone_str: Phone number string. Supports both formatted (e.g., "+1 919-672-2226", "919-672-2226") and unformatted ("9196722226") inputs.
+            phone_str: Phone number string in any format (e.g., "+1 919-672-2226", "919-672-2226", "(919) 672-2226")
         
         Returns:
-            Formatted phone number as a 10-digit string (e.g., "9196722226"). If input is not valid, returns the original string.
+            Formatted phone number as (XXX) XXX-XXXX (e.g., "(919) 672-2226"). If input is not valid, returns the original string.
         
         Examples:
             >>> format_phone("+1 919-672-2226")
-            '9196722226'
+            '(919) 672-2226'
             >>> format_phone("919-672-2226")
-            '9196722226'
-            >>> format_phone("9196722226")
-            '9196722226'
+            '(919) 672-2226'
+            >>> format_phone("(919) 672-2226")
+            '(919) 672-2226'
         """
         if not phone_str:
             return ""
@@ -133,9 +133,9 @@ class TemplateRenderer:
         if len(digits) == 11 and digits.startswith('1'):
             digits = digits[1:]
         
-        # Return 10-digit number without formatting
+        # Return ATS-compatible format: (XXX) XXX-XXXX
         if len(digits) == 10:
-            return digits
+            return f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
         
         # If not 10 digits, return original
         return phone_str
