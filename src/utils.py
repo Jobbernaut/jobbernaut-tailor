@@ -15,7 +15,21 @@ def load_yaml(filepath: str) -> Any:
 
 
 def save_yaml(filepath: str, data: Any) -> None:
-    """Save data to a YAML file."""
+    """Save data to a YAML file, preserving literal block scalars (|) for multiline strings."""
+    
+    class LiteralString(str):
+        """String subclass to mark strings that should use literal block scalar style."""
+        pass
+    
+    def literal_presenter(dumper, data):
+        """Present strings as literal block scalars if they contain newlines."""
+        if '\n' in data:
+            return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+    
+    # Create a custom dumper
+    yaml.add_representer(str, literal_presenter)
+    
     with open(filepath, "w", encoding="utf-8") as f:
         yaml.dump(
             data, f, default_flow_style=False, allow_unicode=True, sort_keys=False
