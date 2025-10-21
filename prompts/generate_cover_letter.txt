@@ -30,6 +30,35 @@ You MUST generate a complete, compelling cover letter WITHOUT asking for additio
 
 ### WORKFLOW: CRAFTING THE NARRATIVE
 
+**Step 0: Extract Narrative Intelligence from Resume (FOUNDATION)**
+
+Before crafting the cover letter, analyze the tailored resume's "narrative_context" fields to extract mission-aligned stories:
+
+**For each relevant experience, identify:**
+1. **Mission-aligned stories**: Which technical_story elements connect to company's mission and domain?
+   - **Aerospace/Space company** → reliability, uptime, scale, failure handling, mission-critical systems stories
+   - **Fintech/Banking** → security, compliance, data integrity, transaction processing stories
+   - **Healthcare/Medical** → privacy, accuracy, life-critical systems, regulatory compliance stories
+   - **Enterprise SaaS** → scalability, multi-tenancy, performance optimization stories
+   - **Startup/High-growth** → rapid iteration, ownership, wearing multiple hats stories
+
+2. **Authentic passion signals**: What challenges_overcome show genuine interest in this domain or problem space?
+
+3. **Leadership context**: What leadership_story elements align with the company's cultural_values from research?
+
+4. **Technical depth**: What technologies_deep_dive details add credibility beyond surface-level mentions?
+
+**Use this intelligence to:**
+- Craft hook that references authentic passion from challenges_overcome or impact_story
+- Build bridge using impact_story to show personal motivation aligns with company mission
+- Enhance proof_points with narrative context to transform generic achievements into mission-aligned stories
+- Add technical depth from technologies_deep_dive where relevant to show mastery
+
+**Example transformation:**
+- **Generic**: "Reduced API latency by 40% serving 50K users"
+- **Mission-aligned (Aerospace)**: "Architected event-driven systems with 99.9% uptime serving 50K users—applying the reliability-first mindset required for mission-critical systems where failure isn't an option"
+- **Mission-aligned (Healthcare)**: "Built HIPAA-compliant data pipeline processing 50K patient records—implementing the same privacy and accuracy standards required for life-critical healthcare systems"
+
 **Step 1: Leverage Pre-Generated Storytelling Arc (PRIMARY STRUCTURE)**
 - **CRITICAL**: You have been provided with [STORYTELLING_ARC] - a pre-crafted narrative structure
 - **USE THIS AS YOUR FOUNDATION**:

@@ -19,6 +19,10 @@ Based on the job description and any implicit company information, extract and r
 
 6. "recent_news": Brief statement about company focus or achievements if mentioned in JD, otherwise empty string (e.g., "Recently raised Series B funding to expand AI capabilities")
 
+7. "mission_keywords": Array of words that signal company's core mission extracted from JD language (e.g., for aerospace: ["space", "exploration", "reliability", "safety", "innovation"], for fintech: ["security", "trust", "compliance", "financial integrity"])
+
+8. "domain_context": Brief statement (1-2 sentences) about the industry/domain and what matters most based on JD tone (e.g., "Aerospace industry where reliability and safety are paramount; failure is not an option", "Healthcare sector where patient privacy and data accuracy are life-critical")
+
 CRITICAL INSTRUCTIONS:
 - "company_name" and "mission_statement" and "core_values" are REQUIRED (must have at least one value in core_values array)
 - Other fields can be empty arrays or empty strings if not found

@@ -15,7 +15,12 @@ You will be given the following data, clearly delineated:
 
 1.  **[JOB_DESCRIPTION]:** The full text of the job description the candidate is applying for.
 2.  **[MASTER_RESUME_JSON]:** The candidate's master profile as a JSON object. This is a comprehensive database of their entire career, including:
-    - `narrative_context`: Rich, detailed narratives explaining the full story behind each experience
+    - `narrative_context`: Rich, detailed narratives explaining the full story behind each experience with fields:
+      - `technical_story`: Full narrative of technical challenges, solutions, and architectural decisions
+      - `leadership_story`: How candidate led, mentored, influenced teams, or drove cultural change
+      - `impact_story`: Broader organizational/business impact beyond just metrics
+      - `challenges_overcome`: Authentic struggles, obstacles faced, and how they were solved
+      - `technologies_deep_dive`: Deep technical context and reasoning beyond surface-level tool mentions
     - `key_metrics`: Structured metrics with exact values and context
     - `role_clarity`: Explicit indication of the candidate's role (led, contributed, enabled, etc.)
     - `bullet_points`: Pre-written bullets (use as reference, but synthesize from narrative when tailoring)
@@ -26,6 +31,25 @@ You will be given the following data, clearly delineated:
     - `hidden_requirements`: Implicit expectations not explicitly stated (e.g., "startup mentality", "self-starter", "ambiguity tolerance")
     - `power_verbs`: Action verbs used in the JD that signal desired behaviors (e.g., "drive", "lead", "innovate")
     - `technical_keywords`: Technical terms and technologies mentioned
+
+### CRITICAL: LEVERAGE NARRATIVE CONTEXT FOR MISSION-ALIGNED BULLETS
+
+**MANDATORY INSTRUCTION:** When synthesizing bullets from `narrative_context`, extract mission-aligned elements by matching company domain to relevant stories:
+
+**Domain-Specific Narrative Extraction:**
+- **Aerospace/Space/Defense**: Use `technical_story` elements about reliability, uptime, scale, failure handling, mission-critical systems
+- **Fintech/Banking**: Use `technical_story` about security, compliance, data integrity, transaction processing
+- **Healthcare/Medical**: Use `technical_story` about privacy, accuracy, life-critical systems, regulatory compliance
+- **Enterprise SaaS**: Use `technical_story` about scalability, multi-tenancy, performance optimization
+- **Leadership roles**: Use `leadership_story` about mentoring, culture-building, team growth, cross-functional collaboration
+- **Mission-driven companies**: Use `challenges_overcome` to show authentic passion and problem-solving mindset
+
+**Contextual Depth Transformation:**
+- **Generic**: "Reduced API latency by 40%"
+- **Mission-aligned (Aerospace)**: "40% latency reduction with 99.9% uptime—applying reliability-first mindset for mission-critical systems"
+- **Mission-aligned (Fintech)**: "40% faster transaction processing with zero data loss—implementing financial-grade integrity standards"
+
+**Use `role_clarity` to choose accurate power verbs** that match contribution level (led vs contributed vs enabled)
 
 ### WORKFLOW: A STEP-BY-STEP PROCESS
 
