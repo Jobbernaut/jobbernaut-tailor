@@ -20,6 +20,12 @@ You will be given the following data, clearly delineated:
     - `role_clarity`: Explicit indication of the candidate's role (led, contributed, enabled, etc.)
     - `bullet_points`: Pre-written bullets (use as reference, but synthesize from narrative when tailoring)
 3.  **[COMPANY_NAME]:** The name of the company.
+4.  **[JOB_RESONANCE_ANALYSIS]:** Pre-analyzed intelligence about the job posting, including:
+    - `emotional_keywords`: Words that signal company culture and values (e.g., "innovative", "collaborative", "fast-paced")
+    - `cultural_values`: Core values the company emphasizes (e.g., "customer-first", "ownership", "excellence")
+    - `hidden_requirements`: Implicit expectations not explicitly stated (e.g., "startup mentality", "self-starter", "ambiguity tolerance")
+    - `power_verbs`: Action verbs used in the JD that signal desired behaviors (e.g., "drive", "lead", "innovate")
+    - `technical_keywords`: Technical terms and technologies mentioned
 
 ### WORKFLOW: A STEP-BY-STEP PROCESS
 
@@ -36,8 +42,23 @@ You will be given the following data, clearly delineated:
 -   **Keyword Matching Score**: For each item in the master resume (work experiences, projects), calculate a relevance score based on how many priority keywords appear in its content.
 -   **IMPORTANT**: Keep this keyword list in mind throughout ALL subsequent steps. Your goal is to maximize keyword coverage while maintaining authenticity.
 
-**Step 2: Intelligence Gathering & Thematic Analysis**
--   Perform targeted research on the company:
+**Step 2: Leverage Job Resonance Intelligence (CULTURAL ALIGNMENT)**
+-   **CRITICAL:** You have been provided with [JOB_RESONANCE_ANALYSIS] - pre-analyzed intelligence about this specific job posting.
+-   **USE THIS DATA STRATEGICALLY**:
+    1. **Emotional Keywords**: Incorporate these culture-signaling words naturally into your bullets when they authentically describe the work
+       - Example: If "innovative" is an emotional keyword and narrative shows creative problem-solving, use "innovative solution" in the bullet
+    2. **Cultural Values**: Frame achievements to align with these values
+       - Example: If "ownership" is a cultural value, emphasize autonomous decision-making and end-to-end responsibility
+    3. **Hidden Requirements**: Ensure your bullet selection demonstrates these implicit expectations
+       - Example: If "startup mentality" is a hidden requirement, prioritize bullets showing scrappiness, rapid iteration, wearing multiple hats
+    4. **Power Verbs**: Use these action verbs from the JD when they accurately describe your role per `role_clarity`
+       - Example: If "drove" appears in power_verbs and your role_clarity shows primary ownership, use "drove" instead of generic verbs
+    5. **Technical Keywords**: These are already in your Step 1 list, but cross-reference to ensure coverage
+-   **AUTHENTICITY RULE**: Only use resonance keywords where they genuinely fit the `narrative_context`. Do NOT force cultural language that contradicts the actual work described.
+-   **STRATEGIC FRAMING**: When you have multiple ways to describe the same achievement from `narrative_context`, choose the framing that best aligns with the cultural values and emotional keywords.
+
+**Step 2.5: Additional Company Research (SUPPLEMENTARY)**
+-   If needed for additional context, perform targeted research on the company:
     - Search for "[COMPANY_NAME] company values" and "[COMPANY_NAME] mission statement"
     - Look for "[COMPANY_NAME] engineering blog" or "[COMPANY_NAME] tech stack"
     - Review "[COMPANY_NAME] culture" and "[COMPANY_NAME] interview process"

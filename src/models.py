@@ -237,3 +237,111 @@ class TailoredResume(BaseModel):
         if v and v.strip():
             raise ValueError("professional_summaries must be empty string to maximize content space")
         return ""
+
+
+class JobResonanceAnalysis(BaseModel):
+    """
+    Intelligence gathering model for deep job description analysis.
+    Extracts emotional keywords, cultural values, and hidden requirements.
+    """
+    emotional_keywords: List[str] = Field(
+        ..., 
+        description="Emotionally charged words from JD (e.g., 'passionate', 'innovative', 'ownership')"
+    )
+    cultural_values: List[str] = Field(
+        ..., 
+        description="Company culture signals (e.g., 'collaborative', 'fast-paced', 'data-driven')"
+    )
+    hidden_requirements: List[str] = Field(
+        ..., 
+        description="Implicit requirements not in bullet points (e.g., 'startup mentality', 'ambiguity tolerance')"
+    )
+    power_verbs: List[str] = Field(
+        ..., 
+        description="Action verbs from JD to mirror in resume (e.g., 'architected', 'spearheaded', 'optimized')"
+    )
+    technical_keywords: List[str] = Field(
+        ..., 
+        description="Technical skills and tools mentioned in JD for ATS optimization"
+    )
+    
+    @field_validator('emotional_keywords', 'cultural_values', 'hidden_requirements', 'power_verbs', 'technical_keywords')
+    @classmethod
+    def validate_non_empty_lists(cls, v: List[str]) -> List[str]:
+        """Ensure all lists have at least one item."""
+        if not v or len(v) == 0:
+            raise ValueError("List must contain at least one item")
+        return v
+
+
+class CompanyResearch(BaseModel):
+    """
+    Company intelligence model for authentic connection building.
+    Stores company mission, values, tech stack, and culture keywords.
+    """
+    company_name: str = Field(..., description="Company name from job posting")
+    mission_statement: str = Field(
+        ..., 
+        description="Company mission or 'about us' summary (1-2 sentences)"
+    )
+    core_values: List[str] = Field(
+        ..., 
+        description="Company values (e.g., 'customer obsession', 'innovation', 'integrity')"
+    )
+    tech_stack: List[str] = Field(
+        default_factory=list,
+        description="Known technologies used by company (optional)"
+    )
+    culture_keywords: List[str] = Field(
+        default_factory=list,
+        description="Culture descriptors from company website/reviews (optional)"
+    )
+    recent_news: str = Field(
+        default="",
+        description="Recent company news or achievements (optional, 1 sentence)"
+    )
+    
+    @field_validator('core_values')
+    @classmethod
+    def validate_core_values(cls, v: List[str]) -> List[str]:
+        """Ensure core values list has at least one item."""
+        if not v or len(v) == 0:
+            raise ValueError("core_values must contain at least one item")
+        return v
+
+
+class StorytellingArc(BaseModel):
+    """
+    Narrative structure model for cover letter storytelling.
+    Creates emotional connection through structured story arc.
+    """
+    hook: str = Field(
+        ..., 
+        description="Opening sentence that creates emotional connection (1 sentence)"
+    )
+    bridge: str = Field(
+        ..., 
+        description="Transition from hook to candidate's story (1-2 sentences)"
+    )
+    proof_points: List[str] = Field(
+        ..., 
+        min_length=2,
+        max_length=3,
+        description="2-3 specific stories demonstrating fit (each 2-3 sentences)"
+    )
+    vision: str = Field(
+        ..., 
+        description="Forward-looking statement about impact at company (1-2 sentences)"
+    )
+    call_to_action: str = Field(
+        ..., 
+        description="Closing sentence inviting conversation (1 sentence)"
+    )
+    
+    @field_validator('hook', 'bridge', 'vision', 'call_to_action')
+    @classmethod
+    def validate_non_empty_strings(cls, v: str) -> str:
+        """Ensure all string fields are non-empty."""
+        if not v or not v.strip():
+            raise ValueError("Field must be a non-empty string")
+        return v.strip()

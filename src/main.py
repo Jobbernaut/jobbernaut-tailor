@@ -22,7 +22,7 @@ from utils import (
     cleanup_output_directory,
 )
 from template_renderer import TemplateRenderer
-from models import TailoredResume
+from models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
 
 
 class ResumeOptimizationPipeline:
@@ -43,6 +43,12 @@ class ResumeOptimizationPipeline:
         # Bot configurations
         self.resume_bot = self.config.get("resume_generation", {}).get("bot_name") or defaults.get("resume_bot")
         self.cover_letter_bot = self.config.get("cover_letter_generation", {}).get("bot_name") or defaults.get("cover_letter_bot")
+        
+        # Intelligence step bot configurations
+        intelligence_config = self.config.get("intelligence_steps", {})
+        self.job_resonance_bot = intelligence_config.get("job_resonance_analysis", {}).get("bot_name") or self.resume_bot
+        self.company_research_bot = intelligence_config.get("company_research", {}).get("bot_name") or self.resume_bot
+        self.storytelling_arc_bot = intelligence_config.get("storytelling_arc", {}).get("bot_name") or self.resume_bot
 
         # Referral contact info
         referral_config = self.config.get("referral_resume", {})
@@ -191,6 +197,147 @@ class ResumeOptimizationPipeline:
 
         return json.loads(json_str)
 
+    def _validate_job_inputs(self, job: dict) -> None:
+        """
+        Validate job inputs before processing.
+        
+        Args:
+            job: The job dictionary to validate
+            
+        Raises:
+            ValueError: If any input is invalid
+        """
+        job_id = job.get("job_id")
+        job_title = job.get("job_title")
+        company_name = job.get("company_name")
+        job_description = job.get("job_description")
+        
+        # Validate job_id
+        if not job_id or not isinstance(job_id, str) or len(job_id.strip()) == 0:
+            raise ValueError("job_id is required and must be a non-empty string")
+        
+        # Validate job_title
+        if not job_title or not isinstance(job_title, str):
+            raise ValueError("job_title is required and must be a string")
+        if len(job_title.strip()) < 3:
+            raise ValueError(f"job_title must be at least 3 characters, got: '{job_title}'")
+        if len(job_title) > 200:
+            raise ValueError(f"job_title is too long (max 200 chars), got {len(job_title)} chars")
+        
+        # Validate company_name
+        if not company_name or not isinstance(company_name, str):
+            raise ValueError("company_name is required and must be a string")
+        if len(company_name.strip()) < 2:
+            raise ValueError(f"company_name must be at least 2 characters, got: '{company_name}'")
+        if len(company_name) > 100:
+            raise ValueError(f"company_name is too long (max 100 chars), got {len(company_name)} chars")
+        
+        # Validate job_description
+        if not job_description or not isinstance(job_description, str):
+            raise ValueError("job_description is required and must be a string")
+        if len(job_description.strip()) < 100:
+            raise ValueError(f"job_description is too short (min 100 chars), got {len(job_description.strip())} chars")
+        if len(job_description) > 50000:
+            raise ValueError(f"job_description is too long (max 50K chars), got {len(job_description)} chars")
+        
+        print(f"✓ Job inputs validated successfully")
+        print(f"  - Job ID: {job_id}")
+        print(f"  - Title: {job_title[:50]}{'...' if len(job_title) > 50 else ''}")
+        print(f"  - Company: {company_name}")
+        print(f"  - Description: {len(job_description)} characters\n")
+    
+    def _validate_intelligence_output(self, data: dict, step_name: str, model_class) -> None:
+        """
+        Validate intelligence output has meaningful content.
+        
+        Args:
+            data: The validated Pydantic model data
+            step_name: Name of the intelligence step for logging
+            model_class: The Pydantic model class for type checking
+            
+        Raises:
+            ValueError: If output doesn't meet quality thresholds
+        """
+        if model_class == JobResonanceAnalysis:
+            # Validate emotional_keywords
+            if len(data.get('emotional_keywords', [])) < 3:
+                raise ValueError(f"{step_name}: emotional_keywords must have at least 3 items, got {len(data.get('emotional_keywords', []))}")
+            if len(data.get('emotional_keywords', [])) > 15:
+                raise ValueError(f"{step_name}: emotional_keywords has too many items (max 15), got {len(data.get('emotional_keywords', []))}")
+            
+            # Validate cultural_values
+            if len(data.get('cultural_values', [])) < 2:
+                raise ValueError(f"{step_name}: cultural_values must have at least 2 items, got {len(data.get('cultural_values', []))}")
+            
+            # Validate hidden_requirements
+            if len(data.get('hidden_requirements', [])) < 2:
+                raise ValueError(f"{step_name}: hidden_requirements must have at least 2 items, got {len(data.get('hidden_requirements', []))}")
+            
+            # Validate power_verbs
+            if len(data.get('power_verbs', [])) < 3:
+                raise ValueError(f"{step_name}: power_verbs must have at least 3 items, got {len(data.get('power_verbs', []))}")
+            
+            # Validate technical_keywords
+            if len(data.get('technical_keywords', [])) < 3:
+                raise ValueError(f"{step_name}: technical_keywords must have at least 3 items, got {len(data.get('technical_keywords', []))}")
+            
+            # Check for empty strings
+            for field in ['emotional_keywords', 'cultural_values', 'hidden_requirements', 'power_verbs', 'technical_keywords']:
+                if any(not item or not item.strip() for item in data.get(field, [])):
+                    raise ValueError(f"{step_name}: {field} contains empty strings")
+        
+        elif model_class == CompanyResearch:
+            # Validate mission_statement
+            mission = data.get('mission_statement', '')
+            if len(mission.strip()) < 20:
+                raise ValueError(f"{step_name}: mission_statement too short (min 20 chars), got {len(mission.strip())} chars")
+            
+            # Validate core_values
+            if len(data.get('core_values', [])) < 2:
+                raise ValueError(f"{step_name}: core_values must have at least 2 items, got {len(data.get('core_values', []))}")
+            if len(data.get('core_values', [])) > 10:
+                raise ValueError(f"{step_name}: core_values has too many items (max 10), got {len(data.get('core_values', []))}")
+            
+            # Check for empty strings in arrays
+            for field in ['core_values', 'tech_stack', 'culture_keywords']:
+                if any(not item or not item.strip() for item in data.get(field, [])):
+                    raise ValueError(f"{step_name}: {field} contains empty strings")
+        
+        elif model_class == StorytellingArc:
+            # Validate hook
+            hook = data.get('hook', '')
+            if len(hook.strip()) < 50:
+                raise ValueError(f"{step_name}: hook too short (min 50 chars), got {len(hook.strip())} chars")
+            
+            # Validate bridge
+            bridge = data.get('bridge', '')
+            if len(bridge.strip()) < 50:
+                raise ValueError(f"{step_name}: bridge too short (min 50 chars), got {len(bridge.strip())} chars")
+            
+            # Validate vision
+            vision = data.get('vision', '')
+            if len(vision.strip()) < 50:
+                raise ValueError(f"{step_name}: vision too short (min 50 chars), got {len(vision.strip())} chars")
+            
+            # Validate call_to_action
+            cta = data.get('call_to_action', '')
+            if len(cta.strip()) < 20:
+                raise ValueError(f"{step_name}: call_to_action too short (min 20 chars), got {len(cta.strip())} chars")
+            
+            # Validate proof_points
+            proof_points = data.get('proof_points', [])
+            if len(proof_points) < 2:
+                raise ValueError(f"{step_name}: proof_points must have at least 2 items, got {len(proof_points)}")
+            if len(proof_points) > 3:
+                raise ValueError(f"{step_name}: proof_points must have at most 3 items, got {len(proof_points)}")
+            
+            # Check proof_points content
+            for i, point in enumerate(proof_points):
+                if len(point.strip()) < 30:
+                    raise ValueError(f"{step_name}: proof_points[{i}] too short (min 30 chars), got {len(point.strip())} chars")
+        
+        print(f"  ✓ {step_name} output validation passed")
+    
     def _build_error_feedback(self, validation_error: ValidationError) -> str:
         """
         Build detailed error feedback section to append to prompt.
@@ -281,6 +428,225 @@ class ResumeOptimizationPipeline:
         
         return "\n".join(error_lines)
 
+    async def _call_intelligence_step_with_retry(
+        self, 
+        prompt_template_name: str,
+        replacements: dict,
+        model_class,
+        step_name: str,
+        output_dir: str,
+        output_filename_prefix: str,
+        bot_name: str,
+        max_retries: int = 3
+    ) -> dict:
+        """
+        Generic retry wrapper for intelligence steps with validation and self-healing.
+        
+        Args:
+            prompt_template_name: Name of the prompt template file
+            replacements: Dictionary of placeholder -> value replacements
+            model_class: Pydantic model class for validation
+            step_name: Human-readable step name for logging
+            output_dir: Directory to save outputs
+            output_filename_prefix: Prefix for output files (e.g., "Job_Resonance_Analysis")
+            bot_name: Name of the bot to use for API calls
+            max_retries: Maximum retry attempts (default: 3)
+            
+        Returns:
+            Validated dictionary from Pydantic model
+            
+        Raises:
+            ValueError: If all retries fail
+        """
+        # Load prompt template
+        prompt_template = load_prompt_template(prompt_template_name)
+        base_prompt = prompt_template
+        for placeholder, value in replacements.items():
+            base_prompt = base_prompt.replace(placeholder, value)
+        
+        current_prompt = base_prompt
+        last_error = None
+        
+        for attempt in range(1, max_retries + 1):
+            print(f"  Attempt {attempt}/{max_retries}...")
+            
+            try:
+                # Call API
+                response = await self.call_poe_api(current_prompt, bot_name)
+                
+                # Save raw response
+                raw_path = os.path.join(output_dir, f"{output_filename_prefix}_Raw_Attempt_{attempt}.txt")
+                with open(raw_path, "w", encoding="utf-8") as f:
+                    f.write(response)
+                print(f"    Raw response saved: {output_filename_prefix}_Raw_Attempt_{attempt}.txt")
+                
+                # Extract JSON
+                try:
+                    data = self.extract_json_from_response(response)
+                    print(f"    ✓ JSON extraction successful")
+                except json.JSONDecodeError as e:
+                    print(f"    ✗ JSON extraction failed: {str(e)}")
+                    if attempt < max_retries:
+                        error_feedback = f"\n\n{'='*80}\n# JSON PARSING ERROR\n{'='*80}\n\nThe previous response was not valid JSON.\nError: {str(e)}\n\nPlease ensure your response contains ONLY valid JSON with no additional text.\n{'='*80}\n"
+                        current_prompt = base_prompt + error_feedback
+                        continue
+                    else:
+                        raise ValueError(f"{step_name} failed: Invalid JSON after {max_retries} attempts")
+                
+                # Validate with Pydantic
+                print(f"    Validating with Pydantic...")
+                try:
+                    validated_model = model_class(**data)
+                    result = validated_model.model_dump()
+                    print(f"    ✓ Pydantic validation passed")
+                except ValidationError as e:
+                    print(f"    ✗ Pydantic validation failed: {len(e.errors())} error(s)")
+                    if attempt < max_retries:
+                        error_feedback = self._build_error_feedback(e)
+                        current_prompt = base_prompt + error_feedback
+                        continue
+                    else:
+                        raise ValueError(f"{step_name} failed: Pydantic validation failed after {max_retries} attempts")
+                
+                # Validate output quality
+                print(f"    Validating output quality...")
+                try:
+                    self._validate_intelligence_output(result, step_name, model_class)
+                except ValueError as e:
+                    print(f"    ✗ Quality validation failed: {str(e)}")
+                    if attempt < max_retries:
+                        error_feedback = f"\n\n{'='*80}\n# OUTPUT QUALITY ERROR\n{'='*80}\n\n{str(e)}\n\nPlease provide more detailed and meaningful content that meets the quality thresholds.\n{'='*80}\n"
+                        current_prompt = base_prompt + error_feedback
+                        continue
+                    else:
+                        raise ValueError(f"{step_name} failed: Quality validation failed after {max_retries} attempts")
+                
+                # Success! Save validated JSON
+                json_path = os.path.join(output_dir, f"{output_filename_prefix}.json")
+                save_json(json_path, result)
+                print(f"    ✓ {step_name} complete (attempt {attempt})")
+                
+                return result
+                
+            except Exception as e:
+                last_error = e
+                print(f"    ✗ Attempt {attempt} failed: {str(e)}")
+                if attempt >= max_retries:
+                    raise ValueError(f"{step_name} failed after {max_retries} attempts: {str(last_error)}")
+        
+        # Should never reach here
+        raise ValueError(f"{step_name} failed after {max_retries} attempts: {str(last_error)}")
+
+    async def analyze_job_resonance(self, job_description: str, company_name: str, output_dir: str) -> dict:
+        """
+        INTELLIGENCE STEP 1: Analyze job description for emotional keywords and hidden requirements.
+        
+        Args:
+            job_description: The job description text
+            company_name: The company name
+            output_dir: Directory to save analysis results
+            
+        Returns:
+            Dictionary containing JobResonanceAnalysis data
+        """
+        print("INTELLIGENCE STEP 1: Analyzing job resonance...")
+        
+        result = await self._call_intelligence_step_with_retry(
+            prompt_template_name="analyze_job_resonance.txt",
+            replacements={
+                "[JOB_DESCRIPTION]": job_description,
+                "[COMPANY_NAME]": company_name
+            },
+            model_class=JobResonanceAnalysis,
+            step_name="Job Resonance Analysis",
+            output_dir=output_dir,
+            output_filename_prefix="Job_Resonance_Analysis",
+            bot_name=self.job_resonance_bot
+        )
+        
+        print(f"  ✓ Job resonance analysis complete")
+        print(f"    - Emotional keywords: {len(result['emotional_keywords'])}")
+        print(f"    - Cultural values: {len(result['cultural_values'])}")
+        print(f"    - Hidden requirements: {len(result['hidden_requirements'])}")
+        print(f"    - Power verbs: {len(result['power_verbs'])}")
+        print(f"    - Technical keywords: {len(result['technical_keywords'])}\n")
+        
+        return result
+
+    async def research_company(self, job_description: str, company_name: str, output_dir: str) -> dict:
+        """
+        INTELLIGENCE STEP 2: Research company for authentic connection building.
+        
+        Args:
+            job_description: The job description text
+            company_name: The company name
+            output_dir: Directory to save research results
+            
+        Returns:
+            Dictionary containing CompanyResearch data
+        """
+        print("INTELLIGENCE STEP 2: Researching company...")
+        
+        result = await self._call_intelligence_step_with_retry(
+            prompt_template_name="research_company.txt",
+            replacements={
+                "[COMPANY_NAME]": company_name,
+                "[JOB_DESCRIPTION]": job_description
+            },
+            model_class=CompanyResearch,
+            step_name="Company Research",
+            output_dir=output_dir,
+            output_filename_prefix="Company_Research",
+            bot_name=self.company_research_bot
+        )
+        
+        print(f"  ✓ Company research complete")
+        print(f"    - Mission: {result['mission_statement'][:60]}...")
+        print(f"    - Core values: {len(result['core_values'])}")
+        print(f"    - Tech stack: {len(result['tech_stack'])} technologies\n")
+        
+        return result
+
+    async def generate_storytelling_arc(self, job_description: str, company_research: dict, 
+                                       job_resonance: dict, tailored_resume: dict, 
+                                       output_dir: str) -> dict:
+        """
+        INTELLIGENCE STEP 3: Generate storytelling arc for cover letter.
+        
+        Args:
+            job_description: The job description text
+            company_research: CompanyResearch data
+            job_resonance: JobResonanceAnalysis data
+            tailored_resume: The tailored resume JSON
+            output_dir: Directory to save storytelling arc
+            
+        Returns:
+            Dictionary containing StorytellingArc data
+        """
+        print("INTELLIGENCE STEP 3: Generating storytelling arc...")
+        
+        result = await self._call_intelligence_step_with_retry(
+            prompt_template_name="generate_storytelling_arc.txt",
+            replacements={
+                "[JOB_DESCRIPTION]": job_description,
+                "[COMPANY_RESEARCH]": json.dumps(company_research, indent=2),
+                "[JOB_RESONANCE]": json.dumps(job_resonance, indent=2),
+                "[TAILORED_RESUME]": json.dumps(tailored_resume, indent=2)
+            },
+            model_class=StorytellingArc,
+            step_name="Storytelling Arc Generation",
+            output_dir=output_dir,
+            output_filename_prefix="Storytelling_Arc",
+            bot_name=self.storytelling_arc_bot
+        )
+        
+        print(f"  ✓ Storytelling arc generated")
+        print(f"    - Hook: {result['hook'][:60]}...")
+        print(f"    - Proof points: {len(result['proof_points'])}")
+        print(f"    - Vision: {result['vision'][:60]}...\n")
+        
+        return result
+
     async def process_job(self, job: dict) -> None:
         """
         Process a single job application following the 12-step pipeline.
@@ -309,9 +675,36 @@ class ResumeOptimizationPipeline:
         print(f"Job ID: {job_id}")
         print(f"{'='*60}\n")
 
+        # Validate job inputs before processing
+        print("VALIDATING JOB INPUTS...")
+        try:
+            self._validate_job_inputs(job)
+        except ValueError as e:
+            print(f"\n{'='*60}")
+            print(f"❌ JOB INPUT VALIDATION FAILED")
+            print(f"{'='*60}")
+            print(f"Error: {str(e)}")
+            print(f"{'='*60}\n")
+            raise ValueError(f"Invalid job inputs: {str(e)}")
+
         # Create output directory
         output_dir = create_output_directory(job_id, job_title, company_name)
         print(f"Output directory: {output_dir}\n")
+
+        # INTELLIGENCE GATHERING PHASE (3 steps before resume generation)
+        print(f"\n{'='*60}")
+        print(f"INTELLIGENCE GATHERING PHASE")
+        print(f"{'='*60}\n")
+        
+        # Intelligence Step 1: Analyze job resonance
+        job_resonance = await self.analyze_job_resonance(job_description, company_name, output_dir)
+        
+        # Intelligence Step 2: Research company
+        company_research = await self.research_company(job_description, company_name, output_dir)
+        
+        print(f"{'='*60}")
+        print(f"INTELLIGENCE GATHERING COMPLETE")
+        print(f"{'='*60}\n")
 
         # STEP 1: Generate Resume JSON
         print("STEP 1: Generating tailored resume JSON...")
@@ -321,6 +714,8 @@ class ResumeOptimizationPipeline:
             "[MASTER_RESUME_JSON]", f"```json\n{json.dumps(self.master_resume, indent=2)}\n```"
         ).replace(
             "[COMPANY_NAME]", company_name
+        ).replace(
+            "[JOB_RESONANCE_ANALYSIS]", f"```json\n{json.dumps(job_resonance, indent=2)}\n```"
         )
         
         # Apply humanization if enabled for resume
@@ -435,6 +830,15 @@ class ResumeOptimizationPipeline:
         save_json(resume_json_path, tailored_resume)
         print(f"✓ Resume JSON saved (Pydantic validation passed)\n")
 
+        # Intelligence Step 3: Generate storytelling arc (after resume, before cover letter)
+        storytelling_arc = await self.generate_storytelling_arc(
+            job_description, company_research, job_resonance, tailored_resume, output_dir
+        )
+        
+        print(f"{'='*60}")
+        print(f"INTELLIGENCE PHASE COMPLETE - PROCEEDING TO COVER LETTER")
+        print(f"{'='*60}\n")
+
         # STEP 2: Generate Cover Letter Text
         print("STEP 2: Generating cover letter text...")
         cover_letter_prompt = self.cover_letter_prompt_template.replace(
@@ -443,6 +847,12 @@ class ResumeOptimizationPipeline:
             "[JOB_DESCRIPTION]", f"```\n{job_description}\n```"
         ).replace(
             "[COMPANY_NAME]", company_name
+        ).replace(
+            "[STORYTELLING_ARC]", f"```json\n{json.dumps(storytelling_arc, indent=2)}\n```"
+        ).replace(
+            "[COMPANY_RESEARCH]", f"```json\n{json.dumps(company_research, indent=2)}\n```"
+        ).replace(
+            "[JOB_RESONANCE_ANALYSIS]", f"```json\n{json.dumps(job_resonance, indent=2)}\n```"
         )
         
         # Apply humanization if enabled for cover letter
