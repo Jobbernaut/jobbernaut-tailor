@@ -132,9 +132,9 @@ class WorkExperience(BaseModel):
             clean_bullet = re.sub(illegal_chars, '', bullet).strip()
             
             # Check length after sanitization
-            if len(clean_bullet) > 110:
+            if len(clean_bullet) > 115:
                 raise ValueError(
-                    f"Bullet point {i+1} exceeds 110 characters ({len(clean_bullet)} chars): {clean_bullet[:50]}..."
+                    f"Bullet point {i+1} exceeds 115 characters ({len(clean_bullet)} chars): {clean_bullet[:50]}..."
                 )
             sanitized.append(clean_bullet)
         return sanitized
@@ -169,9 +169,9 @@ class Project(BaseModel):
         
         # Check length constraint
         joined = ", ".join(sanitized)
-        if len(joined) > 95:
+        if len(joined) > 100:
             raise ValueError(
-                f"Technologies exceed 95 characters when joined ({len(joined)} chars): {joined}"
+                f"Technologies exceed 100 characters when joined ({len(joined)} chars): {joined}"
             )
         return sanitized
     
@@ -188,9 +188,9 @@ class Project(BaseModel):
             clean_bullet = re.sub(illegal_chars, '', bullet).strip()
             
             # Check length after sanitization
-            if len(clean_bullet) > 110:
+            if len(clean_bullet) > 115:
                 raise ValueError(
-                    f"Bullet point {i+1} exceeds 110 characters ({len(clean_bullet)} chars): {clean_bullet[:50]}..."
+                    f"Bullet point {i+1} exceeds 115 characters ({len(clean_bullet)} chars): {clean_bullet[:50]}..."
                 )
             sanitized.append(clean_bullet)
         return sanitized
@@ -200,7 +200,6 @@ class TailoredResume(BaseModel):
     """Complete tailored resume model."""
     contact_info: ContactInfo
     professional_summaries: str = ""  # Should be empty string
-    work_authorization: Optional[str] = None
     education: List[Education] = Field(..., min_length=1)
     skills: Dict[str, str] = Field(...)  # Category name -> comma-separated skills string
     work_experience: List[WorkExperience] = Field(..., min_length=3, max_length=3)
@@ -222,9 +221,9 @@ class TailoredResume(BaseModel):
             clean_skills = re.sub(illegal_chars, '', skills_str).strip()
             
             # Check length constraint
-            if len(clean_skills) > 95:
+            if len(clean_skills) > 100:
                 raise ValueError(
-                    f"Skills in category '{clean_category}' exceed 95 characters ({len(clean_skills)} chars): {clean_skills[:50]}..."
+                    f"Skills in category '{clean_category}' exceed 100 characters ({len(clean_skills)} chars): {clean_skills[:50]}..."
                 )
             
             sanitized_skills[clean_category] = clean_skills

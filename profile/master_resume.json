@@ -167,12 +167,11 @@
       },
       "role_clarity": "led",
       "bullet_points": [
-        "Built ATS-native resume tool ensuring candidate authenticity with zero noticed fabrications in 200+ applications",
+        "Built ATS-native open source resume tool ensuring candidate authenticity with zero noticed fabrications in 200+ applications",
         "Conceived and single-handedly developed Jobbernaut, an AI-powered CLI tool that automates the generation of tailored resumes and cover letters, reducing application creation time from over 30 minutes to just 30 seconds.",
         "Engineered a novel 12-step generation pipeline that grounds an LLM with a master resume JSON, intelligently selects relevant experiences, and rewrites them for a specific job description to eliminate hallucinations and ensure relevance.",
         "Implemented a system using Jinja and LaTeX to produce highly optimized (<30 KiB), ATS-native PDFs, achieving perfect, zero-correction parsing on major platforms like Workday.",
         "Developed a crucial verification step where an LLM cross-references the generated content against the source data to guarantee factual accuracy and content integrity before final output.",
-        "The tool proved so effective in generating 'Must Interview' tier application materials that its public release was revoked due to ethical considerations and its potential to disrupt the job application market.",
         "The tool has been developed from the ground up with an anti-fragile, self-healing, and error-correcting architecture so that it learns from its mistakes and becomes better with every use.",
         "Enhancv, Jobscan and other ATS compatability tools give resumes generated with Jobbernaut no less than 90% compatibility score which is unheard of in the industry with a fully automated tool.",
         "The proof that this tool works well is the resume sitting right in front of you."

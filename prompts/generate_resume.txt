@@ -200,7 +200,7 @@ For EACH work experience and project, order bullets as follows:
     - Avoid special symbols entirely in names, titles, companies, locations, bullet points, skills, and technologies
 -   No use of em dashes anywhere to join sentences or show impact. Use alternative grammatical tools, but no em dashes or dashes.
 -   This JSON object must contain the complete, tailored resume.
--   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, work_authorization, education, skills, work_experience, projects).
+-   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, education, skills, work_experience, projects).
 -   **CRITICAL - Professional Summaries Field:** Leave the `professional_summaries` field as an empty string ("") to maximize space for impactful content.
 -   **CRITICAL - Education Field:** 
     - The `degree` field in the education section already contains the GPA (e.g., "Master of Science in Computer Science (GPA: 4.0/4.0)"). Keep this EXACTLY as provided in the master resume. Do NOT extract or separate the GPA into the separate `gpa` field. Leave the `gpa` field empty ("").
