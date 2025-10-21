@@ -25,8 +25,35 @@ Pydantic is built on top of Python's type hints and uses Rust-based validation f
 
 ## Model Hierarchy
 
-The validation system is organized into a hierarchical structure of models, each responsible for validating a specific aspect of the resume or cover letter.
+The validation system is organized into a hierarchical structure of models, each responsible for validating a specific aspect of the intelligence gathering phase, resume, or cover letter.
 
+### V4 Intelligence Models (New)
+```
+JobResonanceAnalysis
+├── key_requirements (array)
+├── nice_to_have_skills (array)
+├── cultural_indicators (array)
+├── experience_level (string)
+├── technical_stack (array)
+└── soft_skills_emphasis (array)
+
+CompanyResearch
+├── company_mission (string)
+├── company_values (array)
+├── recent_news (array)
+├── industry_position (string)
+├── work_culture_indicators (array)
+└── growth_stage (string)
+
+StorytellingArc
+├── opening_hook (string)
+├── background_bridge (string)
+├── value_proposition (string)
+├── cultural_alignment (string)
+└── closing_vision (string)
+```
+
+### Resume and Cover Letter Models
 ```
 TailoredResume
 ├── ContactInfo
@@ -42,6 +69,227 @@ CoverLetter
 ├── Body (array of strings)
 └── Closing (string)
 ```
+
+---
+
+## V4 Intelligence Models
+
+The V4 architecture introduces three new models that power the intelligence gathering phase. These models extract and structure contextual information from job postings and company research, which then informs the resume and cover letter generation process.
+
+---
+
+## JobResonanceAnalysis Model
+
+### Purpose
+Analyzes job postings to extract structured insights about requirements, skills, culture, and technical expectations. This model transforms unstructured job descriptions into actionable intelligence that guides resume tailoring.
+
+### Fields
+
+#### key_requirements (required)
+- Type: Array of strings
+- Validation: 3-15 items, each 10-200 characters
+- Purpose: Core requirements and must-have qualifications
+- Example: ["5+ years Python development", "Experience with microservices architecture", "Strong problem-solving skills"]
+
+#### nice_to_have_skills (required)
+- Type: Array of strings
+- Validation: 2-10 items, each 10-150 characters
+- Purpose: Preferred but not required skills
+- Example: ["AWS certification", "Experience with Kubernetes", "Open source contributions"]
+
+#### cultural_indicators (required)
+- Type: Array of strings
+- Validation: 2-8 items, each 10-150 characters
+- Purpose: Company culture signals from job posting
+- Example: ["Fast-paced startup environment", "Collaborative team culture", "Innovation-focused"]
+
+#### experience_level (required)
+- Type: String
+- Validation: 10-100 characters, non-generic content
+- Purpose: Required experience level and seniority
+- Example: "Senior level (5-8 years) with leadership experience"
+
+#### technical_stack (required)
+- Type: Array of strings
+- Validation: 3-20 items, each 2-50 characters
+- Purpose: Technologies, tools, and frameworks mentioned
+- Example: ["Python", "Django", "PostgreSQL", "Docker", "AWS", "React"]
+
+#### soft_skills_emphasis (required)
+- Type: Array of strings
+- Validation: 2-8 items, each 10-100 characters
+- Purpose: Emphasized soft skills and interpersonal qualities
+- Example: ["Strong communication skills", "Team leadership", "Mentoring junior developers"]
+
+### Validation Rules
+
+#### Array Size Constraints
+Ensures comprehensive yet focused analysis:
+- key_requirements: 3-15 items (captures core needs without overwhelming)
+- nice_to_have_skills: 2-10 items (identifies bonus qualifications)
+- cultural_indicators: 2-8 items (extracts culture signals)
+- technical_stack: 3-20 items (comprehensive tech list)
+- soft_skills_emphasis: 2-8 items (key interpersonal skills)
+
+#### Character Limits
+Prevents verbose or trivial content:
+- key_requirements: 10-200 characters per item
+- nice_to_have_skills: 10-150 characters per item
+- cultural_indicators: 10-150 characters per item
+- experience_level: 10-100 characters
+- technical_stack: 2-50 characters per item
+- soft_skills_emphasis: 10-100 characters per item
+
+#### Content Quality Validation
+Beyond schema compliance, validates:
+- No generic phrases like "good communication skills" without context
+- No trivial content like "must know how to code"
+- Meaningful, specific insights extracted from job posting
+- Actionable information that can guide tailoring
+
+### Design Rationale
+Job resonance analysis is the foundation of intelligent tailoring. By extracting structured insights from job postings, the system can make informed decisions about which experiences to emphasize, which skills to highlight, and how to position the candidate. Strict validation ensures the analysis is comprehensive, specific, and actionable rather than generic or superficial.
+
+---
+
+## CompanyResearch Model
+
+### Purpose
+Structures research findings about the target company, including mission, values, recent developments, and culture. This contextual intelligence enables culturally-aligned and company-specific tailoring.
+
+### Fields
+
+#### company_mission (required)
+- Type: String
+- Validation: 20-300 characters, non-generic content
+- Purpose: Company's core mission and purpose
+- Example: "Democratizing access to financial services through innovative mobile-first banking solutions for underserved communities"
+
+#### company_values (required)
+- Type: Array of strings
+- Validation: 3-8 items, each 10-100 characters
+- Purpose: Core values and principles
+- Example: ["Customer obsession", "Innovation through diversity", "Sustainable growth", "Transparency and trust"]
+
+#### recent_news (required)
+- Type: Array of strings
+- Validation: 2-6 items, each 20-200 characters
+- Purpose: Recent company developments, funding, products, or initiatives
+- Example: ["Series C funding of $50M announced Q3 2025", "Launched AI-powered fraud detection system", "Expanded to European markets"]
+
+#### industry_position (required)
+- Type: String
+- Validation: 20-200 characters, non-generic content
+- Purpose: Company's position in industry and competitive landscape
+- Example: "Leading fintech challenger in mobile banking space, competing with traditional banks and neobanks like Chime and Revolut"
+
+#### work_culture_indicators (required)
+- Type: Array of strings
+- Validation: 3-10 items, each 10-150 characters
+- Purpose: Signals about work environment and culture
+- Example: ["Remote-first with quarterly team gatherings", "Strong emphasis on work-life balance", "Flat organizational structure", "Hackathon culture"]
+
+#### growth_stage (required)
+- Type: String
+- Validation: 10-100 characters, non-generic content
+- Purpose: Company's current growth phase and trajectory
+- Example: "High-growth Series C startup scaling from 50 to 200 employees, expanding internationally"
+
+### Validation Rules
+
+#### Array Size Constraints
+Ensures thorough research without information overload:
+- company_values: 3-8 items (core principles)
+- recent_news: 2-6 items (recent developments)
+- work_culture_indicators: 3-10 items (culture signals)
+
+#### Character Limits
+Balances detail with conciseness:
+- company_mission: 20-300 characters (clear but not verbose)
+- company_values: 10-100 characters per item
+- recent_news: 20-200 characters per item
+- industry_position: 20-200 characters
+- work_culture_indicators: 10-150 characters per item
+- growth_stage: 10-100 characters
+
+#### Content Quality Validation
+Ensures meaningful research:
+- No generic statements like "innovative company"
+- Specific, verifiable information
+- Recent and relevant news items
+- Concrete culture indicators
+- Clear growth stage assessment
+
+### Design Rationale
+Company research enables culturally-aligned tailoring that resonates with the organization's values and current priorities. By understanding the company's mission, recent developments, and culture, the system can craft applications that demonstrate genuine interest and cultural fit. Validation ensures research is specific, current, and actionable rather than generic corporate speak.
+
+---
+
+## StorytellingArc Model
+
+### Purpose
+Creates a narrative structure for the cover letter that connects the candidate's background to the company's needs through a compelling story. This model transforms raw information into a coherent, engaging narrative arc.
+
+### Fields
+
+#### opening_hook (required)
+- Type: String
+- Validation: 50-400 characters, non-generic content
+- Purpose: Compelling opening that captures attention and establishes connection
+- Example: "When I read about your mission to democratize financial services, it resonated deeply with my experience building mobile banking solutions that served over 2 million underbanked users"
+
+#### background_bridge (required)
+- Type: String
+- Validation: 100-500 characters, non-generic content
+- Purpose: Connects candidate's background to company's domain
+- Example: "My journey in fintech began at a traditional bank where I witnessed firsthand the barriers preventing millions from accessing basic financial services. This drove me to join a startup where I led the development of an AI-powered lending platform that reduced approval times from days to minutes"
+
+#### value_proposition (required)
+- Type: String
+- Validation: 100-500 characters, non-generic content
+- Purpose: Articulates specific value candidate brings to role
+- Example: "I bring a unique combination of enterprise-scale system design experience and startup agility. At my current role, I architected a microservices platform handling 10M+ daily transactions while maintaining 99.99% uptime, and I'm excited to apply this expertise to scaling your mobile banking infrastructure"
+
+#### cultural_alignment (required)
+- Type: String
+- Validation: 50-400 characters, non-generic content
+- Purpose: Demonstrates fit with company values and culture
+- Example: "Your emphasis on innovation through diversity aligns with my leadership philosophy. I've built and mentored diverse engineering teams, believing that varied perspectives drive better solutions—a principle that proved crucial when we redesigned our UX for accessibility"
+
+#### closing_vision (required)
+- Type: String
+- Validation: 50-400 characters, non-generic content
+- Purpose: Forward-looking statement about potential impact
+- Example: "I'm energized by the opportunity to contribute to your European expansion, bringing my experience scaling systems across regions while maintaining the customer-obsessed culture that defines your success"
+
+### Validation Rules
+
+#### Character Limits
+Ensures each narrative element is substantial yet concise:
+- opening_hook: 50-400 characters (impactful but not verbose)
+- background_bridge: 100-500 characters (sufficient context)
+- value_proposition: 100-500 characters (detailed value statement)
+- cultural_alignment: 50-400 characters (meaningful connection)
+- closing_vision: 50-400 characters (forward-looking but focused)
+
+#### Content Quality Validation
+Enforces narrative quality:
+- No generic openings like "I am writing to apply for..."
+- Specific examples and concrete details
+- Clear connection between candidate and company
+- Authentic voice, not corporate jargon
+- Forward-looking and action-oriented
+
+#### Narrative Coherence
+While validated individually, fields should form coherent story:
+- Opening hooks reader with relevant connection
+- Background provides context and credibility
+- Value proposition articulates specific contributions
+- Cultural alignment demonstrates fit
+- Closing vision shows enthusiasm and forward thinking
+
+### Design Rationale
+The storytelling arc transforms cover letters from generic applications into compelling narratives. By structuring the narrative into distinct elements—hook, background, value, alignment, and vision—the system ensures cover letters are engaging, specific, and memorable. Strict validation prevents generic content and ensures each element contributes meaningfully to the overall story. This approach dramatically improves cover letter quality and reader engagement.
 
 ---
 

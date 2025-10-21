@@ -1,0 +1,87 @@
+Create a storytelling arc structure for the cover letter that creates emotional connection.
+
+JOB DESCRIPTION:
+[JOB_DESCRIPTION]
+
+COMPANY RESEARCH:
+[COMPANY_RESEARCH]
+
+JOB RESONANCE ANALYSIS:
+[JOB_RESONANCE]
+
+CANDIDATE'S TAILORED RESUME:
+[TAILORED_RESUME]
+
+### CRITICAL: LEVERAGE NARRATIVE CONTEXT FROM MASTER RESUME
+
+The tailored resume JSON contains a "narrative_context" field for each experience with rich storytelling elements:
+- "technical_story": Full narrative of technical challenges, solutions, and architectural decisions
+- "leadership_story": How candidate led, mentored, influenced teams, or drove cultural change
+- "impact_story": Broader organizational/business impact beyond just metrics
+- "challenges_overcome": Authentic struggles, obstacles faced, and how they were solved
+- "technologies_deep_dive": Deep technical context and reasoning beyond surface-level tool mentions
+
+**MANDATORY INSTRUCTIONS FOR NARRATIVE EXTRACTION:**
+
+1. **Read narrative_context** for the top 2-3 experiences most relevant to this role (based on job requirements)
+
+2. **Extract mission-aligned elements** by matching company domain to relevant stories:
+   - **Aerospace/Space/Defense**: Use technical_story elements about reliability, uptime, scale, failure handling, mission-critical systems
+   - **Fintech/Banking**: Use technical_story about security, compliance, data integrity, transaction processing
+   - **Healthcare/Medical**: Use technical_story about privacy, accuracy, life-critical systems, regulatory compliance
+   - **Enterprise SaaS**: Use technical_story about scalability, multi-tenancy, performance optimization
+   - **Leadership roles**: Use leadership_story about mentoring, culture-building, team growth, cross-functional collaboration
+   - **Mission-driven companies**: Use challenges_overcome to show authentic passion and problem-solving mindset
+
+3. **Create authentic connection** using narrative context:
+   - **hook**: Reference challenges_overcome or impact_story to show genuine passion for the domain
+   - **bridge**: Use impact_story to connect personal motivation to company mission
+   - **proof_points**: Weave technical_story narratives into achievements to add mission-aligned context
+   - **vision**: Use leadership_story or technologies_deep_dive to show forward-thinking contribution
+
+4. **Add contextual depth** to transform generic achievements into mission-aligned narratives:
+   - **Generic**: "Reduced API latency by 40%"
+   - **Mission-aligned (Aerospace)**: "Architected event-driven systems with 99.9% uptime serving 50K users—applying the reliability-first mindset required for mission-critical systems where failure isn't an option"
+   - **Mission-aligned (Fintech)**: "Built secure transaction processing pipeline handling $2M daily—implementing the same data integrity standards required for financial systems where accuracy is paramount"
+
+**VALIDATION CHECKLIST:**
+- [ ] Does hook reference authentic passion from challenges_overcome or impact_story?
+- [ ] Do proof_points connect technical achievements to company's mission using narrative_context?
+- [ ] Does vision incorporate leadership_story or technologies_deep_dive for forward-looking impact?
+- [ ] Have I used narrative context to add domain-specific framing, not just generic tech achievements?
+
+Create a narrative structure that will guide the cover letter generation. Return a JSON object with these fields:
+
+1. "hook": Opening sentence that creates immediate emotional connection by referencing company mission, values, or recent news (1 sentence, ~20-25 words)
+
+2. "bridge": Transition from hook to candidate's story, explaining why this role resonates personally (1-2 sentences, ~30-40 words)
+
+3. "proof_points": Array of 2-3 specific story elements from candidate's experience that demonstrate fit. Each should be 2-3 sentences (~40-50 words each) and reference:
+   - A specific achievement from the resume
+   - How it aligns with job requirements
+   - The emotional keywords and cultural values identified
+
+4. "vision": Forward-looking statement about the impact candidate will make at the company, using power verbs and emotional keywords (1-2 sentences, ~30-40 words)
+
+5. "call_to_action": Closing sentence inviting conversation, expressing enthusiasm (1 sentence, ~15-20 words)
+
+CRITICAL INSTRUCTIONS:
+- Use emotional keywords and cultural values from job resonance analysis
+- Reference specific achievements from tailored resume
+- Mirror power verbs from job description
+- Create authentic connection, not corporate speak
+- Each field must be non-empty
+- Return ONLY valid JSON with no additional text
+
+Example format:
+```json
+{
+  "hook": "When I learned about TechCorp's mission to democratize AI for developers, it resonated deeply with my own journey building accessible ML tools.",
+  "bridge": "Throughout my career, I've been driven by the belief that powerful technology should be intuitive and accessible. This role represents the perfect opportunity to scale that impact.",
+  "proof_points": [
+    "At UNC Chapel Hill, I architected an event-driven microservices platform that reduced API latency by 40% while serving 50,000+ users. This experience taught me how to build scalable systems that prioritize user experience—exactly what TechCorp needs for its growing developer platform.",
+    "Leading the migration to AWS Lambda at Tally, I didn't just implement technology—I fostered a culture of ownership and innovation within my team. We reduced infrastructure costs by 35% while improving system reliability, demonstrating the collaborative, data-driven approach TechCorp values."
+  ],
+  "vision": "I'm excited to bring this combination of technical depth and user-centric thinking to TechCorp, where I can help architect solutions that empower millions of developers while mentoring the next generation of engineers.",
+  "call_to_action": "I'd love to discuss how my experience aligning with your mission can contribute to TechCorp's continued growth."
+}

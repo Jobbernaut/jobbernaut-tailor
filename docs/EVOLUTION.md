@@ -2,13 +2,14 @@
 
 ## Overview
 
-Jobbernaut Tailor has undergone three major architectural iterations, each addressing specific limitations and improving the system's reliability, maintainability, and output quality. This document traces the evolution from the initial proof of concept through production freeze to the current Jinja2-based architecture.
+Jobbernaut Tailor has undergone four major architectural iterations, each addressing specific limitations and improving the system's reliability, maintainability, and output quality. This document traces the evolution from the initial proof of concept through production freeze to the current intelligence-driven architecture.
 
 ## Timeline
 
 - **V1 (Proof of Concept)**: October 11-13, 2025 - Initial AI-driven pipeline with keyword matching
 - **V2 (Production Freeze)**: October 14-16, 2025 - Added LaTeX verification and AI-based conversion
-- **V3 (Current)**: October 17-19, 2025 - Migrated to Jinja2 templates with Pydantic validation
+- **V3 (Template Revolution)**: October 17-19, 2025 - Migrated to Jinja2 templates with Pydantic validation
+- **V4 (Current)**: October 20-21, 2025 - Intelligence gathering phase with contextual analysis
 
 ---
 
@@ -120,7 +121,7 @@ Without formal templates, making global formatting changes required modifying pr
 
 ---
 
-## Version 3: Current Architecture
+## Version 3: Template Revolution
 
 ### Core Philosophy
 V3 represents a fundamental architectural shift toward deterministic, template-based generation. The philosophy is: let AI do what it does best (content generation) and use proven tools for what they do best (formatting and validation).
@@ -345,21 +346,287 @@ V3's extensive configuration system allows users to customize behavior without m
 
 ---
 
+---
+
+## Version 4: Intelligence-Driven Architecture (Current)
+
+### Core Philosophy
+V4 represents a paradigm shift from reactive content generation to proactive intelligence gathering. The philosophy is: understand the job deeply before generating any content. By analyzing job requirements, company culture, and emotional resonance upfront, the system can create more targeted, compelling application materials.
+
+### Major Architectural Changes
+
+#### Intelligence Gathering Phase
+The most significant change in V4 is the introduction of a **3-step intelligence gathering phase** that executes BEFORE resume generation.
+
+**Intelligence Steps:**
+
+1. **Job Resonance Analysis**
+   - Extracts emotional keywords that resonate with the role
+   - Identifies cultural values embedded in the job description
+   - Uncovers hidden requirements not explicitly stated
+   - Catalogs power verbs for impactful bullet points
+   - Maps technical keywords for ATS optimization
+
+2. **Company Research**
+   - Researches company mission and values
+   - Identifies core cultural principles
+   - Maps technology stack and tools
+   - Extracts culture keywords for alignment
+
+3. **Storytelling Arc Generation**
+   - Creates compelling narrative hook
+   - Builds bridge between candidate and role
+   - Articulates future vision and impact
+   - Develops proof points from experience
+   - Crafts authentic call-to-action
+
+**Why This Matters:**
+Instead of generating a resume and hoping it resonates, V4 first understands what will resonate, then generates content optimized for that understanding. This produces more targeted, compelling applications.
+
+#### New Pydantic Validation Models
+V4 introduces three new validation models to ensure intelligence quality:
+
+**JobResonanceAnalysis Model:**
+- `emotional_keywords`: 3-15 items, no empty strings
+- `cultural_values`: 2+ items, no empty strings
+- `hidden_requirements`: 2+ items, no empty strings
+- `power_verbs`: 3+ items, no empty strings
+- `technical_keywords`: 3+ items, no empty strings
+
+**CompanyResearch Model:**
+- `mission_statement`: 20+ characters
+- `core_values`: 2-10 items, no empty strings
+- `tech_stack`: Array of technologies, no empty strings
+- `culture_keywords`: Array of keywords, no empty strings
+
+**StorytellingArc Model:**
+- `hook`: 50+ characters
+- `bridge`: 50+ characters
+- `vision`: 50+ characters
+- `call_to_action`: 20+ characters
+- `proof_points`: 2-3 items, each 30+ characters
+
+#### Enhanced Retry System with Quality Validation
+V4 introduces a sophisticated retry wrapper that handles all intelligence steps uniformly.
+
+**Generic Retry Wrapper (`_call_intelligence_step_with_retry`):**
+- Handles JSON extraction failures with format guidance
+- Processes Pydantic validation errors with field-specific fixes
+- Validates output quality against thresholds
+- Provides progressive error feedback to AI
+- Supports up to 3 attempts per intelligence step
+
+**Quality Validation Layer:**
+Beyond Pydantic schema validation, V4 adds content quality checks:
+- Minimum character counts for text fields
+- Array size constraints (min/max items)
+- Empty string detection in arrays
+- Meaningful content verification
+
+#### Input Validation Layer
+V4 adds proactive input validation before any processing begins.
+
+**Validation Rules:**
+- `job_id`: Non-empty string
+- `job_title`: 3-200 characters
+- `company_name`: 2-100 characters
+- `job_description`: 100-50,000 characters
+
+**Fail-Fast Behavior:**
+Invalid inputs are rejected immediately with clear error messages, preventing wasted API calls and processing time.
+
+#### Configurable Intelligence Bots
+V4 allows different AI models for different intelligence steps.
+
+**Configuration Options:**
+```json
+"intelligence_steps": {
+  "job_resonance_analysis": {
+    "bot_name": "Gemini-2.5-Pro"
+  },
+  "company_research": {
+    "bot_name": "Claude-Sonnet-4.5"
+  },
+  "storytelling_arc": {
+    "bot_name": "GPT-4o"
+  }
+}
+```
+
+This enables optimization: use faster models for analysis, more creative models for storytelling.
+
+### Pipeline Evolution
+
+#### V3 Pipeline (10 Steps)
+1. Load configuration
+2. Generate tailored resume JSON
+3. Validate with Pydantic
+4. Apply humanization (optional)
+5. Render resume template
+6. Generate cover letter JSON
+7. Validate with Pydantic
+8. Apply humanization (optional)
+9. Render cover letter template
+10. Compile PDFs and cleanup
+
+#### V4 Pipeline (13 Steps)
+1. **Validate job inputs** (NEW)
+2. **Analyze job resonance** (NEW - Intelligence Step 1)
+3. **Research company** (NEW - Intelligence Step 2)
+4. Generate tailored resume JSON (now informed by intelligence)
+5. Validate with Pydantic
+6. Apply humanization (optional)
+7. **Generate storytelling arc** (NEW - Intelligence Step 3)
+8. Generate cover letter text (now informed by storytelling arc)
+9. Render resume LaTeX template
+10. Render cover letter LaTeX template
+11. Compile resume and cover letter PDFs
+12. Generate and compile referral versions
+13. Cleanup and organize output
+
+**Key Differences:**
+- Added input validation as first step
+- Added 3-step intelligence gathering phase
+- Resume generation now receives job resonance analysis
+- Cover letter generation now receives storytelling arc, company research, and job resonance
+- Intelligence steps use generic retry wrapper
+- Quality validation ensures meaningful content
+
+### Current Strengths
+
+#### Contextual Intelligence
+V4 understands the job context before generating content, resulting in more targeted and compelling applications.
+
+#### Quality Assurance
+Multi-layer validation (input → Pydantic → quality thresholds) ensures high-quality outputs at every stage.
+
+#### Self-Healing
+Progressive error feedback enables the AI to self-correct, reducing manual intervention.
+
+#### Configurability
+Different AI models can be used for different intelligence steps, optimizing for speed, creativity, or accuracy as needed.
+
+#### Fail-Fast Design
+Input validation prevents wasted processing on invalid data, saving time and API costs.
+
+### Deprecated Features from V3
+
+**None.** V4 is purely additive - all V3 features remain intact. The intelligence gathering phase enhances rather than replaces existing functionality.
+
+---
+
+## Architectural Decisions
+
+### Why Add Intelligence Gathering?
+
+**The Problem:**
+V3 generated resumes reactively - analyzing the job description and master resume simultaneously during generation. This meant the AI had to understand context and generate content in a single pass, leading to:
+- Less targeted content selection
+- Generic cover letter narratives
+- Missed opportunities for cultural alignment
+- Suboptimal keyword optimization
+
+**The Solution:**
+Separate intelligence gathering from content generation. First understand the job deeply, then use that understanding to inform content generation.
+
+**Benefits:**
+- More targeted resume content selection
+- Compelling, narrative-driven cover letters
+- Better cultural and value alignment
+- Improved ATS keyword optimization
+- Higher quality, more personalized applications
+
+### Why Quality Validation Beyond Pydantic?
+
+**The Problem:**
+Pydantic validates structure and types but cannot assess content quality. An AI could generate technically valid but meaningless content (e.g., single-word values, generic statements).
+
+**The Solution:**
+Add quality thresholds for character counts, array sizes, and content meaningfulness.
+
+**Benefits:**
+- Ensures substantive, meaningful content
+- Prevents low-quality outputs from reaching final documents
+- Provides clear quality standards for AI to meet
+- Reduces manual review burden
+
+### Why Generic Retry Wrapper?
+
+**The Problem:**
+V3 had retry logic only for resume generation. Intelligence steps needed similar robustness but duplicating code would violate DRY principles.
+
+**The Solution:**
+Create a generic retry wrapper that handles any intelligence step with configurable validation.
+
+**Benefits:**
+- Code reusability across all intelligence steps
+- Consistent error handling and feedback
+- Easier to maintain and extend
+- Uniform retry behavior across pipeline
+
+---
+
+## Migration Considerations
+
+### From V3 to V4
+Organizations using V3 need to:
+- Add three new prompt templates (analyze_job_resonance.txt, research_company.txt, generate_storytelling_arc.txt)
+- Update config.json with intelligence_steps configuration (optional - defaults to resume bot)
+- Update existing prompts to accept intelligence data as context
+- No changes to master_resume.json or applications.yaml required
+- No changes to templates required
+
+**Backward Compatibility:**
+V4 is fully backward compatible with V3. Existing configurations work without modification, though they won't leverage the new intelligence features until prompts are updated.
+
+### Future Considerations
+V4's intelligence-driven architecture enables future enhancements:
+- Additional intelligence steps (competitor analysis, salary research)
+- Machine learning to optimize intelligence gathering
+- A/B testing different intelligence strategies
+- Integration with external data sources (LinkedIn, Glassdoor)
+- Caching intelligence results for similar jobs
+
+---
+
+## Lessons Learned
+
+### Intelligence Before Generation
+Separating intelligence gathering from content generation produces higher quality, more targeted outputs. Understanding context first enables better decision-making during generation.
+
+### Quality Validation Matters
+Pydantic validates structure, but quality thresholds ensure meaningful content. Both layers are necessary for production-grade outputs.
+
+### Generic Abstractions Reduce Complexity
+The retry wrapper demonstrates that well-designed abstractions can handle diverse use cases without code duplication.
+
+### Progressive Error Feedback Works
+Providing detailed, categorized error feedback enables AI models to self-correct effectively, reducing manual intervention.
+
+### Fail-Fast Saves Resources
+Input validation before processing prevents wasted API calls and processing time on invalid data.
+
+---
+
 ## Future Evolution
 
-### Potential V4 Enhancements
+### Potential V5 Enhancements
 - Multi-language support via template variants
-- A/B testing framework for different resume styles
+- A/B testing framework for different intelligence strategies
 - Analytics integration for application tracking
-- Machine learning for optimal humanization levels
+- Machine learning for optimal bot selection per step
 - Integration with job board APIs for automated applications
+- Caching layer for intelligence results
+- Competitor analysis intelligence step
+- Salary research and negotiation intelligence
 
 ### Architectural Stability
-V3's template-based architecture is expected to remain stable. Future enhancements will likely focus on:
-- Expanding template library
-- Refining Pydantic validation rules
-- Improving humanization algorithms
-- Adding new output formats
-- Enhancing configuration options
+V4's intelligence-driven architecture is expected to remain stable. Future enhancements will likely focus on:
+- Expanding intelligence gathering capabilities
+- Refining quality validation thresholds
+- Optimizing bot selection per intelligence step
+- Adding new intelligence steps
+- Improving error feedback mechanisms
+- Enhancing caching and performance
 
-The core separation between content generation and formatting is unlikely to change, as it has proven to be the right architectural approach for this problem domain.
+The core separation between intelligence gathering, content generation, validation, and rendering has proven to be the right architectural approach for this problem domain.

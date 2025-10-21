@@ -9,6 +9,20 @@
     "thinking_budget": "2048",
     "web_search": true
   },
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "company_research": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "storytelling_arc": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    }
+  },
   "humanization": {
     "enabled": false,
     "level": "low",
@@ -16,7 +30,7 @@
   },
   "referral_resume": {
     "email": "srmanda.compsci@gmail.com",
-    "phone": "9195260631"
+    "phone": "(919) 526-0631"
   },
   "defaults": {
     "resume_bot": "Gemini-2.5-Pro",

@@ -15,11 +15,41 @@ You will be given the following data, clearly delineated:
 
 1.  **[JOB_DESCRIPTION]:** The full text of the job description the candidate is applying for.
 2.  **[MASTER_RESUME_JSON]:** The candidate's master profile as a JSON object. This is a comprehensive database of their entire career, including:
-    - `narrative_context`: Rich, detailed narratives explaining the full story behind each experience
+    - `narrative_context`: Rich, detailed narratives explaining the full story behind each experience with fields:
+      - `technical_story`: Full narrative of technical challenges, solutions, and architectural decisions
+      - `leadership_story`: How candidate led, mentored, influenced teams, or drove cultural change
+      - `impact_story`: Broader organizational/business impact beyond just metrics
+      - `challenges_overcome`: Authentic struggles, obstacles faced, and how they were solved
+      - `technologies_deep_dive`: Deep technical context and reasoning beyond surface-level tool mentions
     - `key_metrics`: Structured metrics with exact values and context
     - `role_clarity`: Explicit indication of the candidate's role (led, contributed, enabled, etc.)
     - `bullet_points`: Pre-written bullets (use as reference, but synthesize from narrative when tailoring)
 3.  **[COMPANY_NAME]:** The name of the company.
+4.  **[JOB_RESONANCE_ANALYSIS]:** Pre-analyzed intelligence about the job posting, including:
+    - `emotional_keywords`: Words that signal company culture and values (e.g., "innovative", "collaborative", "fast-paced")
+    - `cultural_values`: Core values the company emphasizes (e.g., "customer-first", "ownership", "excellence")
+    - `hidden_requirements`: Implicit expectations not explicitly stated (e.g., "startup mentality", "self-starter", "ambiguity tolerance")
+    - `power_verbs`: Action verbs used in the JD that signal desired behaviors (e.g., "drive", "lead", "innovate")
+    - `technical_keywords`: Technical terms and technologies mentioned
+
+### CRITICAL: LEVERAGE NARRATIVE CONTEXT FOR MISSION-ALIGNED BULLETS
+
+**MANDATORY INSTRUCTION:** When synthesizing bullets from `narrative_context`, extract mission-aligned elements by matching company domain to relevant stories:
+
+**Domain-Specific Narrative Extraction:**
+- **Aerospace/Space/Defense**: Use `technical_story` elements about reliability, uptime, scale, failure handling, mission-critical systems
+- **Fintech/Banking**: Use `technical_story` about security, compliance, data integrity, transaction processing
+- **Healthcare/Medical**: Use `technical_story` about privacy, accuracy, life-critical systems, regulatory compliance
+- **Enterprise SaaS**: Use `technical_story` about scalability, multi-tenancy, performance optimization
+- **Leadership roles**: Use `leadership_story` about mentoring, culture-building, team growth, cross-functional collaboration
+- **Mission-driven companies**: Use `challenges_overcome` to show authentic passion and problem-solving mindset
+
+**Contextual Depth Transformation:**
+- **Generic**: "Reduced API latency by 40%"
+- **Mission-aligned (Aerospace)**: "40% latency reduction with 99.9% uptime—applying reliability-first mindset for mission-critical systems"
+- **Mission-aligned (Fintech)**: "40% faster transaction processing with zero data loss—implementing financial-grade integrity standards"
+
+**Use `role_clarity` to choose accurate power verbs** that match contribution level (led vs contributed vs enabled)
 
 ### WORKFLOW: A STEP-BY-STEP PROCESS
 
@@ -36,8 +66,23 @@ You will be given the following data, clearly delineated:
 -   **Keyword Matching Score**: For each item in the master resume (work experiences, projects), calculate a relevance score based on how many priority keywords appear in its content.
 -   **IMPORTANT**: Keep this keyword list in mind throughout ALL subsequent steps. Your goal is to maximize keyword coverage while maintaining authenticity.
 
-**Step 2: Intelligence Gathering & Thematic Analysis**
--   Perform targeted research on the company:
+**Step 2: Leverage Job Resonance Intelligence (CULTURAL ALIGNMENT)**
+-   **CRITICAL:** You have been provided with [JOB_RESONANCE_ANALYSIS] - pre-analyzed intelligence about this specific job posting.
+-   **USE THIS DATA STRATEGICALLY**:
+    1. **Emotional Keywords**: Incorporate these culture-signaling words naturally into your bullets when they authentically describe the work
+       - Example: If "innovative" is an emotional keyword and narrative shows creative problem-solving, use "innovative solution" in the bullet
+    2. **Cultural Values**: Frame achievements to align with these values
+       - Example: If "ownership" is a cultural value, emphasize autonomous decision-making and end-to-end responsibility
+    3. **Hidden Requirements**: Ensure your bullet selection demonstrates these implicit expectations
+       - Example: If "startup mentality" is a hidden requirement, prioritize bullets showing scrappiness, rapid iteration, wearing multiple hats
+    4. **Power Verbs**: Use these action verbs from the JD when they accurately describe your role per `role_clarity`
+       - Example: If "drove" appears in power_verbs and your role_clarity shows primary ownership, use "drove" instead of generic verbs
+    5. **Technical Keywords**: These are already in your Step 1 list, but cross-reference to ensure coverage
+-   **AUTHENTICITY RULE**: Only use resonance keywords where they genuinely fit the `narrative_context`. Do NOT force cultural language that contradicts the actual work described.
+-   **STRATEGIC FRAMING**: When you have multiple ways to describe the same achievement from `narrative_context`, choose the framing that best aligns with the cultural values and emotional keywords.
+
+**Step 2.5: Additional Company Research (SUPPLEMENTARY)**
+-   If needed for additional context, perform targeted research on the company:
     - Search for "[COMPANY_NAME] company values" and "[COMPANY_NAME] mission statement"
     - Look for "[COMPANY_NAME] engineering blog" or "[COMPANY_NAME] tech stack"
     - Review "[COMPANY_NAME] culture" and "[COMPANY_NAME] interview process"
@@ -193,9 +238,14 @@ For EACH work experience and project, order bullets as follows:
 
 ### OUTPUT FORMAT: STRICT JSON
 -   Your final output MUST be a single, valid JSON object.
+-   **CRITICAL ATS COMPATIBILITY**: NEVER use these characters anywhere in the JSON output: `<` `>` `[` `]` `{` `}` `\` `|` `~` `^`
+    - These characters break ATS parsing systems like Workday
+    - Use parentheses `()` instead of brackets/braces where needed
+    - Use commas or semicolons instead of pipes
+    - Avoid special symbols entirely in names, titles, companies, locations, bullet points, skills, and technologies
 -   No use of em dashes anywhere to join sentences or show impact. Use alternative grammatical tools, but no em dashes or dashes.
 -   This JSON object must contain the complete, tailored resume.
--   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, work_authorization, education, skills, work_experience, projects).
+-   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, education, skills, work_experience, projects).
 -   **CRITICAL - Professional Summaries Field:** Leave the `professional_summaries` field as an empty string ("") to maximize space for impactful content.
 -   **CRITICAL - Education Field:** 
     - The `degree` field in the education section already contains the GPA (e.g., "Master of Science in Computer Science (GPA: 4.0/4.0)"). Keep this EXACTLY as provided in the master resume. Do NOT extract or separate the GPA into the separate `gpa` field. Leave the `gpa` field empty ("").

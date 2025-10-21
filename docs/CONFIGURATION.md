@@ -102,6 +102,44 @@ Controls the AI model used for generating tailored resume JSON.
 
 ---
 
+### intelligence_steps (V4)
+
+Controls the AI models used for the three intelligence gathering steps that precede resume generation.
+
+#### job_resonance_analysis
+- **Type**: Object
+- **Purpose**: Configuration for analyzing job description to extract key requirements
+- **bot_name**: Which AI model to use for job analysis
+  - **Recommendation**: `"Gemini-2.5-Pro"` for structured extraction
+  - **Default**: `"Gemini-2.5-Pro"`
+- **thinking_budget**: Tokens allocated for analysis
+  - **Recommendation**: `"4096"` for thorough requirement extraction
+  - **Default**: `"4096"`
+
+#### company_research
+- **Type**: Object
+- **Purpose**: Configuration for researching company culture, values, and positioning
+- **bot_name**: Which AI model to use for company research
+  - **Recommendation**: `"Gemini-2.5-Pro"` with web search capabilities
+  - **Default**: `"Gemini-2.5-Pro"`
+- **thinking_budget**: Tokens allocated for research
+  - **Recommendation**: `"4096"` for comprehensive research
+  - **Default**: `"4096"`
+
+#### storytelling_arc
+- **Type**: Object
+- **Purpose**: Configuration for generating narrative structure for cover letter
+- **bot_name**: Which AI model to use for narrative generation
+  - **Recommendation**: `"Gemini-2.5-Pro"` for coherent storytelling
+  - **Default**: `"Gemini-2.5-Pro"`
+- **thinking_budget**: Tokens allocated for narrative creation
+  - **Recommendation**: `"4096"` for compelling story development
+  - **Default**: `"4096"`
+
+**Note**: These intelligence steps run before resume/cover letter generation, providing context that makes the final documents more targeted and effective.
+
+---
+
 ### cover_letter_generation
 
 Controls the AI model used for generating cover letters.
@@ -160,6 +198,35 @@ Controls post-processing to make AI-generated content sound more natural.
 - **Recommendation**: `["resume", "cover_letter"]` if humanization is enabled
 - **Default**: `["resume", "cover_letter"]`
 - **Note**: Only applies when `enabled: true`
+
+---
+
+### defaults
+
+Fallback bot configurations when specific settings aren't provided.
+
+#### resume_bot
+- **Type**: String
+- **Purpose**: Default bot for resume generation if not specified elsewhere
+- **Default**: `"Gemini-2.5-Pro"`
+
+#### cover_letter_bot
+- **Type**: String
+- **Purpose**: Default bot for cover letter generation if not specified elsewhere
+- **Default**: `"Claude-Sonnet-4.5"`
+
+---
+
+### reasoning_trace
+
+Controls whether to output detailed reasoning traces during processing.
+
+- **Type**: Boolean
+- **Purpose**: Enable/disable verbose reasoning output for debugging
+- **Options**: `true` or `false`
+- **Recommendation**: `false` (only enable for debugging)
+- **Default**: `false`
+- **Note**: When enabled, shows detailed AI reasoning steps in logs
 
 ---
 
@@ -225,13 +292,27 @@ Alternate contact information for referral versions of documents.
 {
   "resume_generation": {
     "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "16384",
+    "thinking_budget": "8192",
     "web_search": true
   },
   "cover_letter_generation": {
     "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "8192",
+    "thinking_budget": "2048",
     "web_search": true
+  },
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "company_research": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "storytelling_arc": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    }
   },
   "humanization": {
     "enabled": false,
@@ -239,9 +320,14 @@ Alternate contact information for referral versions of documents.
     "apply_to": ["resume", "cover_letter"]
   },
   "referral_resume": {
-    "email": "referral@email.com",
-    "phone": "555-9999"
-  }
+    "email": "alternative@email.com",
+    "phone": "555-0123"
+  },
+  "defaults": {
+    "resume_bot": "Gemini-2.5-Pro",
+    "cover_letter_bot": "Claude-Sonnet-4.5"
+  },
+  "reasoning_trace": false
 }
 ```
 
@@ -263,6 +349,20 @@ Alternate contact information for referral versions of documents.
     "thinking_budget": "1024",
     "web_search": false
   },
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "GPT-4o-Mini",
+      "thinking_budget": "2048"
+    },
+    "company_research": {
+      "bot_name": "GPT-4o-Mini",
+      "thinking_budget": "2048"
+    },
+    "storytelling_arc": {
+      "bot_name": "GPT-4o-Mini",
+      "thinking_budget": "2048"
+    }
+  },
   "humanization": {
     "enabled": false,
     "level": "low",
@@ -271,7 +371,12 @@ Alternate contact information for referral versions of documents.
   "referral_resume": {
     "email": "alternative@email.com",
     "phone": "555-0123"
-  }
+  },
+  "defaults": {
+    "resume_bot": "GPT-4o-Mini",
+    "cover_letter_bot": "GPT-4o-Mini"
+  },
+  "reasoning_trace": false
 }
 ```
 
@@ -293,6 +398,20 @@ Alternate contact information for referral versions of documents.
     "thinking_budget": "4096",
     "web_search": true
   },
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "Claude-Sonnet-4.5",
+      "thinking_budget": "4096"
+    },
+    "company_research": {
+      "bot_name": "Claude-Sonnet-4.5",
+      "thinking_budget": "4096"
+    },
+    "storytelling_arc": {
+      "bot_name": "Claude-Sonnet-4.5",
+      "thinking_budget": "4096"
+    }
+  },
   "humanization": {
     "enabled": true,
     "level": "medium",
@@ -301,7 +420,12 @@ Alternate contact information for referral versions of documents.
   "referral_resume": {
     "email": "referral@email.com",
     "phone": "555-7777"
-  }
+  },
+  "defaults": {
+    "resume_bot": "Claude-Sonnet-4.5",
+    "cover_letter_bot": "Claude-Sonnet-4.5"
+  },
+  "reasoning_trace": false
 }
 ```
 
@@ -424,7 +548,15 @@ If configuration is invalid, the system will:
 
 ## Version History
 
-- **v3.0** (October 2025): Current configuration system
+- **v4.0** (October 2025): Current configuration system
+  - Intelligence gathering phase configuration
+  - Job resonance analysis settings
+  - Company research configuration
+  - Storytelling arc generation settings
+  - Defaults section for fallback bots
+  - Reasoning trace debugging option
+
+- **v3.0** (October 2025): Previous configuration system
   - Poe API integration
   - Separate resume/cover letter model selection
   - Humanization controls

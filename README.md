@@ -19,7 +19,7 @@ Jobbernaut Tailor is an intelligent automation system that transforms your maste
 ### The New Way (Effortless)
 1. Copy-paste the job description into one file
 2. Run `python src/main.py`
-3. Get a perfectly tailored resume + cover letter in 30 seconds
+3. Get a perfectly tailored resume + cover letter in 60-90 seconds
 4. Everything is saved and organized automatically
 5. Never lose a job description again
 
@@ -181,6 +181,20 @@ The default configuration works great out of the box, but you can customize:
     "thinking_budget": "2048",
     "web_search": true
   },
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "company_research": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "storytelling_arc": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    }
+  },
   "humanization": {
     "enabled": false,
     "level": "low",
@@ -189,15 +203,23 @@ The default configuration works great out of the box, but you can customize:
   "referral_resume": {
     "email": "alternative@email.com",
     "phone": "555-0123"
-  }
+  },
+  "defaults": {
+    "resume_bot": "Gemini-2.5-Pro",
+    "cover_letter_bot": "Claude-Sonnet-4.5"
+  },
+  "reasoning_trace": false
 }
 ```
 
 **Key settings:**
 - `bot_name`: Which AI model to use (Gemini, Claude, GPT-4)
+- `intelligence_steps`: Configure AI models for job analysis, company research, and storytelling (V4)
 - `humanization.enabled`: Make AI writing sound more natural
 - `humanization.level`: "low", "medium", or "high" naturalness
 - `referral_resume`: Alternative contact info for employee referrals
+- `defaults`: Fallback bot configurations
+- `reasoning_trace`: Enable detailed debugging output
 
 ### Environment Variables (`.env`)
 
@@ -279,7 +301,7 @@ For developers and advanced users, comprehensive technical documentation is avai
 
 - **[Documentation Index](docs/README.md)** - Navigation and overview
 - **[Architecture](docs/ARCHITECTURE.md)** - System design and components
-- **[Evolution](docs/EVOLUTION.md)** - Version history (V1 → V2 → V3)
+- **[Evolution](docs/EVOLUTION.md)** - Version history (V1 → V2 → V3 → V4)
 - **[Pipeline](docs/PIPELINE.md)** - Detailed pipeline steps
 - **[Models](docs/MODELS.md)** - Pydantic validation system
 - **[Templates](docs/TEMPLATES.md)** - Jinja2 template customization

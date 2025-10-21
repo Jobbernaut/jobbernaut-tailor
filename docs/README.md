@@ -34,7 +34,7 @@ This directory contains comprehensive documentation for the Jobbernaut Tailor sy
 **Read this** to understand how the system evolved and why current architectural decisions were made.
 
 #### [PIPELINE.md](PIPELINE.md)
-**10-Step Pipeline Architecture**
+**13-Step Pipeline Architecture (V4)**
 - Detailed breakdown of each pipeline step
 - Input/output for each step
 - Error handling at each stage
@@ -128,8 +128,16 @@ Documents reference each other where appropriate:
 
 ## Version History
 
-### V3 Documentation (Current)
-- Complete documentation of current architecture
+### V4 Documentation (Current)
+- Intelligence-driven architecture
+- Job resonance analysis
+- Company research integration
+- Storytelling arc generation
+- Enhanced validation with quality checks
+- 13-step pipeline
+
+### V3 Documentation (Historical)
+- Complete documentation of V3 architecture
 - Jinja2 template system
 - Pydantic validation
 - Humanization system
@@ -277,6 +285,6 @@ When reporting documentation issues:
 
 ---
 
-**Last Updated**: October 19, 2025  
-**Documentation Version**: 3.0  
-**System Version**: V3 (Jinja2-based architecture)
+**Last Updated**: October 21, 2025  
+**Documentation Version**: 4.0  
+**System Version**: V4 (Intelligence-driven architecture)

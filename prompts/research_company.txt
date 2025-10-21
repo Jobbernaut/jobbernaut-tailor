@@ -1,0 +1,41 @@
+Research this company and extract intelligence for authentic cover letter connection.
+
+COMPANY: [COMPANY_NAME]
+
+JOB DESCRIPTION (for context):
+[JOB_DESCRIPTION]
+
+Based on the job description and any implicit company information, extract and return a JSON object with these fields:
+
+1. "company_name": The company name (string)
+
+2. "mission_statement": Company mission or "about us" summary in 1-2 sentences. If not explicitly stated in JD, infer from the job description's tone and focus (e.g., "Building innovative solutions that empower developers worldwide")
+
+3. "core_values": Array of company values inferred from the job description (e.g., ["customer obsession", "innovation", "integrity", "collaboration", "excellence"])
+
+4. "tech_stack": Array of technologies the company uses (extract from JD if mentioned, otherwise return empty array)
+
+5. "culture_keywords": Array of culture descriptors inferred from job description language (e.g., ["fast-paced", "collaborative", "data-driven", "startup mentality"])
+
+6. "recent_news": Brief statement about company focus or achievements if mentioned in JD, otherwise empty string (e.g., "Recently raised Series B funding to expand AI capabilities")
+
+7. "mission_keywords": Array of words that signal company's core mission extracted from JD language (e.g., for aerospace: ["space", "exploration", "reliability", "safety", "innovation"], for fintech: ["security", "trust", "compliance", "financial integrity"])
+
+8. "domain_context": Brief statement (1-2 sentences) about the industry/domain and what matters most based on JD tone (e.g., "Aerospace industry where reliability and safety are paramount; failure is not an option", "Healthcare sector where patient privacy and data accuracy are life-critical")
+
+CRITICAL INSTRUCTIONS:
+- "company_name" and "mission_statement" and "core_values" are REQUIRED (must have at least one value in core_values array)
+- Other fields can be empty arrays or empty strings if not found
+- Infer mission and values from job description tone, language, and focus areas
+- Return ONLY valid JSON with no additional text
+
+Example format:
+```json
+{
+  "company_name": "TechCorp",
+  "mission_statement": "Building innovative cloud solutions that empower enterprises to scale efficiently and securely.",
+  "core_values": ["customer obsession", "innovation", "ownership", "collaboration"],
+  "tech_stack": ["AWS", "Python", "React", "PostgreSQL"],
+  "culture_keywords": ["fast-paced", "data-driven", "collaborative"],
+  "recent_news": "Recently launched new AI-powered analytics platform"
+}

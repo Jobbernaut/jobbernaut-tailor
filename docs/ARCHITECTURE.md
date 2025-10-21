@@ -46,7 +46,8 @@ Once a job is marked as "processed," the pipeline ignores it on subsequent runs,
 ┌─────────────────────────────────────────────────────────────┐
 │                   Pipeline Orchestration                     │
 │  - ResumeOptimizationPipeline (main.py)                     │
-│  - Sequential 10-step processing                             │
+│  - Sequential 13-step processing (V4)                        │
+│  - Intelligence gathering phase                              │
 │  - Error handling and retry logic                            │
 └─────────────────────────────────────────────────────────────┘
                               ↓
@@ -85,13 +86,19 @@ Once a job is marked as "processed," the pipeline ignores it on subsequent runs,
 **Responsibility**: Coordinates the entire document generation workflow.
 
 **Key Classes**:
-- `ResumeOptimizationPipeline`: Main orchestration class that manages the 10-step pipeline
+- `ResumeOptimizationPipeline`: Main orchestration class that manages the 13-step pipeline (V4)
 
 **Key Methods**:
 - `__init__()`: Initializes configuration, loads master resume, sets up API clients
 - `process_job()`: Executes the complete pipeline for a single job
 - `run()`: Entry point that finds pending jobs and processes them
 - `call_poe_api()`: Handles AI API calls with retry logic
+- `_validate_job_inputs()`: Validates job inputs before processing (V4)
+- `_call_intelligence_step_with_retry()`: Generic retry wrapper for intelligence steps (V4)
+- `_validate_intelligence_output()`: Validates intelligence output quality (V4)
+- `analyze_job_resonance()`: Intelligence Step 1 - analyzes job resonance (V4)
+- `research_company()`: Intelligence Step 2 - researches company (V4)
+- `generate_storytelling_arc()`: Intelligence Step 3 - generates storytelling arc (V4)
 - `_build_error_feedback()`: Generates detailed error messages for validation failures
 - `_apply_humanization()`: Conditionally applies humanization prompts
 
@@ -107,6 +114,9 @@ Once a job is marked as "processed," the pipeline ignores it on subsequent runs,
 - `WorkExperience`: Professional experience entries
 - `Project`: Project portfolio entries
 - `TailoredResume`: Complete resume structure
+- `JobResonanceAnalysis`: Job resonance intelligence data (V4)
+- `CompanyResearch`: Company research intelligence data (V4)
+- `StorytellingArc`: Cover letter storytelling arc data (V4)
 
 **Validation Rules**:
 - Character limits (bullet points ≤ 100 chars, skills ≤ 100 chars, technologies ≤ 100 chars)
@@ -151,7 +161,7 @@ Once a job is marked as "processed," the pipeline ignores it on subsequent runs,
 
 ## Data Flow
 
-### Complete Pipeline Flow
+### Complete Pipeline Flow (V4 - 13 Steps)
 
 ```
 1. User adds job to applications.yaml with status: "pending"
@@ -160,40 +170,73 @@ Once a job is marked as "processed," the pipeline ignores it on subsequent runs,
                     ↓
 3. Load master resume from profile/master_resume.json
                     ↓
-4. Generate tailored resume JSON via AI
+4. Validate job inputs (V4)
+   - Check required fields (company_name, job_title, job_description)
+   - Verify data types and non-empty values
+   - Halt pipeline if validation fails
+                    ↓
+5. INTELLIGENCE STEP 1: Analyze Job Resonance (V4)
+   - Call analyze_job_resonance() with retry wrapper
+   - Validate output with JobResonanceAnalysis model
+   - Check quality: character counts, array sizes, meaningful content
+   - Retry up to 3 times with progressive error feedback
+   - Save validated output to job data
+                    ↓
+6. INTELLIGENCE STEP 2: Research Company (V4)
+   - Call research_company() with retry wrapper
+   - Validate output with CompanyResearch model
+   - Check quality: character counts, array sizes, meaningful content
+   - Retry up to 3 times with progressive error feedback
+   - Save validated output to job data
+                    ↓
+7. INTELLIGENCE STEP 3: Generate Storytelling Arc (V4)
+   - Call generate_storytelling_arc() with retry wrapper
+   - Validate output with StorytellingArc model
+   - Check quality: character counts, array sizes, meaningful content
+   - Retry up to 3 times with progressive error feedback
+   - Save validated output to job data
+                    ↓
+8. Generate tailored resume JSON via AI
+   - Use intelligence context from previous steps
    - Retry up to 3 times on validation failure
    - Build error feedback for AI on each retry
                     ↓
-5. Validate JSON with Pydantic models
+9. Validate resume JSON with TailoredResume Pydantic model
    - Enforce schema compliance
-   - Check character limits
-   - Verify required fields
+   - Check character limits (bullets ≤100, skills ≤100, tech ≤100)
+   - Verify required fields and array lengths
                     ↓
-6. Generate cover letter text via AI
-   - Apply humanization if enabled
+10. Generate cover letter text via AI
+    - Use storytelling arc from intelligence phase
+    - Apply humanization if enabled
                     ↓
-7. Render resume LaTeX from Jinja2 template
-   - Apply custom filters
-   - Escape special characters
+11. Render documents to LaTeX
+    - Render resume LaTeX from Jinja2 template
+    - Render cover letter LaTeX from Jinja2 template
+    - Apply custom filters and escape special characters
                     ↓
-8. Render cover letter LaTeX from Jinja2 template
+12. Compile PDFs with pdflatex
+    - Compile resume PDF
+    - Compile cover letter PDF
+    - Generate referral versions (alternate contact info)
+      * Render referral resume LaTeX
+      * Render referral cover letter LaTeX
+      * Compile referral resume PDF
+      * Compile referral cover letter PDF
                     ↓
-9. Compile resume PDF with pdflatex
-                    ↓
-10. Compile cover letter PDF with pdflatex
-                    ↓
-11. Generate referral versions (alternate contact info)
-    - Render referral resume LaTeX
-    - Render referral cover letter LaTeX
-    - Compile referral resume PDF
-    - Compile referral cover letter PDF
-                    ↓
-12. Organize output files
-    - Keep 4 final PDFs in main directory
+13. Finalize and cleanup
+    - Organize output files (4 final PDFs in main directory)
     - Move intermediate files to debug/ subdirectory
-                    ↓
-13. Update job status to "processed" in applications.yaml
+    - Update job status to "processed" in applications.yaml
 ```
+
+**V4 Key Changes**:
+- Added input validation step (Step 4)
+- Added 3-step intelligence gathering phase (Steps 5-7)
+- Intelligence steps use generic retry wrapper with quality validation
+- Resume generation (Step 8) now uses intelligence context
+- Cover letter generation (Step 10) uses storytelling arc
+- Total pipeline expanded from 10 to 13 steps
 
 ## Technology Stack
 
