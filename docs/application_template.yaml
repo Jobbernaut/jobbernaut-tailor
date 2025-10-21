@@ -4,8 +4,5 @@
 #   location: <insert_location_or_country>
 #   status: pending
 #   posting_link: <insert_posting_link>
-#   job_description: "
+#   job_description: |
 #     <insert job description here>
-#     "
-
-# Note: If the location is empty, it will default to US
