@@ -246,6 +246,44 @@ def create_referral_latex(
     return referral_latex
 
 
+def remove_reasoning_traces(text: str, remove_traces: bool = True) -> str:
+    """
+    Remove reasoning traces from model responses.
+    
+    Handles multiple reasoning trace formats:
+    - Lines starting with ">" (common in some models)
+    - Content between <thinking>...</thinking> tags (Claude-style)
+    - Content between [REASONING]...[/REASONING] markers
+    
+    Args:
+        text: The raw model response
+        remove_traces: Whether to remove traces (from config)
+        
+    Returns:
+        Cleaned text with reasoning traces removed
+    """
+    if not remove_traces:
+        return text
+    
+    import re
+    
+    # Remove lines starting with ">" (quote-style reasoning)
+    lines = text.split('\n')
+    filtered_lines = [line for line in lines if not line.strip().startswith('>')]
+    text = '\n'.join(filtered_lines)
+    
+    # Remove <thinking>...</thinking> blocks (Claude-style)
+    text = re.sub(r'<thinking>.*?</thinking>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    
+    # Remove [REASONING]...[/REASONING] blocks
+    text = re.sub(r'\[REASONING\].*?\[/REASONING\]', '', text, flags=re.DOTALL | re.IGNORECASE)
+    
+    # Remove multiple consecutive blank lines (cleanup after removal)
+    text = re.sub(r'\n\s*\n\s*\n+', '\n\n', text)
+    
+    return text.strip()
+
+
 def cleanup_output_directory(output_dir: str, first_name: str, last_name: str, company_name: str, job_id: str) -> None:
     """
     Clean up output directory by moving all non-PDF files to debug/ folder.

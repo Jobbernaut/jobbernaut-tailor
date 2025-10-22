@@ -20,6 +20,7 @@ from utils import (
     load_prompt_template,
     compile_latex_to_pdf,
     cleanup_output_directory,
+    remove_reasoning_traces,
 )
 from template_renderer import TemplateRenderer
 from models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
@@ -88,6 +89,12 @@ class ResumeOptimizationPipeline:
             self.humanization_prompt = self._load_humanization_prompt(self.humanization_level)
             print(f"✓ Humanization enabled: {self.humanization_level} level")
             print(f"  Applying to: {', '.join(self.humanization_targets)}\n")
+        
+        # Load reasoning trace configuration
+        # Note: reasoning_trace = false means "remove traces" (don't include them)
+        self.remove_reasoning_traces = not self.config.get("reasoning_trace", False)
+        if self.remove_reasoning_traces:
+            print(f"✓ Reasoning trace removal enabled\n")
         
         # Initialize template renderer
         self.renderer = TemplateRenderer()
@@ -202,6 +209,15 @@ class ResumeOptimizationPipeline:
                 
                 print(f"  ✓ API call successful on attempt {attempt}")
                 print(f"  Response length: {len(response_text)} characters")
+                
+                # Apply reasoning trace removal if enabled
+                if self.remove_reasoning_traces:
+                    original_length = len(response_text)
+                    response_text = remove_reasoning_traces(response_text, self.remove_reasoning_traces)
+                    cleaned_length = len(response_text)
+                    if original_length != cleaned_length:
+                        print(f"  ✓ Reasoning traces removed ({original_length - cleaned_length} characters)")
+                
                 return response_text
                 
             except Exception as e:
