@@ -1,15 +1,15 @@
 {
   "resume_generation": {
     "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "4096"
+    "thinking_budget": "48192"
   },
   "cover_letter_generation": {
     "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "2048"
+    "thinking_budget": "4096"
   },
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "GPT-4o",
+      "bot_name": "Claude-Sonnet-4.5",
       "thinking_budget": "2048"
     },
     "company_research": {
@@ -17,7 +17,7 @@
       "thinking_budget": "4096"
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
+      "bot_name": "Claude-Sonnet-4.5",
       "thinking_budget": "2048"
     }
   },
