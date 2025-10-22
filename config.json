@@ -2,12 +2,12 @@
   "resume_generation": {
     "bot_name": "Gemini-2.5-Pro",
     "thinking_budget": "8192",
-    "web_search": true
+    "web_search": false
   },
   "cover_letter_generation": {
     "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "2048",
-    "web_search": true
+    "thinking_budget": "4096",
+    "web_search": false
   },
   "intelligence_steps": {
     "job_resonance_analysis": {
@@ -15,11 +15,12 @@
       "thinking_budget": "4096"
     },
     "company_research": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096"
+      "bot_name": "Claude-Sonnet-4-Search",
+      "thinking_budget": "4096",
+      "web_search": true
     },
     "storytelling_arc": {
-      "bot_name": "Gemini-2.5-Pro",
+      "bot_name": "Claude-Sonnet-4.5",
       "thinking_budget": "4096"
     }
   },
@@ -33,7 +34,7 @@
     "phone": "(919) 526-0631"
   },
   "defaults": {
-    "resume_bot": "Gemini-2.5-Pro",
+    "resume_bot": "Claude-Sonnet-4.5",
     "cover_letter_bot": "Claude-Sonnet-4.5"
   },
   "reasoning_trace": false
