@@ -1,5 +1,28 @@
 Research this company and extract intelligence for authentic cover letter connection.
 
+## REQUIRED JSON OUTPUT STRUCTURE
+
+You MUST return a JSON object with EXACTLY these 8 field names (case-sensitive):
+
+```json
+{
+  "company_name": "string",
+  "mission_statement": "string",
+  "core_values": ["value1", "value2", ...],
+  "tech_stack": ["tech1", "tech2", ...],
+  "culture_keywords": ["keyword1", "keyword2", ...],
+  "recent_news": "string",
+  "mission_keywords": ["keyword1", "keyword2", ...],
+  "domain_context": "string describing the company's domain and industry context"
+}
+```
+
+CRITICAL: 
+- Use these EXACT field names. Do not rename, abbreviate, or modify them.
+- ALL 8 FIELDS ARE REQUIRED. mission_keywords and domain_context are especially important.
+
+---
+
 COMPANY: [COMPANY_NAME]
 
 JOB DESCRIPTION (for context):
@@ -37,5 +60,7 @@ Example format:
   "core_values": ["customer obsession", "innovation", "ownership", "collaboration"],
   "tech_stack": ["AWS", "Python", "React", "PostgreSQL"],
   "culture_keywords": ["fast-paced", "data-driven", "collaborative"],
-  "recent_news": "Recently launched new AI-powered analytics platform"
+  "recent_news": "Recently launched new AI-powered analytics platform",
+  "mission_keywords": ["cloud", "scalability", "security", "enterprise", "innovation"],
+  "domain_context": "Enterprise cloud infrastructure where reliability, security, and scalability are critical for business operations."
 }
