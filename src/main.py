@@ -40,15 +40,29 @@ class ResumeOptimizationPipeline:
         self.config = load_json("config.json")
         defaults = self.config.get("defaults", {})
 
-        # Bot configurations
-        self.resume_bot = self.config.get("resume_generation", {}).get("bot_name") or defaults.get("resume_bot")
-        self.cover_letter_bot = self.config.get("cover_letter_generation", {}).get("bot_name") or defaults.get("cover_letter_bot")
+        # Bot configurations with thinking budgets
+        resume_config = self.config.get("resume_generation", {})
+        self.resume_bot = resume_config.get("bot_name") or defaults.get("resume_bot")
+        self.resume_thinking_budget = int(resume_config.get("thinking_budget", 0)) if resume_config.get("thinking_budget") else None
         
-        # Intelligence step bot configurations
+        cover_letter_config = self.config.get("cover_letter_generation", {})
+        self.cover_letter_bot = cover_letter_config.get("bot_name") or defaults.get("cover_letter_bot")
+        self.cover_letter_thinking_budget = int(cover_letter_config.get("thinking_budget", 0)) if cover_letter_config.get("thinking_budget") else None
+        
+        # Intelligence step bot configurations with thinking budgets
         intelligence_config = self.config.get("intelligence_steps", {})
-        self.job_resonance_bot = intelligence_config.get("job_resonance_analysis", {}).get("bot_name") or self.resume_bot
-        self.company_research_bot = intelligence_config.get("company_research", {}).get("bot_name") or self.resume_bot
-        self.storytelling_arc_bot = intelligence_config.get("storytelling_arc", {}).get("bot_name") or self.resume_bot
+        
+        job_resonance_config = intelligence_config.get("job_resonance_analysis", {})
+        self.job_resonance_bot = job_resonance_config.get("bot_name") or self.resume_bot
+        self.job_resonance_thinking_budget = int(job_resonance_config.get("thinking_budget", 0)) if job_resonance_config.get("thinking_budget") else None
+        
+        company_research_config = intelligence_config.get("company_research", {})
+        self.company_research_bot = company_research_config.get("bot_name") or self.resume_bot
+        self.company_research_thinking_budget = int(company_research_config.get("thinking_budget", 0)) if company_research_config.get("thinking_budget") else None
+        
+        storytelling_arc_config = intelligence_config.get("storytelling_arc", {})
+        self.storytelling_arc_bot = storytelling_arc_config.get("bot_name") or self.resume_bot
+        self.storytelling_arc_thinking_budget = int(storytelling_arc_config.get("thinking_budget", 0)) if storytelling_arc_config.get("thinking_budget") else None
 
         # Referral contact info
         referral_config = self.config.get("referral_resume", {})
@@ -130,13 +144,14 @@ class ResumeOptimizationPipeline:
         
         return humanized_prompt
     
-    async def call_poe_api(self, prompt: str, bot_name: str, max_retries: int = 2) -> str:
+    async def call_poe_api(self, prompt: str, bot_name: str, thinking_budget: int = None, max_retries: int = 2) -> str:
         """
         Call the Poe API with retry logic.
         
         Args:
             prompt: The prompt to send to the API
             bot_name: The name of the bot to use
+            thinking_budget: Optional thinking budget for extended reasoning (Claude: int, GPT: mapped to reasoning_effort)
             max_retries: Maximum number of retry attempts (default: 2)
             
         Returns:
@@ -150,9 +165,36 @@ class ResumeOptimizationPipeline:
         for attempt in range(1, max_retries + 1):
             try:
                 print(f"  API Call Attempt {attempt}/{max_retries} to {bot_name}...")
+                
+                # Build parameters based on bot type and thinking_budget
+                parameters = {}
+                if thinking_budget is not None:
+                    if "Claude" in bot_name:
+                        # Claude models use thinking_budget parameter (integer)
+                        parameters["thinking_budget"] = thinking_budget
+                        print(f"  Using thinking_budget: {thinking_budget}")
+                    elif "GPT" in bot_name or "gpt" in bot_name:
+                        # GPT models use reasoning_effort parameter (string: low/medium/high)
+                        if thinking_budget >= 4096:
+                            parameters["reasoning_effort"] = "high"
+                            print(f"  Using reasoning_effort: high (thinking_budget={thinking_budget})")
+                        elif thinking_budget >= 2048:
+                            parameters["reasoning_effort"] = "medium"
+                            print(f"  Using reasoning_effort: medium (thinking_budget={thinking_budget})")
+                        else:
+                            parameters["reasoning_effort"] = "low"
+                            print(f"  Using reasoning_effort: low (thinking_budget={thinking_budget})")
+                
+                # Create ProtocolMessage with parameters if available
+                message = fp.ProtocolMessage(
+                    role="user",
+                    content=prompt,
+                    parameters=parameters if parameters else None
+                )
+                
                 response_text = ""
                 async for partial in fp.get_bot_response(
-                    messages=[fp.ProtocolMessage(role="user", content=prompt)],
+                    messages=[message],
                     bot_name=bot_name,
                     api_key=self.api_key,
                 ):
@@ -432,6 +474,7 @@ class ResumeOptimizationPipeline:
         output_dir: str,
         output_filename_prefix: str,
         bot_name: str,
+        thinking_budget: int = None,
         max_retries: int = 2
     ) -> dict:
         """
@@ -467,7 +510,7 @@ class ResumeOptimizationPipeline:
             
             try:
                 # Call API
-                response = await self.call_poe_api(current_prompt, bot_name)
+                response = await self.call_poe_api(current_prompt, bot_name, thinking_budget)
                 
                 # Save raw response
                 raw_path = os.path.join(output_dir, f"{output_filename_prefix}_Raw_Attempt_{attempt}.txt")
@@ -564,7 +607,8 @@ class ResumeOptimizationPipeline:
             step_name="Job Resonance Analysis",
             output_dir=output_dir,
             output_filename_prefix="Job_Resonance_Analysis",
-            bot_name=self.job_resonance_bot
+            bot_name=self.job_resonance_bot,
+            thinking_budget=self.job_resonance_thinking_budget
         )
         
         print(f"  ✓ Job resonance analysis complete")
@@ -602,7 +646,8 @@ class ResumeOptimizationPipeline:
             step_name="Company Research",
             output_dir=output_dir,
             output_filename_prefix="Company_Research",
-            bot_name=self.company_research_bot
+            bot_name=self.company_research_bot,
+            thinking_budget=self.company_research_thinking_budget
         )
         
         print(f"  ✓ Company research complete")
@@ -646,7 +691,8 @@ class ResumeOptimizationPipeline:
             step_name="Storytelling Arc Generation",
             output_dir=output_dir,
             output_filename_prefix="Storytelling_Arc",
-            bot_name=self.storytelling_arc_bot
+            bot_name=self.storytelling_arc_bot,
+            thinking_budget=self.storytelling_arc_thinking_budget
         )
         
         print(f"  ✓ Storytelling arc generated")
@@ -747,7 +793,7 @@ class ResumeOptimizationPipeline:
             else:
                 print(f"  Regenerating resume JSON with error feedback (retry {validation_attempt - 1})...")
             
-            resume_response = await self.call_poe_api(current_prompt, self.resume_bot)
+            resume_response = await self.call_poe_api(current_prompt, self.resume_bot, self.resume_thinking_budget)
             
             # Save raw response for debugging
             raw_response_path = os.path.join(output_dir, f"Resume_Response_Attempt_{validation_attempt}.txt")
@@ -870,7 +916,7 @@ class ResumeOptimizationPipeline:
         # Apply humanization if enabled for cover letter
         cover_letter_prompt = self._apply_humanization(cover_letter_prompt, "cover_letter")
         
-        cover_letter_response = await self.call_poe_api(cover_letter_prompt, self.cover_letter_bot)
+        cover_letter_response = await self.call_poe_api(cover_letter_prompt, self.cover_letter_bot, self.cover_letter_thinking_budget)
         cover_letter_text = cover_letter_response.strip()
         
         # Save cover letter text
