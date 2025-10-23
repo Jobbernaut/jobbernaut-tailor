@@ -43,6 +43,7 @@
     "cover_letter_bot": "Claude-Sonnet-4.5"
   },
   "reasoning_trace": false,
+  "max_concurrent_jobs": 10,
   "file_paths": {
     "applications": "data/applications.yaml",
     "application_template": "data/application_template.yaml",

@@ -104,6 +104,10 @@ class ResumeOptimizationPipeline:
         if self.remove_reasoning_traces:
             print(f"✓ Reasoning trace removal enabled\n")
         
+        # Load concurrency limit configuration
+        self.max_concurrent_jobs = self.config.get("max_concurrent_jobs", 10)
+        print(f"✓ Max concurrent jobs: {self.max_concurrent_jobs}\n")
+        
         # Initialize template renderer
         self.renderer = TemplateRenderer()
 
@@ -1170,7 +1174,7 @@ class ResumeOptimizationPipeline:
         print(f"{'='*60}\n")
 
     async def run(self) -> None:
-        """Run the pipeline to process all pending jobs."""
+        """Run the pipeline to process all pending jobs in parallel with concurrency limiting."""
         print("\n" + "=" * 60)
         print("RESUME OPTIMIZATION PIPELINE")
         print("=" * 60 + "\n")
@@ -1185,35 +1189,51 @@ class ResumeOptimizationPipeline:
             return
 
         print(f"Found {len(pending_jobs)} pending job(s) to process.\n")
+        print(f"Processing jobs with max {self.max_concurrent_jobs} concurrent at a time...\n")
         
-        # Process each pending job
+        # Create semaphore to limit concurrent jobs
+        semaphore = asyncio.Semaphore(self.max_concurrent_jobs)
+        
+        async def process_with_limit(job):
+            """Process a job with semaphore-based concurrency limiting."""
+            async with semaphore:
+                return await self.process_job(job)
+        
+        # Process all jobs concurrently using asyncio.gather with concurrency limit
+        # return_exceptions=True ensures one job's failure doesn't stop others
+        results = await asyncio.gather(
+            *[process_with_limit(job) for job in pending_jobs],
+            return_exceptions=True
+        )
+        
+        # Count successes and failures
         processed_count = 0
         failed_count = 0
+        failed_jobs = []
         
-        for idx, pending_job in enumerate(pending_jobs, 1):
-            job_title = pending_job.get("job_title", "Unknown")
-            company_name = pending_job.get("company_name", "Unknown")
+        for idx, (job, result) in enumerate(zip(pending_jobs, results), 1):
+            job_title = job.get("job_title", "Unknown")
+            company_name = job.get("company_name", "Unknown")
+            job_id = job.get("job_id", "Unknown")
             
-            print(f"\n{'='*60}")
-            print(f"Processing job {idx}/{len(pending_jobs)}")
-            print(f"{'='*60}\n")
-            
-            try:
-                await self.process_job(pending_job)
-                processed_count += 1
-                print(f"\n✓ Successfully processed job {idx}/{len(pending_jobs)}: {job_title} at {company_name}")
-            except Exception as e:
+            if isinstance(result, Exception):
                 failed_count += 1
-                job_id = pending_job.get("job_id", "Unknown")
+                failed_jobs.append({
+                    "job_id": job_id,
+                    "job_title": job_title,
+                    "company_name": company_name,
+                    "error": str(result)
+                })
                 print(f"\n{'='*60}")
-                print(f"❌ ERROR processing job {idx}/{len(pending_jobs)}")
+                print(f"❌ Job {idx}/{len(pending_jobs)} FAILED")
                 print(f"{'='*60}")
                 print(f"Job: {job_title} at {company_name}")
                 print(f"Job ID: {job_id}")
-                print(f"Error: {str(e)}")
+                print(f"Error: {str(result)}")
                 print(f"{'='*60}\n")
-                print(f"Continuing to next job...\n")
-                continue
+            else:
+                processed_count += 1
+                print(f"\n✓ Job {idx}/{len(pending_jobs)} completed: {job_title} at {company_name}")
 
         # Print summary
         print(f"\n{'='*60}")
@@ -1227,7 +1247,7 @@ class ResumeOptimizationPipeline:
         if processed_count > 0:
             print("Pipeline completed successfully!")
         if failed_count > 0:
-            print(f"⚠️  {failed_count} job(s) failed. Check the error messages above for details.\n")
+            print(f"⚠️  {failed_count} job(s) failed. Details above.\n")
 
 
 async def main():
