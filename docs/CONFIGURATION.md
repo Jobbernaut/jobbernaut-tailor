@@ -1,6 +1,8 @@
 # Configuration Guide
 
-## Quick Setup
+Complete setup and customization guide for Jobbernaut Tailor v4.2.
+
+## Quick Start
 
 ```bash
 # 1. Clone repository
@@ -10,111 +12,421 @@ cd jobbernaut-tailor
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Configure environment
+# 3. Install LaTeX (if not already installed)
+# Windows: Download MiKTeX from https://miktex.org/
+# macOS: brew install --cask mactex
+# Linux: sudo apt-get install texlive-full
+
+# 4. Configure environment
 cp .env.example .env
 # Add your POE_API_KEY to .env
 
-# 4. Run system
+# 5. Configure concurrency (optional)
+# Edit config.json to adjust max_concurrent_jobs
+
+# 6. Add jobs to data/applications.yaml
+
+# 7. Run system
 python src/main.py
 ```
 
-## Core Configuration
+## Core Configuration Files
 
-### config.json
+### 1. config.json - Main Configuration
+
+```json
+{
+  "max_concurrent_jobs": 10,
+  
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "Gemini-2.5-Pro",
+      "thinking_budget": "4096"
+    },
+    "company_research": {
+      "bot_name": "Claude-3.5-Sonnet",
+      "thinking_budget": "2048"
+    },
+    "storytelling_arc": {
+      "bot_name": "GPT-4o",
+      "thinking_budget": "3072"
+    },
+    "resume_generation": {
+      "bot_name": "Claude-3.5-Sonnet",
+      "thinking_budget": "8192"
+    },
+    "cover_letter_generation": {
+      "bot_name": "GPT-4o",
+      "thinking_budget": "4096"
+    }
+  },
+  
+  "output": {
+    "base_directory": "./output",
+    "pdf_quality": "production",
+    "save_intermediate": false,
+    "debug_mode": false
+  }
+}
+```
+
+### 2. .env - Environment Variables
+
+```bash
+# Required
+POE_API_KEY=your_poe_api_key_here
+
+# Optional
+DEBUG_MODE=false
+LATEX_COMPILER=pdflatex
+OUTPUT_DIR=./output
+LOG_LEVEL=INFO
+```
+
+### 3. data/applications.yaml - Job Queue
+
+```yaml
+applications:
+  - company: "TechCorp"
+    title: "Senior Software Engineer"
+    location: "San Francisco, CA"
+    job_url: "https://techcorp.com/careers/123"
+    description: |
+      Full job description here...
+      Multiple lines supported...
+    status: "pending"
+    
+  - company: "StartupXYZ"
+    title: "Full Stack Developer"
+    location: "Remote"
+    job_url: "https://startupxyz.com/jobs/456"
+    description: |
+      Another job description...
+    status: "pending"
+```
+
+## Parallel Processing Configuration
+
+### Concurrency Settings
+
+```json
+{
+  "max_concurrent_jobs": 10,
+  "semaphore_timeout": 300,
+  "enable_parallel_processing": true
+}
+```
+
+**Tuning Guidelines**:
+
+| System Specs | Recommended Concurrency | Expected Performance |
+|--------------|------------------------|---------------------|
+| 4GB RAM, 2 cores | 3-5 | ~20 jobs in 5-7 min |
+| 8GB RAM, 4 cores | 8-10 | ~50 jobs in 7-10 min |
+| 16GB+ RAM, 8+ cores | 12-15 | ~100 jobs in 12-15 min |
+
+**Performance vs. Resource Usage**:
+- **1-5 concurrent**: Conservative, minimal resource usage
+- **10 concurrent**: Optimal for most systems (default)
+- **15+ concurrent**: High-end systems only, diminishing returns
+
+**Factors to Consider**:
+- API rate limits (POE API)
+- Available system memory
+- LaTeX compilation overhead
+- Network bandwidth
+
+## Intelligence Model Configuration
+
+### Model Selection Strategy
+
 ```json
 {
   "intelligence_steps": {
     "job_resonance_analysis": {
       "bot_name": "Gemini-2.5-Pro",
       "thinking_budget": "4096",
-      "temperature": 0.7
+      "rationale": "Best for technical pattern matching"
     },
     "company_research": {
-      "bot_name": "Claude-3",
+      "bot_name": "Claude-3.5-Sonnet",
       "thinking_budget": "2048",
-      "temperature": 0.5
+      "rationale": "Excellent research and synthesis"
+    },
+    "storytelling_arc": {
+      "bot_name": "GPT-4o",
+      "thinking_budget": "3072",
+      "rationale": "Superior creative storytelling"
+    },
+    "resume_generation": {
+      "bot_name": "Claude-3.5-Sonnet",
+      "thinking_budget": "8192",
+      "rationale": "Precise, structured content generation"
+    },
+    "cover_letter_generation": {
+      "bot_name": "GPT-4o",
+      "thinking_budget": "4096",
+      "rationale": "Engaging narrative writing"
     }
-  },
-  "validation": {
-    "retry_attempts": 2,
-    "quality_threshold": 0.85
-  },
-  "output": {
-    "pdf_quality": "production",
-    "debug_mode": false
   }
 }
 ```
 
-## Intelligence Models
+### Available Models
 
-### Model Selection
+| Model | Strengths | Best For | Cost |
+|-------|-----------|----------|------|
+| **Gemini-2.5-Pro** | Technical analysis, pattern matching | Job resonance analysis | Low |
+| **Claude-3.5-Sonnet** | Research, synthesis, accuracy | Company research, resume generation | Medium |
+| **GPT-4o** | Creativity, storytelling, narrative | Storytelling arc, cover letters | Medium |
+| **GPT-4o-mini** | Fast, cost-effective | Testing, development | Low |
+
+### Thinking Budget Configuration
+
+**What is Thinking Budget?**
+- Controls the depth of reasoning for models that support extended thinking
+- Higher budgets = more thorough analysis but higher cost
+- Measured in tokens
+
+**Recommended Budgets**:
 ```json
 {
-  "available_models": {
-    "Gemini-2.5-Pro": {
-      "strengths": ["technical analysis", "pattern matching"],
-      "use_case": "job resonance analysis"
-    },
-    "Claude-3": {
-      "strengths": ["research", "synthesis"],
-      "use_case": "company research"
-    },
-    "GPT-4": {
-      "strengths": ["storytelling", "creativity"],
-      "use_case": "cover letter generation"
-    }
-  }
+  "job_resonance_analysis": "4096",    // Deep analysis needed
+  "company_research": "2048",          // Moderate depth
+  "storytelling_arc": "3072",          // Creative exploration
+  "resume_generation": "8192",         // Comprehensive generation
+  "cover_letter_generation": "4096"    // Balanced creativity
 }
 ```
 
-## Validation Rules
+## Validation Configuration
 
-### Character Limits
+### Character Limits (ATS Optimization)
+
 ```python
+# Enforced in src/models.py
 LIMITS = {
-    'bullet_point': 118,
-    'skills_category': 30,
-    'skills_list': 85,
-    'project_tech': 65,
-    'summary': 425
+    'bullet_point': 118,        # ATS parsing threshold
+    'skills_category_name': 30, # Category label limit
+    'skills_list': 85,          # Combined skills per category
+    'project_tech_stack': 65,   # Technology list limit
+    'summary': 425,             # Professional summary limit
+    'project_description': 200  # Project description limit
 }
 ```
+
+**Why These Limits?**
+- Based on ATS parsing behavior analysis
+- Ensures content fits within standard parsing windows
+- Prevents truncation in applicant tracking systems
+- Optimizes for both human and machine readability
 
 ### Quality Thresholds
+
 ```python
+# Enforced in validation pipeline
 THRESHOLDS = {
-    'min_bullets': 4,
-    'max_bullets': 4,
-    'min_skills': 3,
-    'max_skills': 6
+    'min_bullet_length': 30,        # Meaningful content
+    'max_bullet_length': 118,       # ATS compatibility
+    'required_bullets_per_role': 4, # Optimal density
+    'min_skills_per_category': 3,   # Sufficient breadth
+    'max_skills_per_category': 6,   # Avoid clutter
+    'min_summary_length': 100,      # Substantive overview
+    'max_summary_length': 425,      # ATS limit
+    'min_projects': 2,              # Demonstrate experience
+    'max_projects': 4               # Avoid overwhelming
 }
 ```
+
+### Self-Healing Configuration
+
+The system includes automatic retry logic with a maximum of 2 retry attempts per validation failure. The retry mechanism is built into the code and does not require configuration.
+
+**Self-Healing Features**:
+- **Progressive Feedback**: Inject error-specific guidance on retry
+- **Context Preservation**: Maintain successful parts across retries
+- **Automatic Format Fixes**: Standardize dates, phone numbers, locations
+- **Character Limit Enforcement**: Trim content while preserving meaning
 
 ## Template Customization
 
 ### LaTeX Templates
-- `templates/resume.jinja2`
-- `templates/cover_letter.jinja2`
 
-### Style Configuration
+**Resume Template** (`templates/resume.jinja2`):
 ```latex
-% In latex/resume.cls
-\geometry{
-    paper=letterpaper,
-    top=0.5in,
-    bottom=0.5in,
-    left=0.5in,
-    right=0.5in
+\documentclass{resume}
+
+% Contact Information
+\name{\VAR{contact_info.first_name} \VAR{contact_info.last_name}}
+\address{
+    \VAR{contact_info.location} \\
+    \href{tel:\VAR{contact_info.phone}}{\VAR{contact_info.phone}} \\
+    \href{mailto:\VAR{contact_info.email}}{\VAR{contact_info.email}}
+}
+
+% Professional Summary
+\begin{rSection}{SUMMARY}
+\VAR{summary|latex_escape}
+\end{rSection}
+
+% Work Experience
+\begin{rSection}{EXPERIENCE}
+\BLOCK{for exp in work_experience}
+    \begin{rSubsection}
+        {\VAR{exp.company}}
+        {\VAR{exp.start_date} - \VAR{exp.end_date}}
+        {\VAR{exp.title}}
+        {\VAR{exp.location}}
+        \BLOCK{for bullet in exp.bullet_points}
+        \item \VAR{bullet|latex_escape}
+        \BLOCK{endfor}
+    \end{rSubsection}
+\BLOCK{endfor}
+\end{rSection}
+```
+
+**Cover Letter Template** (`templates/cover_letter.jinja2`):
+```latex
+\documentclass{coverletter}
+
+% Header
+\name{\VAR{contact_info.first_name} \VAR{contact_info.last_name}}
+\address{\VAR{contact_info.location}}
+\phone{\VAR{contact_info.phone}}
+\email{\VAR{contact_info.email}}
+
+\begin{document}
+
+% Recipient
+\recipient{Hiring Manager}{\VAR{company}}
+
+% Opening
+\opening{Dear Hiring Manager,}
+
+% Body
+\VAR{opening|latex_escape}
+
+\BLOCK{for paragraph in body_paragraphs}
+\VAR{paragraph|latex_escape}
+
+\BLOCK{endfor}
+
+\VAR{closing|latex_escape}
+
+% Closing
+\closing{Sincerely,}
+
+\end{document}
+```
+
+### LaTeX Class Files
+
+**Resume Class** (`latex/resume.cls`):
+```latex
+\ProvidesClass{resume}[2025/10/23 Resume class]
+\LoadClass[11pt,letterpaper]{article}
+
+% Margins optimized for ATS
+\usepackage[left=0.4in,top=0.4in,right=0.4in,bottom=0.4in]{geometry}
+
+% Professional font
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0}
 }
 ```
 
-## Advanced Options
+**Customization Options**:
+- Margins: Adjust `geometry` package settings
+- Font: Change `\familydefault` or use different font packages
+- Colors: Add `\usepackage{xcolor}` and define custom colors
+- Section styling: Modify `\newenvironment{rSection}` definition
 
-### Debug Mode
+## Master Resume Configuration
+
+### profile/master_resume.json
+
 ```json
 {
-  "debug": {
+  "contact_info": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@email.com",
+    "phone": "(555) 123-4567",
+    "location": "San Francisco, CA",
+    "linkedin": "linkedin.com/in/johndoe",
+    "github": "github.com/johndoe",
+    "portfolio": "johndoe.dev"
+  },
+  
+  "work_experience": [
+    {
+      "company": "TechCorp",
+      "title": "Senior Software Engineer",
+      "location": "San Francisco, CA",
+      "start_date": "January 2020",
+      "end_date": "Present",
+      "bullet_points": [
+        "Led development of microservices architecture serving 10M+ users",
+        "Reduced API latency by 40% through optimization and caching strategies",
+        "Mentored team of 5 junior engineers in best practices and code review",
+        "Implemented CI/CD pipeline reducing deployment time from hours to minutes"
+      ]
+    }
+  ],
+  
+  "projects": [
+    {
+      "name": "Open Source Contribution",
+      "description": "Core contributor to popular Python web framework",
+      "technologies": ["Python", "Django", "PostgreSQL", "Redis"],
+      "highlights": [
+        "Implemented caching layer improving performance by 60%",
+        "Fixed critical security vulnerability affecting 100K+ users"
+      ]
+    }
+  ],
+  
+  "skills": [
+    {
+      "category": "Languages",
+      "items": ["Python", "JavaScript", "TypeScript", "Go", "SQL"]
+    },
+    {
+      "category": "Frameworks",
+      "items": ["Django", "React", "Node.js", "FastAPI"]
+    },
+    {
+      "category": "Tools",
+      "items": ["Docker", "Kubernetes", "AWS", "PostgreSQL", "Redis"]
+    }
+  ],
+  
+  "education": [
+    {
+      "institution": "University of California",
+      "degree": "Bachelor of Science in Computer Science",
+      "location": "Berkeley, CA",
+      "graduation_date": "May 2019",
+      "gpa": "3.8/4.0"
+    }
+  ]
+}
+```
+
+## Advanced Configuration
+
+### Debug Mode
+
+```json
+{
+  "output": {
+    "debug_mode": true,
     "save_intermediate": true,
     "verbose_logging": true,
     "validation_details": true
@@ -122,56 +434,188 @@ THRESHOLDS = {
 }
 ```
 
+**Debug Output Includes**:
+- Intelligence gathering results (JSON)
+- Validation error details
+- LaTeX compilation logs
+- Retry attempt information
+- Processing timestamps
+
 ### Error Recovery
-```json
-{
-  "error_handling": {
-    "max_retries": 2,
-    "backoff_factor": 1.5,
-    "preserve_context": true
-  }
-}
-```
+
+The system includes built-in error recovery with automatic retries (max 2 attempts) and exponential backoff. Error handling is managed internally and does not require additional configuration.
 
 ### Performance Tuning
+
 ```json
 {
   "performance": {
-    "parallel_validation": true,
     "cache_templates": true,
-    "optimize_latex": true
+    "parallel_pdf_compilation": true,
+    "optimize_latex": true,
+    "connection_pool_size": 10,
+    "request_timeout": 60
   }
 }
 ```
 
-## Environment Variables
+## Cost Optimization
 
+### Current Cost Structure (v4.2)
+
+**Average Cost per Application**: $0.10
+
+**Breakdown by Step**:
+```
+Job Resonance Analysis:    $0.015
+Company Research:           $0.010
+Storytelling Arc:           $0.020
+Resume Generation:          $0.035
+Cover Letter Generation:    $0.020
+Total:                      $0.100
+```
+
+### Cost Reduction Strategies
+
+1. **Reduce Thinking Budgets**:
+```json
+{
+  "job_resonance_analysis": {
+    "thinking_budget": "2048"  // Reduced from 4096
+  }
+}
+```
+
+2. **Use Cheaper Models**:
+```json
+{
+  "company_research": {
+    "bot_name": "GPT-4o-mini"  // Instead of Claude-3.5-Sonnet
+  }
+}
+```
+
+**Cost vs. Quality Tradeoff**:
+- Reducing budgets below recommended levels may impact quality
+- Test changes on small batches before full deployment
+- Monitor validation success rates after changes
+
+## Troubleshooting
+
+### Common Issues
+
+**1. LaTeX Compilation Errors**
 ```bash
-POE_API_KEY=your_api_key_here
-DEBUG_MODE=false
-LATEX_QUALITY=production
-OUTPUT_DIR=./output
+# Check LaTeX installation
+pdflatex --version
+
+# Install missing packages (MiKTeX)
+mpm --install=<package-name>
+
+# Install missing packages (TeX Live)
+tlmgr install <package-name>
 ```
 
-## Customization Examples
-
-### 1. Custom Validation Rules
-```python
-# In src/models.py
-class CustomValidator(BaseModel):
-    @validator('bullet_points')
-    def validate_bullet_length(cls, v):
-        if any(len(bullet) > 118 for bullet in v):
-            raise ValueError("Bullet point exceeds ATS limit")
-        return v
+**2. API Rate Limits**
+```json
+{
+  "max_concurrent_jobs": 5  // Reduce concurrency
+}
 ```
 
-### 2. New Intelligence Step
-```python
-# In src/main_intelligence_methods.py
-async def custom_analysis(job_description: str) -> Dict:
-    # Your custom analysis logic
-    return results
+**3. Memory Issues**
+```json
+{
+  "max_concurrent_jobs": 3,  // Reduce concurrency
+  "performance": {
+    "cache_templates": false  // Disable caching
+  }
+}
 ```
 
-For implementation details and architecture overview, see [ARCHITECTURE.md](ARCHITECTURE.md).
+**4. Validation Failures**
+- Check `output/debug/` for detailed error logs
+- Review character limits in generated content
+- Verify master resume data quality
+- Enable debug mode for detailed feedback
+
+### Log Locations
+
+```
+output/
+├── logs/
+│   ├── main.log              # Main application log
+│   ├── validation.log        # Validation details
+│   └── errors.log            # Error tracking
+└── debug/
+    ├── intelligence/         # Intelligence step outputs
+    ├── validation/           # Validation attempts
+    └── latex/                # LaTeX compilation logs
+```
+
+## Best Practices
+
+### 1. Start Small
+- Test with 1-2 jobs before batch processing
+- Verify output quality manually
+- Adjust configuration based on results
+
+### 2. Monitor Performance
+- Track processing times
+- Monitor validation success rates
+- Review cost per application
+
+### 3. Maintain Master Resume
+- Keep master_resume.json up to date
+- Use consistent formatting
+- Verify all required fields
+
+### 4. Regular Backups
+```bash
+# Backup configuration
+cp config.json config.json.backup
+
+# Backup master resume
+cp profile/master_resume.json profile/master_resume.json.backup
+```
+
+### 5. Version Control
+```bash
+# Track configuration changes
+git add config.json
+git commit -m "Update model configuration"
+```
+
+## Migration Guide
+
+### Upgrading from v4.1 to v4.2
+
+**1. Add Concurrency Configuration**:
+```json
+{
+  "max_concurrent_jobs": 10
+}
+```
+
+**2. Update Model Names** (if using old names):
+```json
+{
+  "Claude-3": "Claude-3.5-Sonnet",
+  "GPT-4": "GPT-4o"
+}
+```
+
+**3. Test Parallel Processing**:
+```bash
+# Start with low concurrency
+python src/main.py  # With max_concurrent_jobs: 3
+
+# Gradually increase
+# max_concurrent_jobs: 5, then 10
+```
+
+---
+
+**For architecture details, see [ARCHITECTURE.md](ARCHITECTURE.md)**  
+**For performance benchmarks, see [PERFORMANCE.md](PERFORMANCE.md)**  
+**For validation details, see [VALIDATION.md](VALIDATION.md)**
