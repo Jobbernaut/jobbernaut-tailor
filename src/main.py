@@ -65,13 +65,20 @@ class ResumeOptimizationPipeline:
         self.storytelling_arc_bot = storytelling_arc_config.get("bot_name") or self.resume_bot
         self.storytelling_arc_parameters = storytelling_arc_config.get("parameters", {})
 
-        # Referral contact info
-        referral_config = self.config.get("referral_resume", {})
-        self.referral_email = referral_config.get("email", "srmanda.compsci@gmail.com")
-        self.referral_phone = referral_config.get("phone", "+1 919-526-0631")
+        # Load referral contact info (optional - gracefully handle missing file)
+        self.has_referral_contact = False
+        self.referral_email = None
+        self.referral_phone = None
+        self._load_referral_contact()
 
+        # Load file paths from config
+        file_paths = self.config.get("file_paths", {})
+        self.applications_path = file_paths.get("applications", "data/applications.yaml")
+        self.application_template_path = file_paths.get("application_template", "data/application_template.yaml")
+        self.master_resume_path = file_paths.get("master_resume", "profile/master_resume.json")
+        
         # Load master resume
-        self.master_resume = load_json("profile/master_resume.json")
+        self.master_resume = load_json(self.master_resume_path)
 
         # Load prompt templates
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
@@ -98,6 +105,71 @@ class ResumeOptimizationPipeline:
         
         # Initialize template renderer
         self.renderer = TemplateRenderer()
+
+    def _load_referral_contact(self) -> None:
+        """
+        Load referral contact information from profile/referral_contact.json.
+        Gracefully handles missing, empty, or invalid files by disabling referral generation.
+        """
+        referral_path = "profile/referral_contact.json"
+        
+        try:
+            # Check if file exists
+            if not os.path.exists(referral_path):
+                print(f"ℹ️  Referral contact file not found: {referral_path}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Load the file
+            referral_data = load_json(referral_path)
+            
+            # Validate the data
+            if not referral_data:
+                print(f"⚠️  Referral contact file is empty: {referral_path}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Extract email and phone
+            email = referral_data.get("email")
+            phone = referral_data.get("phone")
+            
+            # Validate required fields
+            if not email or not phone:
+                print(f"⚠️  Referral contact file missing required fields (email, phone)")
+                print(f"   Found: email={email}, phone={phone}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Validate email format (basic check)
+            if not isinstance(email, str) or "@" not in email:
+                print(f"⚠️  Invalid email format in referral contact: {email}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Validate phone format (basic check)
+            if not isinstance(phone, str) or len(phone.strip()) < 7:
+                print(f"⚠️  Invalid phone format in referral contact: {phone}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Success! Set the referral contact info
+            self.referral_email = email
+            self.referral_phone = phone
+            self.has_referral_contact = True
+            
+            print(f"✓ Referral contact loaded successfully")
+            print(f"  Email: {email}")
+            print(f"  Phone: {phone}")
+            print(f"  Referral documents will be generated.\n")
+            
+        except json.JSONDecodeError as e:
+            print(f"⚠️  Invalid JSON in referral contact file: {referral_path}")
+            print(f"   Error: {str(e)}")
+            print(f"   Referral document generation will be skipped.\n")
+        except Exception as e:
+            print(f"⚠️  Error loading referral contact file: {referral_path}")
+            print(f"   Error: {str(e)}")
+            print(f"   Referral document generation will be skipped.\n")
 
     def _load_humanization_prompt(self, level: str) -> str:
         """
@@ -975,62 +1047,65 @@ class ResumeOptimizationPipeline:
         shutil.move(cover_letter_pdf, final_cover_letter_path)
         print(f"✓ Cover Letter PDF: {final_cover_letter_name}\n")
 
-        # STEP 7: Create Referral LaTeX files
-        print("STEP 7: Creating referral LaTeX files...")
-        
-        # Build referral contact info (same name, but referral email/phone)
-        referral_contact = {
-            "first_name": contact_info.get("first_name"),
-            "last_name": contact_info.get("last_name"),
-            "phone": self.referral_phone,
-            "email": self.referral_email,
-            "location": contact_info.get("location"),
-            "linkedin_url": contact_info.get("linkedin_url"),
-            "github_url": contact_info.get("github_url"),
-            "portfolio_url": contact_info.get("portfolio_url")
-        }
-        
-        # Render referral resume LaTeX
-        referral_resume_latex = self.renderer.render_resume_with_referral(tailored_resume, referral_contact)
-        referral_resume_tex_path = os.path.join(output_dir, "Referral_Resume.tex")
-        with open(referral_resume_tex_path, "w", encoding="utf-8") as f:
-            f.write(referral_resume_latex)
-        
-        # Render referral cover letter LaTeX
-        referral_cover_letter_latex = self.renderer.render_cover_letter_with_referral(cover_letter_text, referral_contact)
-        referral_cover_letter_tex_path = os.path.join(output_dir, "Referral_CoverLetter.tex")
-        with open(referral_cover_letter_tex_path, "w", encoding="utf-8") as f:
-            f.write(referral_cover_letter_latex)
-        
-        print(f"✓ Referral LaTeX files created\n")
+        # STEP 7-9: Create Referral Documents (if referral contact info is available)
+        if self.has_referral_contact:
+            print("STEP 7: Creating referral LaTeX files...")
+            
+            # Build referral contact info (same name, but referral email/phone)
+            referral_contact = {
+                "first_name": contact_info.get("first_name"),
+                "last_name": contact_info.get("last_name"),
+                "phone": self.referral_phone,
+                "email": self.referral_email,
+                "location": contact_info.get("location"),
+                "linkedin_url": contact_info.get("linkedin_url"),
+                "github_url": contact_info.get("github_url"),
+                "portfolio_url": contact_info.get("portfolio_url")
+            }
+            
+            # Render referral resume LaTeX
+            referral_resume_latex = self.renderer.render_resume_with_referral(tailored_resume, referral_contact)
+            referral_resume_tex_path = os.path.join(output_dir, "Referral_Resume.tex")
+            with open(referral_resume_tex_path, "w", encoding="utf-8") as f:
+                f.write(referral_resume_latex)
+            
+            # Render referral cover letter LaTeX
+            referral_cover_letter_latex = self.renderer.render_cover_letter_with_referral(cover_letter_text, referral_contact)
+            referral_cover_letter_tex_path = os.path.join(output_dir, "Referral_CoverLetter.tex")
+            with open(referral_cover_letter_tex_path, "w", encoding="utf-8") as f:
+                f.write(referral_cover_letter_latex)
+            
+            print(f"✓ Referral LaTeX files created\n")
 
-        # STEP 8: Compile Referral Resume PDF
-        print("STEP 8: Compiling referral resume PDF...")
-        referral_resume_pdf = compile_latex_to_pdf(referral_resume_tex_path, output_dir, "resume")
-        
-        # Rename to final name
-        final_referral_resume_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-        final_referral_resume_path = os.path.join(output_dir, final_referral_resume_name)
-        shutil.move(referral_resume_pdf, final_referral_resume_path)
-        print(f"✓ Referral Resume PDF: {final_referral_resume_name}\n")
+            # STEP 8: Compile Referral Resume PDF
+            print("STEP 8: Compiling referral resume PDF...")
+            referral_resume_pdf = compile_latex_to_pdf(referral_resume_tex_path, output_dir, "resume")
+            
+            # Rename to final name
+            final_referral_resume_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+            final_referral_resume_path = os.path.join(output_dir, final_referral_resume_name)
+            shutil.move(referral_resume_pdf, final_referral_resume_path)
+            print(f"✓ Referral Resume PDF: {final_referral_resume_name}\n")
 
-        # STEP 9: Compile Referral Cover Letter PDF
-        print("STEP 9: Compiling referral cover letter PDF...")
-        referral_cover_letter_pdf = compile_latex_to_pdf(referral_cover_letter_tex_path, output_dir, "cover_letter")
-        
-        # Rename to final name
-        final_referral_cover_letter_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-        final_referral_cover_letter_path = os.path.join(output_dir, final_referral_cover_letter_name)
-        shutil.move(referral_cover_letter_pdf, final_referral_cover_letter_path)
-        print(f"✓ Referral Cover Letter PDF: {final_referral_cover_letter_name}\n")
+            # STEP 9: Compile Referral Cover Letter PDF
+            print("STEP 9: Compiling referral cover letter PDF...")
+            referral_cover_letter_pdf = compile_latex_to_pdf(referral_cover_letter_tex_path, output_dir, "cover_letter")
+            
+            # Rename to final name
+            final_referral_cover_letter_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
+            final_referral_cover_letter_path = os.path.join(output_dir, final_referral_cover_letter_name)
+            shutil.move(referral_cover_letter_pdf, final_referral_cover_letter_path)
+            print(f"✓ Referral Cover Letter PDF: {final_referral_cover_letter_name}\n")
+        else:
+            print("STEP 7-9: Skipping referral document generation (no referral contact info)\n")
 
-        # STEP 10: Clean up - move everything except 4 PDFs to debug/
+        # STEP 10: Clean up - move everything except PDFs to debug/
         print("STEP 10: Cleaning up output directory...")
         cleanup_output_directory(output_dir, first_name, last_name, company_name, job_id)
         print(f"✓ Cleanup complete\n")
 
         # Update job status
-        update_job_status("applications.yaml", job_id, "processed")
+        update_job_status(self.applications_path, job_id, "processed")
 
         print(f"{'='*60}")
         print(f"✓ Successfully processed: {job_title} at {company_name}")
@@ -1042,7 +1117,7 @@ class ResumeOptimizationPipeline:
         print("RESUME OPTIMIZATION PIPELINE")
         print("=" * 60 + "\n")
 
-        applications = load_yaml("applications.yaml")
+        applications = load_yaml(self.applications_path)
         
         # Find all pending jobs
         pending_jobs = [job for job in applications if job.get("status") == "pending"]

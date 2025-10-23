@@ -38,13 +38,14 @@
     "level": "low",
     "apply_to": ["resume", "cover_letter"]
   },
-  "referral_resume": {
-    "email": "srmanda.compsci@gmail.com",
-    "phone": "(919) 526-0631"
-  },
   "defaults": {
     "resume_bot": "Claude-Sonnet-4.5",
     "cover_letter_bot": "Claude-Sonnet-4.5"
   },
-  "reasoning_trace": false
+  "reasoning_trace": false,
+  "file_paths": {
+    "applications": "data/applications.yaml",
+    "application_template": "data/application_template.yaml",
+    "master_resume": "profile/master_resume.json"
+  }
 }
