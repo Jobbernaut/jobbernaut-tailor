@@ -1,6 +1,7 @@
 """
 Main pipeline for automating resume and cover letter generation.
-Follows a strict 12-step process with no retries.
+Follows a robust, multi-step process with intelligent retries,
+validation, and self-healing capabilities to ensure high-quality output.
 """
 
 import os
@@ -973,7 +974,7 @@ class ResumeOptimizationPipeline:
 
         # STEP 2: Generate Cover Letter Text
         print("STEP 2: Generating cover letter text...")
-        cover_letter_prompt = self.cover_letter_prompt_template.replace(
+        base_cover_letter_prompt = self.cover_letter_prompt_template.replace(
             "[TAILORED_RESUME_JSON]", f"```json\n{json.dumps(tailored_resume, indent=2)}\n```"
         ).replace(
             "[JOB_DESCRIPTION]", f"```\n{job_description}\n```"
@@ -988,10 +989,43 @@ class ResumeOptimizationPipeline:
         )
         
         # Apply humanization if enabled for cover letter
-        cover_letter_prompt = self._apply_humanization(cover_letter_prompt, "cover_letter")
+        base_cover_letter_prompt = self._apply_humanization(base_cover_letter_prompt, "cover_letter")
         
-        cover_letter_response = await self.call_poe_api(cover_letter_prompt, self.cover_letter_bot, self.cover_letter_parameters)
-        cover_letter_text = cover_letter_response.strip()
+        # Retry loop for cover letter generation with quality validation
+        max_cl_retries = 2
+        cover_letter_text = None
+        current_cl_prompt = base_cover_letter_prompt
+
+        for cl_attempt in range(1, max_cl_retries + 1):
+            print(f"  Attempt {cl_attempt}/{max_cl_retries}...")
+            
+            cover_letter_response = await self.call_poe_api(current_cl_prompt, self.cover_letter_bot, self.cover_letter_parameters)
+            temp_cover_letter_text = cover_letter_response.strip()
+            
+            # Save raw response for debugging
+            raw_cl_path = os.path.join(output_dir, f"CoverLetter_Raw_Attempt_{cl_attempt}.txt")
+            with open(raw_cl_path, "w", encoding="utf-8") as f:
+                f.write(temp_cover_letter_text)
+            print(f"    Raw response saved: CoverLetter_Raw_Attempt_{cl_attempt}.txt")
+
+            # Validate cover letter quality (minimum length)
+            min_length = 200
+            if len(temp_cover_letter_text) >= min_length:
+                cover_letter_text = temp_cover_letter_text
+                print(f"    ✓ Quality validation passed (length: {len(cover_letter_text)} chars)")
+                break
+            else:
+                error_msg = f"Cover letter is too short (min {min_length} chars, got {len(temp_cover_letter_text)}). Please generate a more detailed and complete cover letter."
+                print(f"    ✗ Quality validation failed: {error_msg}")
+                
+                if cl_attempt < max_cl_retries:
+                    error_feedback = f"\n\n{'='*80}\n# OUTPUT QUALITY ERROR\n{'='*80}\n\n{error_msg}\n\nPlease provide a more detailed and meaningful cover letter that meets the quality thresholds.\n{'='*80}\n"
+                    current_cl_prompt = base_cover_letter_prompt + error_feedback
+                else:
+                    raise ValueError(f"Cover letter generation failed quality validation after {max_cl_retries} attempts.")
+
+        if cover_letter_text is None:
+            raise ValueError("Cover letter generation failed - no valid text generated")
         
         # Save cover letter text
         cover_letter_txt_path = os.path.join(output_dir, "CoverLetter.txt")
@@ -1029,23 +1063,35 @@ class ResumeOptimizationPipeline:
 
         # STEP 5: Compile Resume PDF
         print("STEP 5: Compiling resume PDF...")
-        resume_pdf = compile_latex_to_pdf(resume_tex_path, output_dir, "resume")
-        
-        # Rename to final name
-        final_resume_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-        final_resume_path = os.path.join(output_dir, final_resume_name)
-        shutil.move(resume_pdf, final_resume_path)
-        print(f"✓ Resume PDF: {final_resume_name}\n")
+        try:
+            resume_pdf = compile_latex_to_pdf(resume_tex_path, output_dir, "resume")
+            
+            # Rename to final name
+            final_resume_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+            final_resume_path = os.path.join(output_dir, final_resume_name)
+            shutil.move(resume_pdf, final_resume_path)
+            print(f"✓ Resume PDF: {final_resume_name}\n")
+        except Exception as e:
+            print(f"✗ ERROR: Failed to compile Resume PDF.")
+            print(f"  Check the LaTeX log file in the output directory for details.")
+            print(f"  Error: {str(e)}")
+            raise  # Re-raise the exception to halt processing for this job
 
         # STEP 6: Compile Cover Letter PDF
         print("STEP 6: Compiling cover letter PDF...")
-        cover_letter_pdf = compile_latex_to_pdf(cover_letter_tex_path, output_dir, "cover_letter")
-        
-        # Rename to final name
-        final_cover_letter_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-        final_cover_letter_path = os.path.join(output_dir, final_cover_letter_name)
-        shutil.move(cover_letter_pdf, final_cover_letter_path)
-        print(f"✓ Cover Letter PDF: {final_cover_letter_name}\n")
+        try:
+            cover_letter_pdf = compile_latex_to_pdf(cover_letter_tex_path, output_dir, "cover_letter")
+            
+            # Rename to final name
+            final_cover_letter_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
+            final_cover_letter_path = os.path.join(output_dir, final_cover_letter_name)
+            shutil.move(cover_letter_pdf, final_cover_letter_path)
+            print(f"✓ Cover Letter PDF: {final_cover_letter_name}\n")
+        except Exception as e:
+            print(f"✗ ERROR: Failed to compile Cover Letter PDF.")
+            print(f"  Check the LaTeX log file in the output directory for details.")
+            print(f"  Error: {str(e)}")
+            raise  # Re-raise the exception to halt processing for this job
 
         # STEP 7-9: Create Referral Documents (if referral contact info is available)
         if self.has_referral_contact:
@@ -1079,23 +1125,35 @@ class ResumeOptimizationPipeline:
 
             # STEP 8: Compile Referral Resume PDF
             print("STEP 8: Compiling referral resume PDF...")
-            referral_resume_pdf = compile_latex_to_pdf(referral_resume_tex_path, output_dir, "resume")
-            
-            # Rename to final name
-            final_referral_resume_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-            final_referral_resume_path = os.path.join(output_dir, final_referral_resume_name)
-            shutil.move(referral_resume_pdf, final_referral_resume_path)
-            print(f"✓ Referral Resume PDF: {final_referral_resume_name}\n")
+            try:
+                referral_resume_pdf = compile_latex_to_pdf(referral_resume_tex_path, output_dir, "resume")
+                
+                # Rename to final name
+                final_referral_resume_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+                final_referral_resume_path = os.path.join(output_dir, final_referral_resume_name)
+                shutil.move(referral_resume_pdf, final_referral_resume_path)
+                print(f"✓ Referral Resume PDF: {final_referral_resume_name}\n")
+            except Exception as e:
+                print(f"✗ ERROR: Failed to compile Referral Resume PDF.")
+                print(f"  Check the LaTeX log file in the output directory for details.")
+                print(f"  Error: {str(e)}")
+                raise  # Re-raise the exception to halt processing for this job
 
             # STEP 9: Compile Referral Cover Letter PDF
             print("STEP 9: Compiling referral cover letter PDF...")
-            referral_cover_letter_pdf = compile_latex_to_pdf(referral_cover_letter_tex_path, output_dir, "cover_letter")
-            
-            # Rename to final name
-            final_referral_cover_letter_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-            final_referral_cover_letter_path = os.path.join(output_dir, final_referral_cover_letter_name)
-            shutil.move(referral_cover_letter_pdf, final_referral_cover_letter_path)
-            print(f"✓ Referral Cover Letter PDF: {final_referral_cover_letter_name}\n")
+            try:
+                referral_cover_letter_pdf = compile_latex_to_pdf(referral_cover_letter_tex_path, output_dir, "cover_letter")
+                
+                # Rename to final name
+                final_referral_cover_letter_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
+                final_referral_cover_letter_path = os.path.join(output_dir, final_referral_cover_letter_name)
+                shutil.move(referral_cover_letter_pdf, final_referral_cover_letter_path)
+                print(f"✓ Referral Cover Letter PDF: {final_referral_cover_letter_name}\n")
+            except Exception as e:
+                print(f"✗ ERROR: Failed to compile Referral Cover Letter PDF.")
+                print(f"  Check the LaTeX log file in the output directory for details.")
+                print(f"  Error: {str(e)}")
+                raise  # Re-raise the exception to halt processing for this job
         else:
             print("STEP 7-9: Skipping referral document generation (no referral contact info)\n")
 
