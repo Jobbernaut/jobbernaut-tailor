@@ -1,6 +1,7 @@
 """
 Main pipeline for automating resume and cover letter generation.
-Follows a strict 12-step process with no retries.
+Follows a robust, multi-step process with intelligent retries,
+validation, and self-healing capabilities to ensure high-quality output.
 """
 
 import os
@@ -20,6 +21,7 @@ from utils import (
     load_prompt_template,
     compile_latex_to_pdf,
     cleanup_output_directory,
+    remove_reasoning_traces,
 )
 from template_renderer import TemplateRenderer
 from models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
@@ -40,23 +42,44 @@ class ResumeOptimizationPipeline:
         self.config = load_json("config.json")
         defaults = self.config.get("defaults", {})
 
-        # Bot configurations
-        self.resume_bot = self.config.get("resume_generation", {}).get("bot_name") or defaults.get("resume_bot")
-        self.cover_letter_bot = self.config.get("cover_letter_generation", {}).get("bot_name") or defaults.get("cover_letter_bot")
+        # Bot configurations with parameters
+        resume_config = self.config.get("resume_generation", {})
+        self.resume_bot = resume_config.get("bot_name") or defaults.get("resume_bot")
+        self.resume_parameters = resume_config.get("parameters", {})
         
-        # Intelligence step bot configurations
+        cover_letter_config = self.config.get("cover_letter_generation", {})
+        self.cover_letter_bot = cover_letter_config.get("bot_name") or defaults.get("cover_letter_bot")
+        self.cover_letter_parameters = cover_letter_config.get("parameters", {})
+        
+        # Intelligence step bot configurations with parameters
         intelligence_config = self.config.get("intelligence_steps", {})
-        self.job_resonance_bot = intelligence_config.get("job_resonance_analysis", {}).get("bot_name") or self.resume_bot
-        self.company_research_bot = intelligence_config.get("company_research", {}).get("bot_name") or self.resume_bot
-        self.storytelling_arc_bot = intelligence_config.get("storytelling_arc", {}).get("bot_name") or self.resume_bot
+        
+        job_resonance_config = intelligence_config.get("job_resonance_analysis", {})
+        self.job_resonance_bot = job_resonance_config.get("bot_name") or self.resume_bot
+        self.job_resonance_parameters = job_resonance_config.get("parameters", {})
+        
+        company_research_config = intelligence_config.get("company_research", {})
+        self.company_research_bot = company_research_config.get("bot_name") or self.resume_bot
+        self.company_research_parameters = company_research_config.get("parameters", {})
+        
+        storytelling_arc_config = intelligence_config.get("storytelling_arc", {})
+        self.storytelling_arc_bot = storytelling_arc_config.get("bot_name") or self.resume_bot
+        self.storytelling_arc_parameters = storytelling_arc_config.get("parameters", {})
 
-        # Referral contact info
-        referral_config = self.config.get("referral_resume", {})
-        self.referral_email = referral_config.get("email", "srmanda.compsci@gmail.com")
-        self.referral_phone = referral_config.get("phone", "+1 919-526-0631")
+        # Load referral contact info (optional - gracefully handle missing file)
+        self.has_referral_contact = False
+        self.referral_email = None
+        self.referral_phone = None
+        self._load_referral_contact()
 
+        # Load file paths from config
+        file_paths = self.config.get("file_paths", {})
+        self.applications_path = file_paths.get("applications", "data/applications.yaml")
+        self.application_template_path = file_paths.get("application_template", "data/application_template.yaml")
+        self.master_resume_path = file_paths.get("master_resume", "profile/master_resume.json")
+        
         # Load master resume
-        self.master_resume = load_json("profile/master_resume.json")
+        self.master_resume = load_json(self.master_resume_path)
 
         # Load prompt templates
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
@@ -75,8 +98,79 @@ class ResumeOptimizationPipeline:
             print(f"✓ Humanization enabled: {self.humanization_level} level")
             print(f"  Applying to: {', '.join(self.humanization_targets)}\n")
         
+        # Load reasoning trace configuration
+        # Note: reasoning_trace = false means "remove traces" (don't include them)
+        self.remove_reasoning_traces = not self.config.get("reasoning_trace", False)
+        if self.remove_reasoning_traces:
+            print(f"✓ Reasoning trace removal enabled\n")
+        
         # Initialize template renderer
         self.renderer = TemplateRenderer()
+
+    def _load_referral_contact(self) -> None:
+        """
+        Load referral contact information from profile/referral_contact.json.
+        Gracefully handles missing, empty, or invalid files by disabling referral generation.
+        """
+        referral_path = "profile/referral_contact.json"
+        
+        try:
+            # Check if file exists
+            if not os.path.exists(referral_path):
+                print(f"ℹ️  Referral contact file not found: {referral_path}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Load the file
+            referral_data = load_json(referral_path)
+            
+            # Validate the data
+            if not referral_data:
+                print(f"⚠️  Referral contact file is empty: {referral_path}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Extract email and phone
+            email = referral_data.get("email")
+            phone = referral_data.get("phone")
+            
+            # Validate required fields
+            if not email or not phone:
+                print(f"⚠️  Referral contact file missing required fields (email, phone)")
+                print(f"   Found: email={email}, phone={phone}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Validate email format (basic check)
+            if not isinstance(email, str) or "@" not in email:
+                print(f"⚠️  Invalid email format in referral contact: {email}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Validate phone format (basic check)
+            if not isinstance(phone, str) or len(phone.strip()) < 7:
+                print(f"⚠️  Invalid phone format in referral contact: {phone}")
+                print(f"   Referral document generation will be skipped.\n")
+                return
+            
+            # Success! Set the referral contact info
+            self.referral_email = email
+            self.referral_phone = phone
+            self.has_referral_contact = True
+            
+            print(f"✓ Referral contact loaded successfully")
+            print(f"  Email: {email}")
+            print(f"  Phone: {phone}")
+            print(f"  Referral documents will be generated.\n")
+            
+        except json.JSONDecodeError as e:
+            print(f"⚠️  Invalid JSON in referral contact file: {referral_path}")
+            print(f"   Error: {str(e)}")
+            print(f"   Referral document generation will be skipped.\n")
+        except Exception as e:
+            print(f"⚠️  Error loading referral contact file: {referral_path}")
+            print(f"   Error: {str(e)}")
+            print(f"   Referral document generation will be skipped.\n")
 
     def _load_humanization_prompt(self, level: str) -> str:
         """
@@ -130,14 +224,15 @@ class ResumeOptimizationPipeline:
         
         return humanized_prompt
     
-    async def call_poe_api(self, prompt: str, bot_name: str, max_retries: int = 3) -> str:
+    async def call_poe_api(self, prompt: str, bot_name: str, parameters: dict = None, max_retries: int = 2) -> str:
         """
         Call the Poe API with retry logic.
         
         Args:
             prompt: The prompt to send to the API
             bot_name: The name of the bot to use
-            max_retries: Maximum number of retry attempts (default: 3)
+            parameters: Optional dict of API parameters to pass directly (e.g., web_search, reasoning_effort, thinking_budget)
+            max_retries: Maximum number of retry attempts (default: 2)
             
         Returns:
             The API response text
@@ -150,9 +245,21 @@ class ResumeOptimizationPipeline:
         for attempt in range(1, max_retries + 1):
             try:
                 print(f"  API Call Attempt {attempt}/{max_retries} to {bot_name}...")
+                
+                # Log parameters if provided
+                if parameters:
+                    print(f"  Using parameters: {parameters}")
+                
+                # Create ProtocolMessage with parameters if available
+                message = fp.ProtocolMessage(
+                    role="user",
+                    content=prompt,
+                    parameters=parameters if parameters else None
+                )
+                
                 response_text = ""
                 async for partial in fp.get_bot_response(
-                    messages=[fp.ProtocolMessage(role="user", content=prompt)],
+                    messages=[message],
                     bot_name=bot_name,
                     api_key=self.api_key,
                 ):
@@ -160,6 +267,15 @@ class ResumeOptimizationPipeline:
                 
                 print(f"  ✓ API call successful on attempt {attempt}")
                 print(f"  Response length: {len(response_text)} characters")
+                
+                # Apply reasoning trace removal if enabled
+                if self.remove_reasoning_traces:
+                    original_length = len(response_text)
+                    response_text = remove_reasoning_traces(response_text, self.remove_reasoning_traces)
+                    cleaned_length = len(response_text)
+                    if original_length != cleaned_length:
+                        print(f"  ✓ Reasoning traces removed ({original_length - cleaned_length} characters)")
+                
                 return response_text
                 
             except Exception as e:
@@ -338,95 +454,90 @@ class ResumeOptimizationPipeline:
         
         print(f"  ✓ {step_name} output validation passed")
     
-    def _build_error_feedback(self, validation_error: ValidationError) -> str:
+    def _build_simple_error_feedback(self, validation_error: ValidationError, step_name: str) -> str:
         """
-        Build detailed error feedback section to append to prompt.
+        Build minimal error feedback for model retry (top-injected).
         
         Args:
             validation_error: The Pydantic ValidationError from the previous attempt
+            step_name: Name of the step for context
             
         Returns:
-            A formatted string with detailed error information and guidance
+            Concise error feedback string (top-injected format)
         """
-        error_lines = [
-            "\n" + "="*80,
-            "# POSSIBLE POINTS OF FAILURE",
-            "="*80,
+        errors = []
+        for error in validation_error.errors():
+            field_path = ".".join(str(loc) for loc in error['loc'])
+            error_msg = error['msg']
+            errors.append(f"  • {field_path}: {error_msg}")
+        
+        feedback = [
+            "=" * 80,
+            "⚠️  VALIDATION ERRORS TO FIX",
+            "=" * 80,
             "",
-            "⚠️  The previous attempt FAILED Pydantic validation with the following errors:",
+            f"The previous {step_name} attempt had {len(errors)} validation error(s):",
+            "",
+            *errors,
+            "",
+            "Fix these issues and regenerate the complete JSON output.",
+            "=" * 80,
             ""
         ]
         
-        # Group errors by type for better organization
-        field_errors = []
-        type_errors = []
-        missing_errors = []
+        return "\n".join(feedback)
+    
+    def _log_validation_failure(self, step_name: str, validation_error: ValidationError, 
+                               job_id: str, company_name: str, attempt: int) -> None:
+        """
+        Log validation failure to learnings.yaml for incident tracking.
         
+        Args:
+            step_name: Name of the step that failed
+            validation_error: The Pydantic ValidationError
+            job_id: Job ID for context
+            company_name: Company name for context
+            attempt: Attempt number when failure occurred
+        """
+        from datetime import datetime
+        import yaml
+        
+        # Build incident record
+        incident = {
+            'timestamp': datetime.now().isoformat(),
+            'step_name': step_name,
+            'job_id': job_id,
+            'company_name': company_name,
+            'attempt': attempt,
+            'error_count': len(validation_error.errors()),
+            'errors': []
+        }
+        
+        # Extract error details
         for error in validation_error.errors():
-            field_path = " -> ".join(str(loc) for loc in error['loc'])
-            error_msg = error['msg']
-            error_type = error['type']
-            
-            error_detail = f"❌ Field: '{field_path}'\n   Error: {error_msg}\n   Type: {error_type}"
-            
-            # Add specific guidance based on error 'type' codes for robust categorization
-            if 'graduation_date' in field_path and error_type == 'value_error.missing':
-                error_detail += "\n   💡 FIX: Use 'graduation_date' NOT 'end_date' in education entries"
-                missing_errors.append(error_detail)
-            elif 'technologies' in field_path and error_type == 'type_error.list':
-                error_detail += '\n   💡 FIX: Format as array: ["Tech1", "Tech2", "Tech3"] NOT "Tech1, Tech2, Tech3"'
-                error_detail += '\n   💡 EXAMPLE: "technologies": ["Python", "PyTorch", "Scikit-learn"]'
-                type_errors.append(error_detail)
-            elif error_type == 'value_error.missing':
-                error_detail += f"\n   💡 FIX: This field is REQUIRED and cannot be omitted"
-                missing_errors.append(error_detail)
-            elif error_type.startswith('type_error'):
-                error_detail += f"\n   💡 FIX: Check the data type - ensure it matches the schema"
-                type_errors.append(error_detail)
-            else:
-                field_errors.append(error_detail)
+            field_path = ".".join(str(loc) for loc in error['loc'])
+            incident['errors'].append({
+                'field': field_path,
+                'message': error['msg'],
+                'type': error['type']
+            })
         
-        # Add errors in organized sections
-        if missing_errors:
-            error_lines.append("📋 MISSING REQUIRED FIELDS:")
-            error_lines.append("")
-            for err in missing_errors:
-                error_lines.append(err)
-                error_lines.append("")
+        # Load existing learnings or create new structure
+        learnings_file = "learnings.yaml"
+        if os.path.exists(learnings_file):
+            with open(learnings_file, 'r', encoding='utf-8') as f:
+                learnings = yaml.safe_load(f) or {'incidents': []}
+        else:
+            learnings = {'incidents': []}
         
-        if type_errors:
-            error_lines.append("🔧 TYPE/FORMAT ERRORS:")
-            error_lines.append("")
-            for err in type_errors:
-                error_lines.append(err)
-                error_lines.append("")
+        # Append new incident
+        learnings['incidents'].append(incident)
         
-        if field_errors:
-            error_lines.append("⚠️  OTHER VALIDATION ERRORS:")
-            error_lines.append("")
-            for err in field_errors:
-                error_lines.append(err)
-                error_lines.append("")
+        # Save back to file
+        with open(learnings_file, 'w', encoding='utf-8') as f:
+            yaml.dump(learnings, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
         
-        # Add critical reminders
-        error_lines.extend([
-            "="*80,
-            "🚨 CRITICAL REMINDERS FOR THIS RETRY:",
-            "="*80,
-            "",
-            "1. Education entries MUST use 'graduation_date' (NOT 'end_date')",
-            "2. Project 'technologies' MUST be an array: [\"Tech1\", \"Tech2\"]",
-            "3. All required fields MUST be present (check schema in docs/expected_json_schema.md)",
-            "4. Ensure data types match exactly (strings, arrays, objects)",
-            "5. Do NOT invent new field names - use ONLY the fields defined in the schema",
-            "",
-            "="*80,
-            "🎯 ACTION REQUIRED: Fix ALL errors listed above in your next response.",
-            "="*80,
-            ""
-        ])
-        
-        return "\n".join(error_lines)
+        print(f"    ⚠️  Incident logged to learnings.yaml")
 
     async def _call_intelligence_step_with_retry(
         self, 
@@ -437,7 +548,8 @@ class ResumeOptimizationPipeline:
         output_dir: str,
         output_filename_prefix: str,
         bot_name: str,
-        max_retries: int = 3
+        parameters: dict = None,
+        max_retries: int = 2
     ) -> dict:
         """
         Generic retry wrapper for intelligence steps with validation and self-healing.
@@ -450,7 +562,8 @@ class ResumeOptimizationPipeline:
             output_dir: Directory to save outputs
             output_filename_prefix: Prefix for output files (e.g., "Job_Resonance_Analysis")
             bot_name: Name of the bot to use for API calls
-            max_retries: Maximum retry attempts (default: 3)
+            parameters: Optional dict of API parameters to pass directly
+            max_retries: Maximum retry attempts (default: 2)
             
         Returns:
             Validated dictionary from Pydantic model
@@ -472,7 +585,7 @@ class ResumeOptimizationPipeline:
             
             try:
                 # Call API
-                response = await self.call_poe_api(current_prompt, bot_name)
+                response = await self.call_poe_api(current_prompt, bot_name, parameters)
                 
                 # Save raw response
                 raw_path = os.path.join(output_dir, f"{output_filename_prefix}_Raw_Attempt_{attempt}.txt")
@@ -501,9 +614,15 @@ class ResumeOptimizationPipeline:
                     print(f"    ✓ Pydantic validation passed")
                 except ValidationError as e:
                     print(f"    ✗ Pydantic validation failed: {len(e.errors())} error(s)")
+                    
+                    # Log incident (requires job_id and company_name from replacements)
+                    job_id = replacements.get('[JOB_ID]', 'unknown')
+                    company_name = replacements.get('[COMPANY_NAME]', 'unknown')
+                    self._log_validation_failure(step_name, e, job_id, company_name, attempt)
+                    
                     if attempt < max_retries:
-                        error_feedback = self._build_error_feedback(e)
-                        current_prompt = base_prompt + error_feedback
+                        error_feedback = self._build_simple_error_feedback(e, step_name)
+                        current_prompt = error_feedback + "\n\n" + base_prompt
                         continue
                     else:
                         raise ValueError(f"{step_name} failed: Pydantic validation failed after {max_retries} attempts")
@@ -537,13 +656,14 @@ class ResumeOptimizationPipeline:
         # Should never reach here
         raise ValueError(f"{step_name} failed after {max_retries} attempts: {str(last_error)}")
 
-    async def analyze_job_resonance(self, job_description: str, company_name: str, output_dir: str) -> dict:
+    async def analyze_job_resonance(self, job_description: str, company_name: str, job_id: str, output_dir: str) -> dict:
         """
         INTELLIGENCE STEP 1: Analyze job description for emotional keywords and hidden requirements.
         
         Args:
             job_description: The job description text
             company_name: The company name
+            job_id: Job ID for logging
             output_dir: Directory to save analysis results
             
         Returns:
@@ -555,13 +675,15 @@ class ResumeOptimizationPipeline:
             prompt_template_name="analyze_job_resonance.txt",
             replacements={
                 "[JOB_DESCRIPTION]": job_description,
-                "[COMPANY_NAME]": company_name
+                "[COMPANY_NAME]": company_name,
+                "[JOB_ID]": job_id
             },
             model_class=JobResonanceAnalysis,
             step_name="Job Resonance Analysis",
             output_dir=output_dir,
             output_filename_prefix="Job_Resonance_Analysis",
-            bot_name=self.job_resonance_bot
+            bot_name=self.job_resonance_bot,
+            parameters=self.job_resonance_parameters
         )
         
         print(f"  ✓ Job resonance analysis complete")
@@ -573,13 +695,14 @@ class ResumeOptimizationPipeline:
         
         return result
 
-    async def research_company(self, job_description: str, company_name: str, output_dir: str) -> dict:
+    async def research_company(self, job_description: str, company_name: str, job_id: str, output_dir: str) -> dict:
         """
         INTELLIGENCE STEP 2: Research company for authentic connection building.
         
         Args:
             job_description: The job description text
             company_name: The company name
+            job_id: Job ID for logging
             output_dir: Directory to save research results
             
         Returns:
@@ -591,13 +714,15 @@ class ResumeOptimizationPipeline:
             prompt_template_name="research_company.txt",
             replacements={
                 "[COMPANY_NAME]": company_name,
-                "[JOB_DESCRIPTION]": job_description
+                "[JOB_DESCRIPTION]": job_description,
+                "[JOB_ID]": job_id
             },
             model_class=CompanyResearch,
             step_name="Company Research",
             output_dir=output_dir,
             output_filename_prefix="Company_Research",
-            bot_name=self.company_research_bot
+            bot_name=self.company_research_bot,
+            parameters=self.company_research_parameters
         )
         
         print(f"  ✓ Company research complete")
@@ -609,7 +734,7 @@ class ResumeOptimizationPipeline:
 
     async def generate_storytelling_arc(self, job_description: str, company_research: dict, 
                                        job_resonance: dict, tailored_resume: dict, 
-                                       output_dir: str) -> dict:
+                                       job_id: str, company_name: str, output_dir: str) -> dict:
         """
         INTELLIGENCE STEP 3: Generate storytelling arc for cover letter.
         
@@ -618,6 +743,8 @@ class ResumeOptimizationPipeline:
             company_research: CompanyResearch data
             job_resonance: JobResonanceAnalysis data
             tailored_resume: The tailored resume JSON
+            job_id: Job ID for logging
+            company_name: Company name for logging
             output_dir: Directory to save storytelling arc
             
         Returns:
@@ -631,13 +758,16 @@ class ResumeOptimizationPipeline:
                 "[JOB_DESCRIPTION]": job_description,
                 "[COMPANY_RESEARCH]": json.dumps(company_research, indent=2),
                 "[JOB_RESONANCE]": json.dumps(job_resonance, indent=2),
-                "[TAILORED_RESUME]": json.dumps(tailored_resume, indent=2)
+                "[TAILORED_RESUME]": json.dumps(tailored_resume, indent=2),
+                "[JOB_ID]": job_id,
+                "[COMPANY_NAME]": company_name
             },
             model_class=StorytellingArc,
             step_name="Storytelling Arc Generation",
             output_dir=output_dir,
             output_filename_prefix="Storytelling_Arc",
-            bot_name=self.storytelling_arc_bot
+            bot_name=self.storytelling_arc_bot,
+            parameters=self.storytelling_arc_parameters
         )
         
         print(f"  ✓ Storytelling arc generated")
@@ -697,10 +827,10 @@ class ResumeOptimizationPipeline:
         print(f"{'='*60}\n")
         
         # Intelligence Step 1: Analyze job resonance
-        job_resonance = await self.analyze_job_resonance(job_description, company_name, output_dir)
+        job_resonance = await self.analyze_job_resonance(job_description, company_name, job_id, output_dir)
         
         # Intelligence Step 2: Research company
-        company_research = await self.research_company(job_description, company_name, output_dir)
+        company_research = await self.research_company(job_description, company_name, job_id, output_dir)
         
         print(f"{'='*60}")
         print(f"INTELLIGENCE GATHERING COMPLETE")
@@ -722,7 +852,7 @@ class ResumeOptimizationPipeline:
         resume_prompt = self._apply_humanization(resume_prompt, "resume")
         
         # Retry loop for resume generation with Pydantic validation
-        max_validation_retries = 3
+        max_validation_retries = 2
         tailored_resume = None
         last_validation_error = None
         current_prompt = resume_prompt
@@ -738,7 +868,7 @@ class ResumeOptimizationPipeline:
             else:
                 print(f"  Regenerating resume JSON with error feedback (retry {validation_attempt - 1})...")
             
-            resume_response = await self.call_poe_api(current_prompt, self.resume_bot)
+            resume_response = await self.call_poe_api(current_prompt, self.resume_bot, self.resume_parameters)
             
             # Save raw response for debugging
             raw_response_path = os.path.join(output_dir, f"Resume_Response_Attempt_{validation_attempt}.txt")
@@ -799,14 +929,17 @@ class ResumeOptimizationPipeline:
                 save_json(invalid_json_path, tailored_resume_raw)
                 print(f"Invalid JSON saved to: Resume_INVALID_Attempt_{validation_attempt}.json")
                 
+                # Log incident
+                self._log_validation_failure("Resume Generation", e, job_id, company_name, validation_attempt)
+                
                 if validation_attempt < max_validation_retries:
                     # Build error feedback and retry
                     print(f"\n{'='*60}")
                     print(f"PREPARING RETRY WITH ERROR FEEDBACK")
                     print(f"{'='*60}\n")
                     
-                    error_feedback = self._build_error_feedback(e)
-                    current_prompt = resume_prompt + error_feedback
+                    error_feedback = self._build_simple_error_feedback(e, "Resume Generation")
+                    current_prompt = error_feedback + "\n\n" + resume_prompt
                     
                     print(f"Error feedback appended to prompt ({len(error_feedback)} characters)")
                     print(f"Retrying generation with corrective guidance...\n")
@@ -832,7 +965,7 @@ class ResumeOptimizationPipeline:
 
         # Intelligence Step 3: Generate storytelling arc (after resume, before cover letter)
         storytelling_arc = await self.generate_storytelling_arc(
-            job_description, company_research, job_resonance, tailored_resume, output_dir
+            job_description, company_research, job_resonance, tailored_resume, job_id, company_name, output_dir
         )
         
         print(f"{'='*60}")
@@ -841,7 +974,7 @@ class ResumeOptimizationPipeline:
 
         # STEP 2: Generate Cover Letter Text
         print("STEP 2: Generating cover letter text...")
-        cover_letter_prompt = self.cover_letter_prompt_template.replace(
+        base_cover_letter_prompt = self.cover_letter_prompt_template.replace(
             "[TAILORED_RESUME_JSON]", f"```json\n{json.dumps(tailored_resume, indent=2)}\n```"
         ).replace(
             "[JOB_DESCRIPTION]", f"```\n{job_description}\n```"
@@ -856,10 +989,43 @@ class ResumeOptimizationPipeline:
         )
         
         # Apply humanization if enabled for cover letter
-        cover_letter_prompt = self._apply_humanization(cover_letter_prompt, "cover_letter")
+        base_cover_letter_prompt = self._apply_humanization(base_cover_letter_prompt, "cover_letter")
         
-        cover_letter_response = await self.call_poe_api(cover_letter_prompt, self.cover_letter_bot)
-        cover_letter_text = cover_letter_response.strip()
+        # Retry loop for cover letter generation with quality validation
+        max_cl_retries = 2
+        cover_letter_text = None
+        current_cl_prompt = base_cover_letter_prompt
+
+        for cl_attempt in range(1, max_cl_retries + 1):
+            print(f"  Attempt {cl_attempt}/{max_cl_retries}...")
+            
+            cover_letter_response = await self.call_poe_api(current_cl_prompt, self.cover_letter_bot, self.cover_letter_parameters)
+            temp_cover_letter_text = cover_letter_response.strip()
+            
+            # Save raw response for debugging
+            raw_cl_path = os.path.join(output_dir, f"CoverLetter_Raw_Attempt_{cl_attempt}.txt")
+            with open(raw_cl_path, "w", encoding="utf-8") as f:
+                f.write(temp_cover_letter_text)
+            print(f"    Raw response saved: CoverLetter_Raw_Attempt_{cl_attempt}.txt")
+
+            # Validate cover letter quality (minimum length)
+            min_length = 200
+            if len(temp_cover_letter_text) >= min_length:
+                cover_letter_text = temp_cover_letter_text
+                print(f"    ✓ Quality validation passed (length: {len(cover_letter_text)} chars)")
+                break
+            else:
+                error_msg = f"Cover letter is too short (min {min_length} chars, got {len(temp_cover_letter_text)}). Please generate a more detailed and complete cover letter."
+                print(f"    ✗ Quality validation failed: {error_msg}")
+                
+                if cl_attempt < max_cl_retries:
+                    error_feedback = f"\n\n{'='*80}\n# OUTPUT QUALITY ERROR\n{'='*80}\n\n{error_msg}\n\nPlease provide a more detailed and meaningful cover letter that meets the quality thresholds.\n{'='*80}\n"
+                    current_cl_prompt = base_cover_letter_prompt + error_feedback
+                else:
+                    raise ValueError(f"Cover letter generation failed quality validation after {max_cl_retries} attempts.")
+
+        if cover_letter_text is None:
+            raise ValueError("Cover letter generation failed - no valid text generated")
         
         # Save cover letter text
         cover_letter_txt_path = os.path.join(output_dir, "CoverLetter.txt")
@@ -897,80 +1063,107 @@ class ResumeOptimizationPipeline:
 
         # STEP 5: Compile Resume PDF
         print("STEP 5: Compiling resume PDF...")
-        resume_pdf = compile_latex_to_pdf(resume_tex_path, output_dir, "resume")
-        
-        # Rename to final name
-        final_resume_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-        final_resume_path = os.path.join(output_dir, final_resume_name)
-        shutil.move(resume_pdf, final_resume_path)
-        print(f"✓ Resume PDF: {final_resume_name}\n")
+        try:
+            resume_pdf = compile_latex_to_pdf(resume_tex_path, output_dir, "resume")
+            
+            # Rename to final name
+            final_resume_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+            final_resume_path = os.path.join(output_dir, final_resume_name)
+            shutil.move(resume_pdf, final_resume_path)
+            print(f"✓ Resume PDF: {final_resume_name}\n")
+        except Exception as e:
+            print(f"✗ ERROR: Failed to compile Resume PDF.")
+            print(f"  Check the LaTeX log file in the output directory for details.")
+            print(f"  Error: {str(e)}")
+            raise  # Re-raise the exception to halt processing for this job
 
         # STEP 6: Compile Cover Letter PDF
         print("STEP 6: Compiling cover letter PDF...")
-        cover_letter_pdf = compile_latex_to_pdf(cover_letter_tex_path, output_dir, "cover_letter")
-        
-        # Rename to final name
-        final_cover_letter_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-        final_cover_letter_path = os.path.join(output_dir, final_cover_letter_name)
-        shutil.move(cover_letter_pdf, final_cover_letter_path)
-        print(f"✓ Cover Letter PDF: {final_cover_letter_name}\n")
+        try:
+            cover_letter_pdf = compile_latex_to_pdf(cover_letter_tex_path, output_dir, "cover_letter")
+            
+            # Rename to final name
+            final_cover_letter_name = f"{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
+            final_cover_letter_path = os.path.join(output_dir, final_cover_letter_name)
+            shutil.move(cover_letter_pdf, final_cover_letter_path)
+            print(f"✓ Cover Letter PDF: {final_cover_letter_name}\n")
+        except Exception as e:
+            print(f"✗ ERROR: Failed to compile Cover Letter PDF.")
+            print(f"  Check the LaTeX log file in the output directory for details.")
+            print(f"  Error: {str(e)}")
+            raise  # Re-raise the exception to halt processing for this job
 
-        # STEP 7: Create Referral LaTeX files
-        print("STEP 7: Creating referral LaTeX files...")
-        
-        # Build referral contact info (same name, but referral email/phone)
-        referral_contact = {
-            "first_name": contact_info.get("first_name"),
-            "last_name": contact_info.get("last_name"),
-            "phone": self.referral_phone,
-            "email": self.referral_email,
-            "location": contact_info.get("location"),
-            "linkedin_url": contact_info.get("linkedin_url"),
-            "github_url": contact_info.get("github_url"),
-            "portfolio_url": contact_info.get("portfolio_url")
-        }
-        
-        # Render referral resume LaTeX
-        referral_resume_latex = self.renderer.render_resume_with_referral(tailored_resume, referral_contact)
-        referral_resume_tex_path = os.path.join(output_dir, "Referral_Resume.tex")
-        with open(referral_resume_tex_path, "w", encoding="utf-8") as f:
-            f.write(referral_resume_latex)
-        
-        # Render referral cover letter LaTeX
-        referral_cover_letter_latex = self.renderer.render_cover_letter_with_referral(cover_letter_text, referral_contact)
-        referral_cover_letter_tex_path = os.path.join(output_dir, "Referral_CoverLetter.tex")
-        with open(referral_cover_letter_tex_path, "w", encoding="utf-8") as f:
-            f.write(referral_cover_letter_latex)
-        
-        print(f"✓ Referral LaTeX files created\n")
+        # STEP 7-9: Create Referral Documents (if referral contact info is available)
+        if self.has_referral_contact:
+            print("STEP 7: Creating referral LaTeX files...")
+            
+            # Build referral contact info (same name, but referral email/phone)
+            referral_contact = {
+                "first_name": contact_info.get("first_name"),
+                "last_name": contact_info.get("last_name"),
+                "phone": self.referral_phone,
+                "email": self.referral_email,
+                "location": contact_info.get("location"),
+                "linkedin_url": contact_info.get("linkedin_url"),
+                "github_url": contact_info.get("github_url"),
+                "portfolio_url": contact_info.get("portfolio_url")
+            }
+            
+            # Render referral resume LaTeX
+            referral_resume_latex = self.renderer.render_resume_with_referral(tailored_resume, referral_contact)
+            referral_resume_tex_path = os.path.join(output_dir, "Referral_Resume.tex")
+            with open(referral_resume_tex_path, "w", encoding="utf-8") as f:
+                f.write(referral_resume_latex)
+            
+            # Render referral cover letter LaTeX
+            referral_cover_letter_latex = self.renderer.render_cover_letter_with_referral(cover_letter_text, referral_contact)
+            referral_cover_letter_tex_path = os.path.join(output_dir, "Referral_CoverLetter.tex")
+            with open(referral_cover_letter_tex_path, "w", encoding="utf-8") as f:
+                f.write(referral_cover_letter_latex)
+            
+            print(f"✓ Referral LaTeX files created\n")
 
-        # STEP 8: Compile Referral Resume PDF
-        print("STEP 8: Compiling referral resume PDF...")
-        referral_resume_pdf = compile_latex_to_pdf(referral_resume_tex_path, output_dir, "resume")
-        
-        # Rename to final name
-        final_referral_resume_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
-        final_referral_resume_path = os.path.join(output_dir, final_referral_resume_name)
-        shutil.move(referral_resume_pdf, final_referral_resume_path)
-        print(f"✓ Referral Resume PDF: {final_referral_resume_name}\n")
+            # STEP 8: Compile Referral Resume PDF
+            print("STEP 8: Compiling referral resume PDF...")
+            try:
+                referral_resume_pdf = compile_latex_to_pdf(referral_resume_tex_path, output_dir, "resume")
+                
+                # Rename to final name
+                final_referral_resume_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Resume.pdf"
+                final_referral_resume_path = os.path.join(output_dir, final_referral_resume_name)
+                shutil.move(referral_resume_pdf, final_referral_resume_path)
+                print(f"✓ Referral Resume PDF: {final_referral_resume_name}\n")
+            except Exception as e:
+                print(f"✗ ERROR: Failed to compile Referral Resume PDF.")
+                print(f"  Check the LaTeX log file in the output directory for details.")
+                print(f"  Error: {str(e)}")
+                raise  # Re-raise the exception to halt processing for this job
 
-        # STEP 9: Compile Referral Cover Letter PDF
-        print("STEP 9: Compiling referral cover letter PDF...")
-        referral_cover_letter_pdf = compile_latex_to_pdf(referral_cover_letter_tex_path, output_dir, "cover_letter")
-        
-        # Rename to final name
-        final_referral_cover_letter_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
-        final_referral_cover_letter_path = os.path.join(output_dir, final_referral_cover_letter_name)
-        shutil.move(referral_cover_letter_pdf, final_referral_cover_letter_path)
-        print(f"✓ Referral Cover Letter PDF: {final_referral_cover_letter_name}\n")
+            # STEP 9: Compile Referral Cover Letter PDF
+            print("STEP 9: Compiling referral cover letter PDF...")
+            try:
+                referral_cover_letter_pdf = compile_latex_to_pdf(referral_cover_letter_tex_path, output_dir, "cover_letter")
+                
+                # Rename to final name
+                final_referral_cover_letter_name = f"Referral_{safe_first}_{safe_last}_{safe_company}_{job_id}_Cover_Letter.pdf"
+                final_referral_cover_letter_path = os.path.join(output_dir, final_referral_cover_letter_name)
+                shutil.move(referral_cover_letter_pdf, final_referral_cover_letter_path)
+                print(f"✓ Referral Cover Letter PDF: {final_referral_cover_letter_name}\n")
+            except Exception as e:
+                print(f"✗ ERROR: Failed to compile Referral Cover Letter PDF.")
+                print(f"  Check the LaTeX log file in the output directory for details.")
+                print(f"  Error: {str(e)}")
+                raise  # Re-raise the exception to halt processing for this job
+        else:
+            print("STEP 7-9: Skipping referral document generation (no referral contact info)\n")
 
-        # STEP 10: Clean up - move everything except 4 PDFs to debug/
+        # STEP 10: Clean up - move everything except PDFs to debug/
         print("STEP 10: Cleaning up output directory...")
         cleanup_output_directory(output_dir, first_name, last_name, company_name, job_id)
         print(f"✓ Cleanup complete\n")
 
         # Update job status
-        update_job_status("applications.yaml", job_id, "processed")
+        update_job_status(self.applications_path, job_id, "processed")
 
         print(f"{'='*60}")
         print(f"✓ Successfully processed: {job_title} at {company_name}")
@@ -982,7 +1175,7 @@ class ResumeOptimizationPipeline:
         print("RESUME OPTIMIZATION PIPELINE")
         print("=" * 60 + "\n")
 
-        applications = load_yaml("applications.yaml")
+        applications = load_yaml(self.applications_path)
         
         # Find all pending jobs
         pending_jobs = [job for job in applications if job.get("status") == "pending"]

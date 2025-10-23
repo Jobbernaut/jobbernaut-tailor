@@ -1,26 +1,36 @@
 {
   "resume_generation": {
     "bot_name": "Gemini-2.5-Pro",
-    "thinking_budget": "8192",
-    "web_search": true
+    "parameters": {
+      "web_search": false,
+      "thinking_budget": 2048
+    }
   },
   "cover_letter_generation": {
-    "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "2048",
-    "web_search": true
+    "bot_name": "Claude-Haiku-4.5",
+    "parameters": {
+      "thinking_budget": 0
+    }
   },
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096"
+      "bot_name": "Claude-Haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     },
     "company_research": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096"
+      "bot_name": "Claude-Sonnet-4-Search",
+      "parameters": {
+        "web_search": true,
+        "thinking_budget": 0
+      }
     },
     "storytelling_arc": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096"
+      "bot_name": "Claude-Haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     }
   },
   "humanization": {
@@ -28,13 +38,14 @@
     "level": "low",
     "apply_to": ["resume", "cover_letter"]
   },
-  "referral_resume": {
-    "email": "srmanda.compsci@gmail.com",
-    "phone": "(919) 526-0631"
-  },
   "defaults": {
-    "resume_bot": "Gemini-2.5-Pro",
+    "resume_bot": "Claude-Sonnet-4.5",
     "cover_letter_bot": "Claude-Sonnet-4.5"
   },
-  "reasoning_trace": false
+  "reasoning_trace": false,
+  "file_paths": {
+    "applications": "data/applications.yaml",
+    "application_template": "data/application_template.yaml",
+    "master_resume": "profile/master_resume.json"
+  }
 }

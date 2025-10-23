@@ -193,7 +193,7 @@ Your response should:
 
 **STEP 2: VERIFY QUALITY**
 - [ ] Does opening clearly state position and one compelling fact?
-- [ ] Does motivation section reference company-specific details from web search?
+- [ ] Does motivation section reference company-specific details from company research?
 - [ ] Do both achievements include concrete numbers and quantified results?
 - [ ] Have I mirrored 3-5 key phrases from the job description?
 - [ ] Is every sentence focused on value to the company?

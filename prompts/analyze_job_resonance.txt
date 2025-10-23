@@ -1,5 +1,23 @@
 Analyze this job description and extract intelligence for tailoring resume and cover letter.
 
+## REQUIRED JSON OUTPUT STRUCTURE
+
+You MUST return a JSON object with EXACTLY these field names (case-sensitive):
+
+```json
+{
+  "emotional_keywords": ["keyword1", "keyword2", ...],
+  "cultural_values": ["value1", "value2", ...],
+  "hidden_requirements": ["requirement1", "requirement2", ...],
+  "power_verbs": ["verb1", "verb2", ...],
+  "technical_keywords": ["keyword1", "keyword2", ...]
+}
+```
+
+CRITICAL: Use these EXACT field names. Do not rename, abbreviate, or modify them.
+
+---
+
 JOB DESCRIPTION:
 [JOB_DESCRIPTION]
 

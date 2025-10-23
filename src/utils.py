@@ -17,22 +17,27 @@ def load_yaml(filepath: str) -> Any:
 def save_yaml(filepath: str, data: Any) -> None:
     """Save data to a YAML file, preserving literal block scalars (|) for multiline strings."""
     
-    class LiteralString(str):
-        """String subclass to mark strings that should use literal block scalar style."""
-        pass
-    
     def literal_presenter(dumper, data):
         """Present strings as literal block scalars if they contain newlines."""
         if '\n' in data:
             return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
         return dumper.represent_scalar('tag:yaml.org,2002:str', data)
     
-    # Create a custom dumper
-    yaml.add_representer(str, literal_presenter)
+    # Create a custom dumper class to avoid global state issues
+    class CustomDumper(yaml.SafeDumper):
+        pass
+    
+    # Add the representer to our custom dumper
+    CustomDumper.add_representer(str, literal_presenter)
     
     with open(filepath, "w", encoding="utf-8") as f:
         yaml.dump(
-            data, f, default_flow_style=False, allow_unicode=True, sort_keys=False
+            data, f, 
+            Dumper=CustomDumper,
+            default_flow_style=False, 
+            allow_unicode=True, 
+            sort_keys=False,
+            width=float('inf')  # Prevent line wrapping
         )
 
 
@@ -125,9 +130,9 @@ def compile_latex_to_pdf(
 
     # Determine which .cls file to use based on document type
     if document_type == "cover_letter":
-        cls_source = "coverletter.cls"
+        cls_source = "latex/coverletter.cls"
     else:
-        cls_source = "resume.cls"
+        cls_source = "latex/resume.cls"
 
     # Copy the .cls file to the output directory
     cls_dest = os.path.join(output_dir, os.path.basename(cls_source))
@@ -244,6 +249,44 @@ def create_referral_latex(
     referral_latex = re.sub(email_pattern, referral_email, referral_latex)
 
     return referral_latex
+
+
+def remove_reasoning_traces(text: str, remove_traces: bool = True) -> str:
+    """
+    Remove reasoning traces from model responses.
+    
+    Handles multiple reasoning trace formats:
+    - Lines starting with ">" (common in some models)
+    - Content between <thinking>...</thinking> tags (Claude-style)
+    - Content between [REASONING]...[/REASONING] markers
+    
+    Args:
+        text: The raw model response
+        remove_traces: Whether to remove traces (from config)
+        
+    Returns:
+        Cleaned text with reasoning traces removed
+    """
+    if not remove_traces:
+        return text
+    
+    import re
+    
+    # Remove lines starting with ">" (quote-style reasoning)
+    lines = text.split('\n')
+    filtered_lines = [line for line in lines if not line.strip().startswith('>')]
+    text = '\n'.join(filtered_lines)
+    
+    # Remove <thinking>...</thinking> blocks (Claude-style)
+    text = re.sub(r'<thinking>.*?</thinking>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    
+    # Remove [REASONING]...[/REASONING] blocks
+    text = re.sub(r'\[REASONING\].*?\[/REASONING\]', '', text, flags=re.DOTALL | re.IGNORECASE)
+    
+    # Remove multiple consecutive blank lines (cleanup after removal)
+    text = re.sub(r'\n\s*\n\s*\n+', '\n\n', text)
+    
+    return text.strip()
 
 
 def cleanup_output_directory(output_dir: str, first_name: str, last_name: str, company_name: str, job_id: str) -> None:

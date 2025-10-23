@@ -1,5 +1,23 @@
 Create a storytelling arc structure for the cover letter that creates emotional connection.
 
+## REQUIRED JSON OUTPUT STRUCTURE
+
+You MUST return a JSON object with EXACTLY these field names (case-sensitive):
+
+```json
+{
+  "hook": "string - compelling opening sentence",
+  "bridge": "string - connection between candidate and role",
+  "proof_points": ["point1", "point2", ...],
+  "vision": "string - future-focused alignment",
+  "call_to_action": "string - confident closing"
+}
+```
+
+CRITICAL: Use these EXACT field names. Do not rename, abbreviate, or modify them.
+
+---
+
 JOB DESCRIPTION:
 [JOB_DESCRIPTION]
 
