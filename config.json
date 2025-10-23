@@ -1,24 +1,36 @@
 {
   "resume_generation": {
-    "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "48192"
+    "bot_name": "Gemini-2.5-Pro",
+    "parameters": {
+      "web_search": false,
+      "thinking_budget": 2048
+    }
   },
   "cover_letter_generation": {
-    "bot_name": "Claude-Sonnet-4.5",
-    "thinking_budget": "4096"
+    "bot_name": "Claude-Haiku-4.5",
+    "parameters": {
+      "thinking_budget": 0
+    }
   },
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Claude-Sonnet-4.5",
-      "thinking_budget": "2048"
+      "bot_name": "Claude-Haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     },
     "company_research": {
       "bot_name": "Claude-Sonnet-4-Search",
-      "thinking_budget": "4096"
+      "parameters": {
+        "web_search": true,
+        "thinking_budget": 0
+      }
     },
     "storytelling_arc": {
-      "bot_name": "Claude-Sonnet-4.5",
-      "thinking_budget": "2048"
+      "bot_name": "Claude-Haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     }
   },
   "humanization": {

@@ -65,8 +65,8 @@ CRITICAL FIELD NAMES:
 - **Work Experience Bullets: 108 characters MAX per bullet** (must fit in 1 line)
 - **Project Descriptions: 108 characters MAX per bullet** (must fit in 1 line)
 - **Project Technologies: 55 characters MAX when joined with ", "** (technologies beside project name)
-- **Skills per category: 65 characters MAX when joined with ", "** (skills after category name)
-- **Category Names: 15 characters MAX** (category name itself, excluding skills)
+- **Skills per category: 75 characters MAX when joined with ", "** (skills after category name)
+- **Category Names: 20 characters MAX** (category name itself, excluding skills)
 
 These constraints override all other instructions. If you must choose between impact and length compliance, choose length compliance. You will verify character counts before output.
 
@@ -283,7 +283,7 @@ For EACH work experience and project, order bullets as follows:
       2. Select the 6 categories with the highest keyword overlap
       3. If needed, rename categories to better match JD terminology (e.g., "Frontend Technologies" → "Frontend Development" if JD uses that term)
     -   **Smart Skill Selection (KEYWORD-FIRST)**:
-      - For each category, select 8-65 characters worth of skills
+      - For each category, select 8-75 characters worth of skills
       - **PRIORITY ORDER**:
         1. Skills that appear in your Step 1 keyword list (MUST INCLUDE)
         2. Skills that are synonyms/related to JD keywords
@@ -295,7 +295,7 @@ For EACH work experience and project, order bullets as follows:
       - ✅ CORRECT: `"Programming Languages": "Python, JavaScript, TypeScript, Java"`
       - ❌ WRONG: `"Programming Languages": ["Python", "JavaScript", "TypeScript", "Java"]`
     -   **CRITICAL ONE-LINE CONSTRAINT**: Each skill category MUST fit on a single line when formatted as "\textbf{Category:} skill1, skill2, skill3, etc."
-    -   **MAXIMUM 65 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
+    -   **MAXIMUM 75 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
     -   **Category Strategy**: Use descriptive category names that match JD terminology where possible.
 
 ### OUTPUT FORMAT: STRICT JSON
@@ -405,7 +405,7 @@ For EVERY skill category in the skills object:
 - Join the skills with ", "
 - Count the characters in the joined string
 - Write down: "[Category name]: X characters"
-- If ANY category > 65 characters: STOP IMMEDIATELY and revise
+- If ANY category > 75 characters: STOP IMMEDIATELY and revise
   - Remove the least relevant skills (those NOT in Step 1 keyword list)
   - Recount after revision
 - Verify that priority keywords from Step 1 are present and listed FIRST in each category

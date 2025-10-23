@@ -217,19 +217,19 @@ class TailoredResume(BaseModel):
             # Sanitize category name
             clean_category = re.sub(illegal_chars, '', category).strip()
             
-            # Validate category name length (max 25 characters)
-            if len(clean_category) > 25:
+            # Validate category name length (max 30 characters)
+            if len(clean_category) > 30:
                 raise ValueError(
-                    f"Category name '{clean_category}' exceeds 25 characters ({len(clean_category)} chars)"
+                    f"Category name '{clean_category}' exceeds 30 characters ({len(clean_category)} chars)"
                 )
             
             # Sanitize skills string
             clean_skills = re.sub(illegal_chars, '', skills_str).strip()
             
-            # Check skills value length constraint (max 75 characters)
-            if len(clean_skills) > 75:
+            # Check skills value length constraint (max 85 characters)
+            if len(clean_skills) > 85:
                 raise ValueError(
-                    f"Skills in category '{clean_category}' exceed 75 characters ({len(clean_skills)} chars): {clean_skills[:50]}..."
+                    f"Skills in category '{clean_category}' exceed 85 characters ({len(clean_skills)} chars): {clean_skills[:50]}..."
                 )
             
             sanitized_skills[clean_category] = clean_skills
