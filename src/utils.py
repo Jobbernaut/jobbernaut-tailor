@@ -125,9 +125,9 @@ def compile_latex_to_pdf(
 
     # Determine which .cls file to use based on document type
     if document_type == "cover_letter":
-        cls_source = "coverletter.cls"
+        cls_source = "latex/coverletter.cls"
     else:
-        cls_source = "resume.cls"
+        cls_source = "latex/resume.cls"
 
     # Copy the .cls file to the output directory
     cls_dest = os.path.join(output_dir, os.path.basename(cls_source))
