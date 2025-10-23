@@ -64,8 +64,8 @@ CRITICAL FIELD NAMES:
 **MAXIMUM LENGTHS - NON-NEGOTIABLE:**
 - **Work Experience Bullets: 108 characters MAX per bullet** (must fit in 1 line)
 - **Project Descriptions: 108 characters MAX per bullet** (must fit in 1 line)
-- **Project Technologies: 55 characters MAX when joined with ", "** (technologies beside project name)
-- **Skills per category: 75 characters MAX when joined with ", "** (skills after category name)
+- **Project Technologies: 60 characters MAX when joined with ", "** (technologies beside project name)
+- **Skills per category: 80 characters MAX when joined with ", "** (skills after category name)
 - **Category Names: 20 characters MAX** (category name itself, excluding skills)
 
 These constraints override all other instructions. If you must choose between impact and length compliance, choose length compliance. You will verify character counts before output.
@@ -176,7 +176,7 @@ You will be given the following data, clearly delineated:
       1. Appear in your Step 1 keyword list (HIGHEST PRIORITY)
       2. Are relevant to the job description
       3. Are specific and technical (e.g., "React" not "frontend", "PostgreSQL" not "database")
-    - Limited to a maximum of 55 characters when joined with ", "
+    - Limited to a maximum of 60 characters when joined with ", "
     - Order by relevance to JD (most relevant first)
 
 **Step 3.5: ACCURACY-FIRST PRINCIPLES**
@@ -295,7 +295,7 @@ For EACH work experience and project, order bullets as follows:
       - ✅ CORRECT: `"Programming Languages": "Python, JavaScript, TypeScript, Java"`
       - ❌ WRONG: `"Programming Languages": ["Python", "JavaScript", "TypeScript", "Java"]`
     -   **CRITICAL ONE-LINE CONSTRAINT**: Each skill category MUST fit on a single line when formatted as "\textbf{Category:} skill1, skill2, skill3, etc."
-    -   **MAXIMUM 75 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
+    -   **MAXIMUM 80 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
     -   **Category Strategy**: Use descriptive category names that match JD terminology where possible.
 
 ### OUTPUT FORMAT: STRICT JSON
@@ -405,7 +405,7 @@ For EVERY skill category in the skills object:
 - Join the skills with ", "
 - Count the characters in the joined string
 - Write down: "[Category name]: X characters"
-- If ANY category > 75 characters: STOP IMMEDIATELY and revise
+- If ANY category > 80 characters: STOP IMMEDIATELY and revise
   - Remove the least relevant skills (those NOT in Step 1 keyword list)
   - Recount after revision
 - Verify that priority keywords from Step 1 are present and listed FIRST in each category
@@ -432,7 +432,7 @@ For EVERY project in the projects array:
 - Write down: "Project [name] technologies: X characters"
 - Verify that technologies include priority keywords from Step 1 where applicable
 - Verify technologies are ordered by JD relevance (most important first)
-- If ANY project > 55 characters: STOP IMMEDIATELY and iteratively remove the least relevant technologies (those NOT in the keyword list), starting with those least related to the job description, until the joined string is ≤ 55 characters.
+- If ANY project > 60 characters: STOP IMMEDIATELY and iteratively remove the least relevant technologies (those NOT in the keyword list), starting with those least related to the job description, until the joined string is ≤ 60 characters.
 - After each removal, recount the characters in the joined technologies string.
 - Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 55 characters when joined with ", ". This is a non-negotiable constraint.
 

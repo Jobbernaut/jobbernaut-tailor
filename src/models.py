@@ -123,7 +123,7 @@ class WorkExperience(BaseModel):
     @classmethod
     def validate_bullet_length(cls, v: List[str]) -> List[str]:
         """Ensure each bullet point is <= 118 characters and sanitize ATS-incompatible characters."""
-        sanitized = []
+        sanitized: List[str] = []
         # Remove illegal characters: <>[]{}\|~^
         illegal_chars = r'[<>\[\]{}\\|~^]'
         
@@ -162,16 +162,16 @@ class Project(BaseModel):
     @field_validator('technologies')
     @classmethod
     def validate_technologies_length(cls, v: List[str]) -> List[str]:
-        """Ensure technologies joined with ', ' is <= 65 characters and sanitize ATS-incompatible characters."""
+        """Ensure technologies joined with ', ' is <= 70 characters and sanitize ATS-incompatible characters."""
         # Remove illegal characters from each technology
-        illegal_chars = r'[<>\[\]{}\\|~^]'
+        illegal_chars = r'[<>[]{}\\|~^]'
         sanitized = [re.sub(illegal_chars, '', tech).strip() for tech in v]
         
         # Check length constraint
         joined = ", ".join(sanitized)
-        if len(joined) > 65:
+        if len(joined) > 70:
             raise ValueError(
-                f"Technologies exceed 65 characters when joined ({len(joined)} chars): {joined}"
+                f"Technologies exceed 70 characters when joined ({len(joined)} chars): {joined}"
             )
         return sanitized
     
@@ -208,9 +208,9 @@ class TailoredResume(BaseModel):
     @field_validator('skills')
     @classmethod
     def validate_skills_length(cls, v: Dict[str, str]) -> Dict[str, str]:
-        """Ensure category names <= 25 chars and skill values <= 75 chars. Sanitize ATS-incompatible characters."""
+        """Ensure category names <= 30 chars and skill values <= 90 chars. Sanitize ATS-incompatible characters."""
         # Remove illegal characters: <>[]{}\|~^
-        illegal_chars = r'[<>\[\]{}\\|~^]'
+        illegal_chars = r'[<>[]{}\\|~^]'
         sanitized_skills: Dict[str, str] = {}
         
         for category, skills_str in v.items():
@@ -226,10 +226,10 @@ class TailoredResume(BaseModel):
             # Sanitize skills string
             clean_skills = re.sub(illegal_chars, '', skills_str).strip()
             
-            # Check skills value length constraint (max 85 characters)
-            if len(clean_skills) > 85:
+            # Check skills value length constraint (max 90 characters)
+            if len(clean_skills) > 90:
                 raise ValueError(
-                    f"Skills in category '{clean_category}' exceed 85 characters ({len(clean_skills)} chars): {clean_skills[:50]}..."
+                    f"Skills in category '{clean_category}' exceed 90 characters ({len(clean_skills)} chars): {clean_skills[:50]}..."
                 )
             
             sanitized_skills[clean_category] = clean_skills
