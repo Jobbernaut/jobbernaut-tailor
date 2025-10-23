@@ -1,6 +1,6 @@
 # Jobbernaut Tailor Documentation
 
-Welcome to the comprehensive documentation for Jobbernaut Tailor v4.2—an industrial-scale resume tailoring system with quality guarantees.
+Welcome to the comprehensive documentation for Jobbernaut Tailor v4.2 – an industrial-scale resume tailoring system with quality guarantees.
 
 ## Documentation Structure
 
