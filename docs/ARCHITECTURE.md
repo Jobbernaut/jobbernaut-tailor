@@ -209,6 +209,85 @@ class StorytellingArc(BaseModel):
 - Validation rules
 - Output formatting
 
+## LaTeX Architecture
+
+The system employs a sophisticated LaTeX generation pipeline that ensures consistent, ATS-optimized PDFs:
+
+### 1. Custom LaTeX Classes
+```latex
+% Professional formatting with ATS-friendly spacing
+\documentclass{resume}  % or coverletter
+\usepackage[left=0.4in,top=0.4in,right=0.4in,bottom=0.4in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+```
+
+### 2. Jinja2 Template Layer
+```jinja2
+% Smart variable interpolation
+\VAR{contact_info.first_name|latex_escape}
+
+% Conditional formatting
+\BLOCK{if project.technologies}
+| \VAR{project.technologies|join(', ')|latex_escape}
+\BLOCK{endif}
+```
+
+### 3. ATS Optimizations
+```latex
+% Precise spacing for optimal parsing
+\itemsep -3pt {}
+
+% Clean URL handling
+\href{\VAR{url|latex_escape}}{\VAR{url|replace('https://', '')|latex_escape}}
+
+% Standardized section headers
+\begin{rSection}{EXPERIENCE}
+```
+
+### 4. Unified Template System
+```latex
+% Shared configuration across templates
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[left=0.4in,top=0.4in,right=0.4in,bottom=0.4in]{geometry}
+```
+
+### 5. PDF Metadata Optimization
+```latex
+% Rich PDF metadata for improved searchability
+\usepackage[pdftex,
+    pdfauthor={\VAR{contact_info.first_name} \VAR{contact_info.last_name}},
+    pdftitle={...},
+    pdfsubject={...},
+    pdfkeywords={Software Development Engineer, Resume},
+    pdfproducer={LaTeX},
+    pdfcreator={pdflatex}
+]{hyperref}
+```
+
+### 6. Generation Pipeline
+1. Template Rendering
+   - Jinja2 processes templates
+   - LaTeX escaping for special characters
+   - URL sanitization and formatting
+   - Contact info standardization
+
+2. LaTeX Compilation
+   - pdflatex with hyperref support
+   - UTF-8 encoding for universal compatibility
+   - Rich metadata injection
+   - Hyperlinked contact information
+
+3. Quality Validation
+   - Character encoding validation
+   - Structure verification
+   - Format consistency checks
+   - Hyperlink validation
+   - PDF metadata verification
+
 ## Future Extensibility
 
 The v4.1 architecture supports:
@@ -216,5 +295,7 @@ The v4.1 architecture supports:
 2. Custom validation rules
 3. New output formats
 4. Enhanced ATS optimization
+5. Template customization
+6. PDF metadata configuration
 
 For configuration details and customization options, see [CONFIGURATION.md](CONFIGURATION.md).
