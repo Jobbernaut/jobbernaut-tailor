@@ -116,7 +116,7 @@ async with semaphore:
     await process_job_with_validation(job)
 ```
 
-**Key Innovation**: The robust validation pipeline (v4.0-v4.1) made each job's processing completely independent and self-contained, enabling v4.2's breakthrough parallel execution without quality compromise.
+**Key Innovation**: Each job's intelligence gathering, validation, and PDF generation runs independently—perfect for parallelization.
 
 ## Technical Highlights
 
