@@ -110,8 +110,26 @@ Key settings in `config.json`:
 
 ## Documentation
 
-- [Architecture Details](docs/ARCHITECTURE.md)
-- [Configuration Guide](docs/CONFIGURATION.md)
+Comprehensive documentation is available to help you understand, use, and contribute to Jobbernaut Tailor:
+
+### Getting Started
+- **[README.md](README.md)** (this file) - Quick start and project overview
+- **[CONFIGURATION.md](docs/CONFIGURATION.md)** - Setup guide and configuration options
+
+### Understanding the System
+- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - System architecture, pipeline flow, and design patterns
+- **[DEVELOPMENT.md](docs/DEVELOPMENT.md)** - Engineering decisions, design rationales, and development guide
+- **[API_REFERENCE.md](docs/API_REFERENCE.md)** - Complete API documentation for all classes and methods
+
+### Contributing
+- **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Contributing guidelines, coding standards, and workflow
+- **[CHANGELOG.md](docs/CHANGELOG.md)** - Version history, breaking changes, and migration guides
+
+### Quick Links
+- [Installation Guide](docs/CONFIGURATION.md#quick-setup)
+- [Pipeline Architecture](docs/ARCHITECTURE.md#intelligence-pipeline-overview)
+- [Adding Features](docs/DEVELOPMENT.md#common-tasks)
+- [Troubleshooting](docs/ARCHITECTURE.md#troubleshooting-common-issues)
 
 ## The Engineering Impact
 
