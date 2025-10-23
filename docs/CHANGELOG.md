@@ -244,10 +244,12 @@ class JobResonanceAnalysis(BaseModel):
 
 ---
 
-## PoC - Basic Processing (2025-10-11 to 2025-10-17)
+## PoC - Basic Processing (2025-10-11)
 
-**First Commit**: `ef087b9` - Initial commit (Oct 11, 2025)  
-**Final PoC Commit**: `3ccd5e5` - feat: mvp complete (Oct 11, 2025)
+**First Commit**: `ef087b9` - Initial commit (Oct 11, 2025, 5:20 PM)  
+**MVP Complete**: `3ccd5e5` - feat: mvp complete (Oct 11, 2025, 9:23 PM)
+
+**Note**: v1.0 development continued Oct 11-17 before v2.0 PR #1 was created.
 
 ### Initial Implementation
 - Single job processing
