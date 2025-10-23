@@ -30,8 +30,26 @@ tasks = [process_with_semaphore(job, semaphore) for job in pending_jobs]
 await asyncio.gather(*tasks)
 ```
 
-### Why It Matters
-The self-contained, independent job processing architecture built from day one enabled this parallelization without breaking anything. The robust validation pipeline from v4.0-v4.1 ensures quality is maintained even under concurrent execution.
+### Why It Matters: Beyond Speed
+
+Parallelization unlocks multiple strategic advantages at $0.10/job:
+
+**1. SaaS-Ready Architecture**
+- Can serve multiple users simultaneously
+- Handles volume without proportional cost increase
+- Foundation for future hosted service
+
+**2. Scale Economics**
+- Process 100 jobs in 12 minutes = 500 jobs/hour capacity
+- At $0.10/job, that's $50/hour max cost for industrial volume
+- Makes high-volume job search sustainable
+
+**3. Self-Contained Design Payoff**
+- Day-one architectural decision to keep jobs independent
+- No state bleeding between concurrent jobs
+- Parallelization "just worked" without refactoring
+
+The robust validation pipeline from v4.0-v4.1 ensures quality is maintained even under concurrent execution.
 
 **Files Changed**: `src/main.py`, `config.json`, `docs/*`  
 **Stats**: +1707 additions, -411 deletions
@@ -49,11 +67,23 @@ Production readiness through cost optimization, documentation streamlining, and 
 
 ### Major Changes
 
-#### 1. Cost Optimization
+#### 1. Cost Optimization Through Modular Pipeline Design
 - Reduced cost per application from ~$0.50 to $0.10 (5x improvement)
-- Optimized model selection per intelligence step
-- Implemented thinking budgets for controlled reasoning depth
-- Enhanced prompt efficiency
+- **Strategic insight**: Only ONE step requires SOTA model (resume generation)
+- Intelligence steps use cheaper models without quality sacrifice
+- Thinking budgets for controlled reasoning depth
+
+**The Architecture Decision:**
+```json
+{
+  "resume_generation": {"bot_name": "Gemini-2.5-Pro"},  // Only SOTA step
+  "job_resonance_analysis": {"bot_name": "Claude-Haiku-4.5"},  // Cheap model
+  "company_research": {"bot_name": "Claude-Sonnet-4-Search"},  // Cheap + search
+  "storytelling_arc": {"bot_name": "Claude-Haiku-4.5"}  // Cheap model
+}
+```
+
+This modular separation keeps costs "dirt cheap" while maintaining quality.
 
 #### 2. Documentation Consolidation  
 - Removed fragmented documentation (7155 deletions!)
@@ -66,11 +96,37 @@ Production readiness through cost optimization, documentation streamlining, and 
 - Reorganized data files to `data/` directory
 - Cleaner project structure
 
-#### 4. Enhanced Validation & Anti-Fragility
-- Improved self-healing pipeline
-- Stricter validation rules
-- Better error recovery
-- Character limit enforcement
+#### 4. Self-Healing Pipeline: Cost Saving, Not Convenience
+
+**The Problem It Solved:**
+What happens when expensive intelligence gathering succeeds (job resonance, company research, storytelling) but the final resume generation fails validation?
+
+**The Cost Dilemma:**
+- Can't re-run the entire pipeline (waste of money)
+- Can't accept invalid output (breaks LaTeX compilation)
+- Need to recover quickly and keep moving
+
+**The Solution: 2-Attempt Self-Healing**
+```python
+max_validation_retries = 2  # Exactly 2 attempts
+
+for attempt in range(1, max_validation_retries + 1):
+    try:
+        validated_resume = TailoredResume(**resume_json)
+        break  # Success!
+    except ValidationError as e:
+        if attempt < max_validation_retries:
+            error_feedback = build_feedback(e)
+            prompt = error_feedback + original_prompt
+            # Retry with guidance
+```
+
+**Why 2 Attempts Max:**
+- If it fails twice, it's a Pydantic model issue or prompt isn't strict enough
+- Both fixable at code level, not worth burning more API credits
+- Saves money by avoiding infinite retry loops
+
+This was a **cost-saving measure**, not a convenience feature.
 
 **Files Changed**: Major reorganization, documentation streamlining  
 **Stats**: +1555 additions, -7155 deletions
@@ -114,10 +170,41 @@ Production readiness through cost optimization, documentation streamlining, and 
 - Orchestrates the 3-stage intelligence pipeline
 - Integrates with main processing flow
 
-### Enhanced Data Models
-- Major expansion of `src/models.py` (+260 lines)
+### Enhanced Data Models with Strategic Validation
+
+Major expansion of `src/models.py` (+260 lines) with intelligent constraint design.
+
+#### The 108→118 Character Buffer Strategy
+
+**The Problem Discovered in Testing:**
+- LaTeX template renders bullets on new line if they exceed 118 characters
+- Models consistently overshoot by 3/4/7/8/10 characters when targeting exact limits
+- Each overshoot = validation failure = wasted API credits
+
+**The Solution: Strategic Buffer**
+```python
+# In prompts/generate_resume.txt
+"Work Experience Bullets: 108 characters MAX per bullet"
+"Aim to use 95-108 characters per bullet point"
+
+# In src/models.py (Pydantic validation)
+if len(clean_bullet) > 118:  # Actual hard limit
+    raise ValueError(f"Bullet exceeds 118 characters")
+```
+
+**Why It Works:**
+- Models asked for 108 chars **never** exceed 128 chars (empirical finding)
+- This gives a 10-character buffer (108 prompt → 118 validation)
+- Catches overshoots before LaTeX rendering breaks
+- Prevents costly pipeline failures
+
+**The Learning:**
+If you ask models to generate exactly 118 characters, they'll overshoot and break validation. The 10-char buffer saves money by reducing retry failures.
+
+#### Additional Validation Rules
 - Pydantic models for all intelligence outputs
-- Validation rules and constraints
+- Phone number standardization for ATS
+- Character sanitization for LaTeX compatibility
 
 ### Comprehensive Documentation
 - Added detailed architecture docs
