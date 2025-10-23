@@ -8,6 +8,7 @@ This changelog documents the two-week journey from a basic proof-of-concept to a
 
 ## v4.2 - The Parallelization Breakthrough (2025-10-23)
 
+**PR**: [#11 - Production Release: v4.2](https://github.com/Jobbernaut/jobbernaut-tailor/pull/11)  
 **Commit**: `2997db7` - feat(major): finally enable parallelization to process 50-100 jobs at a time
 
 ### The Problem
@@ -52,6 +53,7 @@ v4.2 wasn't just "adding parallelization"—it was the culmination of building a
 
 ## v4.1 - Cost Optimization & Anti-Fragility (2025-10-22)
 
+**PR**: [#7 - Production Release: V4.1-stable](https://github.com/Jobbernaut/jobbernaut-tailor/pull/7)  
 **Branch**: `v4.1-dev`  
 **Merge Commit**: `8850608`
 
@@ -116,6 +118,9 @@ v4.2 wasn't just "adding parallelization"—it was the culmination of building a
 
 ## v4.0 - Validation & Self-Healing Foundation (2025-10-21)
 
+**PR**: [#5 - v4: new stable production release](https://github.com/Jobbernaut/jobbernaut-tailor/pull/5)  
+**Merge Commit**: `9f7a031`
+
 ### The Problem
 AI-generated content without validation produced:
 - ATS parsing failures (formatting issues)
@@ -163,6 +168,9 @@ This version laid the foundation for v4.2's parallel processing by ensuring each
 
 ## v3.0 - Storytelling Arc Generation (2025-10-20)
 
+**PR**: [#2 - V3 dev](https://github.com/Jobbernaut/jobbernaut-tailor/pull/2)  
+**Merge Commit**: `82afd5e`
+
 ### The Innovation
 Added narrative structure to cover letters through storytelling arc generation:
 
@@ -185,6 +193,9 @@ class StorytellingArc(BaseModel):
 ---
 
 ## v2.0 - Company Research Integration (2025-10-19)
+
+**PR**: [#1 - Upgrade to v2](https://github.com/Jobbernaut/jobbernaut-tailor/pull/1)  
+**Merge Commit**: `e3c720b`
 
 ### The Innovation
 Added company-specific context gathering:
@@ -209,6 +220,9 @@ class CompanyResearch(BaseModel):
 
 ## v1.0 - Job Resonance Analysis (2025-10-18)
 
+**Development Period**: Oct 17-18, 2025 (Pre-PR development)  
+**First Commit**: `ef087b9` - Initial commit
+
 ### The Innovation
 First intelligence gathering step—analyzing job descriptions for key signals:
 
@@ -230,7 +244,10 @@ class JobResonanceAnalysis(BaseModel):
 
 ---
 
-## PoC - Basic Processing (2025-10-17)
+## PoC - Basic Processing (2025-10-11 to 2025-10-17)
+
+**First Commit**: `ef087b9` - Initial commit (Oct 11, 2025)  
+**Final PoC Commit**: `3ccd5e5` - feat: mvp complete (Oct 11, 2025)
 
 ### Initial Implementation
 - Single job processing
