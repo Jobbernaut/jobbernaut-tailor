@@ -36,7 +36,7 @@ The repository that you see in front of you is the solution to all the problems 
 - Every single resume and cover letter are ATS compatible, and optimised for human eye tracking as well to give you the best shot at the job application
 - If at any point for whatever reason the pipelines fail, not only will they recover and fix themselves automatically, they will tell you every single time in the learnings.yaml file where it's going wrong so that it can be permanently fixed. Once fixed, it won't occur again.
 
-Again, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go thoroughly through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts. That does not mean it is perfect, it just means the decisions I made were sound.
+Again, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go thoroughly through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts. That does not mean it is perfect, it just means the decisions I made were sound. In a market where people have to submit 50k applications for just one callback, this number is nothing, and the system will be tested more and more as I keep using it for my daily applications more and more.
 
 ---
 
