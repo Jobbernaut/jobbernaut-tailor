@@ -25,7 +25,7 @@ This is what I was told:
 - You're overthinking everything, just apply to jobs like everyone else, you have a decent profile, some employer will take notice and give you a job
 - I was laughed off saying AI output is unpredictable and hallucinated, by nature your output will be bad because you're choosing the wrong tool and I'm sinking my time into a blackhole
 
-I am no Elon Musk, I am no brilliant engineer, I am a new grad looking for my first job. I believe I am qualified for most new grad roles being posted out there. I have worked with Python, C++, Java, I have productionized them, I know git, I know good coding and engineering practices, I know how to write git commits, etc. etc. As such, maybe I was naive in thinking that I just need to figure out how to tailor in a mass way to best represent my experience. That this is not an impossible problem, and simply a problem looking for the right architecture. So I told myself a white lie that I will solve every single one of these bottlenecks, for myself, so that I can make my job search more efficient. It wasn't easy. 18-hour days for 14 days straight.
+I am no great visionary thinker, I am no brilliant engineer, I am a new grad looking for my first job. I believe I am qualified for most new grad roles being posted out there. I have worked with Python, C++, Java, I have productionized them, I know git, I know good coding and engineering practices, I know how to write git commits, etc. etc. As such, maybe I was naive in thinking that I just need to figure out how to tailor in a mass way to best represent my experience. That this is not an impossible problem, and simply a problem looking for the right architecture. So I told myself a white lie that I will solve every single one of these bottlenecks, for myself, so that I can make my job search more efficient. It wasn't easy. 18-hour days for 14 days straight.
 
 ---
 
@@ -36,7 +36,7 @@ The repository that you see in front of you is the solution to all the problems 
 - Every single resume and cover letter are ATS compatible, and optimised for human eye tracking as well to give you the best shot at the job application
 - If at any point for whatever reason the pipelines fail, not only will they recover and fix themselves automatically, they will tell you every single time in the learnings.yaml file where it's going wrong so that it can be permanently fixed. Once fixed, it won't occur again.
 
-Again, I am no Elon Musk, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts.
+Again, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts.
 
 ---
 
