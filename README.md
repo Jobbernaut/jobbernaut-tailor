@@ -2,10 +2,6 @@
 
 ---
 
-I know there will be questions. Where did all these huge numerical claims come from that feel completely exaggerated? How good is the tool really? Won't AI filters flag it? Where are the sample output PDFs? Contact me, let's set up a demo on your own terms, with chaotic inputs set up for failure and you'll see just how the engine I built recovers, and just how powerful it truly is.
-
----
-
 ## Foreword from the Creator
 
 When searching for jobs, people usually suggest two strategies. Either tailor your resume perfectly to a small number of roles, researching the company, the culture, and the team to increase the chances that you get hired for that specific role.
@@ -50,7 +46,9 @@ Again, there will be mistakes, there will be hallucinations, there will be probl
 
 ---
 
-To me, it is a statement that even when people tell me I can't do it, I will still figure it out. This is source available because I think it's a good way of showing employers how "I think" because its easy for me to learn or say oh I know Java, I know Flutter, but it's hard to showcase how I think. And this is how I think. The stack, the technology, the programming language does not matter to me. I will learn. One way or the other, I will ask seniors, I will google it, and I will learn. I saw a problem, and I solved it, that's all I know. This system is a massive advantage to anyone who can use it effectively, and it is source available now because I'm confident that the advantage is not in this codebase but in my own skill.
+To me, it is a statement that even when people tell me I can't do it, I will still figure it out. This is source available because I think it's a good way of showing employers how "I think" because its easy for me to learn or say oh I know Java, I know Flutter, but it's hard to showcase how I think. And this is how I think. The stack, the technology, the programming language does not matter to me. I will learn. One way or the other, I will ask seniors, I will google it, and I will learn.
+
+I saw a problem, and I solved it, that's all I know. This system is a massive advantage to anyone who can use it effectively, and it is source available now because I'm confident that the advantage is not in this codebase but in my own skill. I know there will be questions. Where did all these huge numerical claims come from that feel completely exaggerated? How good is the tool really? Won't AI filters flag it? Where are the sample output PDFs? Contact me, let's set up a demo on your own terms, with chaotic inputs set up for failure and you'll see just how the engine I built recovers, and just how powerful it truly is.
 
 ---
 
