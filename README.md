@@ -48,6 +48,10 @@ To me, it is a statement that even when people tell me I can't do it, I will sti
 
 ---
 
+I know there will be questions. Where did all these numerical claims come from? How good is the tool really? Where are the sample output PDFs? Contact me, let's set up a demo on your own terms, with chaotic inputs set up for failure and you'll see just how the engine I built recovers, and just how powerful it truly is.
+
+---
+
 ## What I Built
 
 Here's how I solved those problems, they didn't turn out to be so impossible after all:
