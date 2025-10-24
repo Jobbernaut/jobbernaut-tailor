@@ -44,7 +44,7 @@ Again, there will be mistakes, there will be hallucinations, there will be probl
 
 ---
 
-To me, it is a statement that even when people tell me I can't do it, I will still figure it out. This is source available because I think it's a good way of showing employers how "I think" because its easy for me to learn or say oh I know Java, I know Flutter, but it's hard to showcase how I think. And this is how I think. The stack, the technology, the programming language does not matter to me. I will learn. One way or the other, I will ask seniors, I will google it, and I will learn. I saw a problem, and I solved it, that's all I know.
+To me, it is a statement that even when people tell me I can't do it, I will still figure it out. This is source available because I think it's a good way of showing employers how "I think" because its easy for me to learn or say oh I know Java, I know Flutter, but it's hard to showcase how I think. And this is how I think. The stack, the technology, the programming language does not matter to me. I will learn. One way or the other, I will ask seniors, I will google it, and I will learn. I saw a problem, and I solved it, that's all I know. This system is a massive advantage to anyone who can use it effectively, and it is source available now because I'm confident that the advantage is not in this codebase but in my own skill.
 
 ---
 
