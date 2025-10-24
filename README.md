@@ -1,8 +1,59 @@
 # Jobbernaut Tailor v4.2
 
-**Industrial-Scale Resume Tailoring with Quality Guarantees**
+## Foreword from the Creator
 
-## The Problem
+When searching for jobs, people usually suggest two strategies. Either tailor your resume perfectly to a small number of roles, researching the company, the culture, and the team to increase the chances that you get hired for that specific role.
+
+Or you mass apply to a lot of companies and hope that the surface area is big enough that one of them will hit and you get a job from that. Or some kind of monstrous hybrid of these where you maintain multiple resumes for multiple roles.
+
+I like asking questions. Maybe a bit too much at that. So I asked one question. Why? I asked why can't you have the best of both worlds. Why can't you mass apply and maintain an ultra high quality of application material (Both the Resume and the Cover Letter)
+
+These were the reasons I was given:
+
+- It takes too much time, it will become another full time job.
+- You can use AI to tailor but, you have to review output manually and AI isn't the best at what it does anyway. And if you're applying to a lot of jobs AI gets very expensive.
+- Just follow what people have done before, don't try to reinvent the wheel like an idiot.
+
+So I told them something: What if I was able to design a system where you could apply to as many jobs as you want every single day, have the quality at a much higher level than any human being could possibly produce, and keep it cheap.
+
+(I didn't know how to do it, I was just bluffing)
+
+This is what I was told:
+
+- All those three are three separately impossible things. Who do you think you are? Stick to new grad projects and known methods.
+- Entire engineering teams are built to solve the same kind of issue, nobody has been able to figure it out otherwise it would've been a mass market product already, you're wasting your time
+- You're overthinking everything, just apply to jobs like everyone else, you have a decent profile, some employer will take notice and give you a job
+- I was laughed off saying AI output is unpredictable and hallucinated, by nature your output will be bad because you're choosing the wrong tool and I'm sinking my time into a blackhole
+
+I am no Elon Musk, I am no brilliant engineer, I am a new grad looking for my first job. I believe I am qualified for most new grad roles being posted out there. I have worked with Python, C++, Java, I have productionized them, I know git, I know good coding and engineering practices, I know how to write git commits, etc. etc. As such, maybe I was naive in thinking that I just need to figure out how to tailor in a mass way to best represent my experience. That this is not an impossible problem, and simply a problem looking for the right architecture. So I told myself a white lie that I will solve every single one of these bottlenecks, for myself, so that I can make my job search more efficient. It wasn't easy. 18-hour days for 14 days straight.
+
+---
+
+The repository that you see in front of you is the solution to all the problems I was facing:
+
+- It can tailor your resume and cover letter to an extent beyond what a professional resume writer could do in an hour or two for $400 an hour. You don't have to worry about the quality; quality assurance is built into the architecture itself.
+- If suddenly there are 50 new grad job postings in the past hour, and you need to apply to all of them, the architecture will rise to meet your demand. Be it 10, 20, 50, 100, 500, 1000, 2000, the only limiting factor is your API credits and your hardware.
+- Every single resume and cover letter are ATS compatible, and optimised for human eye tracking as well to give you the best shot at the job application
+- If at any point for whatever reason the pipelines fail, not only will they recover and fix themselves automatically, they will tell you every single time in the learnings.yaml file where it's going wrong so that it can be permanently fixed. Once fixed, it won't occur again.
+
+Again, I am no Elon Musk, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts.
+
+---
+
+**Word of Caution:** This was not built to help you spam applications. It is intentionally a nightmare to setup and tune. If you go through the commits you will realize that it was initially built to be compatible with any API, but I changed it to support only Poe. Because the Poe library is a pain to work with. The people who are technically skilled enough to even get it to work are the people I trust won't misuse this engineering piece and will appreciate the amount of effort that went into designing this. To business competitors, I cannot in good faith issue an open source license for this project as this technology if made accessible will make the market worse for everyone. But, I cannot stop you either and request that you act in good faith.
+
+---
+
+To me, it is a statement that even when people tell me I can't do it, I will still figure it out. This is source available because I think it's a good way of showing employers how "I think" because its easy for me to learn or say oh I know Java, I know Flutter, but it's hard to showcase how I think. And this is how I think. The stack, the technology, the programming language does not matter to me. I will learn. One way or the other, I will ask seniors, I will google it, and I will learn. I saw a problem, and I solved it, that's all I know.
+
+---
+
+## What I Built
+
+Here's how I solved those problems, they didn't turn out to be so impossible after all:
+
+
+## **Industrial-Scale Resume Tailoring with Quality Guarantees**
 
 Applying to jobs at scale isn't about tailoring one resume—it's about tailoring **100 resumes per day** while maintaining quality guarantees. 
 
