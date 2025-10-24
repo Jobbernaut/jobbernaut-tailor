@@ -31,7 +31,7 @@ I am no great visionary thinker, I am no brilliant engineer, I am a new grad loo
 
 The repository that you see in front of you is the solution to all the problems I was facing:
 
-- It can tailor your resume and cover letter to an extent beyond what a normal person could do in an hour or two. You don't have to worry about the quality; quality assurance is built into the architecture itself.
+- It can tailor your resume and cover letter to an extent beyond what an average jobseeker with AI access could do in an hour or two. You don't have to worry about the quality; quality assurance is built into the architecture itself.
 - If suddenly there are 50 new grad job postings in the past hour, and you need to apply to all of them, the architecture will rise to meet your demand. Be it 10, 20, 50, 100, 500, 1000, 2000, the only limiting factor is your API credits and your hardware.
 - Every single resume and cover letter are ATS compatible, and optimised for human eye tracking as well to give you the best shot at the job application
 - If at any point for whatever reason the pipelines fail, not only will they recover and fix themselves automatically, they will tell you every single time in the learnings.yaml file where it's going wrong so that it can be permanently fixed. Once fixed, it won't occur again.
