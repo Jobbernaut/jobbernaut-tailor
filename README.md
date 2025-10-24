@@ -31,12 +31,12 @@ I am no great visionary thinker, I am no brilliant engineer, I am a new grad loo
 
 The repository that you see in front of you is the solution to all the problems I was facing:
 
-- It can tailor your resume and cover letter to an extent beyond what a professional resume writer could do in an hour or two for $400 an hour. You don't have to worry about the quality; quality assurance is built into the architecture itself.
+- It can tailor your resume and cover letter to an extent beyond what a normal person could do in an hour or two. You don't have to worry about the quality; quality assurance is built into the architecture itself.
 - If suddenly there are 50 new grad job postings in the past hour, and you need to apply to all of them, the architecture will rise to meet your demand. Be it 10, 20, 50, 100, 500, 1000, 2000, the only limiting factor is your API credits and your hardware.
 - Every single resume and cover letter are ATS compatible, and optimised for human eye tracking as well to give you the best shot at the job application
 - If at any point for whatever reason the pipelines fail, not only will they recover and fix themselves automatically, they will tell you every single time in the learnings.yaml file where it's going wrong so that it can be permanently fixed. Once fixed, it won't occur again.
 
-Again, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts.
+Again, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the 1000+ applications that this system has handled just from my side, I go thoroughly through every resume and cover letter outputted by it and have yet to notice a single hallucination or misrepresentation of facts. That does not mean it is perfect, it just means the decisions I made were sound.
 
 ---
 
