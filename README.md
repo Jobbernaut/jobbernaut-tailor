@@ -4,9 +4,9 @@
 
 When searching for jobs, people usually suggest two strategies. Either tailor your resume perfectly to a small number of roles, researching the company, the culture, and the team to increase the chances that you get hired for that specific role.
 
-Or you mass apply to a lot of companies and hope that the surface area is big enough that one of them will hit and you get a job from that. Or some kind of monstrous hybrid of these where you maintain multiple resumes for multiple roles.
+Or you apply to a lot of companies and hope that the surface area is big enough that one of them will hit and you get a job from that. Or some kind of monstrous hybrid of these where you maintain multiple resumes for multiple roles.
 
-I like asking questions. Maybe a bit too much at that. So I asked one question. Why? I asked why can't you have the best of both worlds. Why can't you mass apply and maintain an ultra high quality of application material (Both the Resume and the Cover Letter)
+I like asking questions. Maybe a bit too much at that. So I asked one question. Why? I asked why can't you have the best of both worlds. Why can't you apply to all the roles you're qualified for and maintain an ultra high quality of application material (Both the Resume and the Cover Letter)
 
 These were the reasons I was given:
 
@@ -40,7 +40,7 @@ Again, there will be mistakes, there will be hallucinations, there will be probl
 
 ---
 
-**Word of Caution:** This was not built to help you spam applications. It is intentionally a nightmare to setup and tune. If you go through the commits you will realize that it was initially built to be compatible with any API, but I changed it to support only Poe. Because the Poe library is a pain to work with. The people who are technically skilled enough to even get it to work are the people I trust won't misuse this engineering piece and will appreciate the amount of effort that went into designing this. To business competitors, I cannot in good faith issue an open source license for this project as this technology if made accessible will make the market worse for everyone. But, I cannot stop you either and request that you act in good faith.
+**Word of Caution:** This was not built to help you spam applications. It is an engineer piece that shows the flaws in the current recruiting system. It is possible to game it with just a laptop and $5 worth of API credit. It is intentionally a nightmare to setup and tune. If you go through the commits you will realize that it was initially built to be compatible with any API, but I changed it to support only Poe. Because the Poe library is a pain to work with. The people who are technically skilled enough to even get it to work are the people I trust won't misuse this engineering piece and will appreciate the amount of effort that went into designing this. To business competitors, I cannot in good faith issue an open source license for this project as this technology if made accessible will make the market worse for everyone. But, I cannot stop you either and request that you act in good faith.
 
 ---
 
