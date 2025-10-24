@@ -14,7 +14,7 @@ These were the reasons I was given:
 - You can use AI to tailor but, you have to review output manually and AI isn't the best at what it does anyway. And if you're applying to a lot of jobs AI gets very expensive.
 - Just follow what people have done before, don't try to reinvent the wheel like an idiot.
 
-So I told them something: What if I was able to design a system where you could apply to as many jobs as you want every single day, have the quality at a much higher level than any human being could possibly produce, and keep it cheap.
+So I told them something: What if I was able to design a system where you could apply to as many jobs as you want every single day, have the quality at a much higher level than a human with AI access could reasonably produce, and keep it cheap.
 
 (I didn't know how to do it, I was just bluffing)
 
