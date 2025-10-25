@@ -436,24 +436,80 @@ For EVERY project in the projects array:
 - After each removal, recount the characters in the joined technologies string.
 - Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 55 characters when joined with ", ". This is a non-negotiable constraint.
 
-**STEP 10: VERIFY JSON STRUCTURE**
+**STEP 10: JSON SYNTAX VALIDATION (CRITICAL)**
+BEFORE outputting your JSON, you MUST perform this rigorous syntax check:
+
+1. **Verify ALL bullet_points arrays have proper quote syntax:**
+   - EVERY bullet point MUST start with a double quote: "
+   - EVERY bullet point MUST end with a double quote: "
+   - Check EACH of the 12 work experience bullets (3 positions × 4 bullets)
+   - Check EACH of the 12 project bullets (3 projects × 4 bullets)
+   - **Common error to catch**: Bullet missing opening quote
+     - ❌ WRONG: `Architected a full-stack MS Teams app..."`
+     - ✅ RIGHT: `"Architected a full-stack MS Teams app..."`
+
+2. **Verify array syntax:**
+   - All arrays must use square brackets: [ ]
+   - Array elements must be separated by commas
+   - Last element must NOT have a trailing comma
+   - Example: `["item1", "item2", "item3"]` ✓
+   - Example: `["item1", "item2", "item3",]` ✗ (trailing comma)
+
+3. **Verify object syntax:**
+   - All objects must use curly braces: { }
+   - Key-value pairs must be separated by commas
+   - Last pair must NOT have a trailing comma
+   - All keys must be in double quotes
+   - All string values must be in double quotes
+
+4. **Perform mental JSON.parse() test:**
+   - Mentally parse your entire JSON from top to bottom
+   - Verify every opening brace { has a matching closing brace }
+   - Verify every opening bracket [ has a matching closing bracket ]
+   - Verify every opening quote " has a matching closing quote "
+
+5. **Common JSON errors to check for:**
+   - Missing commas between array elements or object properties
+   - Extra commas after last array element or object property
+   - Missing quotes around string values
+   - Unescaped quotes inside string values (use \" if needed)
+   - Missing colons between keys and values
+
+**If you find ANY syntax errors during this check, FIX THEM immediately before output.**
+**DO NOT output invalid JSON under any circumstances.**
+
+Write down: "JSON Syntax Check: [PASS/FAIL]"
+If FAIL, identify the specific error, fix it, and recheck.
+Only proceed to output if PASS.
+
+**STEP 11: VERIFY JSON STRUCTURE**
 - Confirm the JSON is valid and complete
 - Confirm all required fields are present
 - Confirm no explanatory text outside the JSON
 
-**STEP 11: FINAL KEYWORD COVERAGE CHECK**
+**STEP 12: FINAL KEYWORD COVERAGE CHECK**
 - Recount keyword coverage one final time
 - Confirm: Coverage ≥ 70%
 - If not, STOP and revise
 
-**STEP 12: FINAL EYE-TRACKING CHECK**
+**STEP 13: FINAL EYE-TRACKING CHECK**
 - Verify metrics are front-loaded (first 10 chars) in at least 50% of bullets
 - Verify Bullet 1 for each experience/project is the strongest
 - Confirm: Eye-tracking optimization applied
 
-DO NOT OUTPUT until:
+**STEP 14: FINAL JSON VALIDATION (LAST CHECK BEFORE OUTPUT)**
+- Perform one final mental parse of your entire JSON
+- Verify EVERY bullet point has opening AND closing quotes
+- Verify NO trailing commas anywhere
+- Verify all brackets and braces are balanced
+- Write down: "Final JSON validation: [PASS/FAIL]"
+- If FAIL, fix immediately and recheck
+
+DO NOT OUTPUT until ALL of these conditions are met:
 1. Keyword coverage ≥ 70% (HIGHEST PRIORITY)
 2. Eye-tracking optimization verified (metrics front-loaded, bullets ordered by impact)
-3. All character counts are verified to be within limits (≤100 chars, ideally ≥85 chars)
-4. All exact counts are confirmed
+3. All character counts are verified to be within limits (≤108 chars, ideally ≥90 chars)
+4. All exact counts are confirmed (3 work exp, 3 projects, 4 bullets each, 6 skill categories)
 5. All accuracy checks pass against `narrative_context`, `key_metrics`, and `role_clarity`
+6. JSON syntax validation PASSED (Step 10)
+7. Final JSON validation PASSED (Step 14)
