@@ -39,7 +39,7 @@ The repository that you see in front of you is the solution to all the problems 
 
 Again, there will be mistakes, there will be hallucinations, there will be problems, no system, not even AWS or Google or Instagram is perfect enough to guarantee there will never be any issue. But in the applications that this system has handled just from my side, I go thoroughly through every resume and cover letter outputted by it and have yet to notice a single misrepresentation of facts. That does not mean it is perfect, it just means the decisions I made were sound.
 
-In a market where people have to submit 50k applications for just one callback, my numbers are nothing, and the system will be tested more and more as I keep using it for my daily applications more and more. That being said, epirically, it has given me enough confidence that if you asked me to apply to my dream role with Jobbernaut Tailor materials without double checking, it wouldn't be a very hard decision for me, I would do it in the blink of an eye.
+In a market where people have to submit 50k applications for just one callback, my numbers are nothing, and the system will be tested more and more as I keep using it for my daily applications more and more. That being said, empirically, it has given me enough confidence that if you asked me to apply to my dream role with Jobbernaut Tailor materials without double checking, it wouldn't be a very hard decision for me, I would do it in the blink of an eye.
 
 ---
 # Is it a spam tool?
@@ -110,7 +110,7 @@ I'm not trying to sell you on the project, I'm trying to solve my own problems. 
 2. Figure out how to make one good tailored cover letter [Company Research, Storytelling arc, etc.]
 3. Keep R&D/Prod costs cheap because I'm a student with no money [Aggressive Cost Optimization]
 4. Figure out how ATS actually work, how recruiters read resume, and how to make one stand out [Eye Tracking and ATS Research]
-5. Figure out how to make it catch midtakes by itself without me overseeing it [Validation]
+5. Figure out how to make it catch mistakes by itself without me overseeing it [Validation]
 6. Figure out how to make it recover from mistakes because I can't waste money [Self Healing]
 7. Figure out how to learn from mistakes [learnings.yaml and debug/]
 8. Figure out how to do this for 10 applications one at a time
