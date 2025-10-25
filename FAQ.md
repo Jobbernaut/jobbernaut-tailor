@@ -46,7 +46,7 @@ In a market where people have to submit 50k applications for just one callback, 
 
 **Word of Caution:** This was not built to help you spam applications. There is a reason why Jobbernaut Discovery is empty. There is a reason why you have to manually paste into the applications.yaml manually instead of simply automating it. It is an engineering piece. It is possible to build it with just a laptop and $5 worth of API credit. It is intentionally a nightmare to setup and tune for the average person. If you go through the commits you will realize that it was initially built to be compatible with any API, but I changed it to support only Poe. Because the Poe library is a pain to work with, you have to pay for it separately, and it is rate limited by design. The people who are technically skilled enough to even get it to work are the people I trust won't misuse this engineering piece and will appreciate the amount of effort that went into designing this.
 
-To business competitors, I cannot in good faith issue an open source license for this project as this technology if made accessible will make the market worse for everyone. But, I cannot stop you either and request that you act in good faith.
+To business competitors, I cannot in good faith issue an open source license for this project as this technology if made accessible will make the market worse for everyone. But, I cannot stop you either and request that you act in good faith. Contact me and I will guide you on monetization and how you can implement this tech to make the experience better for your customers.
 
 ---
 # What do you have to gain?
@@ -118,6 +118,6 @@ I'm not trying to sell you on the project, I'm trying to solve my own problems. 
 10. Figure out how to do this for 100 applications all at once
 11. Figure out how to do this for 100 applications all at once, every single day for however long possible without it failing on me. 
 
-Each problem by itself is a months long deep dive and I'm proud of myself to get it done to a shippable state so quickly while not scarificing quality. 
+Each problem by itself is a months long deep dive and I'm proud of myself to get it done to a shippable state so quickly while not sacrificing quality. 
 
 The fact that the final solution appears obvious, elegant, and too simple to people is a sign of good engineering taste and ability, not of the problem's nature. 
