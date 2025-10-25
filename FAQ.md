@@ -102,3 +102,22 @@ If it hallucinates, it hallucinates in my favor. For example, a lot of JDs don't
 
 # Why should I use your project over others?
 I'm not trying to sell you on the project, I'm trying to solve my own problems. If you think it will solve the specific problems you have with the job search, you're free to use it and I will guide you. If you are not able to see the value, power, and danger behind this system then, be assured you are not the target audience, there are simpler solutions for you. Reach out to me, I will tell you how to supercharge your job search without an application of this much complexity.
+
+---
+
+# Why did something so simple and obvious take you 14 days? 
+1. Figure out how to make one good tailored resume automatically [Find out what a good resume is, what tools are available to build your resume, etc.]
+2. Figure out how to make one good tailored cover letter [Company Research, Storytelling arc, etc.]
+3. Keep R&D/Prod costs cheap because I'm a student with no money [Aggressive Cost Optimization]
+4. Figure out how ATS actually work, how recruiters read resume, and how to make one stand out [Eye Tracking and ATS Research]
+5. Figure out how to make it catch midtakes by itself without me overseeing it [Validation]
+6. Figure out how to make it recover from mistakes because I can't waste money [Self Healing]
+7. Figure out how to learn from mistakes [learnings.yaml and debug/]
+8. Figure out how to do this for 10 applications one at a time
+9. Figure out how to do this for 10 applications all at once
+10. Figure out how to do this for 100 applications all at once
+11. Figure out how to do this for 100 applications all at once, every single day for however long possible without it failing on me. 
+
+Each problem by itself is a months long deep dive and I'm proud of myself to get it done to a shippable state so quickly while not scarificing quality. 
+
+The fact that the final solution appears obvious, elegant, and too simple to people is a sign of good engineering taste and ability, not of the problem's nature. 
