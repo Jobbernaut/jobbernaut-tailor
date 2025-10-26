@@ -19,7 +19,7 @@ Traditional approaches fail at scale:
 
 ## The Solution
 
-Jobbernaut Tailor solves industrial-scale resume tailoring through three breakthrough innovations:99
+Jobbernaut Tailor solves industrial-scale resume tailoring through three breakthrough innovations:
 
 ### 1. Parallel Processing Architecture (v4.2)
 ```
