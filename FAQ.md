@@ -98,6 +98,12 @@ I used AI to write the code, I used AI to review the code, I used AI to review t
 # How can you say that the AI doesn't hallucinate? That's impossible!
 Of course AI hallucinates, why wouldn't it. That's the best part of this application. In v3.0 I made the validation so strict that it started generating sterile resumes and cover letters. That was the exact opposite of what I wanted from the project. Somewhere you have to take a risk, add a little bit of flair. And from my own empirical testing like I said, I have genuinely not seen a case of the AI inventing facts. Why could this be? The prompts are ultra detailed, and extremely constrained. Even if one single letter is missing from the field, self-healing will start. LLMs are probabilistic machines, and the prompts being so detailed along with the LLMs themselves being so good, along with the self-healing constrain it to a very specific output space.
 
+If it sounds too complicated and obscure, here is a simpler example:
+
+<img width="506" height="854" alt="image" src="https://github.com/user-attachments/assets/01a96a4c-4b25-410f-9aed-d60ed5842035" />
+
+No matter how many times I send that message, the LLM is NOT going to hallucinate because the prompt is specific and the model is good enough, the output space is so small that there is no gap to hallucinate. The same thing is happening here just at a larger scale.
+
 If it hallucinates, it hallucinates in my favor. For example, a lot of JDs don't have technical keywords, so the technical keywords array will be empty in the first try, which will trigger self-healing, and now at the very top the LLM will see a message saying "Hey, in a previous attempt you return an empty tech array, that really can't happen, don't let it happen" so the AI will pull from its own training data hidden facts about the company and team giving me a leg-up. The goal is to get an interview without lying. Some marketing flair has to be there, that's the whole point.
 
 ---
