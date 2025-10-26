@@ -19,7 +19,7 @@ Traditional approaches fail at scale:
 
 ## The Solution
 
-Jobbernaut Tailor solves industrial-scale resume tailoring through three breakthrough innovations:
+Jobbernaut Tailor solves industrial-scale resume tailoring through three breakthrough innovations:99
 
 ### 1. Parallel Processing Architecture (v4.2)
 ```
@@ -65,7 +65,7 @@ graph LR
 | 50   | 62.5 min         | 7.5 min         | 55 min     |
 | 100  | 125 min          | 12.5 min        | 112 min    |
 
-**Quality Guarantee**: 99.5% validation success rate maintained across all concurrency levels.
+**Quality Guarantee**: 96%+ validation success rate maintained across all concurrency levels post self-healing.
 
 ## Quick Start
 
@@ -171,7 +171,7 @@ This system solves a complex automation challenge that most people don't realize
 ## Performance Metrics
 
 - **Processing Time**: 60-90 seconds per job (parallel)
-- **Validation Success**: >99.5% after self-healing
+- **Validation Success**: >96% after self-healing
 - **ATS Compatibility**: >95% on major systems
 - **Cost per Application**: $0.10 average
 - **Concurrency**: Up to 10 jobs simultaneously
