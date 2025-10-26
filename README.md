@@ -33,7 +33,7 @@ Parallel (v4.2):    100 jobs ÷ 10 = 12.5 minutes
 - Multi-stage validation gates with automatic error correction
 - ATS compatibility enforcement (character limits, formatting rules)
 - Quality thresholds with progressive feedback
-- Anti-fragile error recovery (99.5% success rate)
+- Anti-fragile error recovery (96.0%+ success rate)
 
 ### 3. Intelligence-Driven Content Generation (v1-v3)
 - Job resonance analysis with emotional keyword extraction
