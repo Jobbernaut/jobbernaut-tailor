@@ -42,6 +42,44 @@ Again, there will be mistakes, there will be hallucinations, there will be probl
 In a market where people have to submit 50k applications for just one callback, my numbers are nothing, and the system will be tested more and more as I keep using it for my daily applications more and more. That being said, empirically, it has given me enough confidence that if you asked me to apply to my dream role with Jobbernaut Tailor materials without double checking, it wouldn't be a very hard decision for me, I would do it in the blink of an eye.
 
 ---
+
+# How can you say that the AI doesn't hallucinate? That's impossible!
+Of course AI hallucinates, why wouldn't it. That's the best part of this application. In v3.0 I made the validation so strict that it started generating sterile resumes and cover letters. That was the exact opposite of what I wanted from the project. Somewhere you have to take a risk, add a little bit of flair. And from my own empirical testing like I said, I have genuinely not seen a case of the AI inventing facts. Why could this be? The prompts are ultra detailed, and extremely constrained. Even if one single letter is missing from the field, self-healing will start. LLMs are probabilistic machines, and the prompts being so detailed along with the LLMs themselves being so good, along with the self-healing constrain it to a very specific output space.
+
+If it sounds too complicated and obscure, here is a simpler example:
+
+<img width="506" height="854" alt="image" src="https://github.com/user-attachments/assets/01a96a4c-4b25-410f-9aed-d60ed5842035" />
+
+No matter how many times I send that message, the LLM is NOT going to hallucinate because the prompt is specific and the model is good enough, the output space is so small that there is no gap to hallucinate. The same thing is happening here just at a larger scale.
+
+If it hallucinates, it hallucinates in my favor. For example, a lot of JDs don't have technical keywords, so the technical keywords array will be empty in the first try, which will trigger self-healing, and now at the very top the LLM will see a message saying "Hey, in a previous attempt you return an empty tech array, that really can't happen, don't let it happen" so the AI will pull from its own training data hidden facts about the company and team giving me a leg-up. The goal is to get an interview without lying. Some marketing flair has to be there, that's the whole point.
+
+---
+
+# How good is it? The metrics seem all inflated
+I have heard the same thing about my resume as well. The metrics are too inflated to be true, the impact is too much for an intern to do at a large company. The task is too impossible to do. It is impossible to get AI to not hallucinate most of the time. I am constantly being punished for being really good at what I do. The code is open for you to verify, You can demo it on your own terms, you can see it run on your own system, and I am using it regularly, updating it regularly, Workday  automatically fills out when I upload Jobbernaut Tailor resumes, etc etc.
+
+---
+
+# Why did something so simple and obvious take you 14 days? 
+1. Figure out how to make one good tailored resume automatically [Find out what a good resume is, what tools are available to build your resume, etc.]
+2. Figure out how to make one good tailored cover letter [Company Research, Storytelling arc, etc.]
+3. Keep R&D/Prod costs cheap because I'm a student with no money [Aggressive Cost Optimization]
+4. Figure out how ATS actually work, how recruiters read resume, and how to make one stand out [Eye Tracking and ATS Research]
+5. Figure out how to make it catch mistakes by itself without me overseeing it [Validation]
+6. Figure out how to make it recover from mistakes because I can't waste money [Self Healing]
+7. Figure out how to learn from mistakes [learnings.yaml and debug/]
+8. Figure out how to do this for 10 applications one at a time
+9. Figure out how to do this for 10 applications all at once
+10. Figure out how to do this for 100 applications all at once
+11. Figure out how to do this for 100 applications all at once, every single day for however long possible without it failing on me. 
+
+Each problem by itself is a months long deep dive and I'm proud of myself to get it done to a shippable state so quickly while not sacrificing quality. 
+
+The fact that the final solution appears obvious, elegant, and too simple to people is a sign of good engineering taste and ability, not of the problem's nature. 
+
+---
+
 # Is it a spam tool?
 
 **Word of Caution:** This was not built to help you spam applications. There is a reason why you have to manually paste into the applications.yaml manually instead of simply automating it. It is an engineering piece. It is possible to build it with just a laptop and $5 worth of API credit. It is intentionally a nightmare to setup and tune for the average person. If you go through the commits you will realize that it was initially built to be compatible with any API, but I changed it to support only Poe. Because the Poe library is a pain to work with, you have to pay for it separately, and it is rate limited by design. The people who are technically skilled enough to even get it to work are the people I trust won't misuse this engineering piece and will appreciate the amount of effort that went into designing this.
@@ -51,6 +89,7 @@ The 100 applications at one time by lunch is an engineering goal that I set for 
 To business competitors, I cannot in good faith issue an open source license for this project as this technology if made accessible will make the market worse for everyone. But, I cannot stop you either and request that you act in good faith. Contact me and I will guide you on monetization and how you can implement this tech to make the experience better for your customers.
 
 ---
+
 # What do you have to gain?
 
 To me, it is a statement that even when people tell me I can't do it, I will still figure it out. This is source available because I think it's a good way of showing employers how "I think" because its easy for me to learn or say oh I know Java, I know Flutter, but it's hard to showcase how I think. And this is how I think.
@@ -75,11 +114,6 @@ Monetization is a completely different kind of game that I do not intend to play
 
 ---
 
-# How good is it? The metrics seem all inflated
-I have heard the same thing about my resume as well. The metrics are too inflated to be true, the impact is too much for an intern to do at a large company. The task is too impossible to do. I am being punished for being really good at what I do. The code is open for you to verify, You can demo it on your own terms, you can see it run on your own system, and I am using it regularly, updating it regularly, Workday  automatically fills out when I upload Jobbernaut Tailor resumes, etc etc.
-
----
-
 # Where are the sample outputs to verify the claims?
 Set it up for yourself and run it on your own master resume. The magic feels more magical when it's happening right in front of you. You will not believe it even after sample outputs are given anyways, you'll say they were handcrafted and cherry picked so run it for yourself. 
 
@@ -95,37 +129,8 @@ I used AI to write the code, I used AI to review the code, I used AI to review t
 
 ---
 
-# How can you say that the AI doesn't hallucinate? That's impossible!
-Of course AI hallucinates, why wouldn't it. That's the best part of this application. In v3.0 I made the validation so strict that it started generating sterile resumes and cover letters. That was the exact opposite of what I wanted from the project. Somewhere you have to take a risk, add a little bit of flair. And from my own empirical testing like I said, I have genuinely not seen a case of the AI inventing facts. Why could this be? The prompts are ultra detailed, and extremely constrained. Even if one single letter is missing from the field, self-healing will start. LLMs are probabilistic machines, and the prompts being so detailed along with the LLMs themselves being so good, along with the self-healing constrain it to a very specific output space.
-
-If it sounds too complicated and obscure, here is a simpler example:
-
-<img width="506" height="854" alt="image" src="https://github.com/user-attachments/assets/01a96a4c-4b25-410f-9aed-d60ed5842035" />
-
-No matter how many times I send that message, the LLM is NOT going to hallucinate because the prompt is specific and the model is good enough, the output space is so small that there is no gap to hallucinate. The same thing is happening here just at a larger scale.
-
-If it hallucinates, it hallucinates in my favor. For example, a lot of JDs don't have technical keywords, so the technical keywords array will be empty in the first try, which will trigger self-healing, and now at the very top the LLM will see a message saying "Hey, in a previous attempt you return an empty tech array, that really can't happen, don't let it happen" so the AI will pull from its own training data hidden facts about the company and team giving me a leg-up. The goal is to get an interview without lying. Some marketing flair has to be there, that's the whole point.
 
 ---
 
 # Why should I use your project over others?
 I'm not trying to sell you on the project, I'm trying to solve my own problems. If you think it will solve the specific problems you have with the job search, you're free to use it and I will guide you. If you are not able to see the value, power, and danger behind this system then, be assured you are not the target audience, there are simpler solutions for you. Reach out to me, I will tell you how to supercharge your job search without an application of this much complexity.
-
----
-
-# Why did something so simple and obvious take you 14 days? 
-1. Figure out how to make one good tailored resume automatically [Find out what a good resume is, what tools are available to build your resume, etc.]
-2. Figure out how to make one good tailored cover letter [Company Research, Storytelling arc, etc.]
-3. Keep R&D/Prod costs cheap because I'm a student with no money [Aggressive Cost Optimization]
-4. Figure out how ATS actually work, how recruiters read resume, and how to make one stand out [Eye Tracking and ATS Research]
-5. Figure out how to make it catch mistakes by itself without me overseeing it [Validation]
-6. Figure out how to make it recover from mistakes because I can't waste money [Self Healing]
-7. Figure out how to learn from mistakes [learnings.yaml and debug/]
-8. Figure out how to do this for 10 applications one at a time
-9. Figure out how to do this for 10 applications all at once
-10. Figure out how to do this for 100 applications all at once
-11. Figure out how to do this for 100 applications all at once, every single day for however long possible without it failing on me. 
-
-Each problem by itself is a months long deep dive and I'm proud of myself to get it done to a shippable state so quickly while not sacrificing quality. 
-
-The fact that the final solution appears obvious, elegant, and too simple to people is a sign of good engineering taste and ability, not of the problem's nature. 
