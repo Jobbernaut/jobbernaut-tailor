@@ -85,18 +85,31 @@ class ResumeOptimizationPipeline:
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
         self.cover_letter_prompt_template = load_prompt_template("generate_cover_letter.txt")
         
-        # Load humanization configuration
+        # Load humanization configuration (supports both new and old formats)
         humanization_config = self.config.get("humanization", {})
         self.humanization_enabled = humanization_config.get("enabled", False)
-        self.humanization_level = humanization_config.get("level", "medium")
-        self.humanization_targets = humanization_config.get("apply_to", ["resume", "cover_letter"])
         
-        # Load humanization prompt if enabled
-        self.humanization_prompt = None
+        # Check for new format (separate levels) vs old format (single level)
+        if "levels" in humanization_config:
+            # New format: separate levels for resume and cover letter
+            levels = humanization_config["levels"]
+            self.resume_humanization_level = levels.get("resume", "medium")
+            self.cover_letter_humanization_level = levels.get("cover_letter", "medium")
+        else:
+            # Old format: single level for both (backward compatibility)
+            single_level = humanization_config.get("level", "medium")
+            self.resume_humanization_level = single_level
+            self.cover_letter_humanization_level = single_level
+        
+        # Load humanization prompts if enabled
+        self.resume_humanization_prompt = None
+        self.cover_letter_humanization_prompt = None
         if self.humanization_enabled:
-            self.humanization_prompt = self._load_humanization_prompt(self.humanization_level)
-            print(f"✓ Humanization enabled: {self.humanization_level} level")
-            print(f"  Applying to: {', '.join(self.humanization_targets)}\n")
+            self.resume_humanization_prompt = self._load_humanization_prompt(self.resume_humanization_level)
+            self.cover_letter_humanization_prompt = self._load_humanization_prompt(self.cover_letter_humanization_level)
+            print(f"✓ Humanization enabled:")
+            print(f"  Resume: {self.resume_humanization_level} level")
+            print(f"  Cover Letter: {self.cover_letter_humanization_level} level\n")
         
         # Load reasoning trace configuration
         # Note: reasoning_trace = false means "remove traces" (don't include them)
@@ -212,19 +225,26 @@ class ResumeOptimizationPipeline:
         Returns:
             The prompt with humanization instructions appended (if applicable)
         """
-        # Check if humanization is enabled and applies to this target
+        # Check if humanization is enabled
         if not self.humanization_enabled:
             return prompt
         
-        if target not in self.humanization_targets:
+        # Select the appropriate humanization prompt based on target
+        if target == "resume":
+            humanization_prompt = self.resume_humanization_prompt
+        elif target == "cover_letter":
+            humanization_prompt = self.cover_letter_humanization_prompt
+        else:
+            # Unknown target, return prompt unchanged
             return prompt
         
-        if not self.humanization_prompt:
+        # If no prompt loaded for this target, return unchanged
+        if not humanization_prompt:
             return prompt
         
         # Append humanization instructions to the prompt
         separator = "\n\n" + "="*80 + "\n"
-        humanized_prompt = prompt + separator + self.humanization_prompt + separator
+        humanized_prompt = prompt + separator + humanization_prompt + separator
         
         return humanized_prompt
     

@@ -10,6 +10,32 @@ CRITICAL SAFEGUARDS:
 - NEVER remove key details or achievements
 - ALL facts, dates, technologies, and results MUST remain exactly as provided
 
+ANTI-AI-DETECTION RULES (APPLY SELECTIVELY):
+
+1. AVOID AI TELL-TALES:
+   - BANNED PHRASES: "leverage", "utilize", "facilitate" (unless technically specific), "synergize", "cutting-edge", "world-class", "industry-leading"
+   - BANNED PATTERNS: Starting 3+ consecutive bullets with the same verb
+   - Example:
+     * AI-like: "Leveraged cutting-edge technologies to facilitate optimization"
+     * Natural: "Applied machine learning algorithms to optimize performance"
+
+2. SENTENCE RHYTHM VARIATION:
+   - Avoid monotonous patterns
+   - Mix simple and compound sentences
+   - Example:
+     * Monotonous: "Built API. Reduced latency. Improved throughput."
+     * Varied: "Built RESTful API that reduced latency by 60% and improved throughput by 45%."
+
+3. ACTIVE VOICE PREFERENCE:
+   - Use active voice consistently
+   - "Built system" not "System was built"
+   - Show direct agency
+
+4. FILLER ELIMINATION:
+   - Cut: "in order to" → use "to"
+   - Cut: "due to the fact that" → use "because"
+   - Remove unnecessary hedging when you led the work
+
 HUMANIZATION TECHNIQUES (Apply Sparingly):
 
 1. SENTENCE STRUCTURE VARIATION:
@@ -37,11 +63,19 @@ HUMANIZATION TECHNIQUES (Apply Sparingly):
    - Avoid mechanical repetition of phrasing patterns
    - Let related accomplishments flow together naturally
 
+5. CLARITY OVER JARGON:
+   - Use plain English when possible
+   - Direct sentences beat complex ones
+   - Example:
+     * Jargon-heavy: "Facilitated cross-functional synergies"
+     * Clear: "Coordinated engineering and product teams"
+
 WHAT NOT TO DO:
 - Do NOT add casual language or conversational tone
 - Do NOT use contractions
 - Do NOT add filler words or unnecessary elaboration
 - Do NOT sacrifice precision for "naturalness"
 - Do NOT make the writing less professional
+- Do NOT use hashtags, emojis, or semicolons
 
-BALANCE: This is LOW humanization - the output should still be highly polished and professional, with only subtle variations that prevent it from feeling template-generated. Most readers should not consciously notice the humanization.
+BALANCE: This is LOW humanization - the output should still be highly polished and professional, with only subtle variations that prevent it from feeling template-generated or AI-written. Most readers should not consciously notice the humanization, but AI detection systems should find it more natural than purely formulaic writing.

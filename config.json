@@ -35,8 +35,10 @@
   },
   "humanization": {
     "enabled": false,
-    "level": "low",
-    "apply_to": ["resume", "cover_letter"]
+    "levels": {
+      "resume": "medium",
+      "cover_letter": "high"
+    }
   },
   "defaults": {
     "resume_bot": "Claude-Sonnet-4.5",
