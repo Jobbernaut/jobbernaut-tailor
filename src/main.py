@@ -28,6 +28,7 @@ from utils import (
 from template_renderer import TemplateRenderer
 from models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
 from progress_tracker import ProgressTracker
+from system_check import verify_system_requirements
 
 
 class ResumeOptimizationPipeline:
@@ -904,7 +905,7 @@ class ResumeOptimizationPipeline:
         # Intelligence Step 2: Research company
         company_research = await self.research_company(job_description, company_name, job_id, output_dir)
         if tracker and job_id:
-            tracker.update_step(job_id, 3, "Resume Generation")
+            tracker.update_step(job_id, 2, "Storytelling Arc")
         
         print(f"{'='*60}")
         print(f"INTELLIGENCE GATHERING COMPLETE")
@@ -1056,9 +1057,6 @@ class ResumeOptimizationPipeline:
         save_json(resume_json_path, tailored_resume)
         print(f"✓ Resume JSON saved (Pydantic validation passed)\n")
         
-        if tracker and job_id:
-            tracker.update_step(job_id, 2, "Storytelling Arc")
-
         # Intelligence Step 3: Generate storytelling arc (after resume, before cover letter)
         storytelling_arc = await self.generate_storytelling_arc(
             job_description, company_research, job_resonance, tailored_resume, job_id, company_name, output_dir
@@ -1317,6 +1315,15 @@ class ResumeOptimizationPipeline:
         print("\n" + "=" * 60)
         print("RESUME OPTIMIZATION PIPELINE")
         print("=" * 60 + "\n")
+        
+        # Run system requirements check if enabled
+        system_config = self.config.get("system_requirements", {})
+        if system_config.get("check_on_startup", True):
+            if not verify_system_requirements(self.config):
+                print("\n❌ System requirements check failed. Please resolve the issues above before running the pipeline.\n")
+                return
+        else:
+            print("ℹ️  System requirements check disabled in config.json\n")
 
         applications = load_yaml(self.applications_path)
         

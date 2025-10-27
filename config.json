@@ -50,5 +50,10 @@
     "applications": "data/applications.yaml",
     "application_template": "data/application_template.yaml",
     "master_resume": "profile/master_resume.json"
+  },
+  "system_requirements": {
+    "check_on_startup": true,
+    "pdflatex_timeout": 300,
+    "allow_missing_optional": false
   }
 }
