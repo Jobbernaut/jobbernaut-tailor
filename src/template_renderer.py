@@ -140,9 +140,11 @@ class TemplateRenderer:
         # If not 10 digits, return original
         return phone_str
     
-    def render_resume(self, resume_data: Dict[str, Any]) -> str:
+    def render_resume(self, resume_data: Dict[str, Any], 
+                     job_title: str = None, 
+                     company_name: str = None) -> str:
         """
-        Render resume LaTeX from JSON data.
+        Render resume LaTeX from JSON data with dynamic PDF metadata.
         
         Args:
             resume_data: Dictionary containing resume data with keys:
@@ -151,10 +153,19 @@ class TemplateRenderer:
                 - skills: dict with category names as keys
                 - work_experience: list of work experience entries
                 - projects: list of project entries
+            job_title: Target job title for PDF metadata optimization
+            company_name: Target company name for PDF metadata optimization
                 
         Returns:
             Rendered LaTeX document as string
         """
+        # Extract top technical skills for PDF metadata
+        top_skills = self._extract_top_skills(resume_data.get('skills', {}))
+        
+        # Inject metadata for ATS optimization
+        resume_data['job_title'] = job_title or "Software Engineer"
+        resume_data['company_name'] = company_name or ""
+        resume_data['top_skills'] = top_skills
         # Sort education by graduation_date (descending - most recent first)
         if 'education' in resume_data and len(resume_data['education']) > 1:
             resume_data['education'] = sorted(
@@ -179,13 +190,52 @@ class TemplateRenderer:
         template = self.env.get_template('resume.jinja2')
         return template.render(**resume_data)
     
-    def render_cover_letter(self, contact_info: Dict[str, str], cover_letter_text: str) -> str:
+    def _extract_top_skills(self, skills_dict: Dict[str, str], max_skills: int = 7) -> list:
         """
-        Render cover letter LaTeX from contact info and cover letter text.
+        Extract top N skills from skills dictionary for PDF metadata.
+        
+        Args:
+            skills_dict: Dictionary of skill categories and their values
+            max_skills: Maximum number of skills to extract
+            
+        Returns:
+            List of top skills for metadata
+        """
+        top_skills = []
+        
+        # Priority order for skill categories (most relevant first)
+        priority_categories = ['Languages', 'Frameworks', 'Tools', 'Technologies', 'Cloud']
+        
+        # Extract from priority categories first
+        for category in priority_categories:
+            if category in skills_dict:
+                skills_str = skills_dict[category]
+                skills_list = [s.strip() for s in skills_str.split(',')]
+                top_skills.extend(skills_list[:3])  # Top 3 from each priority category
+                if len(top_skills) >= max_skills:
+                    break
+        
+        # Fill remaining slots from other categories if needed
+        if len(top_skills) < max_skills:
+            for category, skills_str in skills_dict.items():
+                if category not in priority_categories:
+                    skills_list = [s.strip() for s in skills_str.split(',')]
+                    top_skills.extend(skills_list)
+                    if len(top_skills) >= max_skills:
+                        break
+        
+        return top_skills[:max_skills]
+    
+    def render_cover_letter(self, contact_info: Dict[str, str], cover_letter_text: str,
+                           job_title: str = None, company_name: str = None) -> str:
+        """
+        Render cover letter LaTeX from contact info and cover letter text with dynamic PDF metadata.
         
         Args:
             contact_info: Dictionary with name, phone, email, linkedin, github
             cover_letter_text: The main body text of the cover letter
+            job_title: Target job title for PDF metadata optimization
+            company_name: Target company name for PDF metadata optimization
             
         Returns:
             Rendered LaTeX document as string
@@ -193,17 +243,23 @@ class TemplateRenderer:
         template = self.env.get_template('cover_letter.jinja2')
         return template.render(
             contact_info=contact_info,
-            cover_letter_text=cover_letter_text
+            cover_letter_text=cover_letter_text,
+            job_title=job_title or "",
+            company_name=company_name or ""
         )
     
     def render_resume_with_referral(self, resume_data: Dict[str, Any], 
-                                   referral_contact: Dict[str, str]) -> str:
+                                   referral_contact: Dict[str, str],
+                                   job_title: str = None,
+                                   company_name: str = None) -> str:
         """
-        Render resume with referral contact information.
+        Render resume with referral contact information and dynamic PDF metadata.
         
         Args:
             resume_data: Dictionary containing resume data
             referral_contact: Dictionary with referral contact info (name, phone, email, linkedin, github)
+            job_title: Target job title for PDF metadata optimization
+            company_name: Target company name for PDF metadata optimization
             
         Returns:
             Rendered LaTeX document as string with referral contact info
@@ -212,18 +268,22 @@ class TemplateRenderer:
         resume_with_referral = resume_data.copy()
         resume_with_referral['contact_info'] = referral_contact
         
-        return self.render_resume(resume_with_referral)
+        return self.render_resume(resume_with_referral, job_title, company_name)
     
     def render_cover_letter_with_referral(self, cover_letter_text: str,
-                                         referral_contact: Dict[str, str]) -> str:
+                                         referral_contact: Dict[str, str],
+                                         job_title: str = None,
+                                         company_name: str = None) -> str:
         """
-        Render cover letter with referral contact information.
+        Render cover letter with referral contact information and dynamic PDF metadata.
         
         Args:
             cover_letter_text: The main body text of the cover letter
             referral_contact: Dictionary with referral contact info
+            job_title: Target job title for PDF metadata optimization
+            company_name: Target company name for PDF metadata optimization
             
         Returns:
             Rendered LaTeX document as string with referral contact info
         """
-        return self.render_cover_letter(referral_contact, cover_letter_text)
+        return self.render_cover_letter(referral_contact, cover_letter_text, job_title, company_name)

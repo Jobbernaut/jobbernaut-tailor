@@ -1269,7 +1269,11 @@ class ResumeOptimizationPipeline:
 
         # STEP 3: Render Resume LaTeX using Jinja2 template
         print("STEP 3: Rendering resume LaTeX from template...")
-        resume_latex = self.renderer.render_resume(tailored_resume)
+        resume_latex = self.renderer.render_resume(
+            tailored_resume,
+            job_title=job_title,
+            company_name=company_name
+        )
         
         # Save resume LaTeX
         resume_tex_path = os.path.join(output_dir, "Resume.tex")
@@ -1285,7 +1289,12 @@ class ResumeOptimizationPipeline:
         # STEP 4: Render Cover Letter LaTeX using Jinja2 template
         print("STEP 4: Rendering cover letter LaTeX from template...")
         contact_info = tailored_resume.get("contact_info", {})
-        cover_letter_latex = self.renderer.render_cover_letter(contact_info, cover_letter_text)
+        cover_letter_latex = self.renderer.render_cover_letter(
+            contact_info,
+            cover_letter_text,
+            job_title=job_title,
+            company_name=company_name
+        )
         
         # Save cover letter LaTeX
         cover_letter_tex_path = os.path.join(output_dir, "CoverLetter.tex")
@@ -1398,13 +1407,23 @@ class ResumeOptimizationPipeline:
             }
             
             # Render referral resume LaTeX
-            referral_resume_latex = self.renderer.render_resume_with_referral(tailored_resume, referral_contact)
+            referral_resume_latex = self.renderer.render_resume_with_referral(
+                tailored_resume, 
+                referral_contact,
+                job_title=job_title,
+                company_name=company_name
+            )
             referral_resume_tex_path = os.path.join(output_dir, "Referral_Resume.tex")
             with open(referral_resume_tex_path, "w", encoding="utf-8") as f:
                 f.write(referral_resume_latex)
             
             # Render referral cover letter LaTeX
-            referral_cover_letter_latex = self.renderer.render_cover_letter_with_referral(cover_letter_text, referral_contact)
+            referral_cover_letter_latex = self.renderer.render_cover_letter_with_referral(
+                cover_letter_text, 
+                referral_contact,
+                job_title=job_title,
+                company_name=company_name
+            )
             referral_cover_letter_tex_path = os.path.join(output_dir, "Referral_CoverLetter.tex")
             with open(referral_cover_letter_tex_path, "w", encoding="utf-8") as f:
                 f.write(referral_cover_letter_latex)
