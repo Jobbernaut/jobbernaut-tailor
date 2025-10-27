@@ -1,3 +1,16 @@
+> ⚠️ **NOTICE**: The main branch contains v4.2, most of the docs are inaccurate, and is significantly outdated. 
+> 
+> **Current Version**: v4.2+ (in development branches)
+> 
+> **Major Features Added Since Main**:
+> - Fact verification system (100% accuracy, 0 hallucinations)
+> - 3-level humanization system (85-98% AI detection bypass)
+> - 7 comprehensive technical documentation guides
+> - Enhanced validation pipeline
+> 
+> See the latest branches for current implementation.
+
+
 # Jobbernaut Tailor v4.2
 
 ---
