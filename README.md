@@ -496,6 +496,17 @@ FUZZY_MATCH_THRESHOLD = 0.80  # Lower from 0.85
 
 ---
 
+## Related Tools
+
+### Jobbernaut Extract
+[https://github.com/Jobbernaut/jobbernaut-extract](https://github.com/Jobbernaut/jobbernaut-extract)
+
+Complementary tool that automates the `applications.yaml` entry process. Instead of manually copying job descriptions and company info, jobbernaut-extract scrapes job postings and generates properly formatted YAML entries.
+
+**Use case**: Batch-add 50 jobs to applications.yaml in minutes instead of hours.
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please:
@@ -510,15 +521,7 @@ Contributions are welcome! Please:
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) for details
-
----
-
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/Jobbernaut/jobbernaut-tailor/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/Jobbernaut/jobbernaut-tailor/discussions)
-- **Email**: support@jobbernaut.com
+All Rights Reserved - See [LICENSE](LICENSE) for details
 
 ---
 
