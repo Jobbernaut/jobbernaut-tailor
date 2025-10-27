@@ -521,7 +521,6 @@ Contributions are welcome! Please:
 
 ## License
 
-## License
 This is source-available code under a custom Non-Commercial License.  
 - **Free for non-commercial use**: View, modify, fork, and share with attribution.  
 - **Commercial use**: Contact me at srmanda.cs@gmail.com for permission and pricing.  
