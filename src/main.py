@@ -31,6 +31,7 @@ from template_renderer import TemplateRenderer
 from models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
 from progress_tracker import ProgressTracker
 from system_check import verify_system_requirements
+from fact_verifier import FactVerifier, FactVerificationError
 
 
 class ResumeOptimizationPipeline:
@@ -86,6 +87,10 @@ class ResumeOptimizationPipeline:
         
         # Load master resume
         self.master_resume = load_json(self.master_resume_path)
+        
+        # Initialize fact verifier with master resume
+        self.fact_verifier = FactVerifier(self.master_resume)
+        print(f"✓ Fact verifier initialized with master resume\n")
 
         # Load prompt templates
         self.resume_prompt_template = load_prompt_template("generate_resume.txt")
@@ -1071,10 +1076,60 @@ class ResumeOptimizationPipeline:
             try:
                 validated_resume = TailoredResume(**tailored_resume_raw)
                 tailored_resume = validated_resume.model_dump()
-                print(f"\n{'='*60}")
-                print(f"✅ PYDANTIC VALIDATION PASSED ON ATTEMPT {validation_attempt}")
-                print(f"{'='*60}\n")
-                break  # Success! Exit retry loop
+                print(f"  ✓ Pydantic validation passed")
+                
+                # Fact verification against master resume
+                print(f"  Verifying facts against master resume...")
+                verification_result = self.fact_verifier.verify_resume(tailored_resume)
+                
+                if verification_result.is_valid:
+                    print(f"  ✓ Fact verification passed")
+                    print(f"\n{'='*60}")
+                    print(f"✅ VALIDATION PASSED ON ATTEMPT {validation_attempt}")
+                    print(f"{'='*60}\n")
+                    break  # Success! Exit retry loop
+                else:
+                    # Fact verification failed
+                    print(f"  ✗ Fact verification failed: {len(verification_result.hallucinations)} hallucination(s)")
+                    
+                    # Log to learnings.yaml
+                    self._log_failure_to_learnings(
+                        step_name="Resume Generation",
+                        failure_type="fact_verification",
+                        failure_details={
+                            'hallucination_count': len(verification_result.hallucinations),
+                            'hallucinations': [
+                                {
+                                    'category': h.category,
+                                    'claimed_value': h.claimed_value,
+                                    'context': h.context,
+                                    'severity': h.severity
+                                }
+                                for h in verification_result.hallucinations
+                            ]
+                        },
+                        job_id=job_id,
+                        company_name=company_name,
+                        attempt=validation_attempt
+                    )
+                    
+                    # Track shadow failure
+                    if tracker and job_id and validation_attempt > 1:
+                        tracker.record_retry(
+                            job_id=job_id,
+                            step_name="Resume Generation",
+                            failure_reason=f"Fact verification: {len(verification_result.hallucinations)} hallucinations",
+                            retry_type="validation"
+                        )
+                    
+                    if validation_attempt < max_validation_retries:
+                        # Build error feedback and retry
+                        error_feedback = self.fact_verifier.format_hallucinations_for_retry(verification_result)
+                        current_prompt = error_feedback + "\n\n" + resume_prompt
+                        print(f"\n  Retrying with fact verification feedback...\n")
+                        continue
+                    else:
+                        raise FactVerificationError(verification_result)
                 
             except ValidationError as e:
                 last_validation_error = e
