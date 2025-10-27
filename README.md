@@ -536,6 +536,7 @@ Built with:
 - [Rich](https://rich.readthedocs.io/) - Terminal UI
 - [Poe API](https://poe.com/) - AI model access
 - [LaTeX](https://www.latex-project.org/) - PDF generation
+- [FAANGPath](https://faangpath.com/) - Resume and Cover Letter Templates
 
 ---
 
