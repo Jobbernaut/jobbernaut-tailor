@@ -12,6 +12,8 @@ import fastapi_poe as fp
 from pydantic import ValidationError
 from rich.live import Live
 from rich.console import Console
+from rich.layout import Layout
+from rich.panel import Panel
 
 from utils import (
     load_yaml,
@@ -531,14 +533,16 @@ class ResumeOptimizationPipeline:
         
         return "\n".join(feedback)
     
-    def _log_validation_failure(self, step_name: str, validation_error: ValidationError, 
-                               job_id: str, company_name: str, attempt: int) -> None:
+    def _log_failure_to_learnings(self, step_name: str, failure_type: str, 
+                                 failure_details: dict, job_id: str, 
+                                 company_name: str, attempt: int) -> None:
         """
-        Log validation failure to learnings.yaml for incident tracking.
+        Log any type of failure to learnings.yaml for incident tracking.
         
         Args:
             step_name: Name of the step that failed
-            validation_error: The Pydantic ValidationError
+            failure_type: Type of failure ('validation', 'json_parsing', 'quality', 'api', 'input', 'latex_compilation')
+            failure_details: Dictionary with failure-specific information
             job_id: Job ID for context
             company_name: Company name for context
             attempt: Attempt number when failure occurred
@@ -553,18 +557,9 @@ class ResumeOptimizationPipeline:
             'job_id': job_id,
             'company_name': company_name,
             'attempt': attempt,
-            'error_count': len(validation_error.errors()),
-            'errors': []
+            'failure_type': failure_type,
+            'details': failure_details
         }
-        
-        # Extract error details
-        for error in validation_error.errors():
-            field_path = ".".join(str(loc) for loc in error['loc'])
-            incident['errors'].append({
-                'field': field_path,
-                'message': error['msg'],
-                'type': error['type']
-            })
         
         # Load existing learnings or create new structure
         learnings_file = "learnings.yaml"
@@ -581,7 +576,7 @@ class ResumeOptimizationPipeline:
         with open(learnings_file, 'w', encoding='utf-8') as f:
             yaml.dump(learnings, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
         
-        print(f"    ⚠️  Incident logged to learnings.yaml")
+        print(f"    ⚠️  Incident logged to learnings.yaml ({failure_type})")
 
     async def _call_intelligence_step_with_retry(
         self, 
@@ -645,6 +640,24 @@ class ResumeOptimizationPipeline:
                     print(f"    ✓ JSON extraction successful")
                 except json.JSONDecodeError as e:
                     print(f"    ✗ JSON extraction failed: {str(e)}")
+                    
+                    # Log to learnings.yaml
+                    job_id_val = replacements.get('[JOB_ID]', 'unknown')
+                    company_name = replacements.get('[COMPANY_NAME]', 'unknown')
+                    self._log_failure_to_learnings(
+                        step_name=step_name,
+                        failure_type="json_parsing",
+                        failure_details={
+                            'error_message': str(e),
+                            'error_type': type(e).__name__,
+                            'response_length': len(response),
+                            'response_preview': response[:200] if len(response) > 200 else response
+                        },
+                        job_id=job_id_val,
+                        company_name=company_name,
+                        attempt=attempt
+                    )
+                    
                     if attempt < max_retries:
                         error_feedback = f"\n\n{'='*80}\n# JSON PARSING ERROR\n{'='*80}\n\nThe previous response was not valid JSON.\nError: {str(e)}\n\nPlease ensure your response contains ONLY valid JSON with no additional text.\n{'='*80}\n"
                         current_prompt = base_prompt + error_feedback
@@ -664,7 +677,24 @@ class ResumeOptimizationPipeline:
                     # Log incident (requires job_id and company_name from replacements)
                     job_id_val = replacements.get('[JOB_ID]', 'unknown')
                     company_name = replacements.get('[COMPANY_NAME]', 'unknown')
-                    self._log_validation_failure(step_name, e, job_id_val, company_name, attempt)
+                    self._log_failure_to_learnings(
+                        step_name=step_name,
+                        failure_type="validation",
+                        failure_details={
+                            'error_count': len(e.errors()),
+                            'errors': [
+                                {
+                                    'field': ".".join(str(loc) for loc in err['loc']),
+                                    'message': err['msg'],
+                                    'type': err['type']
+                                }
+                                for err in e.errors()
+                            ]
+                        },
+                        job_id=job_id_val,
+                        company_name=company_name,
+                        attempt=attempt
+                    )
                     
                     # Track shadow failure (validation retry)
                     if tracker and job_id and attempt > 1:
@@ -721,7 +751,8 @@ class ResumeOptimizationPipeline:
         # Should never reach here
         raise ValueError(f"{step_name} failed after {max_retries} attempts: {str(last_error)}")
 
-    async def analyze_job_resonance(self, job_description: str, company_name: str, job_id: str, output_dir: str) -> dict:
+    async def analyze_job_resonance(self, job_description: str, company_name: str, job_id: str, output_dir: str, 
+                                   tracker: ProgressTracker = None) -> dict:
         """
         INTELLIGENCE STEP 1: Analyze job description for emotional keywords and hidden requirements.
         
@@ -730,6 +761,7 @@ class ResumeOptimizationPipeline:
             company_name: The company name
             job_id: Job ID for logging
             output_dir: Directory to save analysis results
+            tracker: Optional ProgressTracker for shadow failure tracking
             
         Returns:
             Dictionary containing JobResonanceAnalysis data
@@ -748,7 +780,9 @@ class ResumeOptimizationPipeline:
             output_dir=output_dir,
             output_filename_prefix="Job_Resonance_Analysis",
             bot_name=self.job_resonance_bot,
-            parameters=self.job_resonance_parameters
+            parameters=self.job_resonance_parameters,
+            tracker=tracker,
+            job_id=job_id
         )
         
         print(f"  ✓ Job resonance analysis complete")
@@ -760,7 +794,8 @@ class ResumeOptimizationPipeline:
         
         return result
 
-    async def research_company(self, job_description: str, company_name: str, job_id: str, output_dir: str) -> dict:
+    async def research_company(self, job_description: str, company_name: str, job_id: str, output_dir: str,
+                              tracker: ProgressTracker = None) -> dict:
         """
         INTELLIGENCE STEP 2: Research company for authentic connection building.
         
@@ -769,6 +804,7 @@ class ResumeOptimizationPipeline:
             company_name: The company name
             job_id: Job ID for logging
             output_dir: Directory to save research results
+            tracker: Optional ProgressTracker for shadow failure tracking
             
         Returns:
             Dictionary containing CompanyResearch data
@@ -787,7 +823,9 @@ class ResumeOptimizationPipeline:
             output_dir=output_dir,
             output_filename_prefix="Company_Research",
             bot_name=self.company_research_bot,
-            parameters=self.company_research_parameters
+            parameters=self.company_research_parameters,
+            tracker=tracker,
+            job_id=job_id
         )
         
         print(f"  ✓ Company research complete")
@@ -799,7 +837,8 @@ class ResumeOptimizationPipeline:
 
     async def generate_storytelling_arc(self, job_description: str, company_research: dict, 
                                        job_resonance: dict, tailored_resume: dict, 
-                                       job_id: str, company_name: str, output_dir: str) -> dict:
+                                       job_id: str, company_name: str, output_dir: str,
+                                       tracker: ProgressTracker = None) -> dict:
         """
         INTELLIGENCE STEP 3: Generate storytelling arc for cover letter.
         
@@ -811,6 +850,7 @@ class ResumeOptimizationPipeline:
             job_id: Job ID for logging
             company_name: Company name for logging
             output_dir: Directory to save storytelling arc
+            tracker: Optional ProgressTracker for shadow failure tracking
             
         Returns:
             Dictionary containing StorytellingArc data
@@ -832,7 +872,9 @@ class ResumeOptimizationPipeline:
             output_dir=output_dir,
             output_filename_prefix="Storytelling_Arc",
             bot_name=self.storytelling_arc_bot,
-            parameters=self.storytelling_arc_parameters
+            parameters=self.storytelling_arc_parameters,
+            tracker=tracker,
+            job_id=job_id
         )
         
         print(f"  ✓ Storytelling arc generated")
@@ -842,7 +884,7 @@ class ResumeOptimizationPipeline:
         
         return result
 
-    async def process_job(self, job: dict, tracker: ProgressTracker = None) -> None:
+    async def process_job(self, job: dict, tracker: ProgressTracker = None, live = None) -> None:
         """
         Process a single job application following the 12-step pipeline.
         
@@ -880,6 +922,26 @@ class ResumeOptimizationPipeline:
             print(f"{'='*60}")
             print(f"Error: {str(e)}")
             print(f"{'='*60}\n")
+            
+            # Log to learnings.yaml
+            self._log_failure_to_learnings(
+                step_name="Input Validation",
+                failure_type="input",
+                failure_details={
+                    'error_message': str(e),
+                    'error_type': type(e).__name__,
+                    'job_data': {
+                        'job_id': job.get('job_id'),
+                        'job_title': job.get('job_title'),
+                        'company_name': job.get('company_name'),
+                        'description_length': len(job.get('job_description', ''))
+                    }
+                },
+                job_id=job.get('job_id', 'unknown'),
+                company_name=job.get('company_name', 'unknown'),
+                attempt=1
+            )
+            
             if tracker and job_id:
                 tracker.mark_failed(job_id, f"Input validation: {str(e)}")
             raise ValueError(f"Invalid job inputs: {str(e)}")
@@ -891,6 +953,8 @@ class ResumeOptimizationPipeline:
         # Update tracker: Starting intelligence gathering
         if tracker and job_id:
             tracker.update_step(job_id, 0, "Job Resonance Analysis")
+            if live:
+                live.update(tracker.generate_table())
 
         # INTELLIGENCE GATHERING PHASE (3 steps before resume generation)
         print(f"\n{'='*60}")
@@ -898,14 +962,18 @@ class ResumeOptimizationPipeline:
         print(f"{'='*60}\n")
         
         # Intelligence Step 1: Analyze job resonance
-        job_resonance = await self.analyze_job_resonance(job_description, company_name, job_id, output_dir)
+        job_resonance = await self.analyze_job_resonance(job_description, company_name, job_id, output_dir, tracker)
         if tracker and job_id:
             tracker.update_step(job_id, 1, "Company Research")
+            if live:
+                live.update(tracker.generate_table())
         
         # Intelligence Step 2: Research company
-        company_research = await self.research_company(job_description, company_name, job_id, output_dir)
+        company_research = await self.research_company(job_description, company_name, job_id, output_dir, tracker)
         if tracker and job_id:
             tracker.update_step(job_id, 2, "Storytelling Arc")
+            if live:
+                live.update(tracker.generate_table())
         
         print(f"{'='*60}")
         print(f"INTELLIGENCE GATHERING COMPLETE")
@@ -957,6 +1025,21 @@ class ResumeOptimizationPipeline:
                 print(f"  ✓ JSON extraction successful")
             except json.JSONDecodeError as e:
                 print(f"  ✗ JSON extraction failed: {str(e)}")
+                
+                # Log to learnings.yaml
+                self._log_failure_to_learnings(
+                    step_name="Resume Generation",
+                    failure_type="json_parsing",
+                    failure_details={
+                        'error_message': str(e),
+                        'error_type': type(e).__name__,
+                        'response_length': len(resume_response),
+                        'response_preview': resume_response[:200] if len(resume_response) > 200 else resume_response
+                    },
+                    job_id=job_id,
+                    company_name=company_name,
+                    attempt=validation_attempt
+                )
                 
                 # Track shadow failure (JSON parsing retry)
                 if tracker and job_id and validation_attempt > 1:
@@ -1015,7 +1098,24 @@ class ResumeOptimizationPipeline:
                 print(f"Invalid JSON saved to: Resume_INVALID_Attempt_{validation_attempt}.json")
                 
                 # Log incident
-                self._log_validation_failure("Resume Generation", e, job_id, company_name, validation_attempt)
+                self._log_failure_to_learnings(
+                    step_name="Resume Generation",
+                    failure_type="validation",
+                    failure_details={
+                        'error_count': len(e.errors()),
+                        'errors': [
+                            {
+                                'field': ".".join(str(loc) for loc in err['loc']),
+                                'message': err['msg'],
+                                'type': err['type']
+                            }
+                            for err in e.errors()
+                        ]
+                    },
+                    job_id=job_id,
+                    company_name=company_name,
+                    attempt=validation_attempt
+                )
                 
                 # Track shadow failure (Pydantic validation retry)
                 if tracker and job_id and validation_attempt > 1:
@@ -1057,13 +1157,21 @@ class ResumeOptimizationPipeline:
         save_json(resume_json_path, tailored_resume)
         print(f"✓ Resume JSON saved (Pydantic validation passed)\n")
         
+        # Update tracker: Resume generation complete
+        if tracker and job_id:
+            tracker.update_step(job_id, 3, "Resume Generation")
+            if live:
+                live.update(tracker.generate_table())
+        
         # Intelligence Step 3: Generate storytelling arc (after resume, before cover letter)
         storytelling_arc = await self.generate_storytelling_arc(
-            job_description, company_research, job_resonance, tailored_resume, job_id, company_name, output_dir
+            job_description, company_research, job_resonance, tailored_resume, job_id, company_name, output_dir, tracker
         )
         
         if tracker and job_id:
             tracker.update_step(job_id, 4, "Cover Letter Generation")
+            if live:
+                live.update(tracker.generate_table())
         
         print(f"{'='*60}")
         print(f"INTELLIGENCE PHASE COMPLETE - PROCEEDING TO COVER LETTER")
@@ -1115,6 +1223,21 @@ class ResumeOptimizationPipeline:
                 error_msg = f"Cover letter is too short (min {min_length} chars, got {len(temp_cover_letter_text)}). Please generate a more detailed and complete cover letter."
                 print(f"    ✗ Quality validation failed: {error_msg}")
                 
+                # Log to learnings.yaml
+                self._log_failure_to_learnings(
+                    step_name="Cover Letter Generation",
+                    failure_type="quality",
+                    failure_details={
+                        'error_message': error_msg,
+                        'min_length': min_length,
+                        'actual_length': len(temp_cover_letter_text),
+                        'text_preview': temp_cover_letter_text[:200] if len(temp_cover_letter_text) > 200 else temp_cover_letter_text
+                    },
+                    job_id=job_id,
+                    company_name=company_name,
+                    attempt=cl_attempt
+                )
+                
                 # Track shadow failure (quality retry)
                 if tracker and job_id and cl_attempt > 1:
                     tracker.record_retry(
@@ -1141,6 +1264,8 @@ class ResumeOptimizationPipeline:
         
         if tracker and job_id:
             tracker.update_step(job_id, 5, "Resume LaTeX Rendering")
+            if live:
+                live.update(tracker.generate_table())
 
         # STEP 3: Render Resume LaTeX using Jinja2 template
         print("STEP 3: Rendering resume LaTeX from template...")
@@ -1154,6 +1279,8 @@ class ResumeOptimizationPipeline:
         
         if tracker and job_id:
             tracker.update_step(job_id, 6, "Cover Letter LaTeX Rendering")
+            if live:
+                live.update(tracker.generate_table())
 
         # STEP 4: Render Cover Letter LaTeX using Jinja2 template
         print("STEP 4: Rendering cover letter LaTeX from template...")
@@ -1168,6 +1295,8 @@ class ResumeOptimizationPipeline:
         
         if tracker and job_id:
             tracker.update_step(job_id, 7, "Resume PDF Compilation")
+            if live:
+                live.update(tracker.generate_table())
 
         # Get name for final PDFs
         first_name = tailored_resume["contact_info"]["first_name"]
@@ -1189,10 +1318,27 @@ class ResumeOptimizationPipeline:
             
             if tracker and job_id:
                 tracker.update_step(job_id, 8, "Cover Letter PDF Compilation")
+                if live:
+                    live.update(tracker.generate_table())
         except Exception as e:
             print(f"✗ ERROR: Failed to compile Resume PDF.")
             print(f"  Check the LaTeX log file in the output directory for details.")
             print(f"  Error: {str(e)}")
+            
+            # Log to learnings.yaml
+            self._log_failure_to_learnings(
+                step_name="Resume PDF Compilation",
+                failure_type="latex_compilation",
+                failure_details={
+                    'error_message': str(e),
+                    'error_type': type(e).__name__,
+                    'tex_file': resume_tex_path
+                },
+                job_id=job_id,
+                company_name=company_name,
+                attempt=1
+            )
+            
             if tracker and job_id:
                 tracker.mark_failed(job_id, f"Resume PDF compilation: {str(e)}")
             raise  # Re-raise the exception to halt processing for this job
@@ -1210,10 +1356,27 @@ class ResumeOptimizationPipeline:
             
             if tracker and job_id:
                 tracker.update_step(job_id, 9, "Referral Resume" if self.has_referral_contact else "Cleanup")
+                if live:
+                    live.update(tracker.generate_table())
         except Exception as e:
             print(f"✗ ERROR: Failed to compile Cover Letter PDF.")
             print(f"  Check the LaTeX log file in the output directory for details.")
             print(f"  Error: {str(e)}")
+            
+            # Log to learnings.yaml
+            self._log_failure_to_learnings(
+                step_name="Cover Letter PDF Compilation",
+                failure_type="latex_compilation",
+                failure_details={
+                    'error_message': str(e),
+                    'error_type': type(e).__name__,
+                    'tex_file': cover_letter_tex_path
+                },
+                job_id=job_id,
+                company_name=company_name,
+                attempt=1
+            )
+            
             if tracker and job_id:
                 tracker.mark_failed(job_id, f"Cover Letter PDF compilation: {str(e)}")
             raise  # Re-raise the exception to halt processing for this job
@@ -1261,10 +1424,27 @@ class ResumeOptimizationPipeline:
                 
                 if tracker and job_id:
                     tracker.update_step(job_id, 10, "Referral Cover Letter")
+                    if live:
+                        live.update(tracker.generate_table())
             except Exception as e:
                 print(f"✗ ERROR: Failed to compile Referral Resume PDF.")
                 print(f"  Check the LaTeX log file in the output directory for details.")
                 print(f"  Error: {str(e)}")
+                
+                # Log to learnings.yaml
+                self._log_failure_to_learnings(
+                    step_name="Referral Resume PDF Compilation",
+                    failure_type="latex_compilation",
+                    failure_details={
+                        'error_message': str(e),
+                        'error_type': type(e).__name__,
+                        'tex_file': referral_resume_tex_path
+                    },
+                    job_id=job_id,
+                    company_name=company_name,
+                    attempt=1
+                )
+                
                 if tracker and job_id:
                     tracker.mark_failed(job_id, f"Referral Resume PDF compilation: {str(e)}")
                 raise  # Re-raise the exception to halt processing for this job
@@ -1282,10 +1462,27 @@ class ResumeOptimizationPipeline:
                 
                 if tracker and job_id:
                     tracker.update_step(job_id, 11, "Cleanup")
+                    if live:
+                        live.update(tracker.generate_table())
             except Exception as e:
                 print(f"✗ ERROR: Failed to compile Referral Cover Letter PDF.")
                 print(f"  Check the LaTeX log file in the output directory for details.")
                 print(f"  Error: {str(e)}")
+                
+                # Log to learnings.yaml
+                self._log_failure_to_learnings(
+                    step_name="Referral Cover Letter PDF Compilation",
+                    failure_type="latex_compilation",
+                    failure_details={
+                        'error_message': str(e),
+                        'error_type': type(e).__name__,
+                        'tex_file': referral_cover_letter_tex_path
+                    },
+                    job_id=job_id,
+                    company_name=company_name,
+                    attempt=1
+                )
+                
                 if tracker and job_id:
                     tracker.mark_failed(job_id, f"Referral Cover Letter PDF compilation: {str(e)}")
                 raise  # Re-raise the exception to halt processing for this job
@@ -1293,6 +1490,8 @@ class ResumeOptimizationPipeline:
             print("STEP 7-9: Skipping referral document generation (no referral contact info)\n")
             if tracker and job_id:
                 tracker.update_step(job_id, 11, "Cleanup")
+                if live:
+                    live.update(tracker.generate_table())
 
         # STEP 10: Clean up - move everything except PDFs to debug/
         print("STEP 10: Cleaning up output directory...")
@@ -1312,18 +1511,20 @@ class ResumeOptimizationPipeline:
 
     async def run(self) -> None:
         """Run the pipeline to process all pending jobs in parallel with concurrency limiting."""
-        print("\n" + "=" * 60)
-        print("RESUME OPTIMIZATION PIPELINE")
-        print("=" * 60 + "\n")
+        console = Console()
+        
+        console.print("\n" + "=" * 60)
+        console.print("RESUME OPTIMIZATION PIPELINE", style="bold cyan")
+        console.print("=" * 60 + "\n")
         
         # Run system requirements check if enabled
         system_config = self.config.get("system_requirements", {})
         if system_config.get("check_on_startup", True):
             if not verify_system_requirements(self.config):
-                print("\n❌ System requirements check failed. Please resolve the issues above before running the pipeline.\n")
+                console.print("\n❌ System requirements check failed. Please resolve the issues above before running the pipeline.\n", style="bold red")
                 return
         else:
-            print("ℹ️  System requirements check disabled in config.json\n")
+            console.print("ℹ️  System requirements check disabled in config.json\n")
 
         applications = load_yaml(self.applications_path)
         
@@ -1331,11 +1532,11 @@ class ResumeOptimizationPipeline:
         pending_jobs = [job for job in applications if job.get("status") == "pending"]
         
         if not pending_jobs:
-            print("No pending jobs found. All jobs are processed!")
+            console.print("No pending jobs found. All jobs are processed!", style="green")
             return
 
-        print(f"Found {len(pending_jobs)} pending job(s) to process.\n")
-        print(f"Processing jobs with max {self.max_concurrent_jobs} concurrent at a time...\n")
+        console.print(f"Found {len(pending_jobs)} pending job(s) to process.\n")
+        console.print(f"Processing jobs with max {self.max_concurrent_jobs} concurrent at a time...\n")
         
         # Initialize progress tracker
         tracker = ProgressTracker(total_jobs=len(pending_jobs))
@@ -1355,12 +1556,20 @@ class ResumeOptimizationPipeline:
             async with semaphore:
                 return await self.process_job(job, tracker=tracker)
         
-        # Process all jobs concurrently using asyncio.gather with concurrency limit
-        # return_exceptions=True ensures one job's failure doesn't stop others
-        results = await asyncio.gather(
-            *[process_with_limit(job) for job in pending_jobs],
-            return_exceptions=True
-        )
+        # Create Live display with progress table
+        with Live(tracker.generate_table(), console=console, refresh_per_second=4) as live:
+            # Process all jobs concurrently using asyncio.gather with concurrency limit
+            # return_exceptions=True ensures one job's failure doesn't stop others
+            # Pass live object to process_job for immediate updates
+            async def process_with_live(job):
+                """Process a job with semaphore-based concurrency limiting and live updates."""
+                async with semaphore:
+                    return await self.process_job(job, tracker=tracker, live=live)
+            
+            results = await asyncio.gather(
+                *[process_with_live(job) for job in pending_jobs],
+                return_exceptions=True
+            )
         
         # Count successes and failures
         processed_count = 0
@@ -1380,35 +1589,34 @@ class ResumeOptimizationPipeline:
                     "company_name": company_name,
                     "error": str(result)
                 })
-                print(f"\n{'='*60}")
-                print(f"❌ Job {idx}/{len(pending_jobs)} FAILED")
-                print(f"{'='*60}")
-                print(f"Job: {job_title} at {company_name}")
-                print(f"Job ID: {job_id}")
-                print(f"Error: {str(result)}")
-                print(f"{'='*60}\n")
+                console.print(f"\n{'='*60}")
+                console.print(f"❌ Job {idx}/{len(pending_jobs)} FAILED", style="bold red")
+                console.print(f"{'='*60}")
+                console.print(f"Job: {job_title} at {company_name}")
+                console.print(f"Job ID: {job_id}")
+                console.print(f"Error: {str(result)}")
+                console.print(f"{'='*60}\n")
             else:
                 processed_count += 1
-                print(f"\n✓ Job {idx}/{len(pending_jobs)} completed: {job_title} at {company_name}")
 
         # Print summary
-        print(f"\n{'='*60}")
-        print(f"PIPELINE SUMMARY")
-        print(f"{'='*60}")
-        print(f"Total pending jobs: {len(pending_jobs)}")
-        print(f"Successfully processed: {processed_count}")
-        print(f"Failed: {failed_count}")
-        print(f"{'='*60}\n")
+        console.print(f"\n{'='*60}")
+        console.print(f"PIPELINE SUMMARY", style="bold cyan")
+        console.print(f"{'='*60}")
+        console.print(f"Total pending jobs: {len(pending_jobs)}")
+        console.print(f"Successfully processed: {processed_count}", style="green")
+        console.print(f"Failed: {failed_count}", style="red" if failed_count > 0 else "green")
+        console.print(f"{'='*60}\n")
         
         # Display shadow failure report
-        print("\n")
-        print(tracker.generate_detailed_report())
-        print("\n")
+        console.print("\n")
+        console.print(tracker.generate_detailed_report())
+        console.print("\n")
         
         if processed_count > 0:
-            print("Pipeline completed successfully!")
+            console.print("Pipeline completed successfully!", style="bold green")
         if failed_count > 0:
-            print(f"⚠️  {failed_count} job(s) failed. Details above.\n")
+            console.print(f"⚠️  {failed_count} job(s) failed. Details above.\n", style="bold yellow")
 
 
 async def main():

@@ -7,6 +7,7 @@ from typing import Dict, List, Optional
 from datetime import datetime
 from rich.console import Console
 from rich.table import Table
+import threading
 
 
 @dataclass
@@ -66,6 +67,7 @@ class ProgressTracker:
         self.total_jobs = total_jobs
         self.jobs: Dict[str, JobProgress] = {}
         self.console = Console()
+        self._lock = threading.Lock()
         
     def add_job(self, job_id: str, job_title: str, company_name: str):
         """
@@ -76,15 +78,16 @@ class ProgressTracker:
             job_title: Job title
             company_name: Company name
         """
-        self.jobs[job_id] = JobProgress(
-            job_id=job_id,
-            job_title=job_title,
-            company_name=company_name,
-            current_step=0,
-            total_steps=len(self.PIPELINE_STEPS),
-            status='running',
-            start_time=datetime.now()
-        )
+        with self._lock:
+            self.jobs[job_id] = JobProgress(
+                job_id=job_id,
+                job_title=job_title,
+                company_name=company_name,
+                current_step=0,
+                total_steps=len(self.PIPELINE_STEPS),
+                status='running',
+                start_time=datetime.now()
+            )
     
     def update_step(self, job_id: str, step_index: int, step_name: str = None):
         """
@@ -95,10 +98,11 @@ class ProgressTracker:
             step_index: Index of the current step (0-based)
             step_name: Optional step name (for validation)
         """
-        if job_id not in self.jobs:
-            return
-        
-        self.jobs[job_id].current_step = step_index
+        with self._lock:
+            if job_id not in self.jobs:
+                return
+            
+            self.jobs[job_id].current_step = step_index
     
     def record_retry(self, job_id: str, step_name: str, failure_reason: str, retry_type: str = "validation"):
         """
@@ -110,29 +114,30 @@ class ProgressTracker:
             failure_reason: Why the retry was needed
             retry_type: Type of retry ('api', 'validation', 'quality')
         """
-        if job_id not in self.jobs:
-            return
-        
-        job = self.jobs[job_id]
-        
-        # Increment total retries
-        job.total_retries += 1
-        
-        # Track by retry type
-        if retry_type == "api":
-            job.api_call_retries += 1
-        elif retry_type == "validation":
-            job.validation_retries += 1
-        elif retry_type == "quality":
-            job.quality_retries += 1
-        
-        # Track by step
-        if step_name not in job.retry_by_step:
-            job.retry_by_step[step_name] = StepRetryInfo(step_name=step_name)
-        
-        step_info = job.retry_by_step[step_name]
-        step_info.total_attempts += 1
-        step_info.failures.append(failure_reason)
+        with self._lock:
+            if job_id not in self.jobs:
+                return
+            
+            job = self.jobs[job_id]
+            
+            # Increment total retries
+            job.total_retries += 1
+            
+            # Track by retry type
+            if retry_type == "api":
+                job.api_call_retries += 1
+            elif retry_type == "validation":
+                job.validation_retries += 1
+            elif retry_type == "quality":
+                job.quality_retries += 1
+            
+            # Track by step
+            if step_name not in job.retry_by_step:
+                job.retry_by_step[step_name] = StepRetryInfo(step_name=step_name)
+            
+            step_info = job.retry_by_step[step_name]
+            step_info.total_attempts += 1
+            step_info.failures.append(failure_reason)
     
     def mark_completed(self, job_id: str):
         """
@@ -141,13 +146,14 @@ class ProgressTracker:
         Args:
             job_id: Job identifier
         """
-        if job_id not in self.jobs:
-            return
-        
-        job = self.jobs[job_id]
-        job.status = 'completed'
-        job.end_time = datetime.now()
-        job.current_step = job.total_steps
+        with self._lock:
+            if job_id not in self.jobs:
+                return
+            
+            job = self.jobs[job_id]
+            job.status = 'completed'
+            job.end_time = datetime.now()
+            job.current_step = job.total_steps
     
     def mark_failed(self, job_id: str, error_message: str):
         """
@@ -157,21 +163,28 @@ class ProgressTracker:
             job_id: Job identifier
             error_message: Error message describing the failure
         """
-        if job_id not in self.jobs:
-            return
-        
-        job = self.jobs[job_id]
-        job.status = 'failed'
-        job.error = error_message
-        job.end_time = datetime.now()
+        with self._lock:
+            if job_id not in self.jobs:
+                return
+            
+            job = self.jobs[job_id]
+            job.status = 'failed'
+            job.error = error_message
+            job.end_time = datetime.now()
     
     def generate_table(self) -> Table:
         """
         Generate a rich Table showing current progress with shadow failures.
+        Uses snapshot isolation to prevent torn reads during concurrent updates.
         
         Returns:
             Rich Table object for display
         """
+        # Create a snapshot of job states under lock
+        with self._lock:
+            jobs_snapshot = list(self.jobs.values())
+        
+        # Build table from snapshot (no lock needed)
         table = Table(title="Job Processing Progress", show_header=True, header_style="bold magenta")
         
         table.add_column("Job", style="cyan", width=25, no_wrap=True)
@@ -180,7 +193,7 @@ class ProgressTracker:
         table.add_column("Status", width=20, no_wrap=True)
         table.add_column("Retries", style="yellow", width=10, justify="right")
         
-        for job in self.jobs.values():
+        for job in jobs_snapshot:
             # Truncate long titles
             title = job.job_title[:22] + "..." if len(job.job_title) > 25 else job.job_title
             company = job.company_name[:12] + "..." if len(job.company_name) > 15 else job.company_name
@@ -221,14 +234,17 @@ class ProgressTracker:
         Returns:
             Summary string with job counts and retry statistics
         """
-        completed = sum(1 for j in self.jobs.values() if j.status == 'completed')
-        failed = sum(1 for j in self.jobs.values() if j.status == 'failed')
-        running = sum(1 for j in self.jobs.values() if j.status == 'running')
+        with self._lock:
+            jobs_snapshot = list(self.jobs.values())
         
-        total_retries = sum(j.total_retries for j in self.jobs.values())
-        total_api_retries = sum(j.api_call_retries for j in self.jobs.values())
-        total_validation_retries = sum(j.validation_retries for j in self.jobs.values())
-        total_quality_retries = sum(j.quality_retries for j in self.jobs.values())
+        completed = sum(1 for j in jobs_snapshot if j.status == 'completed')
+        failed = sum(1 for j in jobs_snapshot if j.status == 'failed')
+        running = sum(1 for j in jobs_snapshot if j.status == 'running')
+        
+        total_retries = sum(j.total_retries for j in jobs_snapshot)
+        total_api_retries = sum(j.api_call_retries for j in jobs_snapshot)
+        total_validation_retries = sum(j.validation_retries for j in jobs_snapshot)
+        total_quality_retries = sum(j.quality_retries for j in jobs_snapshot)
         
         summary_lines = [
             f"\nTotal: {self.total_jobs} | ✓ {completed} | ✗ {failed} | ⟳ {running}",
@@ -251,7 +267,10 @@ class ProgressTracker:
             ""
         ]
         
-        jobs_with_retries = [j for j in self.jobs.values() if j.total_retries > 0]
+        with self._lock:
+            jobs_snapshot = list(self.jobs.values())
+        
+        jobs_with_retries = [j for j in jobs_snapshot if j.total_retries > 0]
         
         if not jobs_with_retries:
             lines.append("No shadow failures detected! All jobs processed without retries.")
