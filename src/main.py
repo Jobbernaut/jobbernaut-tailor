@@ -250,7 +250,7 @@ class ResumeOptimizationPipeline:
     
     async def call_poe_api(self, prompt: str, bot_name: str, parameters: dict = None, max_retries: int = 2) -> str:
         """
-        Call the Poe API with retry logic.
+        Call the Poe API with exponential backoff retry logic.
         
         Args:
             prompt: The prompt to send to the API
@@ -309,7 +309,10 @@ class ResumeOptimizationPipeline:
                 print(f"  Error message: {str(e)}")
                 
                 if attempt < max_retries:
-                    print(f"  Retrying API call...")
+                    # Exponential backoff: 2^attempt seconds
+                    wait_time = 2 ** attempt
+                    print(f"  Waiting {wait_time}s before retry...")
+                    await asyncio.sleep(wait_time)
                 else:
                     print(f"\n{'='*60}")
                     print(f"❌ API CALL FAILED AFTER {max_retries} ATTEMPTS")
