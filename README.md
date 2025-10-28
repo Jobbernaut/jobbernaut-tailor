@@ -1,4 +1,4 @@
-> ⚠️ **NOTICE**: The main branch contains v4.2, most of the docs are inaccurate, and is significantly outdated. 
+> ⚠️ **NOTICE**: The project moves very quickly, and currently the main branch contains v4.2-stable, most of the docs are significantly outdated. 
 > 
 > **Current Version**: v4.2+ (in development branches)
 > 
