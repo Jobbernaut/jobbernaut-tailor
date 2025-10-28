@@ -124,10 +124,5 @@ Set it up for yourself and run it on your own master resume. The magic feels mor
 
 ---
 
-# Did you use AI to write the code?
-I used AI to write the code, I used AI to review the code, I used AI to review the pull requests, I used AI to write the documentation, I used the AI to evaluate architectural and cost tradeoffs. The difference is, the AI didn't wake up one day and think I have to design a 12-step pipeline and reduce the costs to be dirt cheap. I did. AI to me is a force multiplier. I have discarded over 5000 lines of AI generated code and documentation which you can see in my closed PRs and commits. I am very particular about the code that goes in, and I am very particular about the architecture. I scrutinize every single line of code that is written by the AI. Which is why I can give a strong guarantee that it won't just simply fail on you, it's designed to very high standards. LLMs are what make a months-long multi-person engineering effort realisable through just a solo 14-day development sprint.
-
----
-
 # Why should I use your project over others?
 I'm not trying to sell you on the project, I'm trying to solve my own problems. If you think it will solve the specific problems you have with the job search, you're free to use it and I will guide you. If you are not able to see the value, power, and danger behind this system then, be assured you are not the target audience, there are simpler solutions for you. Reach out to me, I will tell you how to supercharge your job search without an application of this much complexity.
