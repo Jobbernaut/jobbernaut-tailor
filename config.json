@@ -1,33 +1,32 @@
 {
   "resume_generation": {
-    "bot_name": "Gemini-2.5-Pro",
+    "bot_name": "gemini-3-pro",
     "parameters": {
-      "web_search": false,
-      "thinking_budget": 2048
+      "thinking_level": "low"
     }
   },
   "cover_letter_generation": {
-    "bot_name": "Claude-Haiku-4.5",
+    "bot_name": "claude-haiku-4.5",
     "parameters": {
       "thinking_budget": 0
     }
   },
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Claude-Haiku-4.5",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
         "thinking_budget": 0
       }
     },
     "company_research": {
-      "bot_name": "Claude-Sonnet-4-Search",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
         "web_search": true,
         "thinking_budget": 0
       }
     },
     "storytelling_arc": {
-      "bot_name": "Claude-Haiku-4.5",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
         "thinking_budget": 0
       }

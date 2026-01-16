@@ -15,7 +15,7 @@ from rich.console import Console
 from rich.layout import Layout
 from rich.panel import Panel
 
-from utils import (
+from .utils import (
     load_yaml,
     load_json,
     save_json,
@@ -27,11 +27,11 @@ from utils import (
     cleanup_output_directory,
     remove_reasoning_traces,
 )
-from template_renderer import TemplateRenderer
-from models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
-from progress_tracker import ProgressTracker
-from system_check import verify_system_requirements
-from fact_verifier import FactVerifier, FactVerificationError
+from .template_renderer import TemplateRenderer
+from .models import TailoredResume, JobResonanceAnalysis, CompanyResearch, StorytellingArc
+from .progress_tracker import ProgressTracker
+from .system_check import verify_system_requirements
+from .fact_verifier import FactVerifier, FactVerificationError
 
 
 class ResumeOptimizationPipeline:

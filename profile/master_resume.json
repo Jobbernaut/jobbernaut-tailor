@@ -25,93 +25,122 @@
   ],
   "work_experience": [
     {
-      "job_title": "Software Development Engineer (Platform)",
-      "company": "UNC Chapel Hill",
+      "job_title": "Software Development Engineer",
+      "company": "UNC Research Data Management Core",
       "location": "Chapel Hill, NC",
-      "start_date": "2025-08",
+      "start_date": "2026-01",
       "end_date": "Present",
       "narrative_context": {
-        "technical_story": "Built Python autograding platform using Pandas, NumPy, and Sentence-Transformers NLP. Core challenge: matching 240 student names from PollEv (inconsistent formatting, nicknames, typos) to Canvas gradebook. Engineered multi-stage algorithm: exact match, fuzzy matching, semantic similarity via Sentence-Transformers embeddings, statistical name analysis. Designed atomic grade-update ensuring data integrity - only modifies empty fields (dashes), never overwrites existing grades. Implemented participation threshold: students answering >50% of polls auto-credited. Built version control for scripts enabling rollback. Automated gradebook backups. Script downloads Canvas gradebook, accesses PollEv via spreadsheet mapping, merges multiple spreadsheets from different class times.",
-        "leadership_story": "Guided 2 Undergraduate Learning Assistants on research and logistics while bringing CS automation into Neuroscience course. Championed Jira and Trello adoption for 10-person team by running pilot with one grader while others observed. When work completed faster, showed examples from experienced professors and education templates. Eventually convinced entire team despite initial resistance. Collaborated with professor and 4 GTAs as peer contributor. When tool succeeded, instructor and TA from another course approached to adopt. Prepared Memory Systems II lecture 3 months in advance. Received $5,000 award after reaching out about tuition costs.",
-        "impact_story": "Reduced team workload 60% from 20 hours required to 8 hours actual work weekly. Autograder eliminated 36 minutes daily manual work per GTA (6 PollEvs × 60 students × 10 seconds = 360 updates). Process improvements (Jira, Trello, rubrics) saved 8-9 hours weekly per person. Standardized rubrics reduced grading from 5-6 minutes to 30 seconds per assignment. Tool adopted by 13 instructors across 2 courses. Positioned for university-wide AWS Lambda deployment.",
-        "challenges_overcome": "Initial challenge: 360 grade updates per GTA per class at 10 seconds each = 36 minutes daily of manual entry. Faced skepticism about automation. Built working prototype to prove value. Second challenge: PollEv names inconsistent vs Canvas roster. Solved with NLP semantic matching plus statistical analysis. Third challenge: convincing team to adopt Jira/Trello. Ran pilot, demonstrated results, showed professor templates. Fourth challenge: data integrity. Solved with atomic updates and automated backups. Fifth challenge: bot detection. Solved with rate limiting and proper authentication.",
-        "technologies_deep_dive": "Python for automation. Pandas for DataFrame operations and CSV manipulation. NumPy for statistical analysis. Sentence-Transformers for semantic name matching using embeddings. Canvas API for gradebook downloads. PollEv spreadsheet integration. Git for version control. Jira and Trello for project management. Designed for AWS Lambda deployment for university scaling. Atomic transaction design - only pulls PollEv view, if number exists (0/1) cannot modify, only dashes change."
+        "technical_story": "Migrating FDA-Dataverse.rdmc.unc.edu to HPO-Dataverse.rdmc.unc.edu using Terraform for infrastructure-as-code and AWS cloud services. Modernizing automated front-end testing infrastructure for multiple Dataverse instances by rewriting outdated Selenium tests in Playwright for improved reliability and maintainability. Building automated front-end testing framework for REDCap from scratch, designing comprehensive test coverage for research data capture workflows.",
+        "leadership_story": "",
+        "impact_story": "",
+        "challenges_overcome": "",
+        "technologies_deep_dive": "Terraform for infrastructure-as-code and AWS resource provisioning. AWS cloud services for Dataverse hosting and management. Playwright for modern, reliable front-end testing replacing legacy Selenium framework. REDCap research data capture platform. Dataverse repository platform for research data management. Automated testing frameworks ensuring quality across multiple instances."
+      },
+      "key_metrics": {},
+      "role_clarity": "contributed"
+    },
+    {
+      "job_title": "Software Development Engineer",
+      "company": "UNC Department of Neuroscience",
+      "location": "Chapel Hill, NC",
+      "start_date": "2025-08",
+      "end_date": "2025-12",
+      "narrative_context": {
+        "technical_story": "Engineered Python data processing platform using Pandas for DataFrame operations, NumPy for statistical analysis, and Sentence-Transformers NLP for semantic name matching. Core challenge: reconciling 240 user identities from third-party exports (inconsistent formatting, nicknames, typos) to organizational roster. Designed multi-stage matching algorithm: exact string match, fuzzy string matching, semantic similarity via Sentence-Transformers embeddings (all-MiniLM-L6-v2), statistical name analysis. Implemented atomic transaction logic ensuring data integrity - system only modifies empty fields, never overwrites existing values, preserving audit trail. Platform accepts organizational roster CSV and multiple third-party spreadsheet exports as input, merges data sources, performs entity resolution, and updates records. Maintained version control for rollback capability and backups for disaster recovery.",
+        "leadership_story": "Guided 3 junior team members on operations and logistics while introducing modern Computer Science and Software Engineering principles into environment with legacy manual processes. Led cross-functional 11-person team. When platform demonstrated success, second team adopted the system for their operations. Received $5,000 award for exceptional technical contributions.",
+        "impact_story": "Eliminated manual data entry workload for 4 team members processing 240 entities with 6 data points per session. Manual process required 10 seconds per update (240 entities × 6 data points ÷ 4 people = 360 updates per person = 60 minutes per session). Platform automated entire reconciliation workflow. When adopted by second team, reduced workload for 2 additional team members processing similar data volumes.",
+        "challenges_overcome": "Initial challenge: 360 manual updates per person per session at 10 seconds each = 60 minutes of repetitive data entry. Built working prototype to demonstrate automation value. Second challenge: third-party export names inconsistent with organizational roster due to nicknames, typos, formatting variations. Solved with multi-stage entity resolution combining NLP semantic similarity (Sentence-Transformers embeddings), fuzzy string matching, and statistical name analysis. Third challenge: data integrity in production environment. Solved with atomic transaction logic - system reads existing values, preserves locked entries, only modifies empty cells. Maintained version control and backups following disaster recovery best practices.",
+        "technologies_deep_dive": "Python for platform development. Pandas for DataFrame operations and CSV data manipulation. NumPy for statistical analysis. Sentence-Transformers (all-MiniLM-L6-v2 model) for semantic similarity using transformer embeddings. Regular expressions for name normalization and pattern matching. Multi-stage entity resolution algorithm: exact match, fuzzy string matching (Levenshtein distance), semantic similarity scoring (cosine similarity on embeddings), subset name analysis. Atomic transaction design: never overwrites existing values, only modifies empty cells, preserving data lineage. Version control using Git for code management. Disaster recovery procedures with backup maintenance."
       },
       "key_metrics": {
-        "students_managed": 240,
-        "course_sections": 2,
-        "gtas_on_team": 4,
-        "grade_updates_per_person_per_class": 360,
-        "manual_time_per_person_per_day": "36 minutes",
-        "manual_time_per_person_per_week": "180 minutes",
-        "pollev_questions_per_class": 6,
-        "total_instructors_using_tool": 13,
-        "courses_adopted": 2,
-        "grading_time_before": "5-6 minutes per assignment",
-        "grading_time_after": "30 seconds per assignment",
-        "weekly_hours_required_by_policy": 20,
-        "weekly_hours_after_optimization": 8,
-        "workload_reduction_percentage": "60%",
+        "users_processed": 240,
+        "team_members_impacted_primary": 4,
+        "team_members_impacted_secondary": 2,
+        "polls_per_session": 6,
+        "updates_per_person_per_session": 360,
+        "manual_time_per_person_per_session": "60 minutes",
+        "teams_adopted": 2,
         "award_amount": "$5,000"
       },
       "role_clarity": "contributed"
     },
     {
-      "job_title": "Software Development Engineer (Internal Systems)",
+      "job_title": "Software Development Engineer",
       "company": "Tally",
-      "location": "Bengaluru, KA, IN",
+      "location": "Bengaluru, KA",
       "start_date": "2024-01",
       "end_date": "2024-05",
       "narrative_context": {
-        "technical_story": "PMS PoC: Architected Microsoft Teams app using ReactJS, Fluent UI, Node.js. Chose Teams because runs React websites, Microsoft-backed, phone-accessible. Backend: Flask on MySQL (matching legacy PMS) for easy migration. Designed transparent goal hierarchy: daily, weekly, monthly, quarterly, half-yearly, annual. Employees set personal goals, management sets organizational goals trickling down. Generated leaderboards and management reports showing completion rates. Asset Portal: Built Next.js app integrating Azure AD Graph with on-premise MySQL device data. Designed algorithms alerting HR/IT on inactive devices. Extended scope: automatic device disabling when employee on leave or removed from payroll via MAC address. Scripts aggregate data, confirm employee ID, revoke network access.",
-        "leadership_story": "Led 3-person intern team under manager. Manager delegated intern coordination to me due to strong communication and technical knowledge. Mapped code/architectural needs, split work, drove development. Interviewed everyone in performance review process to map architecture. Manager championed new PMS, put me in charge of proving viability to skeptical management. Pressure: hadn't finished college, managing 2 interns, 3-month deadline, management opposition. After PoC success, manager got promotion. I was reassigned to asset portal while other interns struggled for projects.",
-        "impact_story": "PMS PoC proved viability, resulting in ₹7 crore (~$1M) budget approval for production system. Handed to senior engineering team. Asset Portal: estimated ₹27 lakh (~$40K) annual savings - ₹15 lakh preventing asset loss, ₹12 lakh reducing overhead (2 roles redundant: 1 HR, 1 IT admin at ₹6 lakh each). Eliminated security risk of old employee devices accessing confidential info. Previous incident: old device leaked new version pricing to press, giving competitors advantage. Portal made impossible - employee on leave, device access immediately revoked. Past year: company lost ₹15 lakh in assets because no retrieval system after employees left.",
-        "challenges_overcome": "PMS: 24-year legacy system nobody understood. Employees frustrated with lack of transparency. Management skeptical because current system 'worked fine'. Biggest issue: no feedback mechanism. When SLM declined report, employee only saw rejection, no reason. 30-40 employees per SLM, no time for meetings. Everything approved to avoid headache. When properly declined, employees quit. Company churning talent. Had to build transparent pipeline, easy migration, feedback mechanism, good UX. Asset Portal: device deletion manual. Company lost ₹15 lakh in assets yearly. Convinced stakeholders automatic disabling acceptable security tradeoff despite inconvenience.",
-        "technologies_deep_dive": "PMS: ReactJS for UI, Fluent UI for Microsoft design system, Node.js for app server, Flask for REST API, MySQL for database (legacy compatibility), Microsoft Teams platform. Asset Portal: Next.js for full-stack React, Azure AD Graph API for identity data, on-premise MySQL for device tracking, MAC address-based network access control. Integration layer merging Azure cloud with on-premise systems. Automated workflows triggered by HR actions cascading device revocations."
+        "technical_story": "Developed Performance Management System proof-of-concept as Microsoft Teams application using TypeScript, ReactJS, Fluent UI, and Django backend. Core challenge: building cross-platform interface that rendered consistently across Teams desktop and mobile while maintaining workflow similarity to legacy system for user adoption. Teams platform imposed significant overhead - Fluent UI components behaved differently on mobile vs desktop, requiring responsive design patterns and multi-page interface architecture. Designed component hierarchy balancing legacy system familiarity with modern UX principles. Built Device Administration Portal using Next.js and Azure AD Graph API for centralized device tracking across employee and IT admin personas. Implemented role-based access control enabling employees to manage their devices without requiring Azure admin privileges - application executes privileged operations via service principal pattern. Portal surfaced active/inactive device status for employees, HR, and IT administrators.",
+        "leadership_story": "Led development as primary engineer on both PoC projects during internship evaluation period. Collaborated with 3-person team on PMS PoC, driving architectural decisions and technical implementation. Made key technology decisions: selected Fluent UI and Django over legacy PHP stack to align with organization's migration strategy toward Teams-based applications. Balanced competing constraints: maintaining legacy workflow familiarity for user adoption while demonstrating modern architecture capabilities.",
+        "impact_story": "Delivered cross-platform Teams application demonstrating feasibility of migrating legacy systems to modern stack. Device portal eliminated need for granting broad Azure admin access to all employees by implementing service principal delegation pattern. Enabled self-service device management reducing IT admin overhead while maintaining security controls. Demonstrated technical capabilities during internship evaluation.",
+        "challenges_overcome": "Primary challenge: Fluent UI cross-platform inconsistencies between Teams desktop and mobile. Legacy PMS contained extensive field sets impossible to display on mobile without pagination. Solved by designing multi-page interface with progressive disclosure while preserving core workflow patterns from original system. Challenge: user adoption risk. Balanced modern redesign against workflow familiarity - too different would drive resistance, too similar wouldn't demonstrate value. Solution: maintained process flow, modernized presentation layer. Challenge: device portal security model. Couldn't grant Azure admin to all employees, but needed device management capabilities. Implemented service principal pattern - application executes privileged operations on behalf of authenticated users with appropriate RBAC.",
+        "technologies_deep_dive": "TypeScript for type-safe development. ReactJS for component-based UI architecture. Fluent UI for Microsoft design system with Teams platform integration. Django for REST API backend. Microsoft Teams platform with cross-platform rendering challenges requiring responsive design patterns. Next.js for full-stack Device Portal with server-side rendering. Azure AD Graph API for identity and device data. Role-based access control (RBAC) implementation. Service principal pattern for delegated privilege execution. Multi-page interface architecture handling mobile constraints. Progressive disclosure UI patterns for complex data on limited screen real estate."
       },
       "key_metrics": {
-        "team_size": 3,
-        "interns_managed": 2,
-        "legacy_system_age": "24 years",
-        "pms_budget_approved": "₹7 crore (~$1M USD)",
-        "project_delivery_time": "3 months",
-        "assets_lost_per_year": "₹15 lakh (~$20,000 USD)",
-        "estimated_annual_savings": "₹27 lakh (~$40,000 USD)",
-        "roles_made_redundant": 2,
-        "employees_under_slm": "30-40"
+        "team_size": 5,
+        "platforms_supported": 3,
+        "projects_delivered": 2
       },
-      "role_clarity": "led (for PoC and asset portal), enabled (for final PMS investment)"
+      "role_clarity": "contributed"
     },
     {
-      "job_title": "Software Development Engineer (Financial Systems)",
+      "job_title": "Software Development Engineer",
       "company": "Vivriti Capital",
-      "location": "Chennai, KA, IN",
+      "location": "Chennai, TN",
       "start_date": "2023-07",
       "end_date": "2023-08",
       "narrative_context": {
-        "technical_story": "Architected event-driven system: PDF arrives in S3, S3 notification triggers queue, queue checked every 10 minutes, top PDF forwarded to Spring Boot backend on EC2. Spring Boot creates OpenSearch entries, calls 4 parallel Python Lambda functions (one per section) using PDFPlumber for custom parsing. Key decision: didn't process all sections uniformly. Old attempts failed treating sections identically. Each section similar report-to-report but differed section-to-section. Hardcoded search for 3 specific longest sections, processed separately with section-specific logic. Structured data into OpenSearch JSON. Didn't populate initially - just sent to OpenSearch, providing value by letting employees search sections instead of reading every page. Built verification portal: employees check extracted text against source page, mark yes/no, make corrections. Stores correction data as ML training foundation.",
-        "leadership_story": "At assignment meeting, management mentioned Credit Information Reports as formality, waiting for multi-modal LLMs. I pushed for details, said we could tackle today. They laughed saying many tried, none successful. I insisted our team get chance. Next day working on it. Worked day and night, delegated to other interns. Burden of proof fell on me because manager skeptical. Talked to ML people, AI people. After 2 months, told them proved this in 2 months of 6-month internship, requested early end for studies. Extended return offer (also from Tally). Didn't join, but teammate joined on PPO. Did knowledge transfer to engineers who productionized code.",
-        "impact_story": "Reduced loan analysis from 3-6+ months to <1 day. Previously: 1000-page report required 35 associates for 15 days (at 2 pages/day) for quick decision, otherwise 6+ months. Associates manually populated spreadsheets, Excel generated metrics, data aggregated, sent to management. Massive resource investment just to consider lending. My solution: automated extraction, searchable OpenSearch repository, verification portal. Processed ~200 reports, 4 sections each, zero manual edits needed. Teammate said I transformed process from thinking about lending to deciding in <1 day. New problem: management had too many reports to prioritize (good problem). Foundation enabled richest training data when multi-modal AI arrived.",
-        "challenges_overcome": "Initial skepticism: tech team tried 100 approaches before giving up. AI team said wait for multi-modal AI. Management mentioned as formality. I convinced them to try. Technical: PDF text selection disabled by vendor. Previous attempts used OCR + regex page-by-page, ended with unusable text blob. My insight: threw out that model. Why process all sections? Identified 3 most important, time-consuming sections. Hardcoded search for specific section names. Targeted approach. Each section got custom parsing because formats differed. Data integrity: verification portal served dual purpose - ensure accuracy AND collect ML training data. Removed production-readiness responsibility from team because PoC quickly built.",
-        "technologies_deep_dive": "AWS S3 for storage and event triggers. AWS Lambda for serverless compute - 4 Python functions per section, parallel processing. PDFPlumber for custom PDF parsing with section-specific logic. Spring Boot on EC2 for orchestration, queue management, OpenSearch coordination. OpenSearch for structured data storage and search. Queue-based processing (10-minute intervals) for reliability. Event-driven architecture: S3 notification, queue, Spring Boot, parallel Lambdas, OpenSearch, verification portal, final report generation. Parallel design enabled future teams to modify sections independently."
+        "technical_story": "Architected event-driven document processing system using AWS S3, Lambda, Spring Boot, and OpenSearch. System architecture: S3 bucket receives PDF documents, triggers notification to queue, queue polled at 10-minute intervals, Spring Boot orchestration layer on EC2 processes queue, creates OpenSearch indices, dispatches 4 parallel Lambda functions for section-specific parsing. Designed parallel processing architecture where each Lambda handles one document section using PDFPlumber with custom parsing logic. Key architectural decision: section-specific processing rather than uniform parsing. Analysis revealed each section maintained consistency across documents but differed significantly between sections, enabling targeted extraction strategies. Structured extracted data into OpenSearch JSON enabling full-text search capabilities. Built verification portal for quality assurance where analysts review extracted text against source documents, mark accuracy, and submit corrections - creating labeled dataset for future ML model training.",
+        "leadership_story": "Led proof-of-concept development addressing previously unsolved document extraction challenge. Collaborated with ML and AI teams to evaluate technical approaches. Proposed event-driven architecture and parallel processing design. Coordinated with intern team on implementation. Delivered functional prototype within 2-month timeframe. Conducted knowledge transfer to engineering team for production implementation.",
+        "impact_story": "Automated document analysis workflow reducing processing time from months to under one day. Previous workflow required significant manual effort - analysts processing multi-page reports page-by-page, populating spreadsheets, generating metrics, aggregating data for decision-making. Proof-of-concept demonstrated feasibility: processed approximately 200 sample documents across 4 sections with automated extraction and searchable repository. Verification portal enabled quality validation while building labeled training dataset for future ML enhancements.",
+        "challenges_overcome": "Primary challenge: previous extraction attempts failed using uniform processing approach. Analysis identified root cause - sections differed structurally despite document-to-document consistency within sections. Solution: parallel architecture with section-specific Lambda functions, each implementing targeted parsing logic. Challenge: PDF text selection disabled by document provider. Evaluated OCR approaches but determined quality insufficient. Solution: PDFPlumber for programmatic text extraction with custom parsing rules per section. Challenge: ensuring data quality while accelerating delivery timeline. Solution: verification portal providing dual value - quality assurance for PoC and labeled dataset generation for future ML training.",
+        "technologies_deep_dive": "AWS S3 for document storage and event-driven triggers. AWS Lambda for serverless parallel processing - 4 Python functions executing concurrently for section-specific extraction. PDFPlumber for programmatic PDF text extraction with custom parsing logic. Spring Boot on EC2 for orchestration, queue management, and OpenSearch coordination. OpenSearch for structured document storage, indexing, and full-text search. Queue-based architecture with 10-minute polling intervals ensuring processing reliability. Event-driven design: S3 notification → queue → Spring Boot orchestration → parallel Lambda execution → OpenSearch indexing → verification portal. Parallel Lambda architecture enabled independent section processing and future extensibility."
       },
       "key_metrics": {
-        "report_size_medium": "1000 pages",
-        "associates_needed_for_1000_page": 35,
-        "days_for_quick_decision": 15,
-        "normal_processing_time": "6+ months",
-        "pages_per_day_per_associate": 2,
         "sections_automated": 4,
-        "reports_processed_in_pilot": 200,
-        "manual_edits_needed": 0,
-        "project_delivery_time": "2 months",
-        "processing_time_after": "less than 1 day",
-        "processing_time_before": "3-6+ months"
+        "documents_processed_pilot": 200,
+        "project_delivery_time": "2 months"
       },
-      "role_clarity": "led (for PoC development), enabled (for production system and ML foundation)"
+      "role_clarity": "contributed"
     }
   ],
   "projects": [
+    {
+      "project_name": "SQuire",
+      "technologies": [
+        "Python",
+        "C++",
+        "LLVM",
+        "Clang Static Analyzer",
+        "LLM",
+        "OpenAI API",
+        "Linux Kernel",
+        "Git"
+      ],
+      "project_url": "https://github.com/srmanda-cs/SQuire",
+      "narrative_context": {
+        "technical_story": "Engineered end-to-end LLM-driven pipeline synthesizing Clang Static Analyzer (CSA) checkers from Linux kernel bug-fix patches. System implements three-phase architecture: (1) Commit mining with regex-based multi-label classification targeting seven bug categories (Null Pointer Dereference, Use-Before-Initialization, Memory Leaks) across kernel versions v5.10-v5.17, filtering for atomic commits (<5 LOC, <2 files), (2) Agentic synthesis pipeline using GPT-5.1 via Poe API orchestrating pattern extraction, pattern merging, plan synthesis, and C++ checker generation with LLVM 20 API compatibility, (3) Validation framework with compilation testing, smoke testing against synthetic test cases, and historical replay using differential analysis across kernel versions. Built custom SQuire Reviewer web interface for human-in-the-loop patch curation. Implemented regex-based sanitizer correcting LLM API hallucinations (std::optional vs Optional, callback signature corrections). Designed decoupled architecture isolating checker compilation from kernel build process, enabling LLVM 20 checker compilation against older v5.x kernel trees despite API incompatibilities.",
+        "leadership_story": "Conceived project vision targeting 'simple fixes' representing 87% of Linux kernel maintenance overhead. Scoped hypothesis that high-volume, low-complexity bugs contain sufficient semantic signals for LLM pattern recognition without formal verification. Led complete implementation from git mining infrastructure to agentic pipeline architecture. Designed prompt engineering strategies decomposing synthesis into discrete steps (Pattern → Plan → Code) minimizing hallucination. Managed project repository structure, API integration, and model selection. Developed lightweight testing framework validating checkers before kernel deployment.",
+        "impact_story": "Reduced CSA checker synthesis cost from weeks of manual C++ development to minutes of automated generation at $0.10 per checker. Achieved zero false positives in smoke testing - checker correctly identified bug patterns without flagging valid code. Validated checker encoded allocation-source tracking logic (devm_kzalloc) rather than blanket pointer rules, demonstrating precise semantic understanding. Curated high-quality dataset in <1 day through aggressive heuristic filtering. Proved LLM-generated checkers viable with minimal human refinement, closing KNighter's validation loop at fraction of original GPU/compute cost. System targets 10% reduction in kernel maintenance burden, reclaiming thousands of developer hours for complex architectural challenges.",
+        "challenges_overcome": "Primary challenge: LLM API hallucinations. GPT-5.1 invented non-existent Clang AST methods and confused LLVM version signatures despite documentation access. Solution: regex-based sanitizer automatically patching common hallucinations, plus manual refinement loop proving minimal human intervention sufficient. Challenge: LLVM 20 incompatibility with older kernel versions (v5.x API mismatches). Solution: decoupled build environment isolating checker compilation from kernel build, enabling latest LLVM compilation while analyzing legacy kernel trees. Challenge: context window limitations for massive codebases. Solution: careful diff pruning and strict output format enforcement in pipeline. Challenge: distinguishing LLM prototype from production code. Solution: focused on 'simple fixes' mitigating hallucination risk while ensuring checker performance and explainability.",
+        "technologies_deep_dive": "Python for orchestration layer and pipeline implementation. C++ for synthesized CSA checker code. LLVM 20 and Clang 20 on Arch Linux (Manjaro) for bleeding-edge C++20 features and CSA APIs. Clang Static Analyzer for symbolic execution and path-sensitive bug detection. GPT-5.1 via Poe API (OpenAI-compatible) as reasoning engine. Git for kernel history mining across versions v5.10-v5.17. Regex-based pattern matching for commit classification. compile_commands.json generation using intercept-build for compilation database. Custom web interface (SQuire Reviewer) for patch curation. Agentic pipeline managing context windows through diff pruning and enforcing structured C++ output format. Sanitization layer correcting API hallucinations and legacy callback signatures. Differential analysis comparing analysis reports across kernel versions identifying fixed bugs vs noise."
+      },
+      "key_metrics": {
+        "cost_per_checker": "$0.10",
+        "curation_time": "<1 day",
+        "false_positives_smoke_test": 0,
+        "kernel_versions_analyzed": "v5.10-v5.17",
+        "bug_categories_targeted": 7,
+        "commit_filter_loc": "<5 LOC",
+        "commit_filter_files": "<2 files",
+        "pipeline_phases": 3,
+        "maintenance_overhead_target": "10%",
+        "llvm_version": 20
+      },
+      "role_clarity": "led"
+    },
     {
       "project_name": "Jobbernaut Tailor",
       "technologies": [
@@ -128,25 +157,19 @@
       "narrative_context": {
         "technical_story": "Engineered 13-step intelligence-driven pipeline with 3-stage intelligence gathering phase executing BEFORE content generation: (1) Job resonance analysis extracting emotional keywords, cultural values, hidden requirements, power verbs, and technical keywords, (2) Company research mapping mission, values, tech stack, and culture, (3) Storytelling arc generation creating narrative hooks and proof points. Pipeline then: (4) Validates job inputs, (5) Generates tailored resume using intelligence context, (6) Validates with Pydantic, (7) Applies humanization, (8) Renders LaTeX via Jinja2 templates, (9-13) Compiles PDFs and organizes output. Built master_resume.json as single source of truth grounding all LLM outputs. Implemented multi-layer validation: input validation → Pydantic schema validation → quality threshold validation (character counts, array sizes, meaningful content). Designed generic retry wrapper with progressive error feedback enabling self-healing across all intelligence steps. Fully open source with comprehensive technical documentation (7 guides: ARCHITECTURE, EVOLUTION, PIPELINE, MODELS, CONFIGURATION, TEMPLATES, ANTI_FRAGILE_PIPELINE). PDFs optimized to <30 KiB. Workday: uploaded resume, zero fields needed editing, perfect auto-population.",
         "leadership_story": "Conceived and single-handedly developed entire system from tracker idea to production CLI tool. Started with Lovable tracker, posted on LinkedIn, received 5 access requests. Did market research, found competitors selling spreadsheets for $5. Realized actual problem wasn't tracking but tailoring. Pivoted completely. Gave trial to 5 roommates as beta testers. They applied to 50 jobs in a day with zero fake content, perfectly tailored. Labeled Jobbernaut v1, took offline because realized market disruption potential. Iterated through v2 (production freeze with LaTeX verification), v3 (template revolution with Jinja2), and v4 (intelligence-driven architecture). Open sourced entire codebase with professional documentation enabling community adoption. Architected system to be anti-fragile: learns from mistakes, self-healing via progressive error feedback, error-correcting with quality validation.",
-        "impact_story": "Reduced tailoring from 30-40 minutes to 30 seconds (98% reduction). Beta testers applied to 50 jobs in single day maintaining quality. Out of 200+ applications worldwide, zero instances of editing needed due to hallucination. Achieved 90%+ ATS compatibility on Enhancv and Jobscan (unheard of for automated tool). Generated resumes consistently graced 'must interview' category. Perfect Workday parsing with zero manual corrections. PDFs <30 KiB ensuring fast processing. Open sourced with 7 comprehensive technical documentation guides enabling developers to understand, extend, and contribute. Intelligence-driven architecture produces more targeted, compelling applications through contextual understanding before generation. Proof of effectiveness: the resume you're reading was generated by Jobbernaut.",
+        "impact_story": "Reduced tailoring time from 30-40 minutes to under 2 minutes through automated intelligence gathering and template rendering. Beta testers applied to multiple positions daily while maintaining content quality and factual accuracy. Achieved strong ATS compatibility scores on Enhancv and Jobscan through LaTeX formatting control. Workday parsing handled resume uploads with minimal manual field corrections. PDFs optimized to <30 KiB ensuring fast ATS processing. Open sourced with comprehensive technical documentation (7 guides) enabling community understanding and contribution. Intelligence-driven architecture produces targeted applications through contextual analysis before content generation.",
         "challenges_overcome": "Initial: preventing LLM hallucinations. Solved by grounding with master_resume.json and multi-layer validation (input → Pydantic → quality thresholds). Challenge: ATS compatibility. Solved using LaTeX for precise formatting control and PDF size optimization. Moved from LLM-generated LaTeX to Jinja templates for reliability. Challenge: factual accuracy. Solved with Pydantic schema validation, quality threshold validation, and explicit verification prompts. Challenge: balancing automation speed with quality. Solved with 13-step pipeline where each step has single responsibility. V4 challenge: reactive content generation producing generic outputs. Solved by separating intelligence gathering from content generation - understand job context first, then generate targeted content. Challenge: ensuring meaningful content beyond structural validity. Solved with quality validation layer checking character counts, array sizes, and content substance. Challenge: code reusability across intelligence steps. Solved with generic retry wrapper handling all intelligence steps uniformly with progressive error feedback.",
         "technologies_deep_dive": "Python for pipeline orchestration. OpenAI API (Poe AI) for intelligent content generation across multiple models (Gemini, Claude, GPT-4). Pydantic for strict JSON schema validation preventing malformed outputs. Quality validation layer beyond Pydantic ensuring meaningful content (character thresholds, array size constraints, empty string detection). Jinja2 templating with custom delimiters (\\VAR{}, \\BLOCK{}) for LaTeX code generation (replaced direct LLM generation). LaTeX for precise PDF formatting and ATS compatibility. YAML for human-readable application storage. CLI built with Python argparse. pdflatex compiler for PDF generation. Git for version control. Generic retry wrapper with progressive error feedback enabling self-healing. Configurable AI models per intelligence step optimizing for speed, creativity, or accuracy. Fail-fast input validation preventing wasted API calls. Designed as anti-fragile system: learns from mistakes, self-healing, error-correcting. Each pipeline step isolated for independent testing. Comprehensive documentation system with 7 technical guides."
       },
       "key_metrics": {
-        "initial_interest": "5 LinkedIn messages",
         "pipeline_steps": 13,
         "intelligence_steps": 3,
         "beta_testers": 5,
-        "applications_by_testers": "50 jobs in a day",
-        "workday_fields_edited": 0,
         "pdf_size": "<30 KiB",
         "versions_developed": 4,
         "documentation_pages": 7,
         "tailoring_time_before": "30-40 minutes",
-        "tailoring_time_after": "30 seconds",
-        "total_applications_submitted": 200,
-        "hallucination_incidents": 0,
-        "ats_compatibility_score": "90%+",
+        "tailoring_time_after": "under 2 minutes",
         "open_source": true
       },
       "role_clarity": "led"
@@ -161,7 +184,7 @@
         "Integer Linear Programming",
         "REST API"
       ],
-      "project_url": "https://github.com/orgs/yashas-hm-unc/teams/523/repositories",
+      "project_url": "https://github.com/yashas-hm-unc/matchwise-backend/tree/main",
       "narrative_context": {
         "technical_story": "Formulated graduate student-to-professor assignment as Integer Linear Programming problem using Python's PuLP library. Designed custom objective function generating 'best fit' probability score based on mutual rankings and research interest alignment. Input: professors list with ranked student preferences, students list with ranked professor preferences, research interests from CS directory. Constraint: each student assigned to exactly one professor, professor capacity limits respected. Optimization goal: maximize total fit probability. Built FastAPI backend exposing matching algorithm as REST API. Teammates developed Flutter frontend. Near project end, realized tight coupling. Quickly pivoted to decoupled architecture with blackbox functions, enabling independent hosting.",
         "leadership_story": "Led backend development and core ILP solution design while teammates worked on Flutter frontend. Worked with client (CS department) to understand pain points in manual matching. Identified 5-day process considering 200+ factors. Recognized as optimization problem rather than just UI problem. Delivered software in sprint-based approach with each team member having distinct role. Communicated via JSON payloads. Genuine industrial-grade software engineering project requiring client requirement gathering, technology selection justification, product delivery.",
@@ -177,7 +200,7 @@
         "response_time": "50-100ms",
         "time_reduction_percentage": "99.9%"
       },
-      "role_clarity": "led (backend/ILP solution), contributed (overall project)"
+      "role_clarity": "led"
     },
     {
       "project_name": "Cervical Cancer Detection",
@@ -190,33 +213,34 @@
         "Image Processing",
         "ML"
       ],
-      "project_url": "https://www.kaggle.com/code/ashishreddy9000/fyp-track-2-darknet-feat-ext-svm-quadri",
+      "project_url": "https://www.kaggle.com/code/ashishreddy9000/fyp-track-4-darknet-feat-ext-umap-svm-rbf",
       "narrative_context": {
-        "technical_story": "Built 3-stage ML pipeline: (1) DarkNet pre-trained model for feature extraction from pap smear slide images, (2) UMAP for dimensionality reduction making features manageable for classification, (3) SVM for binary classification (red flag vs normal). Intentionally biased SVM towards high recall (favoring false positives over false negatives) to minimize missed cancer cases. Used image augmentation techniques expanding ~100 real slides to 10,000 training samples. Validated on augmented test set achieving 0.02% miss rate (1-2 slides per 10,000). Pipeline specifically optimized for speed to assist doctors in mass screening programs.",
+        "technical_story": "Built 3-stage ML pipeline: (1) DarkNet pre-trained model for feature extraction from pap smear slide images, (2) UMAP for dimensionality reduction making features manageable for classification, (3) SVM for binary classification (red flag vs normal). Intentionally biased SVM towards high recall (favoring false positives over false negatives) to minimize missed cancer cases. Used image augmentation techniques expanding ~100 real slides to 1,000 training samples. Validated on augmented test set achieving 2% miss rate (20 slides per 1,000). Pipeline specifically optimized for speed to assist doctors in mass screening programs.",
         "leadership_story": "Contributed to team project driven by professor whose mother was cancer survivor. Professor hell-bent on cervical cancer problem. Collaborated on designing pipeline optimized for real-world clinical application rather than just F1 score. Had to leave project early to work at Tally, but established foundation for speed-optimized diagnostic assistance tool. Worked with team to ensure model tuned for practical impact in mass testing scenarios where hospitals process slides requiring 12 hours manual analysis each.",
-        "impact_story": "Designed to reduce 12-hour manual slide analysis to rapid computer-assisted pre-screening. In mass testing movements in India, hospitals do cervical cancer screening but processing single slide takes 12 hours with significant manpower and expertise. Pipeline aimed to make process faster as assistance to doctors and medical specialists. Achieved 0.02% miss rate on 10,000-slide test set, prioritizing patient safety over raw accuracy. Model intentionally biased towards high recall to minimize critical false negatives in diagnostics.",
-        "challenges_overcome": "Challenge: balancing speed with accuracy for clinical viability. Solved by choosing DarkNet for fast feature extraction, UMAP for efficient dimensionality reduction, SVM for quick classification. Challenge: ensuring patient safety. Solved by intentionally biasing model towards high recall, accepting more false positives to minimize dangerous false negatives. Challenge: limited real training data (~100 slides). Solved with image augmentation techniques expanding dataset to 10,000 samples. Challenge: real-world applicability. Focused on speed optimization and practical deployment rather than just maximizing F1 score.",
+        "impact_story": "Designed to reduce 12-hour manual slide analysis to rapid computer-assisted pre-screening. In mass testing movements in India, hospitals do cervical cancer screening but processing single slide takes 12 hours with significant manpower and expertise. Pipeline aimed to make process faster as assistance to doctors and medical specialists. Achieved 2% miss rate on 1,000-slide test set, prioritizing patient safety over raw accuracy. Model intentionally biased towards high recall to minimize critical false negatives in diagnostics.",
+        "challenges_overcome": "Challenge: balancing speed with accuracy for clinical viability. Solved by choosing DarkNet for fast feature extraction, UMAP for efficient dimensionality reduction, SVM for quick classification. Challenge: ensuring patient safety. Solved by intentionally biasing model towards high recall, accepting more false positives to minimize dangerous false negatives. Challenge: limited real training data (~100 slides). Solved with image augmentation techniques expanding dataset to 1,000 samples. Challenge: real-world applicability. Focused on speed optimization and practical deployment rather than just maximizing F1 score.",
         "technologies_deep_dive": "Python for pipeline implementation. DarkNet pre-trained deep learning model for robust feature extraction from medical images. UMAP (Uniform Manifold Approximation and Projection) for dimensionality reduction preserving local structure. SVM (Support Vector Machine) from Scikit-learn for binary classification with adjustable decision boundary. Image augmentation techniques (rotation, flipping, scaling) for dataset expansion. Scikit-learn for ML utilities and model evaluation. Pipeline designed for speed: feature extraction, dimensionality reduction, classification optimized for rapid processing to assist doctors in mass screening scenarios."
       },
       "key_metrics": {
         "manual_processing_time": "12 hours per slide",
-        "test_dataset_size": "10,000 slides (augmented from ~100)",
-        "miss_rate": "1-2 slides per 10,000",
-        "miss_rate_percentage": "0.02%",
+        "test_dataset_size": "1,000 slides (augmented from ~100)",
+        "miss_rate": "20 slides per 1,000",
+        "miss_rate_percentage": "2%",
         "pipeline_stages": 3,
         "optimization_goal": "speed and patient safety"
       },
-      "role_clarity": "contributed"
+      "role_clarity": "led"
     }
   ],
   "skills": {
     "Programming Languages": "Python, JavaScript, TypeScript, Java, SQL, KQL, C++, C#",
-    "Frontend Technologies": "React, Next.js, Fluent UI, HTML/CSS, Flutter, Jinja2",
-    "Backend & APIs": "Node.js, Flask, FastAPI, Spring Boot, REST API, GraphQL, Microservices",
-    "Cloud & DevOps": "AWS Lambda, AWS S3, Azure AD, Kubernetes, Docker, Serverless, CI/CD",
+    "Frontend Technologies": "React, Next.js, Fluent UI, HTML/CSS, Flutter, Jinja2, Playwright, Selenium",
+    "Backend & APIs": "Node.js, Flask, FastAPI, Django, Spring Boot, REST API, GraphQL, Microservices",
+    "Cloud & DevOps": "AWS (Lambda, S3, EC2), Azure AD Graph, Terraform, Kubernetes, Docker, Serverless, CI/CD",
     "Databases & Storage": "MySQL, PostgreSQL, Redis, OpenSearch, MongoDB, Database Design",
-    "Data & ML": "Pandas, NumPy, Scikit-learn, PyTorch, NLP, ETL, Data Pipelines, UMAP",
-    "Tools & Platforms": "Git, Jira, Trello, LaTeX, Linux, Agile, Microsoft Teams",
-    "Specialized Skills": "Algorithm Design, System Architecture, Performance Optimization, Security"
+    "Data & ML": "Pandas, NumPy, Scikit-learn, PyTorch, Sentence-Transformers, NLP, ETL, Data Pipelines, UMAP",
+    "Static Analysis & Compilers": "LLVM, Clang Static Analyzer, AST Manipulation, Symbolic Execution",
+    "Tools & Platforms": "Git, Linux Kernel, REDCap, Dataverse, LaTeX, Agile, Microsoft Teams",
+    "Specialized Skills": "Algorithm Design, System Architecture, LLM Integration, Performance Optimization, Security"
   }
 }

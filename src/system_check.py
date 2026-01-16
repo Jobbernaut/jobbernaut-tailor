@@ -65,7 +65,8 @@ class SystemRequirements:
                 ))
                 return False
             
-            with open("requirements.txt", "r") as f:
+            # Read with explicit UTF-8 encoding and error handling for robustness
+            with open("requirements.txt", "r", encoding="utf-8", errors="ignore") as f:
                 requirements = [line.strip() for line in f if line.strip() and not line.startswith("#")]
             
             # Try importing key packages
