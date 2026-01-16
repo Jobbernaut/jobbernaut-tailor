@@ -202,8 +202,8 @@ class TailoredResume(BaseModel):
     professional_summaries: str = ""  # Should be empty string
     education: List[Education] = Field(..., min_length=1)
     skills: Dict[str, str] = Field(...)  # Category name -> comma-separated skills string
-    work_experience: List[WorkExperience] = Field(..., min_length=3, max_length=3)
-    projects: List[Project] = Field(..., min_length=3, max_length=3)
+    work_experience: List[WorkExperience] = Field(..., min_length=4, max_length=4)
+    projects: List[Project] = Field(..., min_length=2, max_length=2)
     
     @field_validator('skills')
     @classmethod
