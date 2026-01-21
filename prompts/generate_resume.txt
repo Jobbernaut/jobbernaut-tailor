@@ -140,7 +140,34 @@ CRITICAL: You MUST analyze whether any work_experience job titles should be tran
 3. ✅ **Must be defensible in interview**: "Tell me about your [transformed title] experience" must have 5+ minutes of authentic examples from `technical_story`
 4. ✅ **When in doubt, DO NOT transform** - keep original title from master_resume.json
 
-**SAFE TRANSFORMATIONS (requires work evidence):**
+**TRANSFORMATION PRIORITY FRAMEWORK:**
+
+**PRIORITY 1: Generic Title Normalization (HIGHEST PRIORITY - ALWAYS CHECK FIRST)**
+
+Before attempting ANY specialty transformation, check if the target job title is GENERIC:
+
+**Generic Title Indicators:**
+- Job title contains ONLY: "Software Engineer", "Software Developer", "Engineer", "SWE", "SDE"
+- Job title does NOT contain specialty keywords: "Mobile", "Frontend", "Backend", "Full-Stack", "Data", "DevOps", "Cloud", "ML", "Platform", "Infrastructure"
+
+**IF TARGET IS GENERIC (e.g., "Software Engineer", "Software Developer"):**
+- ✅ Transform ALL "Software Development Engineer" → "Software Engineer" (exact match for ATS)
+- ✅ Transform ALL "Software Development Engineer" → "Software Developer" (exact match for ATS)
+- ❌ DO NOT specialize to "Mobile Engineer", "Frontend Engineer", etc. (even if work evidence exists)
+- **REASON:** Generic roles want generalists, not specialists. Over-specialization can hurt your chances.
+
+**Example:**
+- Target: "Software Engineer" (generic)
+- Your title: "Software Development Engineer"
+- Work evidence: Has mobile development experience
+- **CORRECT ACTION:** Transform to "Software Engineer" (generic match)
+- **WRONG ACTION:** Transform to "Mobile Engineer" (over-specialization)
+
+**PRIORITY 2: Specialty Transformation (ONLY IF TARGET IS SPECIALIZED)**
+
+ONLY proceed to specialty transformation IF the target job title explicitly contains specialty keywords.
+
+**Safe Specialty Transformations (requires work evidence):**
 
 | From Generic Title | To Specialized Title | Required Evidence in narrative_context |
 |-------------------|----------------------|----------------------------------------|
@@ -155,53 +182,97 @@ CRITICAL: You MUST analyze whether any work_experience job titles should be tran
 
 **WORK EVIDENCE CHECKLIST:**
 
-For EACH work_experience entry, evaluate:
+For EACH work_experience entry, follow this decision tree:
 
-1. **Extract target job specialty from [JOB_DESCRIPTION]**
-   - Example: "Mobile Engineer" → specialty = "Mobile"
+**STEP A: Identify Target Job Type**
+1. **Extract target job title from [JOB_DESCRIPTION]**
+   - Example: "Mobile Engineer, University Grad" → specialty = "Mobile"
    - Example: "Frontend Engineer" → specialty = "Frontend"
-   - Example: "Software Engineer" → specialty = "General" (no transformation)
+   - Example: "Software Engineer" → type = "GENERIC" (STOP - use Priority 1)
 
-2. **Analyze `narrative_context.technical_story`:**
-   - Does this story describe mobile/frontend/backend/data/devops work?
-   - Are the technologies in `technologies_deep_dive` specific to this specialty?
-   - Do the challenges in `challenges_overcome` relate to this specialty?
+2. **Check if target is GENERIC or SPECIALIZED:**
+   - IF target contains ONLY "Software Engineer/Developer/SWE/SDE" → GENERIC
+   - IF target contains "Mobile/Frontend/Backend/etc." → SPECIALIZED
 
-3. **Evidence Threshold (MUST meet 2+ of 3):**
+**STEP B: Apply Appropriate Transformation**
+
+**IF TARGET IS GENERIC:**
+- Transform "Software Development Engineer" → "Software Engineer" (exact match)
+- Transform "Software Development Engineer" → "Software Developer" (exact match)
+- DO NOT check work evidence for specialization
+- SKIP to next work experience
+
+**IF TARGET IS SPECIALIZED:**
+- Proceed to STEP C (work evidence evaluation)
+
+**STEP C: Evaluate Work Evidence (ONLY for specialized targets)**
+
+1. **Analyze `narrative_context.technical_story`:**
+   - Does this story describe [specialty]-specific work?
+   - Are the technologies in `technologies_deep_dive` specific to [specialty]?
+   - Do the challenges in `challenges_overcome` relate to [specialty]?
+
+2. **Evidence Threshold (MUST meet 2+ of 3):**
    - ✅ Technical story explicitly mentions specialty-specific work
    - ✅ Technologies list includes 3+ specialty-specific tools/frameworks
    - ✅ Challenges/achievements demonstrate specialty-specific expertise
 
-4. **If evidence threshold MET:**
+3. **IF evidence threshold MET (2+ of 3):**
    - Transform job_title to match target specialty
    - Example: "Software Development Engineer" → "Mobile Engineer"
 
-5. **If evidence threshold NOT MET:**
-   - Keep original job_title from master_resume.json
-   - Do NOT force transformation
+4. **IF evidence threshold NOT MET:**
+   - Normalize to generic equivalent: "Software Development Engineer" → "Software Engineer"
+   - Do NOT force specialty transformation
 
 **CONCRETE EXAMPLES:**
 
-**Example 1: Mobile Engineer Target**
-- Target: "Mobile Engineer, University Grad"
-- Tally experience technical_story: "cross-platform MS Teams app rendering on iOS/Android/Desktop"
-- Technologies: TypeScript, ReactJS, Fluent UI (cross-platform framework)
-- Challenges: "mobile layout constraints", "progressive disclosure for mobile screens"
-- **VERDICT:** ✅ Transform to "Mobile Engineer" (meets 3/3 criteria)
+**Example 1: Generic Target (NEW - HIGHEST PRIORITY CASE)**
+- Target: "Software Engineer" (generic - no specialty keywords)
+- Your title at Tally: "Software Development Engineer"
+- Work evidence: Cross-platform MS Teams app on iOS/Android (MOBILE EVIDENCE EXISTS)
+- **DECISION PATH:**
+  - Step A: Target is GENERIC → use Priority 1
+  - Step B: Transform to "Software Engineer" (exact match)
+  - **DO NOT specialize to "Mobile Engineer"** (target didn't ask for specialty)
+- **FINAL OUTPUT:** "Software Engineer" ✅
 
-**Example 2: Backend Engineer Target**
-- Target: "Backend Engineer"
-- Vivriti experience technical_story: "AWS Lambda, Spring Boot, event-driven architecture"
-- Technologies: Spring Boot, AWS S3, Lambda, OpenSearch, serverless
-- Challenges: "section-specific processing", "queue-based architecture"
-- **VERDICT:** ✅ Transform to "Backend Engineer" (meets 3/3 criteria)
+**Example 2: Specialized Target (Mobile)**
+- Target: "Mobile Engineer, University Grad" (specialized - contains "Mobile")
+- Your title at Tally: "Software Development Engineer"
+- Work evidence:
+  - Technical_story: "cross-platform MS Teams app rendering on iOS/Android/Desktop"
+  - Technologies: TypeScript, ReactJS, Fluent UI (cross-platform framework)
+  - Challenges: "mobile layout constraints", "progressive disclosure for mobile screens"
+- **DECISION PATH:**
+  - Step A: Target is SPECIALIZED → proceed to Step C
+  - Step C: Evidence threshold = 3/3 ✅
+- **FINAL OUTPUT:** "Mobile Engineer" ✅
 
-**Example 3: Frontend Engineer Target**
-- Target: "Frontend Engineer"
-- UNC Neuroscience experience technical_story: "Python data processing platform using Pandas"
-- Technologies: Python, Pandas, NumPy, Sentence-Transformers (NO frontend frameworks)
-- Challenges: "entity resolution", "fuzzy matching" (data processing, not UI)
-- **VERDICT:** ❌ Keep as "Software Development Engineer" (meets 0/3 criteria)
+**Example 3: Specialized Target (Backend)**
+- Target: "Backend Engineer" (specialized - contains "Backend")
+- Your title at Vivriti: "Software Development Engineer"
+- Work evidence:
+  - Technical_story: "AWS Lambda, Spring Boot, event-driven architecture"
+  - Technologies: Spring Boot, AWS S3, Lambda, OpenSearch, serverless
+  - Challenges: "section-specific processing", "queue-based architecture"
+- **DECISION PATH:**
+  - Step A: Target is SPECIALIZED → proceed to Step C
+  - Step C: Evidence threshold = 3/3 ✅
+- **FINAL OUTPUT:** "Backend Engineer" ✅
+
+**Example 4: Specialized Target but No Evidence**
+- Target: "Frontend Engineer" (specialized - contains "Frontend")
+- Your title at UNC Neuroscience: "Software Development Engineer"
+- Work evidence:
+  - Technical_story: "Python data processing platform using Pandas"
+  - Technologies: Python, Pandas, NumPy, Sentence-Transformers (NO frontend frameworks)
+  - Challenges: "entity resolution", "fuzzy matching" (data processing, not UI)
+- **DECISION PATH:**
+  - Step A: Target is SPECIALIZED → proceed to Step C
+  - Step C: Evidence threshold = 0/3 ❌ (no frontend evidence)
+  - Fallback: Normalize to generic
+- **FINAL OUTPUT:** "Software Engineer" ✅ (normalized, not specialized)
 
 **UNSAFE TRANSFORMATIONS (NEVER DO THESE):**
 
@@ -210,20 +281,34 @@ For EACH work_experience entry, evaluate:
 ❌ Adding management: Any title → "Engineering Manager" or "Tech Lead"
 ❌ Function change without evidence: "Backend Engineer" → "ML Engineer" (no ML work)
 ❌ Domain shift: "Software Engineer" → "Product Manager"
+❌ Over-specializing generic targets: Target is "Software Engineer" but you change to "Mobile Engineer"
 
 **OUTPUT INSTRUCTION:**
 
 When populating the `work_experience` array in your final JSON:
-- Use the transformed job_title when work evidence supports it
-- Use the exact original job_title from master_resume.json when transformation not warranted
+- Use the transformed job_title when transformation is warranted (Priority 1 or Priority 2)
+- Use the exact original job_title from master_resume.json when no transformation applies
 - Apply this logic independently to EACH work_experience entry (some may transform, others may not)
 
 **VALIDATION:**
 
 Before finalizing work_experience JSON, ask yourself for EACH transformed title:
-- "If interviewer asks 'Tell me about your Mobile Engineer experience at Tally', can I speak for 5 minutes using technical_story content?"
-- If YES → transformation is valid
-- If NO → revert to original title
+
+1. **Is the target job GENERIC?**
+   - If YES → Did I normalize to generic equivalent (SDE → SWE)?
+   - If NO → Proceed to question 2
+
+2. **Is the target job SPECIALIZED?**
+   - If YES → Does my work evidence meet 2+ of 3 criteria?
+   - If YES to evidence → transformation valid
+   - If NO to evidence → Did I normalize to generic instead?
+
+3. **Interview defensibility test:**
+   - "If interviewer asks 'Tell me about your [transformed title] experience', can I speak for 5 minutes using technical_story content?"
+   - If YES → transformation is valid
+   - If NO → revert to original title or generic normalization
+
+
 
 **Step 2: Leverage Job Resonance Intelligence (CULTURAL ALIGNMENT + RISK PROFILING)**
 -   **CRITICAL:** You have been provided with [JOB_RESONANCE_ANALYSIS] - pre-analyzed intelligence about this specific job posting.
