@@ -249,6 +249,7 @@ class JobResonanceAnalysis(BaseModel):
     """
     Intelligence gathering model for deep job description analysis.
     Extracts emotional keywords, cultural values, and hidden requirements.
+    Now includes risk profiling: underlying anxiety and priority proof metrics.
     """
     emotional_keywords: List[str] = Field(
         ..., 
@@ -270,6 +271,16 @@ class JobResonanceAnalysis(BaseModel):
         ..., 
         description="Technical skills and tools mentioned in JD for ATS optimization"
     )
+    underlying_anxiety: str = Field(
+        ..., 
+        description="The core problem/pain point this hire solves (1-2 sentences)"
+    )
+    priority_proof_metrics: List[str] = Field(
+        ..., 
+        min_length=3,
+        max_length=3,
+        description="Top 3 proof metric types the hiring manager prioritizes (e.g., 'uptime improvements', 'cost reduction', 'deployment speed')"
+    )
     
     @field_validator('emotional_keywords', 'cultural_values', 'hidden_requirements', 'power_verbs', 'technical_keywords')
     @classmethod
@@ -277,6 +288,24 @@ class JobResonanceAnalysis(BaseModel):
         """Ensure all lists have at least one item."""
         if not v or len(v) == 0:
             raise ValueError("List must contain at least one item")
+        return v
+    
+    @field_validator('underlying_anxiety')
+    @classmethod
+    def validate_underlying_anxiety(cls, v: str) -> str:
+        """Ensure underlying_anxiety is a meaningful, non-empty string."""
+        if not v or not v.strip():
+            raise ValueError("underlying_anxiety must be a non-empty string")
+        if len(v.strip()) < 20:
+            raise ValueError("underlying_anxiety must be at least 20 characters (1-2 sentences)")
+        return v.strip()
+    
+    @field_validator('priority_proof_metrics')
+    @classmethod
+    def validate_priority_proof_metrics(cls, v: List[str]) -> List[str]:
+        """Ensure priority_proof_metrics has exactly 3 items."""
+        if len(v) != 3:
+            raise ValueError(f"priority_proof_metrics must have exactly 3 items (found {len(v)})")
         return v
 
 

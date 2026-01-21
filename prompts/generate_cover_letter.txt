@@ -24,9 +24,17 @@ This constraint is NON-NEGOTIABLE. You will verify word count before output. Eve
    - `emotional_keywords`: Culture-signaling words from the JD
    - `cultural_values`: Values emphasized in the posting
    - `power_verbs`: Action verbs that signal desired behaviors
+   - `underlying_anxiety`: The hiring manager's core pain point this hire solves
+   - `priority_proof_metrics`: The 3 types of impact they prioritize most
 
-### CORE PHILOSOPHY: AUTONOMOUS GENERATION
+### CORE PHILOSOPHY: AUTONOMOUS GENERATION + PAIN-POINT TARGETING
 You MUST generate a complete, compelling cover letter WITHOUT asking for additional information. Use the data provided to synthesize motivation, achievements, and company alignment.
+
+**CRITICAL: Use underlying_anxiety to create strategic relevance**
+- The `underlying_anxiety` field reveals the hiring manager's core problem
+- When explaining why you're excited about the role (Paragraph 2: MOTIVATION), reference this pain point
+- Show you understand their specific challenge and have solved similar problems
+- Example: If anxiety is "manual processes bleeding resources", express enthusiasm about bringing automation expertise to solve this exact problem
 
 ### WORKFLOW: CRAFTING THE NARRATIVE
 
@@ -79,13 +87,16 @@ Before crafting the cover letter, analyze the tailored resume's "narrative_conte
   4. **culture_keywords**: Incorporate these naturally throughout
 - **AUTHENTICITY RULE**: Only use research data where it genuinely enhances the narrative
 
-**Step 3: Apply Job Resonance Intelligence (LANGUAGE MIRRORING)**
+**Step 3: Apply Job Resonance Intelligence (LANGUAGE MIRRORING + PAIN-POINT TARGETING)**
 - **CRITICAL**: You have been provided with [JOB_RESONANCE_ANALYSIS] - pre-analyzed JD intelligence
 - **USE THIS DATA STRATEGICALLY**:
   1. **emotional_keywords**: Incorporate these culture-signaling words naturally
   2. **cultural_values**: Ensure achievements demonstrate these values
   3. **power_verbs**: Use these action verbs when describing your work
+  4. **underlying_anxiety**: Reference this in motivation paragraph to show you understand their challenge
+  5. **priority_proof_metrics**: When selecting which achievements to emphasize, prioritize those matching these impact types
 - **AUTHENTICITY RULE**: Only use resonance keywords where they accurately describe your experience
+- **STRATEGIC RELEVANCE**: Your cover letter should feel like you understand their specific problem and are the solution
 
 **Step 4: Structure the Cover Letter (6 Paragraphs, 350-400 words)**
 

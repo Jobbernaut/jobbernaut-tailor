@@ -10,7 +10,9 @@ You MUST return a JSON object with EXACTLY these field names (case-sensitive):
   "cultural_values": ["value1", "value2", ...],
   "hidden_requirements": ["requirement1", "requirement2", ...],
   "power_verbs": ["verb1", "verb2", ...],
-  "technical_keywords": ["keyword1", "keyword2", ...]
+  "technical_keywords": ["keyword1", "keyword2", ...],
+  "underlying_anxiety": "1-2 sentence description of core problem this hire solves",
+  "priority_proof_metrics": ["metric_type_1", "metric_type_2", "metric_type_3"]
 }
 ```
 
@@ -35,6 +37,32 @@ Extract and return a JSON object with these fields:
 
 5. "technical_keywords": Array of ALL technical skills, tools, frameworks, and technologies mentioned for ATS optimization (e.g., "Python", "AWS", "React", "PostgreSQL", "Kubernetes", "CI/CD")
 
+6. "underlying_anxiety": A 1-2 sentence analysis of the core problem/pain point this hire solves
+   - Look BEYOND the listed responsibilities to identify the hiring manager's underlying anxiety
+   - What is the #1 problem they are desperately trying to solve by making this hire?
+   - Read between the lines: urgency signals, repetition of themes, scale mentions, problem keywords
+   - Examples:
+     * "Scaling to 10,000+ satellites requires zero-downtime deployment. Current pipeline cannot keep pace with growth trajectory."
+     * "Manual processes are bleeding significant resources. Need rapid automation expertise to improve operational efficiency within tight constraints."
+     * "Security vulnerabilities growing with platform scale. Need hardened systems and proactive threat mitigation before next audit cycle."
+     * "Legacy codebase blocking innovation velocity. Need modernization expertise to enable team to ship features faster."
+   - Focus on the PAIN, not just the responsibilities
+
+7. "priority_proof_metrics": Array of EXACTLY 3 metric types (ordered by importance) that the hiring manager will prioritize above all else
+   - These are the TYPES of impact they care about most (not specific numbers, but categories of proof)
+   - Infer from: what problems are emphasized, what outcomes are mentioned, what pain points appear repeatedly
+   - Examples of metric types:
+     * "uptime/reliability improvements" (e.g., for mission-critical systems, aerospace, infrastructure)
+     * "cost reduction/efficiency gains" (e.g., for startups, operations roles, automation-focused positions)
+     * "deployment speed/velocity" (e.g., for DevOps, CI/CD, platform engineering)
+     * "security hardening/vulnerability reduction" (e.g., for security-focused roles, compliance-heavy industries)
+     * "scale handling/performance optimization" (e.g., for high-growth companies, distributed systems)
+     * "user satisfaction/experience improvements" (e.g., for product-focused roles, customer-facing systems)
+     * "team velocity/productivity increases" (e.g., for platform/tools teams, developer experience roles)
+     * "data accuracy/integrity improvements" (e.g., for data engineering, analytics, ML infrastructure)
+   - Order from MOST to LEAST critical (hiring manager will look for #1 first, then #2, then #3)
+   - Must be EXACTLY 3 items
+
 CRITICAL INSTRUCTIONS:
 - Each array MUST have at least one item
 - Extract ACTUAL words/phrases from the job description - do not invent
@@ -48,5 +76,7 @@ Example format:
   "cultural_values": ["collaborative", "fast-paced", "data-driven"],
   "hidden_requirements": ["startup mentality", "ambiguity tolerance", "self-starter"],
   "power_verbs": ["architected", "spearheaded", "optimized", "drove"],
-  "technical_keywords": ["Python", "AWS", "React", "PostgreSQL", "Docker"]
+  "technical_keywords": ["Python", "AWS", "React", "PostgreSQL", "Docker"],
+  "underlying_anxiety": "Platform struggling to scale beyond 1M users. Current architecture causing frequent outages and customer churn.",
+  "priority_proof_metrics": ["uptime/reliability improvements", "scale handling/performance optimization", "deployment speed/velocity"]
 }

@@ -128,7 +128,7 @@ You will be given the following data, clearly delineated:
 -   **Keyword Matching Score**: For each item in the master resume (work experiences, projects), calculate a relevance score based on how many priority keywords appear in its content.
 -   **IMPORTANT**: Keep this keyword list in mind throughout ALL subsequent steps. Your goal is to maximize keyword coverage while maintaining authenticity.
 
-**Step 2: Leverage Job Resonance Intelligence (CULTURAL ALIGNMENT)**
+**Step 2: Leverage Job Resonance Intelligence (CULTURAL ALIGNMENT + RISK PROFILING)**
 -   **CRITICAL:** You have been provided with [JOB_RESONANCE_ANALYSIS] - pre-analyzed intelligence about this specific job posting.
 -   **USE THIS DATA STRATEGICALLY**:
     1. **Emotional Keywords**: Incorporate these culture-signaling words naturally into your bullets when they authentically describe the work
@@ -140,8 +140,21 @@ You will be given the following data, clearly delineated:
     4. **Power Verbs**: Use these action verbs from the JD when they accurately describe your role per `role_clarity`
        - Example: If "drove" appears in power_verbs and your role_clarity shows primary ownership, use "drove" instead of generic verbs
     5. **Technical Keywords**: These are already in your Step 1 list, but cross-reference to ensure coverage
+    6. **Underlying Anxiety (CRITICAL - NEW)**: This reveals the hiring manager's core pain point
+       - Read the `underlying_anxiety` field carefully - this is THE problem they're desperate to solve
+       - When selecting bullets from `narrative_context`, prioritize experiences that directly address this anxiety
+       - Example: If anxiety is "scaling issues", prioritize bullets showing scale handling from `key_metrics`
+       - Example: If anxiety is "manual processes bleeding resources", lead with automation/efficiency bullets
+    7. **Priority Proof Metrics (CRITICAL - NEW)**: These are the 3 impact types they care about MOST
+       - The array is ordered by importance: [0] is highest priority, [1] is second, [2] is third
+       - When ordering bullets per experience, match metrics to these priorities:
+         * Bullet 1: Should demonstrate priority_proof_metrics[0] if you have relevant metrics in `key_metrics`
+         * Bullet 2: Should demonstrate priority_proof_metrics[1] if available
+         * Bullet 3: Should demonstrate priority_proof_metrics[2] or technical depth
+       - Example: If priority_proof_metrics = ["uptime/reliability", "scale handling", "deployment speed"], lead with uptime metrics from `key_metrics`
 -   **AUTHENTICITY RULE**: Only use resonance keywords where they genuinely fit the `narrative_context`. Do NOT force cultural language that contradicts the actual work described.
--   **STRATEGIC FRAMING**: When you have multiple ways to describe the same achievement from `narrative_context`, choose the framing that best aligns with the cultural values and emotional keywords.
+-   **STRATEGIC FRAMING**: When you have multiple ways to describe the same achievement from `narrative_context`, choose the framing that best aligns with the cultural values, emotional keywords, AND underlying anxiety.
+-   **PAIN-POINT TARGETING**: Your resume should feel like it was written by someone who understands their specific problem and has solved it before.
 
 **Step 2.5: Additional Company Research (SUPPLEMENTARY)**
 -   If needed for additional context, perform targeted research on the company:
@@ -216,8 +229,40 @@ Before optimizing for impact, you must ensure factual accuracy. Every transforma
    - ❌ NEVER: Alter any structured data fields from the master JSON
    - ✅ ALWAYS: Use exact values from master_resume.json for all structured fields
 
-**Step 4: Content Synthesis & Tailoring (NARRATIVE-DRIVEN + EYE-TRACKING OPTIMIZED)**
+**Step 4: Content Synthesis & Tailoring (NARRATIVE-DRIVEN + EYE-TRACKING OPTIMIZED + ACTION VERB DIVERSITY)**
 This is the most critical step. You will synthesize new bullet points from the narrative context.
+
+### ACTION VERB DIVERSITY BANK (CRITICAL FOR VARIETY)
+To avoid repetitive action verbs, you MUST consult this categorized synonym bank when writing bullets:
+
+**System Design/Architecture:**
+Architected, Designed, Engineered, Constructed, Formulated, Devised, Structured, Blueprinted, Conceptualized
+
+**Development/Building:**
+Built, Developed, Engineered, Created, Implemented, Delivered, Established, Produced, Crafted, Assembled
+
+**Improvement/Optimization:**
+Optimized, Enhanced, Improved, Streamlined, Refined, Accelerated, Upgraded, Modernized, Boosted, Revamped
+
+**Leadership/Initiative:**
+Led, Spearheaded, Drove, Directed, Orchestrated, Championed, Pioneered, Launched, Initiated, Steered
+
+**Problem-Solving:**
+Resolved, Eliminated, Mitigated, Addressed, Overcame, Solved, Debugged, Remedied, Tackled
+
+**Data/Analysis:**
+Analyzed, Processed, Transformed, Extracted, Aggregated, Synthesized, Computed, Evaluated
+
+**Integration/Implementation:**
+Integrated, Deployed, Migrated, Established, Instituted, Incorporated, Rolled out, Introduced
+
+**Collaboration/Coordination:**
+Collaborated, Coordinated, Partnered, Facilitated, Unified, Aligned, Synchronized
+
+**Automation/Efficiency:**
+Automated, Streamlined, Systematized, Standardized, Expedited, Simplified
+
+**CRITICAL RULE: Track verb usage as you write. No action verb may appear more than 2 times across the entire resume (all work_experience + projects bullets combined).**
 
 ### EYE-TRACKING RESEARCH INSIGHTS (CRITICAL)
 Research shows recruiters scan resumes in F-pattern and Z-pattern, spending only 3-5 seconds initially:
@@ -226,12 +271,28 @@ Research shows recruiters scan resumes in F-pattern and Z-pattern, spending only
 - **Left-aligned content dominates attention** - start with numbers, not words
 - **Later bullets get significantly less attention** - but still must be impactful
 
-### MANDATORY BULLET ORDERING (BASED ON EYE-TRACKING)
-For EACH work experience and project, order bullets as follows:
+### MANDATORY BULLET ORDERING (BASED ON EYE-TRACKING + RISK PROFILING)
+For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
+
+**PRIMARY RULE (When priority_proof_metrics available):**
+1. **Bullet 1**: Metric matching `priority_proof_metrics[0]` from `key_metrics` (highest-priority pain point)
+2. **Bullet 2**: Metric matching `priority_proof_metrics[1]` from `key_metrics` (second-priority pain point)
+3. **Bullet 3**: Metric matching `priority_proof_metrics[2]` OR technical depth/architectural complexity
+4. **Bullet 4**: Collaborative achievement, additional scope, or complementary skill
+
+**FALLBACK RULE (When no matching metrics for priority_proof_metrics):**
 1. **Bullet 1**: Highest-impact metric + strongest JD keyword match (this gets read FIRST and MOST)
 2. **Bullet 2**: Second-highest impact with different skill/technology demonstration
 3. **Bullet 3**: Technical depth, architectural complexity, or scale demonstration
 4. **Bullet 4**: Collaborative achievement, additional scope, or complementary skill
+
+**CRITICAL:** If you have metrics in `key_metrics` that directly address the `underlying_anxiety` or match `priority_proof_metrics`, those MUST be prioritized in Bullet 1, even if they're not the absolute largest number. Pain-point relevance > generic impact.
+
+**Example:**
+- underlying_anxiety: "Manual processes bleeding resources"
+- priority_proof_metrics: ["cost reduction/efficiency gains", "automation speed", "process improvements"]
+- If you have "eliminated 60-min manual task" in key_metrics, this should be Bullet 1 even if you also have "99.9% uptime" 
+- The hiring manager cares MORE about efficiency/automation than uptime for this specific role
 
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, synthesize NEW bullet points from the `narrative_context` and `key_metrics`.
@@ -261,6 +322,12 @@ For EACH work experience and project, order bullets as follows:
     -   **KEYWORD INTEGRATION**: When synthesizing bullets from narrative, naturally incorporate 2-3 priority keywords from Step 1 where they authentically fit. For example:
       - narrative_context: "Built Python script using NLP Sentence-Transformers"
       - With Keywords (for ML role): "NLP-powered automation using Sentence-Transformers reduced manual grading 90%"
+    
+    -   **ACTION VERB DIVERSITY (MANDATORY)**: As you write each bullet point, track which action verbs you've already used. Consult the Action Verb Diversity Bank and select synonyms that:
+      1. Accurately reflect the nature of the work per `role_clarity`
+      2. Have NOT been used more than once already in the resume
+      3. Match the technical sophistication of the action
+      - Example: If you've used "Architected" twice, next time use "Designed", "Engineered", or "Structured" instead
     
     -   **AUTHENTICITY CHECK**: Only use keywords that genuinely reflect the work described in `narrative_context`. Do NOT force keywords that don't fit.
     
@@ -425,7 +492,41 @@ For EVERY skill category in the skills object:
 - Confirm: MOST bullets ≥ 90 characters (maximizing space usage)
 - Only proceed to output if TRUE
 
-**STEP 9: VERIFY PROJECT TECHNOLOGIES**
+**STEP 8.5: ACTION VERB DIVERSITY VERIFICATION (CRITICAL)**
+This step ensures professional variety and eliminates monotonous repetition:
+
+1. **Extract all action verbs** from every bullet point across work_experience and projects
+   - Only count verbs that START bullet points or appear in active voice constructions
+   - Do NOT count verbs in passive constructions like "achieved by", "attained via", "secured with"
+
+2. **Count verb frequency** across the entire resume
+   - Create a list: "Architected: 3 times, Engineered: 2 times, Built: 1 time", etc.
+
+3. **Apply the 2-occurrence rule:**
+   - **CRITICAL: No action verb may appear more than 2 times in the entire resume**
+   - If ANY verb appears ≥3 times, you MUST STOP and replace occurrences
+
+4. **Replacement strategy when verb appears ≥3 times:**
+   - Keep the first 2 occurrences where the verb fits best
+   - For the 3rd+ occurrences, consult the Action Verb Diversity Bank
+   - Select synonyms that:
+     a) Match the technical nature of the action (system design vs development vs optimization)
+     b) Align with `role_clarity` (led vs contributed)
+     c) Have not been overused themselves
+   - Example replacements:
+     - "Architected" (used 4x) → Keep 2, replace others with "Designed", "Structured"
+     - "Engineered" (used 3x) → Keep 2, replace 1 with "Developed" or "Built"
+     - "Implemented" (used 3x) → Keep 2, replace 1 with "Deployed" or "Established"
+
+5. **Recount after replacement** to verify no verb appears >2 times
+
+6. **Write down**: "Action Verb Diversity Check: [PASS/FAIL]"
+   - List any verbs that appeared >2 times and how you fixed them
+   - Only proceed if PASS
+
+**Note:** This check preserves metric front-loading. Passive constructions like "85% reduction achieved by optimizing..." are fine and don't count toward verb frequency.
+
+**STEP 9: VERIFY PROJECT TECHNOLOGIES (moved from previous Step 9)**
 For EVERY project in the projects array:
 - Join the technologies array with ", "
 - Count the characters in the joined string
@@ -436,7 +537,7 @@ For EVERY project in the projects array:
 - After each removal, recount the characters in the joined technologies string.
 - Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 55 characters when joined with ", ". This is a non-negotiable constraint.
 
-**STEP 10: JSON SYNTAX VALIDATION (CRITICAL)**
+**STEP 10: JSON SYNTAX VALIDATION (CRITICAL - moved from previous Step 10)**
 BEFORE outputting your JSON, you MUST perform this rigorous syntax check:
 
 1. **Verify ALL bullet_points arrays have proper quote syntax:**
@@ -482,22 +583,22 @@ Write down: "JSON Syntax Check: [PASS/FAIL]"
 If FAIL, identify the specific error, fix it, and recheck.
 Only proceed to output if PASS.
 
-**STEP 11: VERIFY JSON STRUCTURE**
+**STEP 11: VERIFY JSON STRUCTURE (moved from previous Step 11)**
 - Confirm the JSON is valid and complete
 - Confirm all required fields are present
 - Confirm no explanatory text outside the JSON
 
-**STEP 12: FINAL KEYWORD COVERAGE CHECK**
+**STEP 12: FINAL KEYWORD COVERAGE CHECK (moved from previous Step 12)**
 - Recount keyword coverage one final time
 - Confirm: Coverage ≥ 70%
 - If not, STOP and revise
 
-**STEP 13: FINAL EYE-TRACKING CHECK**
+**STEP 13: FINAL EYE-TRACKING CHECK (moved from previous Step 13)**
 - Verify metrics are front-loaded (first 10 chars) in at least 50% of bullets
 - Verify Bullet 1 for each experience/project is the strongest
 - Confirm: Eye-tracking optimization applied
 
-**STEP 14: FINAL JSON VALIDATION (LAST CHECK BEFORE OUTPUT)**
+**STEP 14: FINAL JSON VALIDATION (LAST CHECK BEFORE OUTPUT - moved from previous Step 14)**
 - Perform one final mental parse of your entire JSON
 - Verify EVERY bullet point has opening AND closing quotes
 - Verify NO trailing commas anywhere
@@ -511,5 +612,6 @@ DO NOT OUTPUT until ALL of these conditions are met:
 3. All character counts are verified to be within limits (≤108 chars, ideally ≥90 chars)
 4. All exact counts are confirmed (4 work exp, 2 projects, 4 bullets each, 6 skill categories)
 5. All accuracy checks pass against `narrative_context`, `key_metrics`, and `role_clarity`
-6. JSON syntax validation PASSED (Step 10)
-7. Final JSON validation PASSED (Step 14)
+6. Action verb diversity check PASSED - no verb appears >2 times (Step 8.5)
+7. JSON syntax validation PASSED (Step 10)
+8. Final JSON validation PASSED (Step 14)
