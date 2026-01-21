@@ -128,6 +128,103 @@ You will be given the following data, clearly delineated:
 -   **Keyword Matching Score**: For each item in the master resume (work experiences, projects), calculate a relevance score based on how many priority keywords appear in its content.
 -   **IMPORTANT**: Keep this keyword list in mind throughout ALL subsequent steps. Your goal is to maximize keyword coverage while maintaining authenticity.
 
+**Step 1.5: Strategic Job Title Alignment (WORK-EVIDENCE BASED TRANSFORMATION)**
+
+CRITICAL: You MUST analyze whether any work_experience job titles should be transformed to better match the target job title WHILE MAINTAINING FACTUAL ACCURACY.
+
+**OBJECTIVE:** Maximize ATS keyword matching and recruiter pattern recognition by aligning job titles with target role when work genuinely supports it.
+
+**STRICT RULES:**
+1. ✅ **Only transform when work evidence in `narrative_context` CLEARLY supports the specialized title**
+2. ✅ **Never change seniority level** (SDE = SWE = Engineer, but ≠ Senior/Staff/Principal/Lead)
+3. ✅ **Must be defensible in interview**: "Tell me about your [transformed title] experience" must have 5+ minutes of authentic examples from `technical_story`
+4. ✅ **When in doubt, DO NOT transform** - keep original title from master_resume.json
+
+**SAFE TRANSFORMATIONS (requires work evidence):**
+
+| From Generic Title | To Specialized Title | Required Evidence in narrative_context |
+|-------------------|----------------------|----------------------------------------|
+| Software Development Engineer | Mobile Engineer | iOS/Android development, mobile frameworks (Flutter, React Native, Swift, Kotlin), cross-platform apps, mobile constraints |
+| Software Development Engineer | Frontend Engineer | UI frameworks (React, Vue, Angular, Flutter), responsive design, component architecture, DOM manipulation |
+| Software Development Engineer | Backend Engineer | APIs (REST, GraphQL), databases, server-side logic, authentication, microservices |
+| Software Development Engineer | Full-Stack Engineer | BOTH frontend UI work AND backend API/database work in same role |
+| Software Development Engineer | Data Engineer | ETL pipelines, data processing, data warehouses, Pandas/PySpark, data infrastructure |
+| Software Development Engineer | DevOps Engineer | CI/CD, infrastructure-as-code (Terraform), Kubernetes, Docker, cloud provisioning, monitoring |
+| Software Development Engineer | Cloud Engineer | AWS/Azure/GCP services, cloud architecture, serverless, infrastructure management |
+| Software Development Engineer | ML Engineer | Model training, PyTorch/TensorFlow, ML pipelines, model deployment, feature engineering |
+
+**WORK EVIDENCE CHECKLIST:**
+
+For EACH work_experience entry, evaluate:
+
+1. **Extract target job specialty from [JOB_DESCRIPTION]**
+   - Example: "Mobile Engineer" → specialty = "Mobile"
+   - Example: "Frontend Engineer" → specialty = "Frontend"
+   - Example: "Software Engineer" → specialty = "General" (no transformation)
+
+2. **Analyze `narrative_context.technical_story`:**
+   - Does this story describe mobile/frontend/backend/data/devops work?
+   - Are the technologies in `technologies_deep_dive` specific to this specialty?
+   - Do the challenges in `challenges_overcome` relate to this specialty?
+
+3. **Evidence Threshold (MUST meet 2+ of 3):**
+   - ✅ Technical story explicitly mentions specialty-specific work
+   - ✅ Technologies list includes 3+ specialty-specific tools/frameworks
+   - ✅ Challenges/achievements demonstrate specialty-specific expertise
+
+4. **If evidence threshold MET:**
+   - Transform job_title to match target specialty
+   - Example: "Software Development Engineer" → "Mobile Engineer"
+
+5. **If evidence threshold NOT MET:**
+   - Keep original job_title from master_resume.json
+   - Do NOT force transformation
+
+**CONCRETE EXAMPLES:**
+
+**Example 1: Mobile Engineer Target**
+- Target: "Mobile Engineer, University Grad"
+- Tally experience technical_story: "cross-platform MS Teams app rendering on iOS/Android/Desktop"
+- Technologies: TypeScript, ReactJS, Fluent UI (cross-platform framework)
+- Challenges: "mobile layout constraints", "progressive disclosure for mobile screens"
+- **VERDICT:** ✅ Transform to "Mobile Engineer" (meets 3/3 criteria)
+
+**Example 2: Backend Engineer Target**
+- Target: "Backend Engineer"
+- Vivriti experience technical_story: "AWS Lambda, Spring Boot, event-driven architecture"
+- Technologies: Spring Boot, AWS S3, Lambda, OpenSearch, serverless
+- Challenges: "section-specific processing", "queue-based architecture"
+- **VERDICT:** ✅ Transform to "Backend Engineer" (meets 3/3 criteria)
+
+**Example 3: Frontend Engineer Target**
+- Target: "Frontend Engineer"
+- UNC Neuroscience experience technical_story: "Python data processing platform using Pandas"
+- Technologies: Python, Pandas, NumPy, Sentence-Transformers (NO frontend frameworks)
+- Challenges: "entity resolution", "fuzzy matching" (data processing, not UI)
+- **VERDICT:** ❌ Keep as "Software Development Engineer" (meets 0/3 criteria)
+
+**UNSAFE TRANSFORMATIONS (NEVER DO THESE):**
+
+❌ Adding seniority: "Software Engineer" → "Senior Software Engineer"
+❌ Adding level: "Engineer" → "Staff Engineer" or "Principal Engineer"
+❌ Adding management: Any title → "Engineering Manager" or "Tech Lead"
+❌ Function change without evidence: "Backend Engineer" → "ML Engineer" (no ML work)
+❌ Domain shift: "Software Engineer" → "Product Manager"
+
+**OUTPUT INSTRUCTION:**
+
+When populating the `work_experience` array in your final JSON:
+- Use the transformed job_title when work evidence supports it
+- Use the exact original job_title from master_resume.json when transformation not warranted
+- Apply this logic independently to EACH work_experience entry (some may transform, others may not)
+
+**VALIDATION:**
+
+Before finalizing work_experience JSON, ask yourself for EACH transformed title:
+- "If interviewer asks 'Tell me about your Mobile Engineer experience at Tally', can I speak for 5 minutes using technical_story content?"
+- If YES → transformation is valid
+- If NO → revert to original title
+
 **Step 2: Leverage Job Resonance Intelligence (CULTURAL ALIGNMENT + RISK PROFILING)**
 -   **CRITICAL:** You have been provided with [JOB_RESONANCE_ANALYSIS] - pre-analyzed intelligence about this specific job posting.
 -   **USE THIS DATA STRATEGICALLY**:
