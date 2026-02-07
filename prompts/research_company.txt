@@ -52,15 +52,15 @@ CRITICAL INSTRUCTIONS:
 - Infer mission and values from job description tone, language, and focus areas
 - Return ONLY valid JSON with no additional text
 
-Example format:
+Example format (replace all placeholders with actual research):
 ```json
 {
-  "company_name": "TechCorp",
-  "mission_statement": "Building innovative cloud solutions that empower enterprises to scale efficiently and securely.",
-  "core_values": ["customer obsession", "innovation", "ownership", "collaboration"],
-  "tech_stack": ["AWS", "Python", "React", "PostgreSQL"],
-  "culture_keywords": ["fast-paced", "data-driven", "collaborative"],
-  "recent_news": "Recently launched new AI-powered analytics platform",
-  "mission_keywords": ["cloud", "scalability", "security", "enterprise", "innovation"],
-  "domain_context": "Enterprise cloud infrastructure where reliability, security, and scalability are critical for business operations."
+  "company_name": "[Extract from JD or company website]",
+  "mission_statement": "[Research from company website or infer from JD - 1-2 sentences]",
+  "core_values": ["[value 1]", "[value 2]", "[value 3]", "[value 4]"],
+  "tech_stack": ["[tech 1]", "[tech 2]", "[tech 3]", "[tech 4]"],
+  "culture_keywords": ["[keyword 1]", "[keyword 2]", "[keyword 3]"],
+  "recent_news": "[Recent company news or achievement if found, otherwise empty string]",
+  "mission_keywords": ["[mission word 1]", "[mission word 2]", "[mission word 3]"],
+  "domain_context": "[Industry/domain description with what matters most - 1-2 sentences]"
 }

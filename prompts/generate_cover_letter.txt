@@ -140,34 +140,43 @@ Before crafting the cover letter, analyze the tailored resume's "narrative_conte
 
 ### CRITICAL WRITING PRINCIPLES
 
-**1. SHOW, DON'T TELL**
+**1. VERB TENSE CONSISTENCY (CRITICAL)**
+- **For current positions** (end_date = "Present" in resume): Use PRESENT TENSE verbs
+  - Example: "I maintain production infrastructure with 99.999% uptime serving UNC researchers"
+  - Example: "I coordinate infrastructure changes across 6 cross-functional teams"
+- **For past positions** (any other end_date): Use PAST TENSE verbs
+  - Example: "I engineered a CLI tool that eliminated 4 hours of daily manual work"
+  - Example: "I architected serverless systems processing 200 documents"
+- **CRITICAL**: Match verb tense to the role's status. If discussing current work, use present tense throughout that achievement paragraph
+
+**2. SHOW, DON'T TELL**
 - BAD: "I'm skilled in Python and cloud architecture"
 - GOOD: "By architecting an AWS Lambda-based ETL pipeline processing 2M+ records daily, I reduced processing time by 99%"
 
-**2. USE SPECIFIC NUMBERS AND RESULTS**
+**3. USE SPECIFIC NUMBERS AND RESULTS**
 - Every achievement must include quantified impact (percentages, dollar amounts, time saved, scale)
 - Example metrics: "reduced by 80%", "processing 500K events/sec", "serving 100K daily users"
 
-**3. MIRROR JOB DESCRIPTION LANGUAGE**
+**4. MIRROR JOB DESCRIPTION LANGUAGE**
 - Use exact terminology from the job posting
 - If they mention "microservices", reference microservices in your examples
 - If they emphasize "scalability", highlight your scalable system designs
 
-**4. AVOID GENERIC STATEMENTS**
+**5. AVOID GENERIC STATEMENTS**
 - BAD: "I'm a team player with excellent communication skills"
 - GOOD: "I've led cross-functional teams to deliver cloud infrastructure solutions serving 100K+ users"
 
-**5. CONFIDENT, ASSERTIVE TONE**
+**6. CONFIDENT, ASSERTIVE TONE**
 - Use strong verbs: "architected", "engineered", "designed", "led", "built"
 - Avoid hedging: "I believe I might" → "I will"
 - Stay humble: focus on team impact and learning
 
-**6. COMPANY-SPECIFIC, NOT GENERIC**
+**7. COMPANY-SPECIFIC, NOT GENERIC**
 - Every sentence should be tailored to THIS company and THIS role
 - Reference company's specific mission, products, or engineering challenges
 - If you could swap the company name and it still works, it's too generic
 
-**7. NO EM DASHES**
+**8. NO EM DASHES**
 - NEVER use em dashes (—) to join sentences, show impact, or create emphasis
 - Use alternative punctuation: commas for pauses, semicolons for related clauses, periods for separate thoughts
 - Use conjunctions (and, but, while) for connecting ideas
@@ -175,7 +184,7 @@ Before crafting the cover letter, analyze the tailored resume's "narrative_conte
   - BAD: "Reduced processing time by 99%—from 3 months to 4 minutes"
   - GOOD: "Reduced processing time by 99%, from 3 months to 4 minutes"
 
-**8. CRITICAL ATS COMPATIBILITY**
+**9. CRITICAL ATS COMPATIBILITY**
 - NEVER use these characters anywhere in the cover letter: `<` `>` `[` `]` `{` `}` `\` `|` `~` `^`
 - These characters break ATS parsing systems like Workday
 - Use parentheses `()` instead of brackets/braces where needed

@@ -110,15 +110,15 @@ CRITICAL INSTRUCTIONS:
 - Each field must be non-empty
 - Return ONLY valid JSON with no additional text
 
-Example format:
+Example format (replace all placeholders with actual content from candidate and company research):
 ```json
 {
-  "hook": "When I learned about TechCorp's mission to democratize AI for developers, it resonated deeply with my own journey building accessible ML tools.",
-  "bridge": "Throughout my career, I've been driven by the belief that powerful technology should be intuitive and accessible. This role represents the perfect opportunity to scale that impact.",
+  "hook": "When I learned about [COMPANY]'s mission to [MISSION SUMMARY], it resonated deeply with my own journey [RELEVANT CANDIDATE EXPERIENCE].",
+  "bridge": "Throughout my career, I've been driven by [AUTHENTIC MOTIVATION]. This role represents the perfect opportunity to [CAREER GOAL ALIGNMENT].",
   "proof_points": [
-    "At UNC Chapel Hill, I architected an event-driven microservices platform that reduced API latency by 40% while serving 50,000+ users. This experience taught me how to build scalable systems that prioritize user experience—exactly what TechCorp needs for its growing developer platform.",
-    "Leading the migration to AWS Lambda at Tally, I didn't just implement technology—I fostered a culture of ownership and innovation within my team. We reduced infrastructure costs by 35% while improving system reliability, demonstrating the collaborative, data-driven approach TechCorp values."
+    "At [RECENT COMPANY/UNIVERSITY], I [QUANTIFIED ACHIEVEMENT] while [CONTEXT]. This experience taught me [LESSON]—exactly what [COMPANY] needs for [SPECIFIC CHALLENGE].",
+    "Leading [PROJECT/INITIATIVE], I didn't just [TECHNICAL WORK]—I [LEADERSHIP ACTION]. We [QUANTIFIED IMPACT], demonstrating the [CULTURAL VALUE] approach [COMPANY] values."
   ],
-  "vision": "I'm excited to bring this combination of technical depth and user-centric thinking to TechCorp, where I can help architect solutions that empower millions of developers while mentoring the next generation of engineers.",
-  "call_to_action": "I'd love to discuss how my experience aligning with your mission can contribute to TechCorp's continued growth."
+  "vision": "I'm excited to bring this combination of [SKILL 1] and [SKILL 2] to [COMPANY], where I can help [CONTRIBUTION TO MISSION].",
+  "call_to_action": "I'd love to discuss how my experience [FIT SUMMARY] can contribute to [COMPANY]'s continued growth."
 }

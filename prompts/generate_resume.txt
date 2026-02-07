@@ -351,18 +351,74 @@ Before finalizing work_experience JSON, ask yourself for EACH transformed title:
 
 **Step 3: Relevance Analysis & Content Selection (KEYWORD-DRIVEN)**
 -   Review the [MASTER_RESUME_JSON] using your Keyword Priority List from Step 1.
--   **Rule for `work_experience`:** You MUST select EXACTLY 4 entries from the `work_experience` section.
-    - **Selection Criteria** (in order of priority):
-      1. Keyword matching score (highest priority)
-      2. Recency (more recent = better)
-      3. Role similarity to target position
+-   **Rule for `work_experience`:** You MUST select EXACTLY 3 entries from the `work_experience` section.
+    - **MANDATORY US PRIORITY RULE (HIGHEST PRIORITY):**
+      - **Automatic US Selection**: First, identify ALL work experiences where the `location` field contains US location indicators:
+        - US state codes (e.g., "NC", "CA", "NY", "TX", "MA", "WA", etc.)
+        - US state names (e.g., "North Carolina", "California", "New York", etc.)
+        - "United States", "USA", "US"
+        - "Remote, US" or "Remote - US"
+      - **US Priority Logic**: If you find 2+ US work experiences, select the 2 MOST RECENT ones by comparing `start_date` fields
+      - **Rationale**: US work experiences demonstrate work authorization, local experience, and recent/current work in target market
+      - **Selection Process**: Include top 2 US experiences by recency, then select 1 additional experience from remaining entries
+    - **Selection Criteria for 3rd position** (in order of priority):
+      1. Keyword matching score (highest priority) - count how many Step 1 keywords appear in `narrative_context`
+      2. Domain alignment with target company - analyze `narrative_context.technologies_deep_dive` for technology pattern matching:
+         - **Mobile/Frontend roles**: Look for UI frameworks (React, Vue, Angular, Flutter), mobile development (iOS, Android, React Native, Swift, Kotlin), cross-platform apps, Teams/Electron applications, responsive design patterns
+         - **Cloud/Backend/Infrastructure roles**: Look for cloud services (AWS, Azure, GCP), serverless (Lambda), backend frameworks (Spring Boot, FastAPI, Django), databases (PostgreSQL, MongoDB, OpenSearch), event-driven architecture, microservices
+         - **Data/ML roles**: Look for data processing (Pandas, PySpark, ETL), ML frameworks (PyTorch, TensorFlow), NLP (Sentence-Transformers), data pipelines, data warehousing
+         - **DevOps/SRE roles**: Look for infrastructure-as-code (Terraform, Ansible), containerization (Docker, Kubernetes), CI/CD, monitoring, reliability patterns
+      3. Recency (more recent `start_date` = better)
+      4. Role similarity to target position based on `job_title` field
+    - **CRITICAL - Dynamic Technology Matching (NO HARDCODING)**:
+      - Parse `narrative_context.technologies_deep_dive` field for each remaining work experience
+      - Count technology keyword matches between JD and this field
+      - Select work experience with highest technology overlap score for 3rd position
+      - **Example**: If JD mentions "AWS Lambda, S3, serverless, event-driven", scan each work experience's `technologies_deep_dive` for these exact terms and select the one with most matches
     - For each selected entry, you MUST include EXACTLY 4 bullet points
     - **Bullet Selection Strategy**: Analyze the `narrative_context` and `key_metrics` to identify the 4 most compelling achievements that demonstrate priority keywords from Step 1
--   **Rule for `projects`:** You MUST select EXACTLY 2 projects.
+-   **Rule for `projects`:** You MUST select EXACTLY 3 projects.
+    - **CRITICAL DOMAIN-AWARE RANKING (DYNAMIC, NO HARDCODING):**
+      - Projects must be ranked by domain relevance to target company/role, NOT just keyword overlap
+      - **Step 1: Classify Each Project Dynamically**:
+        For EACH project in master_resume.json, analyze its `technologies` array and `narrative_context` to assign domain tags:
+        
+        **Domain Classification Logic**:
+        - **Static Analysis/Compiler domain**: Technologies contain (LLVM, Clang, AST, compiler, static analyzer)
+        - **Security/Cryptography domain**: Narrative contains (security, vulnerability, DRM, cryptography, exploit, responsible disclosure)
+        - **Cloud/Backend domain**: Technologies contain (AWS, Lambda, S3, Spring Boot, FastAPI, Django, serverless, microservices, Docker, Kubernetes)
+        - **Frontend/Mobile domain**: Technologies contain (React, Vue, Angular, Flutter, React Native, Swift, Kotlin, Fluent UI, mobile, iOS, Android)
+        - **ML/AI domain**: Technologies contain (LLM, OpenAI, PyTorch, TensorFlow, NLP, Sentence-Transformers, GPT, machine learning)
+        - **Data/Optimization domain**: Technologies contain (Pandas, PySpark, ETL, PuLP, optimization, Integer Linear Programming, data pipelines)
+        - **Infrastructure/DevOps domain**: Technologies contain (Terraform, Ansible, CI/CD, Kubernetes, Docker, monitoring, infrastructure-as-code)
+        - **Production System domain**: Narrative contains (production, pipeline, automation, LaTeX, system architecture, multi-step)
+        
+      - **Step 2: Match Project Domains to Target Role**:
+        Based on JD analysis, identify target domain and prioritize projects with matching tags:
+        
+        **Target Domain Matching**:
+        - **Aerospace/Space/Defense/Mission-Critical roles** → Prioritize: Static Analysis domain, then Optimization domain, then Production System domain
+        - **Security/Cybersecurity/AppSec roles** → Prioritize: Security domain, then Static Analysis domain, then Production System domain
+        - **Cloud/Backend/Infrastructure roles** → Prioritize: Cloud/Backend domain, then Production System domain, then Infrastructure domain
+        - **Frontend/Mobile/Full-Stack roles** → Prioritize: Frontend/Mobile domain, then Production System domain, then Cloud/Backend domain
+        - **ML/AI/Data Science roles** → Prioritize: ML/AI domain, then Data/Optimization domain, then Production System domain
+        - **DevOps/SRE roles** → Prioritize: Infrastructure domain, then Cloud/Backend domain, then Production System domain
+        - **Generic Software Engineer roles** → Use keyword matching score, then recency
+        
+      - **Step 3: Score and Rank**:
+        For each project, calculate domain alignment score:
+        - Perfect domain match: +100 points
+        - Secondary domain match: +50 points  
+        - Keyword overlap score: +1 point per Step 1 keyword found in technologies or narrative
+        - Recency bonus: +10 points if project is from last 2 years
+        - Select top 3 projects by total score
+        
     - **Selection Criteria** (in order of priority):
-      1. Technology overlap with JD keywords (check the `technologies` array)
-      2. Keyword matching score from narrative context
-      3. Recency and relevance to target role
+      1. Domain alignment score (HIGHEST PRIORITY - calculated dynamically above)
+      2. Technology overlap with JD keywords (check the `technologies` array)
+      3. Keyword matching score from narrative context
+      4. Complexity and technical depth matching role's seniority level
+      5. Recency and relevance to target role
     - Each project MUST have EXACTLY 4 bullet points
 -   **Rule for `technologies` field in projects:** For each selected project, you MUST populate the `technologies` field as an ARRAY of strings (NOT a comma-separated string).
     - **CRITICAL FORMAT:** `"technologies": ["Tech1", "Tech2", "Tech3"]` (array of strings)
@@ -399,13 +455,26 @@ Before optimizing for impact, you must ensure factual accuracy. Every transforma
      - ❌ WRONG: "Achieved 100% reduction in grading time"
      - ✅ RIGHT: "Eliminated 36-minute daily manual grading task through automation"
 
-3. **OWNERSHIP CLARITY TEST**
+3. **SCOPE CLARITY TEST (CRITICAL FOR SOFTWARE/PLATFORM METRICS)**
+   - ❌ NEVER: Conflate global software adoption with your instance deployment
+     - If narrative says "Software X is used by 1000 companies globally" and you maintain one instance, DO NOT claim "serves 1000 companies"
+   - ✅ ALWAYS: Distinguish between your deployment scope vs software's global reach
+   - EXAMPLE:
+     - key_metrics: "dataverse_software_global_adoption": "143 universities"
+     - key_metrics: "institution_served": "UNC"
+     - narrative_context: "This role maintains UNC's single Dataverse deployment. Dataverse is open-source software trusted by 143+ institutions globally."
+     - ❌ WRONG: "Maintained Dataverse serving 143 universities"
+     - ✅ RIGHT: "Maintains UNC's Dataverse instance (software trusted by 143+ institutions globally)"
+     - ✅ ALSO RIGHT: "Maintains production Dataverse for UNC researchers (open-source software deployed at 143+ institutions)"
+   - **CRITICAL**: When you see both a "global_adoption" metric AND an "institution_served" or similar scope metric, the scope metric defines YOUR impact, not the global number
+
+4. **OWNERSHIP CLARITY TEST**
    - ❌ NEVER: Claim sole ownership of team achievements
    - ❌ NEVER: Omit handoffs or transitions (e.g., if you built a PoC that was handed to another team, don't claim the final outcome)
    - ✅ ALWAYS: Acknowledge collaborative context when present in the narrative
    - ✅ ALWAYS: Use "contributed to", "enabled", "influenced" when you were part of a larger effort (check `role_clarity`)
 
-4. **SOURCE FIDELITY TEST**
+5. **SOURCE FIDELITY TEST**
    - ❌ NEVER: Change URLs from the `project_url` field
    - ❌ NEVER: Modify the `job_title` field (don't add "Intern" if it's not there)
    - ❌ NEVER: Alter any structured data fields from the master JSON
@@ -414,35 +483,56 @@ Before optimizing for impact, you must ensure factual accuracy. Every transforma
 **Step 4: Content Synthesis & Tailoring (NARRATIVE-DRIVEN + EYE-TRACKING OPTIMIZED + ACTION VERB DIVERSITY)**
 This is the most critical step. You will synthesize new bullet points from the narrative context.
 
+### VERB TENSE RULES (CRITICAL FOR CURRENT POSITIONS)
+
+**MANDATORY: Check `end_date` field before choosing verb tense:**
+
+1. **For current positions** (`end_date` = "Present"):
+   - Use PRESENT TENSE verbs: "maintains", "architects", "coordinates", "develops", "manages", "engineers", "builds"
+   - These describe ongoing responsibilities you currently perform
+   - Example: "Maintains 99.999% uptime for production infrastructure serving UNC researchers"
+   - Example: "Coordinates infrastructure changes across 6 cross-functional teams"
+
+2. **For past positions** (any other `end_date`):
+   - Use PAST TENSE verbs: "maintained", "architected", "coordinated", "developed", "managed", "engineered", "built"
+   - These describe completed achievements
+   - Example: "Maintained 99.999% uptime for production infrastructure serving UNC researchers"
+   - Example: "Coordinated infrastructure changes across 6 cross-functional teams"
+
+**CRITICAL: The `role_clarity` field indicates the nature of contribution, but tense is determined SOLELY by `end_date` field. If `end_date` = "Present", you MUST use present tense regardless of what `role_clarity` says.**
+
 ### ACTION VERB DIVERSITY BANK (CRITICAL FOR VARIETY)
 To avoid repetitive action verbs, you MUST consult this categorized synonym bank when writing bullets:
 
-**System Design/Architecture:**
-Architected, Designed, Engineered, Constructed, Formulated, Devised, Structured, Blueprinted, Conceptualized
+**System Design/Architecture (Present/Past):**
+Architects/Architected, Designs/Designed, Engineers/Engineered, Constructs/Constructed, Formulates/Formulated, Devises/Devised, Structures/Structured, Blueprints/Blueprinted, Conceptualizes/Conceptualized
 
-**Development/Building:**
-Built, Developed, Engineered, Created, Implemented, Delivered, Established, Produced, Crafted, Assembled
+**Development/Building (Present/Past):**
+Builds/Built, Develops/Developed, Engineers/Engineered, Creates/Created, Implements/Implemented, Delivers/Delivered, Establishes/Established, Produces/Produced, Crafts/Crafted, Assembles/Assembled
 
-**Improvement/Optimization:**
-Optimized, Enhanced, Improved, Streamlined, Refined, Accelerated, Upgraded, Modernized, Boosted, Revamped
+**Improvement/Optimization (Present/Past):**
+Optimizes/Optimized, Enhances/Enhanced, Improves/Improved, Streamlines/Streamlined, Refines/Refined, Accelerates/Accelerated, Upgrades/Upgraded, Modernizes/Modernized, Boosts/Boosted, Revamps/Revamped
 
-**Leadership/Initiative:**
-Led, Spearheaded, Drove, Directed, Orchestrated, Championed, Pioneered, Launched, Initiated, Steered
+**Leadership/Initiative (Present/Past):**
+Leads/Led, Spearheads/Spearheaded, Drives/Drove, Directs/Directed, Orchestrates/Orchestrated, Champions/Championed, Pioneers/Pioneered, Launches/Launched, Initiates/Initiated, Steers/Steered
 
-**Problem-Solving:**
-Resolved, Eliminated, Mitigated, Addressed, Overcame, Solved, Debugged, Remedied, Tackled
+**Problem-Solving (Present/Past):**
+Resolves/Resolved, Eliminates/Eliminated, Mitigates/Mitigated, Addresses/Addressed, Overcomes/Overcame, Solves/Solved, Debugs/Debugged, Remedies/Remedied, Tackles/Tackled
 
-**Data/Analysis:**
-Analyzed, Processed, Transformed, Extracted, Aggregated, Synthesized, Computed, Evaluated
+**Data/Analysis (Present/Past):**
+Analyzes/Analyzed, Processes/Processed, Transforms/Transformed, Extracts/Extracted, Aggregates/Aggregated, Synthesizes/Synthesized, Computes/Computed, Evaluates/Evaluated
 
-**Integration/Implementation:**
-Integrated, Deployed, Migrated, Established, Instituted, Incorporated, Rolled out, Introduced
+**Integration/Implementation (Present/Past):**
+Integrates/Integrated, Deploys/Deployed, Migrates/Migrated, Establishes/Established, Institutes/Instituted, Incorporates/Incorporated, Rolls out/Rolled out, Introduces/Introduced
 
-**Collaboration/Coordination:**
-Collaborated, Coordinated, Partnered, Facilitated, Unified, Aligned, Synchronized
+**Collaboration/Coordination (Present/Past):**
+Collaborates/Collaborated, Coordinates/Coordinated, Partners/Partnered, Facilitates/Facilitated, Unifies/Unified, Aligns/Aligned, Synchronizes/Synchronized
 
-**Automation/Efficiency:**
-Automated, Streamlined, Systematized, Standardized, Expedited, Simplified
+**Automation/Efficiency (Present/Past):**
+Automates/Automated, Streamlines/Streamlined, Systematizes/Systematized, Standardizes/Standardized, Expedites/Expedited, Simplifies/Simplified
+
+**Maintenance/Operations (Present/Past):**
+Maintains/Maintained, Manages/Managed, Operates/Operated, Monitors/Monitored, Administers/Administered, Oversees/Oversaw, Supports/Supported
 
 **CRITICAL RULE: Track verb usage as you write. No action verb may appear more than 2 times across the entire resume (all work_experience + projects bullets combined).**
 
@@ -661,10 +751,12 @@ For EVERY skill category in the skills object:
 - Confirm: EXACTLY 6 categories used
 
 **STEP 7: VERIFY EXACT COUNTS**
-- Confirm: EXACTLY 4 work experiences selected
-- Confirm: EXACTLY 4 bullets per work experience (16 total work bullets)
-- Confirm: EXACTLY 2 projects selected
-- Confirm: EXACTLY 4 bullets per project (8 total project bullets)
+- Confirm: EXACTLY 3 work experiences selected
+- Confirm: Both US experiences (UNC RDMC + UNC Neuroscience) are included
+- Confirm: EXACTLY 4 bullets per work experience (12 total work bullets)
+- Confirm: EXACTLY 3 projects selected
+- Confirm: Projects are ranked by domain relevance (not just keyword matching)
+- Confirm: EXACTLY 4 bullets per project (12 total project bullets)
 - Confirm: EXACTLY 6 skill categories
 - If any count is wrong: STOP and fix immediately
 
