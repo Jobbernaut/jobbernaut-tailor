@@ -1,6 +1,6 @@
 # Configuration Guide
 
-Complete setup and customization guide for Jobbernaut Tailor v4.2+.
+Complete setup and customization guide for Jobbernaut Tailor v4.3.0.
 
 ## Quick Start
 
@@ -721,7 +721,7 @@ The system includes built-in error recovery with automatic retries (max 2 attemp
 
 ## Cost Optimization
 
-### Current Cost Structure (v4.2)
+### Current Cost Structure (v4.3.0)
 
 **Average Cost per Application**: $0.10
 
@@ -854,7 +854,7 @@ git commit -m "Update model configuration"
 
 ## Migration Guide
 
-### Upgrading from v4.1 to v4.2+
+### Upgrading to v4.3.0
 
 **1. Add Concurrency Configuration**:
 ```json

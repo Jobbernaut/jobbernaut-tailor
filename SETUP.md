@@ -228,9 +228,9 @@ sudo apt-get install texlive-latex-base texlive-latex-extra
 
 ## Git Branch
 
-You're currently on: **v4.2+**
+You're currently on: **v4.3.0**
 
-This is the production version with fact verification and humanization features.
+This is the production version with all features including fact verification and humanization.
 
 ---
 

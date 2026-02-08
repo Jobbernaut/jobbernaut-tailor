@@ -1,7 +1,7 @@
 # Fact Verification System
 
-**Version**: v4.2+  
-**Last Updated**: October 27, 2025
+**Version**: v4.3.0  
+**Last Updated**: February 07, 2025
 
 ---
 
@@ -592,5 +592,5 @@ grep -A 10 "fact_verification" learnings.yaml
 
 ---
 
-**Version**: v4.2+  
-**Last Updated**: October 27, 2025
+**Version**: v4.3.0  
+**Last Updated**: February 07, 2025
