@@ -5,16 +5,17 @@ Welcome to the comprehensive documentation for Jobbernaut Tailor v4.2 – an ind
 ## Documentation Structure
 
 ### Getting Started
-- **[Main README](../README.md)** - Project overview, quick start, and the scale problem
+- **[Main README](../README.md)** - Project overview, quick start, and features
 - **[Configuration Guide](CONFIGURATION.md)** - Setup, installation, and customization
 
 ### Technical Deep Dives
 - **[Architecture](ARCHITECTURE.md)** - 12-step pipeline, parallel processing, and system design
-- **[Validation System](VALIDATION.md)** - Quality assurance, ATS compatibility, and self-healing
-- **[Performance Guide](PERFORMANCE.md)** - Benchmarks, optimization, and scaling characteristics
+- **[Fact Verification](FACT_VERIFICATION.md)** - Hallucination detection system
+- **[Humanization](HUMANIZATION.md)** - Content humanization system
+- **[Tech Debt Analysis](TECH_DEBT_ANALYSIS.md)** - Code quality assessment
 
 ### Project History
-- **[Changelog](CHANGELOG.md)** - Complete evolution from PoC to v4.2
+- **[Changelog](CHANGELOG.md)** - Complete evolution from PoC to v4.2+
 
 ## Quick Navigation
 
@@ -25,13 +26,13 @@ Welcome to the comprehensive documentation for Jobbernaut Tailor v4.2 – an ind
 
 ### For Developers
 1. Read [Architecture](ARCHITECTURE.md) for system design and component interaction
-2. Study [Validation System](VALIDATION.md) for quality assurance mechanisms
+2. Study [Fact Verification](FACT_VERIFICATION.md) and [Humanization](HUMANIZATION.md) for quality assurance
 3. Check [Changelog](CHANGELOG.md) for evolution and design decisions
 
 ### For Performance Tuning
-1. Review [Performance Guide](PERFORMANCE.md) for benchmarks and optimization
+1. Review [Architecture](ARCHITECTURE.md) for performance characteristics
 2. Adjust settings in [Configuration Guide](CONFIGURATION.md)
-3. Monitor system behavior with the validation metrics
+3. Monitor system behavior with the built-in progress tracker
 
 ## Key Concepts
 
@@ -105,12 +106,12 @@ python src/main.py
 ## Getting Help
 
 ### Common Issues
-- **LaTeX Compilation Errors**: Check [Validation System](VALIDATION.md)
+- **LaTeX Compilation Errors**: Check [Architecture](ARCHITECTURE.md) for LaTeX compilation details
 - **API Rate Limits**: Review [Configuration Guide](CONFIGURATION.md)
-- **Performance Bottlenecks**: See [Performance Guide](PERFORMANCE.md)
+- **Performance Bottlenecks**: See [Architecture](ARCHITECTURE.md) performance section
 
 ### Understanding the System
-- **How does validation work?**: See [Validation System](VALIDATION.md)
+- **How does validation work?**: See [Architecture](ARCHITECTURE.md) and [Fact Verification](FACT_VERIFICATION.md)
 - **How does parallelization work?**: See [Architecture](ARCHITECTURE.md)
 - **Why these design decisions?**: See [Changelog](CHANGELOG.md)
 
@@ -130,4 +131,4 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ---
 
-**Documentation maintained for Jobbernaut Tailor v4.2**
+**Documentation maintained for Jobbernaut Tailor v4.2+**

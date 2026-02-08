@@ -587,9 +587,8 @@ grep -A 10 "fact_verification" learnings.yaml
 ## Related Documentation
 
 - [Architecture](ARCHITECTURE.md) - System overview
-- [Validation System](VALIDATION.md) - All validation layers
-- [Pipeline](PIPELINE.md) - Processing flow
 - [Configuration](CONFIGURATION.md) - Setup guide
+- [Humanization](HUMANIZATION.md) - Content humanization system
 
 ---
 

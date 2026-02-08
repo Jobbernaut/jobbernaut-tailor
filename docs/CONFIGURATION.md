@@ -877,6 +877,7 @@ python src/main.py  # With max_concurrent_jobs: 3
 
 ---
 
-**For architecture details, see [ARCHITECTURE.md](ARCHITECTURE.md)**  
-**For performance benchmarks, see [PERFORMANCE.md](PERFORMANCE.md)**  
-**For validation details, see [VALIDATION.md](VALIDATION.md)**
+**For more information, see:**
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System design and components
+- **[FACT_VERIFICATION.md](FACT_VERIFICATION.md)** - Hallucination detection
+- **[HUMANIZATION.md](HUMANIZATION.md)** - Content humanization system

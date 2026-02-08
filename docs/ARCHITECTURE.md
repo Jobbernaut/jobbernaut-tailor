@@ -708,14 +708,11 @@ output/
 
 ## Related Documentation
 
-- [Pipeline Details](PIPELINE.md) - Step-by-step processing flow
-- [Validation System](VALIDATION.md) - All validation layers
 - [Fact Verification](FACT_VERIFICATION.md) - Hallucination detection
 - [Humanization](HUMANIZATION.md) - Content humanization system
 - [Configuration](CONFIGURATION.md) - Setup and customization
-- [Templates](TEMPLATES.md) - Jinja2 and LaTeX templates
 
 ---
 
-**Architecture Version**: v4.2+ (Fact Verification)  
+**Architecture Version**: v4.2+ (Fact Verification & Humanization)  
 **Last Updated**: October 27, 2025

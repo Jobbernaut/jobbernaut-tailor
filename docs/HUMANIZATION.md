@@ -525,7 +525,7 @@ I'm thrilled to apply for the Senior Software Engineer role at TechCorp. Over th
 
 - [Architecture](ARCHITECTURE.md) - System overview
 - [Configuration](CONFIGURATION.md) - Setup guide
-- [Pipeline](PIPELINE.md) - Processing flow
+- [Fact Verification](FACT_VERIFICATION.md) - Hallucination detection
 
 ---
 
