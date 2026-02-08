@@ -40,7 +40,7 @@ class SystemRequirements:
         required_major = 3
         required_minor = 8
         
-        if version.major >= required_major and version.minor >= required_minor:
+        if (version.major, version.minor) >= (required_major, required_minor):
             self.checks_passed.append(
                 ("Python Version", f"{version.major}.{version.minor}.{version.micro}")
             )
