@@ -35,11 +35,11 @@ def check_python_version():
     version = sys.version_info
     print(f"Python version: {version.major}.{version.minor}.{version.micro}")
     
-    if version.major == 3 and version.minor >= 10:
+    if version.major == 3 and version.minor >= 8:
         print_success(f"Python {version.major}.{version.minor}.{version.micro} is compatible")
         return True
     else:
-        print_error(f"Python 3.10+ required, found {version.major}.{version.minor}.{version.micro}")
+        print_error(f"Python 3.8+ required, found {version.major}.{version.minor}.{version.micro}")
         return False
 
 def check_dependencies():
