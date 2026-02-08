@@ -2,8 +2,8 @@
 
 **AI-Powered Resume & Cover Letter Automation Pipeline**
 
-Version: v4.3.0
-Last Updated: February 07, 2026
+Version: v4.2+
+Last Updated: October 27, 2025
 
 ---
 
@@ -122,27 +122,27 @@ python src/main.py
 ## Processing Pipeline
 
 ```
-1. Input Validation (fail-fast)
+1. Job Resonance Analysis (intelligence)
    ↓
-2. Job Resonance Analysis (intelligence)
+2. Company Research (intelligence)
    ↓
-3. Company Research (intelligence)
+3. Storytelling Arc (cover letter narrative)
    ↓
-4. Resume Generation (Pydantic validation)
+4. Resume Generation (Pydantic validation + Fact Verification)
    ↓
-5. Fact Verification (hallucination detection) ⭐ NEW
+5. Cover Letter Generation (quality validation)
    ↓
-6. Storytelling Arc (cover letter narrative)
+6. Resume LaTeX Rendering (Jinja2 template)
    ↓
-7. Cover Letter Generation (quality validation)
+7. Cover Letter LaTeX Rendering (Jinja2 template)
    ↓
-8-9. LaTeX Rendering (Jinja2 templates)
+8. Resume PDF Compilation (pdflatex)
    ↓
-10-11. PDF Compilation (pdflatex)
+9. Cover Letter PDF Compilation (pdflatex)
    ↓
-12. [Optional] Referral Documents
+10-11. [Optional] Referral Documents
    ↓
-13. Cleanup & Status Update
+12. Cleanup & Status Update
 ```
 
 **Processing Time**: 60-90 seconds per job  
@@ -204,21 +204,22 @@ output/
 {
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "4096"
+        "thinking_budget": 0
       }
     },
     "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "2048"
+        "thinking_budget": 0,
+        "web_search": true
       }
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "3072"
+        "thinking_budget": 0
       }
     }
   }
@@ -229,16 +230,16 @@ output/
 ```json
 {
   "resume_generation": {
-    "bot_name": "Claude-3.5-Sonnet",
+    "bot_name": "gemini-3-pro",
     "parameters": {
-      "thinking_budget": "8192"
+      "thinking_level": "low"
     }
   },
   
   "cover_letter_generation": {
-    "bot_name": "GPT-4o",
+    "bot_name": "claude-haiku-4.5",
     "parameters": {
-      "thinking_budget": "4096"
+      "thinking_budget": 0
     }
   }
 }
@@ -370,7 +371,7 @@ output/
 
 ### Core Documentation
 
-- **[Architecture Guide](docs/ARCHITECTURE.md)** - System design and components
+- **[Architecture Guide](docs/ARCHITECTURE.md)** - System design and 12-step pipeline
 - **[Fact Verification](docs/FACT_VERIFICATION.md)** - Hallucination detection system
 - **[Humanization](docs/HUMANIZATION.md)** - Content humanization system
 - **[Configuration](docs/CONFIGURATION.md)** - Setup and customization

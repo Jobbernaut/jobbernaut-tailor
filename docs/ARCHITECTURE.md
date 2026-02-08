@@ -1,7 +1,7 @@
 # Architecture Guide - Jobbernaut Tailor v4.2+
 
 **Last Updated**: October 27, 2025  
-**Version**: v4.2+ (with Fact Verification)
+**Version**: v4.2+ (with Fact Verification & Humanization)
 
 ---
 
@@ -29,43 +29,35 @@ Every design decision prioritizes **validation and error recovery** over raw per
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   INPUT VALIDATION LAYER                     │
-│  • Job data validation (fail-fast)                          │
-│  • Master resume validation                                 │
-│  • Configuration validation                                 │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
 │              INTELLIGENCE GATHERING PHASE                    │
 │  1. Job Resonance Analysis (emotional keywords)             │
 │  2. Company Research (mission, values, tech stack)          │
+│  3. Storytelling Arc (cover letter narrative)               │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                CONTENT GENERATION PHASE                      │
-│  3. Resume Generation (Pydantic validation)                 │
-│  4. Fact Verification (hallucination detection)             │
-│  5. Storytelling Arc (cover letter narrative)               │
-│  6. Cover Letter Generation (quality validation)            │
+│  4. Resume Generation (Pydantic validation)                 │
+│     └─ Includes Fact Verification (hallucination detection) │
+│  5. Cover Letter Generation (quality validation)            │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                  RENDERING & COMPILATION                     │
-│  7. Resume LaTeX Rendering (Jinja2)                         │
-│  8. Cover Letter LaTeX Rendering (Jinja2)                   │
-│  9. Resume PDF Compilation (pdflatex)                       │
-│  10. Cover Letter PDF Compilation (pdflatex)                │
-│  11. [Optional] Referral Documents                          │
+│  6. Resume LaTeX Rendering (Jinja2)                         │
+│  7. Cover Letter LaTeX Rendering (Jinja2)                   │
+│  8. Resume PDF Compilation (pdflatex)                       │
+│  9. Cover Letter PDF Compilation (pdflatex)                 │
+│  10-11. [Optional] Referral Documents                       │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    OUTPUT ORGANIZATION                       │
 │  12. Cleanup (move non-PDFs to debug/)                      │
-│  13. Status update (mark job as processed)                  │
+│      Status update (mark job as processed)                  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -101,15 +93,13 @@ async def _call_intelligence_step_with_retry(...)
 **Multi-Layer Defense**:
 
 ```
-Layer 1: Input Validation
-  ↓ (fail-fast if invalid)
-Layer 2: Pydantic Schema Validation
+Layer 1: Pydantic Schema Validation
   ↓ (retry with feedback if invalid)
-Layer 3: Fact Verification
+Layer 2: Fact Verification
   ↓ (retry with hallucination feedback)
-Layer 4: Quality Thresholds
+Layer 3: Quality Thresholds
   ↓ (retry with quality feedback)
-Layer 5: LaTeX Compilation
+Layer 4: LaTeX Compilation
   ↓ (fail if compilation errors)
 Output: Validated PDFs
 ```
@@ -118,6 +108,8 @@ Output: Validated PDFs
 - Each layer catches different error types
 - Defense in depth prevents cascading failures
 - Self-healing at each layer reduces manual intervention
+
+**Note**: Input validation happens implicitly at the start of `process_job()` through Python type checking and basic validation, but is not a separate numbered step in the pipeline.
 
 ### 3. Pydantic Models (`models.py`)
 
@@ -236,21 +228,7 @@ def remove_reasoning_traces(text, enabled)
 
 ## Processing Pipeline (Detailed)
 
-### Phase 1: Input Validation
-
-**Step 0: Validate Job Inputs**
-```python
-Validates:
-- job_id: non-empty string
-- job_title: 3-200 characters
-- company_name: 2-100 characters
-- job_description: 100-50,000 characters
-
-Failure Mode: Fail-fast (no retry)
-Logs to: learnings.yaml
-```
-
-### Phase 2: Intelligence Gathering
+### Phase 1: Intelligence Gathering
 
 **Step 1: Job Resonance Analysis**
 ```python
@@ -282,9 +260,24 @@ Retry: Max 2 attempts with error feedback
 Bot: Configurable (default: Claude-3.5-Sonnet)
 ```
 
-### Phase 3: Content Generation
+### Phase 2: Content Generation
 
-**Step 3: Resume Generation**
+**Step 3: Storytelling Arc Generation**
+```python
+Input: Job description, company research, job resonance, resume
+Output: StorytellingArc
+  - hook (50+ chars)
+  - bridge (50+ chars)
+  - proof_points (2-3 items, 30+ chars each)
+  - vision (50+ chars)
+  - call_to_action (20+ chars)
+
+Validation: Pydantic + quality thresholds
+Retry: Max 2 attempts with error feedback
+Bot: Configurable (default: claude-haiku-4.5)
+```
+
+**Step 4: Resume Generation**
 ```python
 Input: Job description, master resume, job resonance
 Output: TailoredResume (Pydantic model)
@@ -302,47 +295,12 @@ Validation Layers:
 - Fact verification (hallucination detection)
 - Character limit enforcement
 
-Bot: Configurable (default: Claude-3.5-Sonnet)
+Bot: Configurable (default: gemini-3-pro)
 ```
 
-**Step 4: Fact Verification**
-```python
-Input: Generated resume, master resume
-Output: FactVerificationResult
+**Note**: Fact verification is integrated into resume generation and runs automatically after Pydantic validation. If hallucinations are detected, the resume generation step is retried with detailed feedback.
 
-Process:
-1. Extract claims from generated resume
-2. Verify each claim against master resume
-3. Detect hallucinations (fabricated facts)
-4. If hallucinations found:
-   - Format detailed feedback
-   - Retry resume generation
-   - Max 2 retry attempts
-
-Hallucination Types:
-- Company name mismatches
-- Job title fabrications
-- Date inconsistencies
-- Skill exaggerations
-- Project inventions
-```
-
-**Step 5: Storytelling Arc Generation**
-```python
-Input: Job description, company research, job resonance, resume
-Output: StorytellingArc
-  - hook (50+ chars)
-  - bridge (50+ chars)
-  - proof_points (2-3 items, 30+ chars each)
-  - vision (50+ chars)
-  - call_to_action (20+ chars)
-
-Validation: Pydantic + quality thresholds
-Retry: Max 2 attempts with error feedback
-Bot: Configurable (default: GPT-4o)
-```
-
-**Step 6: Cover Letter Generation**
+**Step 5: Cover Letter Generation**
 ```python
 Input: Resume, job description, storytelling arc, company research
 Output: Cover letter text
@@ -353,12 +311,12 @@ Process:
 3. If validation fails: retry with quality feedback (max 2)
 
 Validation: Quality thresholds (length, coherence)
-Bot: Configurable (default: GPT-4o)
+Bot: Configurable (default: claude-haiku-4.5)
 ```
 
-### Phase 4: Rendering & Compilation
+### Phase 3: Rendering & Compilation
 
-**Step 7-8: LaTeX Rendering**
+**Step 6-7: LaTeX Rendering**
 ```python
 Templates: resume.jinja2, cover_letter.jinja2
 
@@ -375,7 +333,7 @@ Features:
 - ATS-optimized layout
 ```
 
-**Step 9-10: PDF Compilation**
+**Step 8-9: PDF Compilation**
 ```python
 Compiler: pdflatex
 
@@ -390,7 +348,7 @@ FirstName_LastName_Company_JobID_Resume.pdf
 FirstName_LastName_Company_JobID_Cover_Letter.pdf
 ```
 
-**Step 11: Referral Documents (Optional)**
+**Step 10-11: Referral Documents (Optional)**
 ```python
 Condition: referral_contact.json exists and valid
 
@@ -407,7 +365,7 @@ Referral_FirstName_LastName_Company_JobID_Cover_Letter.pdf
 Graceful Degradation: Skips if referral_contact.json missing
 ```
 
-### Phase 5: Output Organization
+### Phase 4: Output Organization
 
 **Step 12: Cleanup**
 ```python
@@ -424,14 +382,7 @@ Process:
 Result: Clean output directory with only final PDFs
 ```
 
-**Step 13: Status Update**
-```python
-Process:
-1. Update job status in applications.yaml
-2. Mark job as "processed"
-3. Update progress tracker
-4. Log completion metrics
-```
+**Note**: Status update happens as part of step 12 cleanup process, marking the job as "processed" in applications.yaml.
 
 ---
 
@@ -558,36 +509,37 @@ incidents:
   
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "4096"
+        "thinking_budget": 0
       }
     },
     "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "2048"
+        "thinking_budget": 0,
+        "web_search": true
       }
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "3072"
+        "thinking_budget": 0
       }
     }
   },
   
   "resume_generation": {
-    "bot_name": "Claude-3.5-Sonnet",
+    "bot_name": "gemini-3-pro",
     "parameters": {
-      "thinking_budget": "8192"
+      "thinking_level": "low"
     }
   },
   
   "cover_letter_generation": {
-    "bot_name": "GPT-4o",
+    "bot_name": "claude-haiku-4.5",
     "parameters": {
-      "thinking_budget": "4096"
+      "thinking_budget": 0
     }
   },
   
@@ -699,14 +651,13 @@ output/
 
 ---
 
-## Quality Guarantees
+### Quality Guarantees
 
 ### Validation Success Rate
 
 **Overall**: >99.5% after self-healing
 
 **By Layer**:
-- Input validation: 100% (fail-fast)
 - Pydantic validation: ~98% first attempt, >99.5% after retry
 - Fact verification: ~95% first attempt, >99% after retry
 - Quality thresholds: ~97% first attempt, >99.5% after retry

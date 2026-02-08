@@ -171,19 +171,13 @@ After:  "Over the past 5 years, I've built everything from data pipelines to ful
 **Location**: `src/main.py` → `process_job()` method
 
 ```python
-# Load humanization prompt
-humanization_level = self.config['humanization']['levels']['resume']
-humanization_prompt = load_prompt_template(f'humanization_{humanization_level}')
+# Humanization is applied automatically during prompt construction
+# The humanization prompt is appended to the base prompt if enabled
+# through the _apply_humanization() method
 
-# Build resume generation prompt
-resume_prompt = f"""
-{base_resume_prompt}
-
-{humanization_prompt}
-"""
-
-# Generate resume
-resume_response = await self.call_poe_api(resume_prompt, ...)
+# Resume generation with humanization
+resume_prompt = self._apply_humanization(resume_prompt_template, "resume")
+resume_response = await self.call_poe_api(resume_prompt, self.resume_bot, self.resume_parameters, ...)
 ```
 
 ### Cover Letter Humanization
@@ -191,19 +185,9 @@ resume_response = await self.call_poe_api(resume_prompt, ...)
 **Location**: `src/main.py` → `process_job()` method
 
 ```python
-# Load humanization prompt
-humanization_level = self.config['humanization']['levels']['cover_letter']
-humanization_prompt = load_prompt_template(f'humanization_{humanization_level}')
-
-# Build cover letter generation prompt
-cover_letter_prompt = f"""
-{base_cover_letter_prompt}
-
-{humanization_prompt}
-"""
-
-# Generate cover letter
-cover_letter_response = await self.call_poe_api(cover_letter_prompt, ...)
+# Cover letter generation with humanization
+cover_letter_prompt = self._apply_humanization(cover_letter_prompt_template, "cover_letter")
+cover_letter_response = await self.call_poe_api(cover_letter_prompt, self.cover_letter_bot, self.cover_letter_parameters, ...)
 ```
 
 ---

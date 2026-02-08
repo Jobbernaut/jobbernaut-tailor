@@ -85,7 +85,7 @@ Humanization prompts are injected into generation prompts, instructing the AI to
 
 #### 3. Enhanced Documentation
 **New Files**:
-- `docs/ARCHITECTURE.md` - Complete rewrite with accurate 13-step pipeline
+- `docs/ARCHITECTURE.md` - Complete rewrite with accurate 12-step pipeline
 - `docs/FACT_VERIFICATION.md` - Hallucination detection system
 - `docs/HUMANIZATION.md` - Content humanization system
 - `docs/TECH_DEBT_ANALYSIS.md` - Code quality assessment
@@ -94,7 +94,7 @@ Humanization prompts are injected into generation prompts, instructing the AI to
 **Documentation Accuracy**: 50% → 100%
 
 **Key Improvements**:
-- Removed fictional features (e.g., "12-step pipeline", "ATS Rules validation")
+- Removed fictional features (e.g., "ATS Rules validation")
 - Documented actual systems (fact verification, humanization)
 - Accurate architecture diagrams
 - Comprehensive troubleshooting guides

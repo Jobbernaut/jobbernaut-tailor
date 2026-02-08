@@ -153,7 +153,7 @@ python -m src.main
 
 The pipeline will:
 1. Find all jobs with `status: pending` in `applications.yaml`
-2. Run 13-step intelligence-driven pipeline for each job
+2. Run 12-step intelligence-driven pipeline for each job
 3. Generate tailored resumes and cover letters
 4. Compile PDFs (including referral versions)
 5. Update job status to `processed`
@@ -228,14 +228,9 @@ sudo apt-get install texlive-latex-base texlive-latex-extra
 
 ## Git Branch
 
-You're currently on: **v4.3-dev**
+You're currently on: **v4.2+**
 
-Latest commits:
-- Remove AI usage explanation from FAQ
-- Update documentation
-- Add LICENSE
-- Tech debt analysis
-- FAQ overhaul
+This is the production version with fact verification and humanization features.
 
 ---
 

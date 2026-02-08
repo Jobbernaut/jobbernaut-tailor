@@ -1,6 +1,6 @@
 # Configuration Guide
 
-Complete setup and customization guide for Jobbernaut Tailor v4.2.
+Complete setup and customization guide for Jobbernaut Tailor v4.2+.
 
 ## Quick Start
 
@@ -164,29 +164,35 @@ applications:
 {
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096",
-      "rationale": "Best for technical pattern matching"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     },
     "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
-      "thinking_budget": "2048",
-      "rationale": "Excellent research and synthesis"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0,
+        "web_search": true
+      }
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
-      "thinking_budget": "3072",
-      "rationale": "Superior creative storytelling"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     },
     "resume_generation": {
-      "bot_name": "Claude-3.5-Sonnet",
-      "thinking_budget": "8192",
-      "rationale": "Precise, structured content generation"
+      "bot_name": "gemini-3-pro",
+      "parameters": {
+        "thinking_level": "low"
+      }
     },
     "cover_letter_generation": {
-      "bot_name": "GPT-4o",
-      "thinking_budget": "4096",
-      "rationale": "Engaging narrative writing"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     }
   }
 }
@@ -194,28 +200,42 @@ applications:
 
 ### Available Models
 
-| Model | Strengths | Best For | Cost |
-|-------|-----------|----------|------|
-| **Gemini-2.5-Pro** | Technical analysis, pattern matching | Job resonance analysis | Low |
-| **Claude-3.5-Sonnet** | Research, synthesis, accuracy | Company research, resume generation | Medium |
-| **GPT-4o** | Creativity, storytelling, narrative | Storytelling arc, cover letters | Medium |
-| **GPT-4o-mini** | Fast, cost-effective | Testing, development | Low |
+The system is flexible and works with any bot available through the Poe API. The parameters you can pass depend on the specific bot and the Poe API version. Common parameters include:
+
+- `thinking_budget` (integer): Token budget for extended thinking (for models that support it)
+- `thinking_level` (string): "low", "medium", or "high" (for models that support levels)
+- `web_search` (boolean): Enable web search for company research
+
+**Note**: Bot names and available parameters depend on your Poe API subscription and the bots available at the time. Check the [Poe documentation](https://poe.com/) for current bot availability.
 
 ### Thinking Budget Configuration
 
 **What is Thinking Budget?**
-- Controls the depth of reasoning for models that support extended thinking
-- Higher budgets = more thorough analysis but higher cost
-- Measured in tokens
+- A parameter for AI models that support extended reasoning
+- Controls the depth of analysis (measured in tokens)
+- Higher values = more thorough analysis but potentially higher cost
+- Set to `0` to use default model behavior
 
-**Recommended Budgets**:
+**What is Thinking Level?**
+- An alternative parameter used by some models (e.g., Gemini)
+- Values: `"low"`, `"medium"`, `"high"`
+- Controls reasoning depth similar to thinking_budget
+
+**Example Configuration**:
 ```json
 {
-  "job_resonance_analysis": "4096",    // Deep analysis needed
-  "company_research": "2048",          // Moderate depth
-  "storytelling_arc": "3072",          // Creative exploration
-  "resume_generation": "8192",         // Comprehensive generation
-  "cover_letter_generation": "4096"    // Balanced creativity
+  "job_resonance_analysis": {
+    "bot_name": "claude-haiku-4.5",
+    "parameters": {
+      "thinking_budget": 0
+    }
+  },
+  "resume_generation": {
+    "bot_name": "gemini-3-pro",
+    "parameters": {
+      "thinking_level": "low"
+    }
+  }
 }
 ```
 
