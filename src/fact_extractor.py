@@ -5,7 +5,6 @@ Extracts verifiable facts (companies, dates, skills, etc.) for static validation
 
 from typing import Dict, List, Set, Tuple
 import re
-from datetime import datetime
 
 
 class FactExtractor:
