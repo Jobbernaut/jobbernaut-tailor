@@ -17,7 +17,6 @@ from .utils import (
     load_yaml,
     load_json,
     save_json,
-    find_pending_job,
     update_job_status,
     create_output_directory,
     load_prompt_template,
