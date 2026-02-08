@@ -211,9 +211,8 @@ def compile_latex_to_pdf(
                 f"LaTeX compilation timed out after {timeout} seconds.\n\n"
                 f"Troubleshooting:\n"
                 f"1. Check if pdflatex is installing packages (first run can be slow)\n"
-                f"2. Increase timeout in config.json: system_requirements.pdflatex_timeout\n"
-                f"3. Review the log file: {log_file}\n"
-                f"4. Ensure your LaTeX file doesn't have infinite loops or errors\n"
+                f"2. Review the log file: {log_file}\n"
+                f"3. Ensure your LaTeX file doesn't have infinite loops or errors\n"
             )
             
             if os.path.exists(log_file):
