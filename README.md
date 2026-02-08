@@ -2,8 +2,8 @@
 
 **AI-Powered Resume & Cover Letter Automation Pipeline**
 
-Version: v4.2+ (with Fact Verification)  
-Last Updated: October 27, 2025
+Version: v4.3.0
+Last Updated: February 07, 2026
 
 ---
 
