@@ -4,6 +4,62 @@
 
 Version: v4.3.0
 Last Updated: February 07, 2025
+---
+
+**Jobbernaut Ecosystem v1.0 Alpha Proposed System Architecture**
+
+```mermaid
+flowchart TD
+    %% Styling
+    classDef frontend fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#01579b
+    classDef gateway fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#e65100
+    classDef backend fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#1b5e20
+    classDef database fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#4a148c
+    classDef director fill:#fff9c4,stroke:#fbc02d,stroke-width:2px,stroke-dasharray: 5 5,color:#fbc02d
+
+    subgraph ClientLayer [Client Layer]
+        TabsFE[Jobbernaut Tabs Frontend]:::frontend
+        Extract[Jobbernaut Extract]:::frontend
+    end
+
+    subgraph EntryLayer [Entry & Routing]
+        ReDirector[Jobbernaut ReDirector]:::gateway
+    end
+
+    subgraph CoreMgmt [Core Management Sync]
+        TabsBE[Jobbernaut Tabs Backend]:::backend
+        TabsDB[(Jobbernaut Tabs Database)]:::database
+    end
+
+    subgraph AsyncWorkflow [Orchestration & Intelligence]
+        Director[Jobbernaut Director]:::director
+        TailorMain[Jobbernaut Tailor Main]:::backend
+        TailorRender[Jobbernaut Tailor Render]:::backend
+    end
+
+    subgraph StorageLayer [Storage Layer]
+        Warehouse[(Jobbernaut Warehouse)]:::database
+    end
+
+    %% Connections
+    TabsFE -->|POST /jobs| ReDirector
+    Extract -->|POST /jobs| ReDirector
+    ReDirector -->|Route Request| TabsBE
+    
+    TabsBE -->|1. CRUD Operations| TabsDB
+    TabsBE -->|2. Generate Presigned URL| Warehouse
+    TabsBE -.->|3. Trigger Workflow| Director
+
+    Director -->|State 1: Context & AI| TailorMain
+    TailorMain -->|Fetch Context| TabsDB
+    TailorMain -->|Return JSON| Director
+    
+    Director -->|State 2: Render PDF| TailorRender
+    TailorRender -->|Upload Final PDF| Warehouse
+    TailorRender -->|Return S3 Key| Director
+    
+    Director -->|State 3: Mark Complete| TabsDB
+```
 
 ---
 
