@@ -5,4 +5,4 @@ This package contains the core components for intelligent, tailored job applicat
 document generation with fact verification and anti-fragile design.
 """
 
-__version__ = "4.3.0-dev"
+__version__ = "4.3.0"
