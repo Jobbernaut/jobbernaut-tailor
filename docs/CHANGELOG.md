@@ -196,14 +196,14 @@ Production readiness through cost optimization, documentation streamlining, and 
 **The Architecture Decision:**
 ```json
 {
-  "resume_generation": {"bot_name": "Gemini-2.5-Pro"},  // Only SOTA step
-  "job_resonance_analysis": {"bot_name": "Claude-Haiku-4.5"},  // Cheap model
-  "company_research": {"bot_name": "Claude-Sonnet-4-Search"},  // Cheap + search
-  "storytelling_arc": {"bot_name": "Claude-Haiku-4.5"}  // Cheap model
+  "resume_generation": {"bot_name": "gemini-3-pro"},  // Main generation step
+  "job_resonance_analysis": {"bot_name": "claude-haiku-4.5"},  // Cost-efficient
+  "company_research": {"bot_name": "claude-haiku-4.5"},  // Cost-efficient + search
+  "storytelling_arc": {"bot_name": "claude-haiku-4.5"}  // Cost-efficient
 }
 ```
 
-This modular separation keeps costs "dirt cheap" while maintaining quality.
+This modular separation keeps costs low while maintaining quality.
 
 #### 2. Documentation Consolidation  
 - Removed fragmented documentation (7155 deletions!)

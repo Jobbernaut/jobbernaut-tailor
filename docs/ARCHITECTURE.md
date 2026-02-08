@@ -242,7 +242,7 @@ Output: JobResonanceAnalysis
 
 Validation: Pydantic + quality thresholds
 Retry: Max 2 attempts with error feedback
-Bot: Configurable (default: Gemini-2.5-Pro)
+Bot: Configurable (default: claude-haiku-4.5)
 ```
 
 **Step 2: Company Research**
@@ -257,7 +257,7 @@ Output: CompanyResearch
 
 Validation: Pydantic + quality thresholds
 Retry: Max 2 attempts with error feedback
-Bot: Configurable (default: Claude-3.5-Sonnet)
+Bot: Configurable (default: claude-haiku-4.5)
 ```
 
 ### Phase 2: Content Generation

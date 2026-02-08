@@ -48,44 +48,38 @@ python src/main.py
   
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "4096"
+        "thinking_budget": 0
       }
     },
     "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "2048"
+        "thinking_budget": 0,
+        "web_search": true
       }
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "3072"
+        "thinking_budget": 0
       }
     }
   },
   
   "resume_generation": {
-    "bot_name": "Claude-3.5-Sonnet",
+    "bot_name": "gemini-3-pro",
     "parameters": {
-      "thinking_budget": "8192"
+      "thinking_level": "low"
     }
   },
   
   "cover_letter_generation": {
-    "bot_name": "GPT-4o",
+    "bot_name": "claude-haiku-4.5",
     "parameters": {
-      "thinking_budget": "4096"
+      "thinking_budget": 0
     }
-  },
-  
-  "output": {
-    "base_directory": "./output",
-    "pdf_quality": "production",
-    "save_intermediate": false,
-    "debug_mode": false
   }
 }
 ```
@@ -743,28 +737,34 @@ Total:                      $0.100
 
 ### Cost Reduction Strategies
 
-1. **Reduce Thinking Budgets**:
+1. **Adjust Model Parameters**:
 ```json
 {
   "job_resonance_analysis": {
-    "thinking_budget": "2048"  // Reduced from 4096
+    "bot_name": "claude-haiku-4.5",
+    "parameters": {
+      "thinking_budget": 0
+    }
   }
 }
 ```
 
-2. **Use Cheaper Models**:
+2. **Use Different Models**:
 ```json
 {
   "company_research": {
-    "bot_name": "GPT-4o-mini"  // Instead of Claude-3.5-Sonnet
+    "bot_name": "gemini-3-pro",  // Alternative model
+    "parameters": {
+      "thinking_level": "low"
+    }
   }
 }
 ```
 
 **Cost vs. Quality Tradeoff**:
-- Reducing budgets below recommended levels may impact quality
 - Test changes on small batches before full deployment
 - Monitor validation success rates after changes
+- Balance between cost and output quality
 
 ## Troubleshooting
 
@@ -854,7 +854,7 @@ git commit -m "Update model configuration"
 
 ## Migration Guide
 
-### Upgrading from v4.1 to v4.2
+### Upgrading from v4.1 to v4.2+
 
 **1. Add Concurrency Configuration**:
 ```json
@@ -863,13 +863,8 @@ git commit -m "Update model configuration"
 }
 ```
 
-**2. Update Model Names** (if using old names):
-```json
-{
-  "Claude-3": "Claude-3.5-Sonnet",
-  "GPT-4": "GPT-4o"
-}
-```
+**2. Update Bot Configuration Format** (if using old format):
+The current format with separate `bot_name` and `parameters` is correct.
 
 **3. Test Parallel Processing**:
 ```bash
