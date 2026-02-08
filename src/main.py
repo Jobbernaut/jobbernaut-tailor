@@ -12,7 +12,6 @@ import fastapi_poe as fp
 from pydantic import ValidationError
 from rich.live import Live
 from rich.console import Console
-from rich.panel import Panel
 
 from .utils import (
     load_yaml,
