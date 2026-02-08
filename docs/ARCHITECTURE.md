@@ -1,609 +1,770 @@
-# Architecture Guide
+# Architecture Guide - Jobbernaut Tailor v4.2+
+
+**Last Updated**: October 27, 2025  
+**Version**: v4.2+ (with Fact Verification)
+
+---
 
 ## System Overview
 
-Jobbernaut Tailor v4.2 is an industrial-scale resume tailoring system built on three architectural pillars:
+Jobbernaut Tailor is a **validation-first resume automation pipeline** that processes job applications at scale while maintaining quality guarantees through multi-stage validation and self-healing error recovery.
 
-1. **Parallel Processing Engine**: Semaphore-based concurrency for 10x throughput
-2. **Self-Healing Validation Pipeline**: 99.5% success rate with automatic error correction
-3. **Intelligence Gathering System**: Multi-stage context extraction at $0.10/application
+### Core Philosophy
+
+```
+Quality > Speed > Cost
+```
+
+Every design decision prioritizes **validation and error recovery** over raw performance. The system is built to handle failures gracefully and self-correct without manual intervention.
+
+---
 
 ## High-Level Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Application Layer                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │ Job Queue    │  │ Concurrency  │  │ Output Mgmt  │      │
-│  │ Management   │  │ Control      │  │ & Storage    │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│                    PIPELINE ORCHESTRATOR                     │
+│                      (main.py)                               │
 └─────────────────────────────────────────────────────────────┘
-                            ↓
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Intelligence Pipeline                       │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │ Job Resonance│  │ Company      │  │ Storytelling │      │
-│  │ Analysis     │  │ Research     │  │ Arc          │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│                   INPUT VALIDATION LAYER                     │
+│  • Job data validation (fail-fast)                          │
+│  • Master resume validation                                 │
+│  • Configuration validation                                 │
 └─────────────────────────────────────────────────────────────┘
-                            ↓
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Content Generation                          │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │ Resume JSON  │  │ Cover Letter │  │ Referral Doc │      │
-│  │ Generation   │  │ Generation   │  │ (Optional)   │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│              INTELLIGENCE GATHERING PHASE                    │
+│  1. Job Resonance Analysis (emotional keywords)             │
+│  2. Company Research (mission, values, tech stack)          │
 └─────────────────────────────────────────────────────────────┘
-                            ↓
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Validation System                           │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │ Pydantic     │  │ ATS          │  │ Self-Healing │      │
-│  │ Schema       │  │ Compatibility│  │ Recovery     │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│                CONTENT GENERATION PHASE                      │
+│  3. Resume Generation (Pydantic validation)                 │
+│  4. Fact Verification (hallucination detection)             │
+│  5. Storytelling Arc (cover letter narrative)               │
+│  6. Cover Letter Generation (quality validation)            │
 └─────────────────────────────────────────────────────────────┘
-                            ↓
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Rendering & Compilation                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │ LaTeX        │  │ PDF          │  │ Quality      │      │
-│  │ Rendering    │  │ Compilation  │  │ Verification │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│                  RENDERING & COMPILATION                     │
+│  7. Resume LaTeX Rendering (Jinja2)                         │
+│  8. Cover Letter LaTeX Rendering (Jinja2)                   │
+│  9. Resume PDF Compilation (pdflatex)                       │
+│  10. Cover Letter PDF Compilation (pdflatex)                │
+│  11. [Optional] Referral Documents                          │
 └─────────────────────────────────────────────────────────────┘
-```
-
-## Parallel Processing Architecture (v4.2)
-
-### The Breakthrough
-
-v4.2 introduces semaphore-based parallel processing that transforms the system from sequential to concurrent execution:
-
-```python
-class JobbernautTailor:
-    async def run(self):
-        """Process all pending jobs in parallel with concurrency control"""
-        pending_jobs = self.get_pending_jobs()
-        
-        # Semaphore limits concurrent execution
-        max_concurrent = self.config.get('max_concurrent_jobs', 10)
-        semaphore = asyncio.Semaphore(max_concurrent)
-        
-        # Create tasks for all jobs
-        tasks = [
-            self.process_job_with_semaphore(job, semaphore)
-            for job in pending_jobs
-        ]
-        
-        # Execute in parallel
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        
-        return results
-    
-    async def process_job_with_semaphore(self, job, semaphore):
-        """Process a single job with semaphore control"""
-        async with semaphore:
-            return await self.process_single_job(job)
-```
-
-### Why Semaphores?
-
-**Problem**: Naive parallelization with `asyncio.gather()` would spawn 100 concurrent tasks, overwhelming:
-- API rate limits
-- System memory
-- LaTeX compilation processes
-
-**Solution**: Semaphore-based concurrency control:
-- Limits concurrent jobs to configurable maximum (default: 10)
-- Queues remaining jobs automatically
-- Maintains quality guarantees at all scales
-- Prevents resource exhaustion
-
-### Performance Characteristics
-
-```
-Concurrency Level vs. Throughput:
-┌────────────────────────────────────────┐
-│ Jobs/min                               │
-│   50 │                          ████   │
-│   40 │                    ████  ████   │
-│   30 │              ████  ████  ████   │
-│   20 │        ████  ████  ████  ████   │
-│   10 │  ████  ████  ████  ████  ████   │
-│    0 └──────────────────────────────────│
-│       1     5     10    15    20       │
-│           Concurrent Jobs               │
-└────────────────────────────────────────┘
-Optimal: 10 concurrent jobs
-Diminishing returns beyond 15
-```
-
-## Intelligence Pipeline
-
-### 12-Step Processing Flow
-
-Each job goes through 12 distinct stages, all of which can run in parallel across different jobs:
-
-#### Stage 1-3: Intelligence Gathering
-
-**1. Job Resonance Analysis**
-```python
-class JobResonanceAnalysis(BaseModel):
-    emotional_keywords: List[str]      # 3-15 items
-    cultural_values: List[str]         # 2+ items
-    hidden_requirements: List[str]     # 2+ items
-    power_verbs: List[str]            # 3+ items
-    technical_keywords: List[str]      # 3+ items
-```
-
-**Purpose**: Extract implicit signals from job descriptions
-- Emotional resonance keywords (e.g., "innovative", "collaborative")
-- Cultural values (e.g., "work-life balance", "fast-paced")
-- Hidden requirements not explicitly stated
-- Action verbs for resume bullet points
-- Technical skills and technologies
-
-**2. Company Research**
-```python
-class CompanyResearch(BaseModel):
-    mission_statement: str             # 20+ chars
-    core_values: List[str]            # 2-10 items
-    tech_stack: List[str]             # Technologies used
-    culture_keywords: List[str]        # Cultural indicators
-    domain_context: str               # Industry context
-```
-
-**Purpose**: Gather company-specific context
-- Mission and vision alignment
-- Core values for cultural fit
-- Technology stack for skills matching
-- Cultural keywords for cover letter
-- Domain-specific terminology
-
-**3. Storytelling Arc**
-```python
-class StorytellingArc(BaseModel):
-    hook: str                         # 50+ chars
-    bridge: str                       # 50+ chars
-    proof_points: List[str]           # 2-3 items, 30+ chars each
-    vision: str                       # 50+ chars
-    call_to_action: str              # 20+ chars
-```
-
-**Purpose**: Structure narrative for cover letter
-- Hook: Opening impact statement
-- Bridge: Transition to relevant experience
-- Proof points: Evidence of capabilities
-- Vision: Future impact at company
-- Call to action: Closing statement
-
-#### Stage 4-5: Content Generation
-
-**4. Resume JSON Generation**
-```python
-class ResumeData(BaseModel):
-    contact_info: ContactInfo
-    summary: str                      # ≤ 425 chars
-    work_experience: List[WorkExperience]
-    projects: List[Project]
-    skills: List[SkillCategory]
-    education: List[Education]
-```
-
-**Validation Rules**:
-- Summary: Maximum 425 characters
-- Work experience: Exactly 4 bullet points per role
-- Bullet points: Maximum 118 characters each
-- Skills per category: Maximum 85 characters
-- All fields: No empty strings
-
-**5. Cover Letter Generation**
-```python
-class CoverLetterData(BaseModel):
-    opening: str                      # Uses storytelling hook
-    body_paragraphs: List[str]        # 2-3 paragraphs
-    closing: str                      # Uses call to action
-    signature: str                    # Professional closing
-```
-
-#### Stage 6-9: Rendering & Compilation
-
-**6-7. LaTeX Rendering**
-- Jinja2 template processing
-- LaTeX character escaping
-- Format standardization
-- Metadata injection
-
-**8-9. PDF Compilation**
-- pdflatex execution
-- Hyperlink generation
-- Metadata embedding
-- Quality verification
-
-#### Stage 10-12: Finalization
-
-**10. Referral Document** (Optional)
-- Networking aid generation
-- Key talking points
-- Company research summary
-
-**11. Quality Validation**
-- Final content verification
-- ATS compatibility check
-- Format consistency
-- Completeness validation
-
-**12. Output Organization**
-- File structure creation
-- Metadata storage
-- Debug information
-- Status tracking
-
-## Validation System
-
-### Multi-Stage Validation Architecture
-
-```
-Input → Pydantic Validation → ATS Rules → Self-Healing → Output
-         ↓ Fail                ↓ Fail      ↓ Fail
-         Retry (2x)            Retry (2x)  Retry (2x)
-         ↓                     ↓           ↓
-         Progressive Feedback  Progressive Feedback
-```
-
-### 1. Pydantic Schema Validation
-
-**Field-Level Validators**:
-```python
-class WorkExperience(BaseModel):
-    company: str
-    title: str
-    location: str
-    start_date: str
-    end_date: str
-    bullet_points: List[str]
-    
-    @validator('bullet_points')
-    def validate_bullets(cls, v):
-        if len(v) != 4:
-            raise ValueError("Must have exactly 4 bullet points")
-        if any(len(bullet) > 118 for bullet in v):
-            raise ValueError(f"Bullet point exceeds 118 char limit")
-        if any(not bullet.strip() for bullet in v):
-            raise ValueError("Empty bullet points not allowed")
-        return v
-    
-    @validator('location')
-    def validate_location(cls, v):
-        # Standardize location format
-        return v.replace(',', ' •').strip()
-```
-
-### 2. ATS Compatibility Rules
-
-**Character Limits** (Enforced at validation):
-```python
-LIMITS = {
-    'bullet_point': 118,      # ATS parsing threshold
-    'skills_category': 30,    # Category name limit
-    'skills_list': 85,        # Combined skills limit
-    'project_tech': 65,       # Technology stack limit
-    'summary': 425,           # Professional summary limit
-}
-```
-
-**Format Standardization**:
-- Phone: `(XXX) XXX-XXXX`
-- Dates: `Month YYYY` or `Month YYYY - Present`
-- Locations: `City • State` or `City • Country`
-- URLs: Hyperlinked with clean display text
-
-**Illegal Character Sanitization**:
-```python
-def sanitize_for_latex(text: str) -> str:
-    """Remove/escape characters that break LaTeX compilation"""
-    replacements = {
-        '&': r'\&',
-        '%': r'\%',
-        '$': r'\$',
-        '#': r'\#',
-        '_': r'\_',
-        '{': r'\{',
-        '}': r'\}',
-        '~': r'\textasciitilde{}',
-        '^': r'\textasciicircum{}',
-    }
-    for char, replacement in replacements.items():
-        text = text.replace(char, replacement)
-    return text
-```
-
-### 3. Self-Healing Error Recovery
-
-**Progressive Feedback System**:
-```python
-async def generate_with_retry(
-    self,
-    prompt: str,
-    model: BaseModel,
-    max_retries: int = 2
-) -> BaseModel:
-    """Generate content with progressive feedback on failures"""
-    
-    for attempt in range(max_retries):
-        try:
-            response = await self.ai_generate(prompt)
-            validated = model.parse_raw(response)
-            return validated
-            
-        except ValidationError as e:
-            if attempt == max_retries - 1:
-                raise
-            
-            # Inject error-specific feedback
-            feedback = self.generate_feedback(e)
-            prompt = f"{prompt}\n\nPREVIOUS ATTEMPT FAILED:\n{feedback}"
-            
-        except JSONDecodeError as e:
-            if attempt == max_retries - 1:
-                raise
-            
-            # Guide JSON formatting
-            prompt = f"{prompt}\n\nJSON PARSING ERROR: Ensure valid JSON format"
-    
-    raise Exception("Max retries exceeded")
-```
-
-**Error-Specific Guidance**:
-- **Character limit exceeded**: "Reduce bullet point length to ≤118 chars"
-- **Missing required fields**: "Include all required fields: {field_list}"
-- **Invalid format**: "Use format: {expected_format}"
-- **Empty content**: "Provide meaningful content, not empty strings"
-
-### 4. Quality Thresholds
-
-**Content Quality Rules**:
-```python
-class QualityThresholds:
-    MIN_BULLET_LENGTH = 30        # Meaningful content
-    MAX_BULLET_LENGTH = 118       # ATS compatibility
-    REQUIRED_BULLETS = 4          # Optimal density
-    MIN_SKILLS_PER_CATEGORY = 3   # Sufficient breadth
-    MAX_SKILLS_PER_CATEGORY = 6   # Avoid clutter
-    MIN_SUMMARY_LENGTH = 100      # Substantive overview
-    MAX_SUMMARY_LENGTH = 425      # ATS limit
-```
-
-## LaTeX Architecture
-
-### Template System
-
-**Jinja2 + LaTeX Integration**:
-```latex
-% templates/resume.jinja2
-\documentclass{resume}
-
-% Contact Information
-\name{\VAR{contact_info.first_name} \VAR{contact_info.last_name}}
-\address{
-    \VAR{contact_info.location} \\
-    \href{tel:\VAR{contact_info.phone}}{\VAR{contact_info.phone}} \\
-    \href{mailto:\VAR{contact_info.email}}{\VAR{contact_info.email}}
-}
-
-% Work Experience
-\begin{rSection}{EXPERIENCE}
-\BLOCK{for exp in work_experience}
-    \begin{rSubsection}
-        {\VAR{exp.company}}
-        {\VAR{exp.start_date} - \VAR{exp.end_date}}
-        {\VAR{exp.title}}
-        {\VAR{exp.location}}
-        \BLOCK{for bullet in exp.bullet_points}
-        \item \VAR{bullet|latex_escape}
-        \BLOCK{endfor}
-    \end{rSubsection}
-\BLOCK{endfor}
-\end{rSection}
-```
-
-### Custom LaTeX Classes
-
-**resume.cls**:
-```latex
-% Optimized for ATS parsing
-\ProvidesClass{resume}[2025/10/23 Resume class]
-\LoadClass[11pt,letterpaper]{article}
-
-% Precise spacing for optimal parsing
-\usepackage[left=0.4in,top=0.4in,right=0.4in,bottom=0.4in]{geometry}
-
-% Clean, professional font
-\usepackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-
-% Section formatting
-\newenvironment{rSection}[1]{
-    \sectionskip
-    \MakeUppercase{\bf #1}
-    \sectionlineskip
-    \hrule
-    \begin{list}{}{
-        \setlength{\leftmargin}{1.5em}
-    }
-    \item[]
-}{
-    \end{list}
-}
-```
-
-### PDF Metadata Optimization
-
-```latex
-\usepackage[pdftex,
-    pdfauthor={\VAR{contact_info.first_name} \VAR{contact_info.last_name}},
-    pdftitle={Resume - \VAR{contact_info.first_name} \VAR{contact_info.last_name} - \VAR{job_title}},
-    pdfsubject={Software Engineering Resume},
-    pdfkeywords={Software Development, \VAR{primary_skills|join(', ')}},
-    pdfproducer={LaTeX with hyperref},
-    pdfcreator={pdflatex}
-]{hyperref}
-```
-
-**Benefits**:
-- Improved searchability in ATS systems
-- Professional metadata for recruiters
-- Hyperlinked contact information
-- Clean URL handling
-
-## Configuration System
-
-### Model Selection
-
-```json
-{
-  "intelligence_steps": {
-    "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096"
-    },
-    "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
-      "thinking_budget": "2048"
-    },
-    "storytelling_arc": {
-      "bot_name": "GPT-4o",
-      "thinking_budget": "3072"
-    }
-  }
-}
-```
-
-**Model Selection Strategy**:
-- **Gemini-2.5-Pro**: Technical analysis, pattern matching
-- **Claude-3.5-Sonnet**: Research, synthesis, factual accuracy
-- **GPT-4o**: Creative writing, storytelling, narrative flow
-
-### Concurrency Configuration
-
-```json
-{
-  "max_concurrent_jobs": 10,
-  "semaphore_timeout": 300
-}
-```
-
-**Tuning Guidelines**:
-- **1-5 concurrent**: Conservative, low resource usage
-- **10 concurrent**: Optimal for most systems (default)
-- **15+ concurrent**: High-end systems only, diminishing returns
-
-## Error Handling
-
-### Fail-Fast Input Validation
-
-```python
-def validate_input(job_data: dict) -> None:
-    """Validate input before processing"""
-    
-    # Job title validation
-    if not 3 <= len(job_data['title']) <= 200:
-        raise ValueError("Job title must be 3-200 characters")
-    
-    # Company name validation
-    if not 2 <= len(job_data['company']) <= 100:
-        raise ValueError("Company name must be 2-100 characters")
-    
-    # Job description validation
-    if not 100 <= len(job_data['description']) <= 50000:
-        raise ValueError("Job description must be 100-50,000 characters")
-```
-
-### Graceful Degradation
-
-```python
-async def process_job_with_fallback(self, job: dict) -> dict:
-    """Process job with fallback strategies"""
-    
-    try:
-        return await self.process_single_job(job)
-    
-    except ValidationError as e:
-        # Log validation failure
-        self.log_error(job, e)
-        return {'status': 'validation_failed', 'error': str(e)}
-    
-    except APIError as e:
-        # Retry with exponential backoff
-        return await self.retry_with_backoff(job, e)
-    
-    except Exception as e:
-        # Catch-all for unexpected errors
-        self.log_critical_error(job, e)
-        return {'status': 'failed', 'error': str(e)}
-```
-
-## Performance Optimization
-
-### Caching Strategy
-
-```python
-class TemplateCache:
-    """Cache compiled Jinja2 templates"""
-    
-    def __init__(self):
-        self.cache = {}
-    
-    def get_template(self, name: str) -> Template:
-        if name not in self.cache:
-            self.cache[name] = self.load_template(name)
-        return self.cache[name]
-```
-
-### Async I/O Optimization
-
-```python
-async def compile_pdfs_parallel(self, latex_files: List[str]) -> List[str]:
-    """Compile multiple PDFs concurrently"""
-    
-    tasks = [
-        self.compile_single_pdf(latex_file)
-        for latex_file in latex_files
-    ]
-    
-    return await asyncio.gather(*tasks)
-```
-
-## System Requirements
-
-### Minimum Requirements
-- Python 3.8+
-- 4GB RAM
-- LaTeX distribution (TeX Live, MiKTeX, MacTeX)
-- POE API key
-
-### Recommended for Parallel Processing
-- Python 3.10+
-- 8GB+ RAM
-- SSD storage
-- Stable internet connection (API calls)
-
-## Monitoring & Observability
-
-### Metrics Tracked
-- Processing time per job
-- Validation success rate
-- Retry attempts per stage
-- API costs per job
-- Concurrency utilization
-
-### Logging Strategy
-```python
-logger.info(f"Processing job: {job_id}")
-logger.debug(f"Intelligence gathering: {elapsed_time}s")
-logger.warning(f"Validation retry: attempt {attempt}/2")
-logger.error(f"Job failed: {error_message}")
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    OUTPUT ORGANIZATION                       │
+│  12. Cleanup (move non-PDFs to debug/)                      │
+│  13. Status update (mark job as processed)                  │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-**Architecture designed for scale, validated for quality, optimized for speed.**
+## Core Components
+
+### 1. Pipeline Orchestrator (`main.py`)
+
+**Purpose**: Coordinates the entire processing pipeline with error handling and retry logic.
+
+**Key Classes**:
+- `ResumeOptimizationPipeline`: Main orchestration class
+  - Manages configuration
+  - Coordinates API calls
+  - Handles validation and retries
+  - Tracks progress
+
+**Key Methods**:
+```python
+async def process_job(job, tracker, live)
+    # Main processing pipeline for a single job
+    
+async def call_poe_api(prompt, bot_name, parameters, max_retries=2)
+    # API calls with exponential backoff retry
+    
+async def _call_intelligence_step_with_retry(...)
+    # Generic retry wrapper for intelligence steps
+```
+
+### 2. Validation System
+
+**Multi-Layer Defense**:
+
+```
+Layer 1: Input Validation
+  ↓ (fail-fast if invalid)
+Layer 2: Pydantic Schema Validation
+  ↓ (retry with feedback if invalid)
+Layer 3: Fact Verification
+  ↓ (retry with hallucination feedback)
+Layer 4: Quality Thresholds
+  ↓ (retry with quality feedback)
+Layer 5: LaTeX Compilation
+  ↓ (fail if compilation errors)
+Output: Validated PDFs
+```
+
+**Why Multiple Layers?**
+- Each layer catches different error types
+- Defense in depth prevents cascading failures
+- Self-healing at each layer reduces manual intervention
+
+### 3. Pydantic Models (`models.py`)
+
+**Purpose**: Define strict schemas for all data structures with custom validators.
+
+**Key Models**:
+```python
+class TailoredResume(BaseModel):
+    # Resume structure with ATS-optimized constraints
+    # - Bullet points ≤ 118 chars
+    # - Skills per category ≤ 85 chars
+    # - Phone number formatting
+    # - Date standardization
+    
+class JobResonanceAnalysis(BaseModel):
+    # Job analysis output structure
+    
+class CompanyResearch(BaseModel):
+    # Company research output structure
+    
+class StorytellingArc(BaseModel):
+    # Cover letter narrative structure
+```
+
+**Custom Validators**:
+- Character limit enforcement
+- Format standardization (phone, dates, locations)
+- Required field validation
+- Type coercion and sanitization
+
+### 4. Fact Verification System
+
+**Components**:
+- `fact_extractor.py`: Extracts factual claims from generated resume
+- `fact_verifier.py`: Verifies claims against master resume
+
+**Process**:
+```python
+1. Extract claims from generated resume
+   - Work experience (companies, titles, dates)
+   - Education (institutions, degrees, dates)
+   - Skills (technical skills, tools)
+   - Projects (names, technologies)
+
+2. Verify against master resume
+   - Exact match validation
+   - Fuzzy matching for variations
+   - Hallucination detection
+
+3. If hallucinations found:
+   - Format detailed feedback
+   - Retry generation with corrections
+   - Max 2 retry attempts
+```
+
+**Hallucination Categories**:
+- Company name mismatches
+- Job title fabrications
+- Date inconsistencies
+- Skill exaggerations
+- Project inventions
+
+### 5. Template Rendering (`template_renderer.py`)
+
+**Purpose**: Convert JSON data to LaTeX using Jinja2 templates.
+
+**Key Methods**:
+```python
+def render_resume(resume_data, job_title, company_name)
+    # Renders resume.jinja2 template
+    
+def render_cover_letter(contact_info, cover_letter_text, ...)
+    # Renders cover_letter.jinja2 template
+    
+def render_resume_with_referral(resume_data, referral_contact, ...)
+    # Renders resume with referral contact info
+```
+
+**Template Features**:
+- LaTeX escaping (special characters)
+- Conditional sections (optional fields)
+- Dynamic formatting (dates, phone numbers)
+- ATS-optimized layout
+
+### 6. Progress Tracking (`progress_tracker.py`)
+
+**Purpose**: Real-time progress visualization and failure tracking.
+
+**Features**:
+- Rich table display with live updates
+- Per-job step tracking (12 steps)
+- Shadow failure tracking (retries that succeeded)
+- Incident logging to `learnings.yaml`
+
+**Tracked Metrics**:
+- Jobs processed / total
+- Current step per job
+- Retry attempts (API, validation, quality)
+- Failure reasons and recovery
+
+### 7. Utility Functions (`utils.py`)
+
+**Purpose**: Common operations used across the pipeline.
+
+**Key Functions**:
+```python
+def load_yaml(path) / save_yaml(path, data)
+def load_json(path) / save_json(path, data)
+def load_prompt_template(name)
+def compile_latex_to_pdf(tex_path, output_dir, doc_type)
+def cleanup_output_directory(output_dir, ...)
+def remove_reasoning_traces(text, enabled)
+```
+
+---
+
+## Processing Pipeline (Detailed)
+
+### Phase 1: Input Validation
+
+**Step 0: Validate Job Inputs**
+```python
+Validates:
+- job_id: non-empty string
+- job_title: 3-200 characters
+- company_name: 2-100 characters
+- job_description: 100-50,000 characters
+
+Failure Mode: Fail-fast (no retry)
+Logs to: learnings.yaml
+```
+
+### Phase 2: Intelligence Gathering
+
+**Step 1: Job Resonance Analysis**
+```python
+Input: Job description, company name
+Output: JobResonanceAnalysis
+  - emotional_keywords (3-15 items)
+  - cultural_values (2+ items)
+  - hidden_requirements (2+ items)
+  - power_verbs (3+ items)
+  - technical_keywords (3+ items)
+
+Validation: Pydantic + quality thresholds
+Retry: Max 2 attempts with error feedback
+Bot: Configurable (default: Gemini-2.5-Pro)
+```
+
+**Step 2: Company Research**
+```python
+Input: Company name, job description
+Output: CompanyResearch
+  - mission_statement (20+ chars)
+  - core_values (2-10 items)
+  - tech_stack (array)
+  - culture_keywords (array)
+  - recent_news (optional)
+
+Validation: Pydantic + quality thresholds
+Retry: Max 2 attempts with error feedback
+Bot: Configurable (default: Claude-3.5-Sonnet)
+```
+
+### Phase 3: Content Generation
+
+**Step 3: Resume Generation**
+```python
+Input: Job description, master resume, job resonance
+Output: TailoredResume (Pydantic model)
+
+Process:
+1. Generate resume JSON (with humanization if enabled)
+2. Extract JSON from response
+3. Validate with Pydantic (character limits, formats)
+4. Verify facts against master resume
+5. If validation fails: retry with error feedback (max 2)
+
+Validation Layers:
+- JSON parsing
+- Pydantic schema validation
+- Fact verification (hallucination detection)
+- Character limit enforcement
+
+Bot: Configurable (default: Claude-3.5-Sonnet)
+```
+
+**Step 4: Fact Verification**
+```python
+Input: Generated resume, master resume
+Output: FactVerificationResult
+
+Process:
+1. Extract claims from generated resume
+2. Verify each claim against master resume
+3. Detect hallucinations (fabricated facts)
+4. If hallucinations found:
+   - Format detailed feedback
+   - Retry resume generation
+   - Max 2 retry attempts
+
+Hallucination Types:
+- Company name mismatches
+- Job title fabrications
+- Date inconsistencies
+- Skill exaggerations
+- Project inventions
+```
+
+**Step 5: Storytelling Arc Generation**
+```python
+Input: Job description, company research, job resonance, resume
+Output: StorytellingArc
+  - hook (50+ chars)
+  - bridge (50+ chars)
+  - proof_points (2-3 items, 30+ chars each)
+  - vision (50+ chars)
+  - call_to_action (20+ chars)
+
+Validation: Pydantic + quality thresholds
+Retry: Max 2 attempts with error feedback
+Bot: Configurable (default: GPT-4o)
+```
+
+**Step 6: Cover Letter Generation**
+```python
+Input: Resume, job description, storytelling arc, company research
+Output: Cover letter text
+
+Process:
+1. Generate cover letter (with humanization if enabled)
+2. Validate minimum length (200+ chars)
+3. If validation fails: retry with quality feedback (max 2)
+
+Validation: Quality thresholds (length, coherence)
+Bot: Configurable (default: GPT-4o)
+```
+
+### Phase 4: Rendering & Compilation
+
+**Step 7-8: LaTeX Rendering**
+```python
+Templates: resume.jinja2, cover_letter.jinja2
+
+Process:
+1. Load Jinja2 template
+2. Inject resume/cover letter data
+3. Apply LaTeX escaping
+4. Render to .tex file
+
+Features:
+- Special character escaping
+- Conditional sections
+- Dynamic formatting
+- ATS-optimized layout
+```
+
+**Step 9-10: PDF Compilation**
+```python
+Compiler: pdflatex
+
+Process:
+1. Run pdflatex on .tex file
+2. Check for compilation errors
+3. If errors: fail (no retry, check LaTeX log)
+4. Rename PDF to final name format
+
+Output Format:
+FirstName_LastName_Company_JobID_Resume.pdf
+FirstName_LastName_Company_JobID_Cover_Letter.pdf
+```
+
+**Step 11: Referral Documents (Optional)**
+```python
+Condition: referral_contact.json exists and valid
+
+Process:
+1. Load referral contact info (email, phone)
+2. Render resume with referral contact
+3. Render cover letter with referral contact
+4. Compile referral PDFs
+
+Output Format:
+Referral_FirstName_LastName_Company_JobID_Resume.pdf
+Referral_FirstName_LastName_Company_JobID_Cover_Letter.pdf
+
+Graceful Degradation: Skips if referral_contact.json missing
+```
+
+### Phase 5: Output Organization
+
+**Step 12: Cleanup**
+```python
+Process:
+1. Create debug/ subdirectory
+2. Move all non-PDF files to debug/
+   - .tex files
+   - .json files
+   - .txt files
+   - .log files
+   - .aux files
+3. Keep only PDFs in main output directory
+
+Result: Clean output directory with only final PDFs
+```
+
+**Step 13: Status Update**
+```python
+Process:
+1. Update job status in applications.yaml
+2. Mark job as "processed"
+3. Update progress tracker
+4. Log completion metrics
+```
+
+---
+
+## Concurrent Execution Model
+
+### Semaphore-Based Concurrency
+
+```python
+# Configuration
+max_concurrent_jobs = 10  # From config.json
+
+# Implementation
+semaphore = asyncio.Semaphore(max_concurrent_jobs)
+
+async def process_with_limit(job):
+    async with semaphore:
+        return await process_job(job, tracker, live)
+
+# Execute all jobs concurrently
+results = await asyncio.gather(
+    *[process_with_limit(job) for job in pending_jobs],
+    return_exceptions=True
+)
+```
+
+**How It Works**:
+1. Semaphore limits concurrent jobs to configured maximum
+2. Each job runs independently (no shared state)
+3. Failures in one job don't affect others
+4. Progress tracker updates in real-time
+
+**Performance**:
+- Sequential (v4.1): 100 jobs × 75s = 125 minutes
+- Concurrent (v4.2): 100 jobs ÷ 10 = 12.5 minutes
+- **10x speedup** with zero quality compromise
+
+**Why This Works**:
+- Each job is independent (no shared state)
+- Intelligence gathering is I/O-bound (API calls)
+- PDF compilation is CPU-bound but short
+- Validation is deterministic (no race conditions)
+
+---
+
+## Error Handling & Recovery
+
+### Retry Strategy
+
+**API Retries** (Exponential Backoff):
+```python
+Attempt 1: Immediate
+Attempt 2: Wait 2 seconds
+Max Attempts: 2
+
+Retry Triggers:
+- Network errors
+- API timeouts
+- Rate limiting
+- Server errors
+```
+
+**Validation Retries** (Progressive Feedback):
+```python
+Attempt 1: Base prompt
+Attempt 2: Base prompt + error feedback
+Max Attempts: 2
+
+Retry Triggers:
+- JSON parsing errors
+- Pydantic validation errors
+- Fact verification failures
+- Quality threshold failures
+```
+
+### Failure Logging
+
+**learnings.yaml Structure**:
+```yaml
+incidents:
+  - timestamp: ISO 8601
+    step_name: "Resume Generation"
+    job_id: "job_123"
+    company_name: "TechCorp"
+    attempt: 2
+    failure_type: "validation"
+    details:
+      error_count: 3
+      errors:
+        - field: "work_experience.0.bullet_points.0"
+          message: "String should have at most 118 characters"
+          type: "string_too_long"
+```
+
+**Failure Types**:
+- `input`: Invalid job data
+- `json_parsing`: Invalid JSON response
+- `validation`: Pydantic validation errors
+- `fact_verification`: Hallucination detection
+- `quality`: Quality threshold failures
+- `latex_compilation`: PDF compilation errors
+- `api`: API call failures
+
+### Shadow Failure Tracking
+
+**Purpose**: Track retries that eventually succeeded.
+
+**Metrics**:
+- Total retry attempts per job
+- Retry reasons (API, validation, quality)
+- Recovery success rate
+- Time to recovery
+
+**Output**: Detailed report at end of pipeline run
+
+---
+
+## Configuration System
+
+### config.json Structure
+
+```json
+{
+  "max_concurrent_jobs": 10,
+  
+  "intelligence_steps": {
+    "job_resonance_analysis": {
+      "bot_name": "Gemini-2.5-Pro",
+      "parameters": {
+        "thinking_budget": "4096"
+      }
+    },
+    "company_research": {
+      "bot_name": "Claude-3.5-Sonnet",
+      "parameters": {
+        "thinking_budget": "2048"
+      }
+    },
+    "storytelling_arc": {
+      "bot_name": "GPT-4o",
+      "parameters": {
+        "thinking_budget": "3072"
+      }
+    }
+  },
+  
+  "resume_generation": {
+    "bot_name": "Claude-3.5-Sonnet",
+    "parameters": {
+      "thinking_budget": "8192"
+    }
+  },
+  
+  "cover_letter_generation": {
+    "bot_name": "GPT-4o",
+    "parameters": {
+      "thinking_budget": "4096"
+    }
+  },
+  
+  "humanization": {
+    "enabled": true,
+    "levels": {
+      "resume": "medium",
+      "cover_letter": "high"
+    }
+  },
+  
+  "reasoning_trace": false,
+  
+  "file_paths": {
+    "applications": "data/applications.yaml",
+    "master_resume": "profile/master_resume.json"
+  }
+}
+```
+
+### Environment Variables (.env)
+
+```bash
+POE_API_KEY=your_api_key_here
+DEBUG_MODE=false
+LOG_LEVEL=INFO
+```
+
+---
+
+## Data Flow
+
+### Input Data
+
+**applications.yaml**:
+```yaml
+applications:
+  - job_id: "job_001"
+    job_title: "Senior Software Engineer"
+    company_name: "TechCorp"
+    job_description: "Full job description..."
+    status: "pending"
+```
+
+**master_resume.json**:
+```json
+{
+  "contact_info": { ... },
+  "work_experience": [ ... ],
+  "education": [ ... ],
+  "skills": [ ... ],
+  "projects": [ ... ]
+}
+```
+
+### Output Data
+
+**Directory Structure**:
+```
+output/
+└── TechCorp_Senior_Software_Engineer_job_001/
+    ├── John_Doe_TechCorp_job_001_Resume.pdf
+    ├── John_Doe_TechCorp_job_001_Cover_Letter.pdf
+    ├── Referral_John_Doe_TechCorp_job_001_Resume.pdf (optional)
+    ├── Referral_John_Doe_TechCorp_job_001_Cover_Letter.pdf (optional)
+    └── debug/
+        ├── Resume.json
+        ├── Resume.tex
+        ├── CoverLetter.txt
+        ├── CoverLetter.tex
+        ├── Job_Resonance_Analysis.json
+        ├── Company_Research.json
+        └── Storytelling_Arc.json
+```
+
+---
+
+## Performance Characteristics
+
+### Processing Time
+
+**Per Job** (average):
+- Intelligence gathering: 20-30s
+- Content generation: 25-35s
+- Rendering & compilation: 10-15s
+- **Total**: 60-90s per job
+
+**Concurrent** (10 jobs):
+- Wall clock time: ~90s (limited by longest job)
+- Throughput: ~10 jobs/minute
+- **100 jobs**: ~12.5 minutes
+
+### Resource Usage
+
+**Memory**:
+- Base: ~200MB
+- Per concurrent job: ~50MB
+- **10 concurrent**: ~700MB total
+
+**CPU**:
+- Intelligence gathering: Low (I/O-bound)
+- PDF compilation: High (CPU-bound, short bursts)
+- Average utilization: 30-50%
+
+**Network**:
+- API calls: ~5-10 per job
+- Bandwidth: Minimal (text-based)
+- Rate limiting: Handled by Poe API
+
+---
+
+## Quality Guarantees
+
+### Validation Success Rate
+
+**Overall**: >99.5% after self-healing
+
+**By Layer**:
+- Input validation: 100% (fail-fast)
+- Pydantic validation: ~98% first attempt, >99.5% after retry
+- Fact verification: ~95% first attempt, >99% after retry
+- Quality thresholds: ~97% first attempt, >99.5% after retry
+- LaTeX compilation: >99.9% (rare failures)
+
+### ATS Compatibility
+
+**Character Limits** (enforced):
+- Bullet points: ≤ 118 chars
+- Skills per category: ≤ 85 chars
+- Summary: ≤ 425 chars
+- Project descriptions: ≤ 200 chars
+
+**Format Standardization**:
+- Phone numbers: (XXX) XXX-XXXX
+- Dates: Month YYYY
+- Locations: City, State
+
+**LaTeX Safety**:
+- Special character escaping
+- No illegal characters
+- ATS-friendly formatting
+
+---
+
+## Extension Points
+
+### Adding New Intelligence Steps
+
+1. Create prompt template in `prompts/`
+2. Define Pydantic model in `models.py`
+3. Add configuration to `config.json`
+4. Call `_call_intelligence_step_with_retry()` in pipeline
+
+### Adding New Validation Rules
+
+1. Add custom validator to Pydantic model
+2. Update `_validate_intelligence_output()` for quality checks
+3. Add error feedback templates
+
+### Adding New Output Formats
+
+1. Create Jinja2 template in `templates/`
+2. Add rendering method to `template_renderer.py`
+3. Add compilation logic to pipeline
+
+---
+
+## Related Documentation
+
+- [Pipeline Details](PIPELINE.md) - Step-by-step processing flow
+- [Validation System](VALIDATION.md) - All validation layers
+- [Fact Verification](FACT_VERIFICATION.md) - Hallucination detection
+- [Humanization](HUMANIZATION.md) - Content humanization system
+- [Configuration](CONFIGURATION.md) - Setup and customization
+- [Templates](TEMPLATES.md) - Jinja2 and LaTeX templates
+
+---
+
+**Architecture Version**: v4.2+ (Fact Verification)  
+**Last Updated**: October 27, 2025

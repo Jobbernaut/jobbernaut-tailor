@@ -30,6 +30,23 @@ JOB RESONANCE ANALYSIS:
 CANDIDATE'S TAILORED RESUME:
 [TAILORED_RESUME]
 
+### CRITICAL: USE UNDERLYING ANXIETY FOR EMOTIONAL CONNECTION
+
+The job resonance analysis now includes:
+- **underlying_anxiety**: The hiring manager's core pain point/problem this hire solves
+- **priority_proof_metrics**: The 3 types of impact they care about most
+
+**MANDATORY: Use underlying_anxiety to shape your narrative hook**
+- Your opening (hook) should acknowledge the pain point or challenge the company is facing
+- Position the candidate as someone who understands and has solved this specific problem
+- Example: If underlying_anxiety is "scaling issues causing outages", reference the candidate's experience building reliable, scalable systems
+- This creates immediate relevance and shows you "get it"
+
+**STRATEGIC: Reference priority_proof_metrics in proof_points**
+- When selecting which achievements to highlight, prioritize those matching priority_proof_metrics[0-2]
+- If priority #1 is "uptime/reliability", lead with reliability achievements
+- This ensures your story addresses what they care about most
+
 ### CRITICAL: LEVERAGE NARRATIVE CONTEXT FROM MASTER RESUME
 
 The tailored resume JSON contains a "narrative_context" field for each experience with rich storytelling elements:
@@ -70,7 +87,9 @@ The tailored resume JSON contains a "narrative_context" field for each experienc
 
 Create a narrative structure that will guide the cover letter generation. Return a JSON object with these fields:
 
-1. "hook": Opening sentence that creates immediate emotional connection by referencing company mission, values, or recent news (1 sentence, ~20-25 words)
+1. "hook": Opening sentence that creates immediate emotional connection by acknowledging the underlying_anxiety or company mission/values (1 sentence, ~20-25 words)
+   - CRITICAL: If underlying_anxiety reveals a specific pain point, reference it in the hook
+   - Example: "When systems fail at scale, it's more than downtime—it's lost trust. I've spent my career building the reliability-first architectures that prevent those moments."
 
 2. "bridge": Transition from hook to candidate's story, explaining why this role resonates personally (1-2 sentences, ~30-40 words)
 
@@ -91,15 +110,15 @@ CRITICAL INSTRUCTIONS:
 - Each field must be non-empty
 - Return ONLY valid JSON with no additional text
 
-Example format:
+Example format (replace all placeholders with actual content from candidate and company research):
 ```json
 {
-  "hook": "When I learned about TechCorp's mission to democratize AI for developers, it resonated deeply with my own journey building accessible ML tools.",
-  "bridge": "Throughout my career, I've been driven by the belief that powerful technology should be intuitive and accessible. This role represents the perfect opportunity to scale that impact.",
+  "hook": "When I learned about [COMPANY]'s mission to [MISSION SUMMARY], it resonated deeply with my own journey [RELEVANT CANDIDATE EXPERIENCE].",
+  "bridge": "Throughout my career, I've been driven by [AUTHENTIC MOTIVATION]. This role represents the perfect opportunity to [CAREER GOAL ALIGNMENT].",
   "proof_points": [
-    "At UNC Chapel Hill, I architected an event-driven microservices platform that reduced API latency by 40% while serving 50,000+ users. This experience taught me how to build scalable systems that prioritize user experience—exactly what TechCorp needs for its growing developer platform.",
-    "Leading the migration to AWS Lambda at Tally, I didn't just implement technology—I fostered a culture of ownership and innovation within my team. We reduced infrastructure costs by 35% while improving system reliability, demonstrating the collaborative, data-driven approach TechCorp values."
+    "At [RECENT COMPANY/UNIVERSITY], I [QUANTIFIED ACHIEVEMENT] while [CONTEXT]. This experience taught me [LESSON]—exactly what [COMPANY] needs for [SPECIFIC CHALLENGE].",
+    "Leading [PROJECT/INITIATIVE], I didn't just [TECHNICAL WORK]—I [LEADERSHIP ACTION]. We [QUANTIFIED IMPACT], demonstrating the [CULTURAL VALUE] approach [COMPANY] values."
   ],
-  "vision": "I'm excited to bring this combination of technical depth and user-centric thinking to TechCorp, where I can help architect solutions that empower millions of developers while mentoring the next generation of engineers.",
-  "call_to_action": "I'd love to discuss how my experience aligning with your mission can contribute to TechCorp's continued growth."
+  "vision": "I'm excited to bring this combination of [SKILL 1] and [SKILL 2] to [COMPANY], where I can help [CONTRIBUTION TO MISSION].",
+  "call_to_action": "I'd love to discuss how my experience [FIT SUMMARY] can contribute to [COMPANY]'s continued growth."
 }

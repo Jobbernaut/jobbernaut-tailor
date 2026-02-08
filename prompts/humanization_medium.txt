@@ -10,6 +10,40 @@ CRITICAL SAFEGUARDS:
 - NEVER remove key details or achievements
 - ALL facts, dates, technologies, and results MUST remain exactly as provided
 
+ANTI-AI-DETECTION RULES (APPLY CONSISTENTLY):
+
+1. ELIMINATE AI TELL-TALES:
+   - BANNED PHRASES: "let's dive in", "it's important to note", "in today's", "moving forward", "at the end of the day", "game-changer", "cutting-edge", "world-class", "industry-leading"
+   - BANNED OPENINGS: "I am writing to express", "I am excited to", "I believe I would be"
+   - BANNED VERBS: "leverage", "utilize", "facilitate" (unless technically specific), "synergize"
+   - BANNED PATTERNS: Starting 3+ consecutive bullets with the same verb
+
+2. SENTENCE RHYTHM VARIATION:
+   - Mix short, medium, and long sentences
+   - Avoid using the same sentence structure more than twice in a row
+   - Vary metric placement within sentences
+   - Example:
+     * Monotonous: "Built API. Reduced latency. Improved throughput."
+     * Varied: "Built RESTful API that reduced latency by 60% and improved throughput by 45%."
+
+3. NATURAL KEYWORD INTEGRATION:
+   - Keywords must flow naturally, not feel forced
+   - Avoid keyword stuffing
+   - Use synonyms to prevent repetition
+   - Example:
+     * Stuffed: "Python developer with Python skills using Python daily"
+     * Natural: "Python developer experienced in Django, Flask, and data analysis"
+
+4. ACTIVE VOICE PREFERENCE:
+   - Use active voice 90%+ of the time
+   - "Built system" not "System was built"
+   - Show direct agency in accomplishments
+
+5. FILLER ELIMINATION:
+   - Cut: "in order to" → use "to"
+   - Cut: "due to the fact that" → use "because"
+   - Remove hedging: "helped to", "assisted in" (when you led the work)
+
 HUMANIZATION TECHNIQUES (Apply Moderately):
 
 1. VARIED SENTENCE STRUCTURES:
@@ -60,6 +94,21 @@ HUMANIZATION TECHNIQUES (Apply Moderately):
      * Disjointed: "Wrote Python scripts. Managed team. Reduced costs."
      * Coherent: "Developed Python automation scripts that reduced manual processing time by 50%, enabling team to focus on high-value analysis work."
 
+7. CLARITY OVER COMPLEXITY:
+   - Use plain English when possible
+   - Short, direct sentences beat long, winding ones
+   - One clear idea per sentence
+   - Example:
+     * Complex: "Facilitated the optimization of cross-functional synergies"
+     * Clear: "Coordinated engineering and product teams to ship features faster"
+
+8. DROP UNNECESSARY WORDS:
+   - Cut empty intensifiers: "very", "really", "extremely"
+   - Avoid redundancy: "past history", "end result"
+   - Example:
+     * Wordy: "Successfully implemented a highly effective system"
+     * Direct: "Implemented system that reduced processing time by 65%"
+
 WHAT NOT TO DO:
 - Do NOT add casual or conversational language
 - Do NOT use contractions or informal expressions
@@ -67,5 +116,6 @@ WHAT NOT TO DO:
 - Do NOT sacrifice clarity for creativity
 - Do NOT make claims beyond the source material
 - Do NOT use clichés or empty phrases
+- Do NOT use hashtags, emojis, or semicolons
 
-BALANCE: This is MEDIUM humanization - the output should read like it was written by an experienced professional who writes clearly and naturally, not by someone following a template. The writing should feel confident and authentic while remaining polished and professional. Readers should find it engaging and easy to read without questioning its professionalism.
+BALANCE: This is MEDIUM humanization - the output should read like it was written by an experienced professional who writes clearly and naturally, not by someone following a template. The writing should feel confident and authentic while remaining polished and professional. Readers should find it engaging and easy to read without questioning its professionalism or suspecting AI generation.

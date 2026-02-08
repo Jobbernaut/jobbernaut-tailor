@@ -1,0 +1,34 @@
+Source-Available Non-Commercial License
+
+Copyright (c) 2025 Snehashish Reddy Manda. All Rights Reserved.
+
+This is source-available code, provided for non-commercial use under the terms below. The source code is made available to encourage learning, research, and non-profit development, but commercial use requires separate permission.
+
+License Grant
+
+Subject to the terms of this Source-Available Non-Commercial License (the "License"), Snehashish Reddy Manda grants you a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable license, to:
+
+1. Access, view, and use the source code and associated documentation (the "Software") for non-commercial purposes only.
+2. Reproduce, modify, and create derivative works of the Software for non-commercial purposes only.
+3. Distribute copies of the Software or derivative works thereof, in source or object form, for non-commercial purposes only.
+4. Fork the repository and publicly share non-commercial derivatives, subject to these terms.
+
+Attribution: Any use, distribution, or public sharing of the Software or derivatives must include:
+- A prominent notice: "This project is based on [original project name] by ${owner}, licensed under the Source-Available Non-Commercial License. Original source: [link to your repo]."
+- The full copyright notice and this License in all copies or substantial portions.
+
+Restrictions:
+- **No Commercial Use**: You may not use the Software or any derivatives for any commercial purpose, including but not limited to:
+  - Selling, leasing, or licensing the Software.
+  - Incorporating it into commercial products or services.
+  - Using it in a business, enterprise, or profit-generating context.
+  Without prior written permission from Snehashish Reddy Manda. To request commercial rights (e.g., a paid license), contact srmanda.cs@gmail.com
+- You may not remove or alter any copyright, trademark, or proprietary notices.
+- This License does not grant rights to Snehashish Reddy Manda's trademarks, patents, or trade secrets beyond the source code provided.
+- Termination: Snehashish Reddy Manda may terminate this License if you violate these terms; upon termination, you must cease all use and distribution.
+
+All other rights are reserved by Snehashish Reddy Manda. This License does not imply any endorsement or warranty.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE ${owner} OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For commercial licensing inquiries, visit srmanda.com or email srmanda.cs@gmail.com

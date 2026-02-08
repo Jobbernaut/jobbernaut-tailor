@@ -106,7 +106,8 @@ def load_prompt_template(prompt_file: str) -> str:
 def compile_latex_to_pdf(
     tex_file_path: str,
     output_dir: str,
-    document_type: str = "resume"
+    document_type: str = "resume",
+    timeout: int = 300
 ) -> str:
     """
     Compile LaTeX file to PDF using pdflatex.
@@ -115,11 +116,13 @@ def compile_latex_to_pdf(
         tex_file_path: Path to the .tex file to compile
         output_dir: Directory where the PDF should be generated
         document_type: Type of document ("resume" or "cover_letter")
+        timeout: Timeout in seconds for pdflatex compilation (default: 300)
     
     Returns the path to the generated PDF file.
     """
     import subprocess
     import shutil
+    import time
 
     # Check if pdflatex is available
     if shutil.which("pdflatex") is None:
@@ -155,6 +158,10 @@ def compile_latex_to_pdf(
     # Run pdflatex twice (standard practice for proper references)
     for run in range(1, 3):
         print(f"  Running pdflatex (pass {run}/2)...")
+        print(f"  Timeout: {timeout}s (first run may take longer if installing packages)")
+        
+        start_time = time.time()
+        
         try:
             result = subprocess.run(
                 [
@@ -166,9 +173,12 @@ def compile_latex_to_pdf(
                 ],
                 capture_output=True,
                 text=True,
-                timeout=120,
+                timeout=timeout,
                 env=env,
             )
+            
+            elapsed_time = time.time() - start_time
+            print(f"  Completed in {elapsed_time:.1f}s")
 
             # Check if PDF was generated (more reliable than return code)
             # pdflatex can return non-zero even when PDF is successfully created
@@ -195,7 +205,20 @@ def compile_latex_to_pdf(
                 raise RuntimeError(error_msg)
 
         except subprocess.TimeoutExpired:
-            raise RuntimeError("LaTeX compilation timed out after 120 seconds.")
+            # Save log file even on timeout for debugging
+            log_file = os.path.join(output_dir, f"{tex_name_no_ext}.log")
+            timeout_msg = (
+                f"LaTeX compilation timed out after {timeout} seconds.\n\n"
+                f"Troubleshooting:\n"
+                f"1. Check if pdflatex is installing packages (first run can be slow)\n"
+                f"2. Review the log file: {log_file}\n"
+                f"3. Ensure your LaTeX file doesn't have infinite loops or errors\n"
+            )
+            
+            if os.path.exists(log_file):
+                timeout_msg += f"\nLog file saved for debugging: {log_file}"
+            
+            raise RuntimeError(timeout_msg)
 
     # Clean up auxiliary files
     aux_extensions = [".aux", ".log", ".out"]
