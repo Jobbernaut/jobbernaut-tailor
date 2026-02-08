@@ -1,7 +1,7 @@
 # Fact Verification System
 
-**Version**: v4.2+  
-**Last Updated**: October 27, 2025
+**Version**: v4.3.0  
+**Last Updated**: February 07, 2025
 
 ---
 
@@ -587,11 +587,10 @@ grep -A 10 "fact_verification" learnings.yaml
 ## Related Documentation
 
 - [Architecture](ARCHITECTURE.md) - System overview
-- [Validation System](VALIDATION.md) - All validation layers
-- [Pipeline](PIPELINE.md) - Processing flow
 - [Configuration](CONFIGURATION.md) - Setup guide
+- [Humanization](HUMANIZATION.md) - Content humanization system
 
 ---
 
-**Version**: v4.2+  
-**Last Updated**: October 27, 2025
+**Version**: v4.3.0  
+**Last Updated**: February 07, 2025

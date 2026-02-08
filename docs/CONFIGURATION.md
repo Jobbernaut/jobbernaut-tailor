@@ -1,6 +1,6 @@
 # Configuration Guide
 
-Complete setup and customization guide for Jobbernaut Tailor v4.2.
+Complete setup and customization guide for Jobbernaut Tailor v4.3.0.
 
 ## Quick Start
 
@@ -48,44 +48,38 @@ python src/main.py
   
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "4096"
+        "thinking_budget": 0
       }
     },
     "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "2048"
+        "thinking_budget": 0,
+        "web_search": true
       }
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
+      "bot_name": "claude-haiku-4.5",
       "parameters": {
-        "thinking_budget": "3072"
+        "thinking_budget": 0
       }
     }
   },
   
   "resume_generation": {
-    "bot_name": "Claude-3.5-Sonnet",
+    "bot_name": "gemini-3-pro",
     "parameters": {
-      "thinking_budget": "8192"
+      "thinking_level": "low"
     }
   },
   
   "cover_letter_generation": {
-    "bot_name": "GPT-4o",
+    "bot_name": "claude-haiku-4.5",
     "parameters": {
-      "thinking_budget": "4096"
+      "thinking_budget": 0
     }
-  },
-  
-  "output": {
-    "base_directory": "./output",
-    "pdf_quality": "production",
-    "save_intermediate": false,
-    "debug_mode": false
   }
 }
 ```
@@ -164,29 +158,35 @@ applications:
 {
   "intelligence_steps": {
     "job_resonance_analysis": {
-      "bot_name": "Gemini-2.5-Pro",
-      "thinking_budget": "4096",
-      "rationale": "Best for technical pattern matching"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     },
     "company_research": {
-      "bot_name": "Claude-3.5-Sonnet",
-      "thinking_budget": "2048",
-      "rationale": "Excellent research and synthesis"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0,
+        "web_search": true
+      }
     },
     "storytelling_arc": {
-      "bot_name": "GPT-4o",
-      "thinking_budget": "3072",
-      "rationale": "Superior creative storytelling"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     },
     "resume_generation": {
-      "bot_name": "Claude-3.5-Sonnet",
-      "thinking_budget": "8192",
-      "rationale": "Precise, structured content generation"
+      "bot_name": "gemini-3-pro",
+      "parameters": {
+        "thinking_level": "low"
+      }
     },
     "cover_letter_generation": {
-      "bot_name": "GPT-4o",
-      "thinking_budget": "4096",
-      "rationale": "Engaging narrative writing"
+      "bot_name": "claude-haiku-4.5",
+      "parameters": {
+        "thinking_budget": 0
+      }
     }
   }
 }
@@ -194,28 +194,42 @@ applications:
 
 ### Available Models
 
-| Model | Strengths | Best For | Cost |
-|-------|-----------|----------|------|
-| **Gemini-2.5-Pro** | Technical analysis, pattern matching | Job resonance analysis | Low |
-| **Claude-3.5-Sonnet** | Research, synthesis, accuracy | Company research, resume generation | Medium |
-| **GPT-4o** | Creativity, storytelling, narrative | Storytelling arc, cover letters | Medium |
-| **GPT-4o-mini** | Fast, cost-effective | Testing, development | Low |
+The system is flexible and works with any bot available through the Poe API. The parameters you can pass depend on the specific bot and the Poe API version. Common parameters include:
+
+- `thinking_budget` (integer): Token budget for extended thinking (for models that support it)
+- `thinking_level` (string): "low", "medium", or "high" (for models that support levels)
+- `web_search` (boolean): Enable web search for company research
+
+**Note**: Bot names and available parameters depend on your Poe API subscription and the bots available at the time. Check the [Poe documentation](https://poe.com/) for current bot availability.
 
 ### Thinking Budget Configuration
 
 **What is Thinking Budget?**
-- Controls the depth of reasoning for models that support extended thinking
-- Higher budgets = more thorough analysis but higher cost
-- Measured in tokens
+- A parameter for AI models that support extended reasoning
+- Controls the depth of analysis (measured in tokens)
+- Higher values = more thorough analysis but potentially higher cost
+- Set to `0` to use default model behavior
 
-**Recommended Budgets**:
+**What is Thinking Level?**
+- An alternative parameter used by some models (e.g., Gemini)
+- Values: `"low"`, `"medium"`, `"high"`
+- Controls reasoning depth similar to thinking_budget
+
+**Example Configuration**:
 ```json
 {
-  "job_resonance_analysis": "4096",    // Deep analysis needed
-  "company_research": "2048",          // Moderate depth
-  "storytelling_arc": "3072",          // Creative exploration
-  "resume_generation": "8192",         // Comprehensive generation
-  "cover_letter_generation": "4096"    // Balanced creativity
+  "job_resonance_analysis": {
+    "bot_name": "claude-haiku-4.5",
+    "parameters": {
+      "thinking_budget": 0
+    }
+  },
+  "resume_generation": {
+    "bot_name": "gemini-3-pro",
+    "parameters": {
+      "thinking_level": "low"
+    }
+  }
 }
 ```
 
@@ -707,7 +721,7 @@ The system includes built-in error recovery with automatic retries (max 2 attemp
 
 ## Cost Optimization
 
-### Current Cost Structure (v4.2)
+### Current Cost Structure (v4.3.0)
 
 **Average Cost per Application**: $0.10
 
@@ -723,28 +737,34 @@ Total:                      $0.100
 
 ### Cost Reduction Strategies
 
-1. **Reduce Thinking Budgets**:
+1. **Adjust Model Parameters**:
 ```json
 {
   "job_resonance_analysis": {
-    "thinking_budget": "2048"  // Reduced from 4096
+    "bot_name": "claude-haiku-4.5",
+    "parameters": {
+      "thinking_budget": 0
+    }
   }
 }
 ```
 
-2. **Use Cheaper Models**:
+2. **Use Different Models**:
 ```json
 {
   "company_research": {
-    "bot_name": "GPT-4o-mini"  // Instead of Claude-3.5-Sonnet
+    "bot_name": "gemini-3-pro",  // Alternative model
+    "parameters": {
+      "thinking_level": "low"
+    }
   }
 }
 ```
 
 **Cost vs. Quality Tradeoff**:
-- Reducing budgets below recommended levels may impact quality
 - Test changes on small batches before full deployment
 - Monitor validation success rates after changes
+- Balance between cost and output quality
 
 ## Troubleshooting
 
@@ -834,7 +854,7 @@ git commit -m "Update model configuration"
 
 ## Migration Guide
 
-### Upgrading from v4.1 to v4.2
+### Upgrading to v4.3.0
 
 **1. Add Concurrency Configuration**:
 ```json
@@ -843,13 +863,8 @@ git commit -m "Update model configuration"
 }
 ```
 
-**2. Update Model Names** (if using old names):
-```json
-{
-  "Claude-3": "Claude-3.5-Sonnet",
-  "GPT-4": "GPT-4o"
-}
-```
+**2. Update Bot Configuration Format** (if using old format):
+The current format with separate `bot_name` and `parameters` is correct.
 
 **3. Test Parallel Processing**:
 ```bash
@@ -862,6 +877,7 @@ python src/main.py  # With max_concurrent_jobs: 3
 
 ---
 
-**For architecture details, see [ARCHITECTURE.md](ARCHITECTURE.md)**  
-**For performance benchmarks, see [PERFORMANCE.md](PERFORMANCE.md)**  
-**For validation details, see [VALIDATION.md](VALIDATION.md)**
+**For more information, see:**
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System design and components
+- **[FACT_VERIFICATION.md](FACT_VERIFICATION.md)** - Hallucination detection
+- **[HUMANIZATION.md](HUMANIZATION.md)** - Content humanization system

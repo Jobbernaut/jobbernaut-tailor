@@ -6,6 +6,35 @@ This changelog documents the two-week journey from a basic proof-of-concept to a
 
 ---
 
+## v4.3.0 - Production Release (2025-02-07)
+
+**Status**: Current Production Version  
+**Major Focus**: Documentation synchronization, stability improvements
+
+### Documentation Overhaul
+
+Following the v3.x to v4.x migration, comprehensive documentation audit was performed to ensure all documentation accurately reflects the codebase.
+
+**Key Updates**:
+- Synchronized all version references to v4.3.0
+- Corrected date references to February 2025
+- Fixed pipeline step count (12 steps accurately documented)
+- Updated all configuration examples to match actual config.json
+- Removed references to non-existent documentation files
+- Fixed broken internal links
+
+**Documentation Changes**:
+- Updated bot names in all examples to match current implementation
+- Corrected parameter formats (thinking_budget as integers, added thinking_level)
+- Clarified fact verification integration within Resume Generation step
+- Fixed architecture diagrams to match actual implementation
+
+### Stability & Quality
+
+This release focuses on ensuring the codebase and documentation are perfectly synchronized, making it easier for users to understand and utilize the system effectively.
+
+---
+
 ## v4.2+ - Fact Verification & Humanization (2025-10-27)
 
 **Status**: Current Production Version  
@@ -85,7 +114,7 @@ Humanization prompts are injected into generation prompts, instructing the AI to
 
 #### 3. Enhanced Documentation
 **New Files**:
-- `docs/ARCHITECTURE.md` - Complete rewrite with accurate 13-step pipeline
+- `docs/ARCHITECTURE.md` - Complete rewrite with accurate 12-step pipeline
 - `docs/FACT_VERIFICATION.md` - Hallucination detection system
 - `docs/HUMANIZATION.md` - Content humanization system
 - `docs/TECH_DEBT_ANALYSIS.md` - Code quality assessment
@@ -94,7 +123,7 @@ Humanization prompts are injected into generation prompts, instructing the AI to
 **Documentation Accuracy**: 50% → 100%
 
 **Key Improvements**:
-- Removed fictional features (e.g., "12-step pipeline", "ATS Rules validation")
+- Removed fictional features (e.g., "ATS Rules validation")
 - Documented actual systems (fact verification, humanization)
 - Accurate architecture diagrams
 - Comprehensive troubleshooting guides
@@ -196,14 +225,14 @@ Production readiness through cost optimization, documentation streamlining, and 
 **The Architecture Decision:**
 ```json
 {
-  "resume_generation": {"bot_name": "Gemini-2.5-Pro"},  // Only SOTA step
-  "job_resonance_analysis": {"bot_name": "Claude-Haiku-4.5"},  // Cheap model
-  "company_research": {"bot_name": "Claude-Sonnet-4-Search"},  // Cheap + search
-  "storytelling_arc": {"bot_name": "Claude-Haiku-4.5"}  // Cheap model
+  "resume_generation": {"bot_name": "gemini-3-pro"},  // Main generation step
+  "job_resonance_analysis": {"bot_name": "claude-haiku-4.5"},  // Cost-efficient
+  "company_research": {"bot_name": "claude-haiku-4.5"},  // Cost-efficient + search
+  "storytelling_arc": {"bot_name": "claude-haiku-4.5"}  // Cost-efficient
 }
 ```
 
-This modular separation keeps costs "dirt cheap" while maintaining quality.
+This modular separation keeps costs low while maintaining quality.
 
 #### 2. Documentation Consolidation  
 - Removed fragmented documentation (7155 deletions!)
