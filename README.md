@@ -525,7 +525,7 @@ Contributions are welcome! Please:
 This is source-available code under the PolyForm Noncommercial License 1.0.0,.  
 - **Free for non-commercial use**: View, modify, fork, and share with attribution.  
 - **Commercial use**: Contact me at srmanda.cs@gmail.com for permission and pricing.  
-See [LICENSE](LICENSE) for full terms.
+See [LICENSE](LICENSE.md) for full terms.
 
 ---
 
