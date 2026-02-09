@@ -56,17 +56,17 @@ CRITICAL FIELD NAMES:
 - Use "technologies" as an ARRAY of strings, NOT a comma-separated string
 - Use "skills" as a DICTIONARY with category names as keys and comma-separated skill STRINGS as values (NOT arrays)
 - Use "professional_summaries" as empty string ""
-- Use "gpa" as empty string "" (GPA is already in degree field)
+- Use "gpa" as empty string ""
 
 ---
 
 ### ⚠️ CRITICAL CONSTRAINTS (HIGHEST PRIORITY) ⚠️
 **MAXIMUM LENGTHS - NON-NEGOTIABLE:**
-- **Work Experience Bullets: 108 characters MAX per bullet** (must fit in 1 line)
-- **Project Descriptions: 108 characters MAX per bullet** (must fit in 1 line)
-- **Project Technologies: 60 characters MAX when joined with ", "** (technologies beside project name)
-- **Skills per category: 80 characters MAX when joined with ", "** (skills after category name)
-- **Category Names: 20 characters MAX** (category name itself, excluding skills)
+- **Work Experience Bullets: 160 characters MAX per bullet** (must fit in 1 line)
+- **Project Descriptions: 160 characters MAX per bullet** (must fit in 1 line)
+- **Project Technologies: 115 characters MAX when joined with ", "** (technologies beside project name)
+- **Skills per category: 155 characters MAX when joined with ", "** (skills after category name)
+- **Category Names: 35 characters MAX** (category name itself, excluding skills)
 
 These constraints override all other instructions. If you must choose between impact and length compliance, choose length compliance. You will verify character counts before output.
 
@@ -351,33 +351,23 @@ Before finalizing work_experience JSON, ask yourself for EACH transformed title:
 
 **Step 3: Relevance Analysis & Content Selection (KEYWORD-DRIVEN)**
 -   Review the [MASTER_RESUME_JSON] using your Keyword Priority List from Step 1.
--   **Rule for `work_experience`:** You MUST select EXACTLY 3 entries from the `work_experience` section.
-    - **MANDATORY US PRIORITY RULE (HIGHEST PRIORITY):**
-      - **Automatic US Selection**: First, identify ALL work experiences where the `location` field contains US location indicators:
-        - US state codes (e.g., "NC", "CA", "NY", "TX", "MA", "WA", etc.)
-        - US state names (e.g., "North Carolina", "California", "New York", etc.)
-        - "United States", "USA", "US"
-        - "Remote, US" or "Remote - US"
-      - **US Priority Logic**: If you find 2+ US work experiences, select the 2 MOST RECENT ones by comparing `start_date` fields
-      - **Rationale**: US work experiences demonstrate work authorization, local experience, and recent/current work in target market
-      - **Selection Process**: Include top 2 US experiences by recency, then select 1 additional experience from remaining entries
-    - **Selection Criteria for 3rd position** (in order of priority):
-      1. Keyword matching score (highest priority) - count how many Step 1 keywords appear in `narrative_context`
-      2. Domain alignment with target company - analyze `narrative_context.technologies_deep_dive` for technology pattern matching:
+-   **Rule for `work_experience`:** You MUST select EXACTLY 4 entries from the `work_experience` section.
+    - **MANDATORY ORDERING RULE (HIGHEST PRIORITY):**
+      - **Timeline Ordering**: Work experiences MUST be ordered by timeline (most recent `start_date` first)
+      - **Selection Process**: Analyze all work experiences in master_resume.json and select the 4 MOST RECENT entries by comparing `start_date` fields
+      - **Rationale**: Timeline ordering shows career progression and demonstrates recent/current work, which is most relevant to hiring managers
+    - **Selection Criteria** (in order of priority):
+      1. Recency (most recent `start_date` = highest priority) - select 4 most recent experiences
+      2. Keyword matching score - count how many Step 1 keywords appear in `narrative_context`
+      3. Domain alignment with target company - analyze `narrative_context.technologies_deep_dive` for technology pattern matching:
          - **Mobile/Frontend roles**: Look for UI frameworks (React, Vue, Angular, Flutter), mobile development (iOS, Android, React Native, Swift, Kotlin), cross-platform apps, Teams/Electron applications, responsive design patterns
          - **Cloud/Backend/Infrastructure roles**: Look for cloud services (AWS, Azure, GCP), serverless (Lambda), backend frameworks (Spring Boot, FastAPI, Django), databases (PostgreSQL, MongoDB, OpenSearch), event-driven architecture, microservices
          - **Data/ML roles**: Look for data processing (Pandas, PySpark, ETL), ML frameworks (PyTorch, TensorFlow), NLP (Sentence-Transformers), data pipelines, data warehousing
          - **DevOps/SRE roles**: Look for infrastructure-as-code (Terraform, Ansible), containerization (Docker, Kubernetes), CI/CD, monitoring, reliability patterns
-      3. Recency (more recent `start_date` = better)
       4. Role similarity to target position based on `job_title` field
-    - **CRITICAL - Dynamic Technology Matching (NO HARDCODING)**:
-      - Parse `narrative_context.technologies_deep_dive` field for each remaining work experience
-      - Count technology keyword matches between JD and this field
-      - Select work experience with highest technology overlap score for 3rd position
-      - **Example**: If JD mentions "AWS Lambda, S3, serverless, event-driven", scan each work experience's `technologies_deep_dive` for these exact terms and select the one with most matches
     - For each selected entry, you MUST include EXACTLY 4 bullet points
     - **Bullet Selection Strategy**: Analyze the `narrative_context` and `key_metrics` to identify the 4 most compelling achievements that demonstrate priority keywords from Step 1
--   **Rule for `projects`:** You MUST select EXACTLY 3 projects.
+-   **Rule for `projects`:** You MUST select EXACTLY 4 projects.
     - **CRITICAL DOMAIN-AWARE RANKING (DYNAMIC, NO HARDCODING):**
       - Projects must be ranked by domain relevance to target company/role, NOT just keyword overlap
       - **Step 1: Classify Each Project Dynamically**:
@@ -569,8 +559,8 @@ For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, synthesize NEW bullet points from the `narrative_context` and `key_metrics`.
     -   **DO NOT simply rewrite the existing `bullet_points`** - use them as reference, but synthesize from the narrative to create tailored content.
-    -   **WORK EXPERIENCE:** You MUST include EXACTLY 4 bullet points per position. Each bullet cannot exceed 108 characters and must fit in one line at any cost.
-    -   **PROJECTS:** For each of the 2 selected projects, you MUST include EXACTLY 4 bullet points. Each bullet cannot exceed 108 characters and must fit in one line at any cost.
+    -   **WORK EXPERIENCE:** You MUST include EXACTLY 4 bullet points per position. Each bullet cannot exceed 160 characters and must fit in one line at any cost.
+    -   **PROJECTS:** For each of the 4 selected projects, you MUST include EXACTLY 4 bullet points. Each bullet cannot exceed 160 characters and must fit in one line at any cost.
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     
     -   **CRITICAL: METRIC FRONT-LOADING (EYE-TRACKING OPTIMIZATION)**
@@ -634,7 +624,9 @@ For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
       - ✅ CORRECT: `"Programming Languages": "Python, JavaScript, TypeScript, Java"`
       - ❌ WRONG: `"Programming Languages": ["Python", "JavaScript", "TypeScript", "Java"]`
     -   **CRITICAL ONE-LINE CONSTRAINT**: Each skill category MUST fit on a single line when formatted as "\textbf{Category:} skill1, skill2, skill3, etc."
-    -   **MAXIMUM 80 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
+    -   **MAXIMUM 155 characters worth of skills PER CATEGORY** - This is NON-NEGOTIABLE.
+    -   **MAXIMUM 35 characters for category names** - This is NON-NEGOTIABLE.
+    -   **MANDATORY**: You MUST use EXACTLY 8 categories from the master `skills` object (increased from 6 for maximum density).
     -   **Category Strategy**: Use descriptive category names that match JD terminology where possible.
 
 ### OUTPUT FORMAT: STRICT JSON
@@ -649,7 +641,7 @@ For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
 -   The structure of your output JSON MUST EXACTLY match the structure of the input `master_resume.json` (contact_info, professional_summaries, education, skills, work_experience, projects).
 -   **CRITICAL - Professional Summaries Field:** Leave the `professional_summaries` field as an empty string ("") to maximize space for impactful content.
 -   **CRITICAL - Education Field:** 
-    - The `degree` field in the education section already contains the GPA (e.g., "Master of Science in Computer Science (GPA: 4.0/4.0)"). Keep this EXACTLY as provided in the master resume. Do NOT extract or separate the GPA into the separate `gpa` field. Leave the `gpa` field empty ("").
+    - The `degree` field in the education section doesn't contain a GPA. Keep this EXACTLY as provided in the master resume. Do NOT extract or separate the GPA into the separate `gpa` field. Leave the `gpa` field empty ("").
     - Education entries MUST use `graduation_date` (NOT `end_date`). This is the field name expected by the template.
 -   **CRITICAL - Projects Technologies Field:**
     - The `technologies` field MUST be an array of strings, NOT a comma-separated string.
@@ -716,16 +708,16 @@ For EVERY work experience and project:
 For EVERY work experience bullet point:
 - Count the characters in the bullet
 - Write down: "Bullet [position] [number]: X characters"
-- If ANY bullet > 108 characters: STOP IMMEDIATELY and revise that bullet
-- If ANY bullet < 90 characters: Consider adding more detail from `narrative_context` or `key_metrics`
+- If ANY bullet > 160 characters: STOP IMMEDIATELY and revise that bullet
+- If ANY bullet < 140 characters: Consider adding more detail from `narrative_context` or `key_metrics`
 - Recount after revision
 
 **STEP 4: COUNT CHARACTERS IN EACH PROJECT BULLET**
-For EACH of the 2 project bullet points (4 bullets per project = 8 total):
+For EACH of the 4 project bullet points (4 bullets per project = 16 total):
 - Count the characters in each project bullet
 - Write down: "Project [name] Bullet [number]: X characters"
-- If ANY bullet > 108 characters: STOP IMMEDIATELY and revise that bullet
-- If ANY bullet < 90 characters: Consider adding more detail from `narrative_context` or `key_metrics`
+- If ANY bullet > 160 characters: STOP IMMEDIATELY and revise that bullet
+- If ANY bullet < 140 characters: Consider adding more detail from `narrative_context` or `key_metrics`
 - Recount after revision
 
 **STEP 5: VERIFY ACCURACY AGAINST SOURCE**
@@ -744,26 +736,26 @@ For EVERY skill category in the skills object:
 - Join the skills with ", "
 - Count the characters in the joined string
 - Write down: "[Category name]: X characters"
-- If ANY category > 80 characters: STOP IMMEDIATELY and revise
+- If ANY category > 155 characters: STOP IMMEDIATELY and revise
   - Remove the least relevant skills (those NOT in Step 1 keyword list)
   - Recount after revision
 - Verify that priority keywords from Step 1 are present and listed FIRST in each category
-- Confirm: EXACTLY 6 categories used
+- Confirm: EXACTLY 8 categories used
 
 **STEP 7: VERIFY EXACT COUNTS**
-- Confirm: EXACTLY 3 work experiences selected
-- Confirm: Both US experiences (UNC RDMC + UNC Neuroscience) are included
-- Confirm: EXACTLY 4 bullets per work experience (12 total work bullets)
-- Confirm: EXACTLY 3 projects selected
+- Confirm: EXACTLY 4 work experiences selected
+- Confirm: Work experiences are ordered by timeline (most recent first)
+- Confirm: EXACTLY 4 bullets per work experience (16 total work bullets)
+- Confirm: EXACTLY 4 projects selected
 - Confirm: Projects are ranked by domain relevance (not just keyword matching)
-- Confirm: EXACTLY 4 bullets per project (12 total project bullets)
-- Confirm: EXACTLY 6 skill categories
+- Confirm: EXACTLY 4 bullets per project (16 total project bullets)
+- Confirm: EXACTLY 8 skill categories
 - If any count is wrong: STOP and fix immediately
 
 **STEP 8: FINAL CHARACTER COUNT VERIFICATION**
 - Recount ALL bullets one final time
-- Confirm: ALL bullets ≤ 108 characters
-- Confirm: MOST bullets ≥ 90 characters (maximizing space usage)
+- Confirm: ALL bullets ≤ 160 characters
+- Confirm: MOST bullets ≥ 140 characters (maximizing space usage)
 - Only proceed to output if TRUE
 
 **STEP 8.5: ACTION VERB DIVERSITY VERIFICATION (CRITICAL)**
@@ -800,16 +792,16 @@ This step ensures professional variety and eliminates monotonous repetition:
 
 **Note:** This check preserves metric front-loading. Passive constructions like "85% reduction achieved by optimizing..." are fine and don't count toward verb frequency.
 
-**STEP 9: VERIFY PROJECT TECHNOLOGIES (moved from previous Step 9)**
+**STEP 9: VERIFY PROJECT TECHNOLOGIES**
 For EVERY project in the projects array:
 - Join the technologies array with ", "
 - Count the characters in the joined string
 - Write down: "Project [name] technologies: X characters"
 - Verify that technologies include priority keywords from Step 1 where applicable
 - Verify technologies are ordered by JD relevance (most important first)
-- If ANY project > 60 characters: STOP IMMEDIATELY and iteratively remove the least relevant technologies (those NOT in the keyword list), starting with those least related to the job description, until the joined string is ≤ 60 characters.
+- If ANY project > 115 characters: STOP IMMEDIATELY and iteratively remove the least relevant technologies (those NOT in the keyword list), starting with those least related to the job description, until the joined string is ≤ 115 characters.
 - After each removal, recount the characters in the joined technologies string.
-- Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 55 characters when joined with ", ". This is a non-negotiable constraint.
+- Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 115 characters when joined with ", ". This is a non-negotiable constraint.
 
 **STEP 10: JSON SYNTAX VALIDATION (CRITICAL - moved from previous Step 10)**
 BEFORE outputting your JSON, you MUST perform this rigorous syntax check:

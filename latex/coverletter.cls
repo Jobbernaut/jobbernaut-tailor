@@ -20,7 +20,7 @@
 
 \ProvidesClass{coverletter}[2010/07/10 v0.9 Cover Letter class]
 
-\LoadClass[11pt,letterpaper]{article} % Font size and paper type (11pt for cover letters)
+\LoadClass[8pt,letterpaper]{extarticle} % Font size and paper type (extarticle supports 8pt)
 
 \usepackage[parfill]{parskip} % Remove paragraph indentation
 \usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns
@@ -99,7 +99,7 @@
   \sectionskip
   \MakeUppercase{{\bf #1}} % Section title
   \sectionlineskip
-  \hrule % Horizontal line
+  \hrule height 0.4pt % Horizontal line with explicit thickness
   \begin{list}{}{ % List for each individual item in the section
     \setlength{\leftmargin}{0em} % Margin within the section
   }

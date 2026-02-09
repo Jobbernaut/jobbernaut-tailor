@@ -4,7 +4,7 @@
     "last_name": "Manda",
     "phone": "(919) 672-2226",
     "email": "srmanda.cs@gmail.com",
-    "location": "Chapel Hill, NC  • Willing to Relocate  •  Authorized to work in U.S.  •  Available full-time from May 11th, 2026",
+    "location": "Chapel Hill, NC",
     "linkedin_url": "https://linkedin.com/in/srmanda-cs",
     "github_url": "https://github.com/srmanda-cs",
     "portfolio_url": "https://srmanda.com"
@@ -14,18 +14,18 @@
       "institution": "The University of North Carolina at Chapel Hill",
       "degree": "Master of Science in Computer Science",
       "start_date": "2024-08",
-      "graduation_date": "2026-05"
+      "graduation_date": "2026-12"
     },
     {
-      "institution": "Amrita University",
-      "degree": "Bachelor of Technology in Computer Science",
+      "institution": "Amrita Vishwa Vidyapeetham",
+      "degree": "Bachelor of Technology in Computer Science Engineering",
       "start_date": "2020-10",
       "graduation_date": "2024-06"
     }
   ],
   "work_experience": [
     {
-      "job_title": "Cloud Infrastructure Engineer",
+      "job_title": "Cloud Infrastructure Engineer (Graduate Fellow)",
       "company": "UNC RDMC",
       "location": "Chapel Hill, NC",
       "start_date": "2026-01",
@@ -60,7 +60,7 @@
       "role_clarity": "contributed/responsibilities. Every bullet point describes a responsibility I own or share with my team. It all needs to be in the present tense."
     },
     {
-      "job_title": "Software Engineer",
+      "job_title": "AI Engineer (Graduate Fellow)",
       "company": "UNC Neuroscience",
       "location": "Chapel Hill, NC",
       "start_date": "2025-08",
@@ -91,7 +91,7 @@
       "role_clarity": "contributed"
     },
     {
-      "job_title": "Software Development Engineer",
+      "job_title": "Cloud Software Engineer (Intern)",
       "company": "Tally",
       "location": "Bengaluru, KA",
       "start_date": "2024-01",
@@ -111,7 +111,7 @@
       "role_clarity": "contributed"
     },
     {
-      "job_title": "Cloud Backend Engineer",
+      "job_title": "Cloud Backend Engineer (Intern)",
       "company": "Vivriti Capital",
       "location": "Chennai, TN",
       "start_date": "2023-07",
