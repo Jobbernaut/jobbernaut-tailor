@@ -559,8 +559,16 @@ For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
 -   **Bullet Points (`work_experience` & `projects`):**
     -   For each selected experience, synthesize NEW bullet points from the `narrative_context` and `key_metrics`.
     -   **DO NOT simply rewrite the existing `bullet_points`** - use them as reference, but synthesize from the narrative to create tailored content.
-    -   **WORK EXPERIENCE:** You MUST include EXACTLY 4 bullet points per position. Each bullet cannot exceed 160 characters and must fit in one line at any cost.
-    -   **PROJECTS:** For each of the 4 selected projects, you MUST include EXACTLY 4 bullet points. Each bullet cannot exceed 160 characters and must fit in one line at any cost.
+    -   **WORK EXPERIENCE (GRADUATED STRUCTURE):** 
+        - **Positions #1-2 (Top 2):** You MUST include EXACTLY 6 bullet points per position. Each bullet cannot exceed 160 characters.
+        - **Positions #3-4 (Bottom 2):** You MUST include EXACTLY 2 bullet points per position. Each bullet cannot exceed 160 characters.
+        - **Total work bullets:** 6 + 6 + 2 + 2 = 16 bullets (NON-NEGOTIABLE)
+        - **Selection for 2-bullet positions:** Choose the 2 bullets that most strongly align with JD keywords and priority_proof_metrics.
+    -   **PROJECTS (GRADUATED STRUCTURE):** 
+        - **Projects #1-2 (Top 2):** You MUST include EXACTLY 6 bullet points per project. Each bullet cannot exceed 160 characters.
+        - **Projects #3-4 (Bottom 2):** You MUST include EXACTLY 2 bullet points per project. Each bullet cannot exceed 160 characters.
+        - **Total project bullets:** 6 + 6 + 2 + 2 = 16 bullets (NON-NEGOTIABLE)
+        - **Selection for 2-bullet projects:** Choose the 2 bullets that most strongly align with JD keywords and demonstrate technical depth.
     -   **Each new bullet point MUST follow the RSTA framework (Result, Situation, Task, Action).**
     
     -   **CRITICAL: METRIC FRONT-LOADING (EYE-TRACKING OPTIMIZATION)**
@@ -742,14 +750,23 @@ For EVERY skill category in the skills object:
 - Verify that priority keywords from Step 1 are present and listed FIRST in each category
 - Confirm: EXACTLY 8 categories used
 
-**STEP 7: VERIFY EXACT COUNTS**
+**STEP 7: VERIFY EXACT COUNTS (GRADUATED STRUCTURE)**
 - Confirm: EXACTLY 4 work experiences selected
 - Confirm: Work experiences are ordered by timeline (most recent first)
-- Confirm: EXACTLY 4 bullets per work experience (16 total work bullets)
+- Confirm: Work experience #1 has EXACTLY 6 bullets
+- Confirm: Work experience #2 has EXACTLY 6 bullets
+- Confirm: Work experience #3 has EXACTLY 2 bullets
+- Confirm: Work experience #4 has EXACTLY 2 bullets
+- Confirm: Total work bullets = 6 + 6 + 2 + 2 = 16 bullets
 - Confirm: EXACTLY 4 projects selected
 - Confirm: Projects are ranked by domain relevance (not just keyword matching)
-- Confirm: EXACTLY 4 bullets per project (16 total project bullets)
+- Confirm: Project #1 has EXACTLY 6 bullets
+- Confirm: Project #2 has EXACTLY 6 bullets
+- Confirm: Project #3 has EXACTLY 2 bullets
+- Confirm: Project #4 has EXACTLY 2 bullets
+- Confirm: Total project bullets = 6 + 6 + 2 + 2 = 16 bullets
 - Confirm: EXACTLY 8 skill categories
+- Confirm: GRAND TOTAL = 32 bullets (16 work + 16 projects)
 - If any count is wrong: STOP and fix immediately
 
 **STEP 8: FINAL CHARACTER COUNT VERIFICATION**
@@ -803,14 +820,14 @@ For EVERY project in the projects array:
 - After each removal, recount the characters in the joined technologies string.
 - Repeat this process as many times as necessary. Do not proceed until ALL project technologies ≤ 115 characters when joined with ", ". This is a non-negotiable constraint.
 
-**STEP 10: JSON SYNTAX VALIDATION (CRITICAL - moved from previous Step 10)**
+**STEP 10: JSON SYNTAX VALIDATION (CRITICAL - GRADUATED STRUCTURE)**
 BEFORE outputting your JSON, you MUST perform this rigorous syntax check:
 
 1. **Verify ALL bullet_points arrays have proper quote syntax:**
    - EVERY bullet point MUST start with a double quote: "
    - EVERY bullet point MUST end with a double quote: "
-   - Check EACH of the 16 work experience bullets (4 positions × 4 bullets)
-   - Check EACH of the 8 project bullets (2 projects × 4 bullets)
+   - Check work experience bullets (graduated: 6 + 6 + 2 + 2 = 16 total)
+   - Check project bullets (graduated: 6 + 6 + 2 + 2 = 16 total)
    - **Common error to catch**: Bullet missing opening quote
      - ❌ WRONG: `Architected a full-stack MS Teams app..."`
      - ✅ RIGHT: `"Architected a full-stack MS Teams app..."`

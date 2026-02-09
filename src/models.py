@@ -96,7 +96,7 @@ class WorkExperience(BaseModel):
     start_date: str
     end_date: str
     location: Optional[str] = None
-    bullet_points: List[str] = Field(..., min_length=4, max_length=4)
+    bullet_points: List[str] = Field(..., min_length=2, max_length=6)
     
     @field_validator('job_title', 'company')
     @classmethod
@@ -146,7 +146,7 @@ class Project(BaseModel):
     technologies: List[str] = Field(default_factory=list)  # Array of technology strings
     project_url: str
     description: Optional[str] = None
-    bullet_points: List[str] = Field(..., min_length=4, max_length=4)
+    bullet_points: List[str] = Field(..., min_length=2, max_length=6)
     
     @field_validator('project_name')
     @classmethod
