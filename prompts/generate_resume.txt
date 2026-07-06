@@ -115,20 +115,98 @@ You will be given the following data, clearly delineated:
 
 ### WORKFLOW: A STEP-BY-STEP PROCESS
 
-**Step 1: Keyword Extraction & JD Analysis (ATS OPTIMIZATION)**
+**Step 1: Keyword & Phrase Extraction + JD Analysis (ATS + LINGUISTIC OPTIMIZATION)**
 -   **CRITICAL:** This step is MANDATORY and forms the foundation for all subsequent decisions.
 -   Carefully read the [JOB_DESCRIPTION] and extract:
     1. **Top 15-20 Technical Keywords**: Programming languages, frameworks, tools, platforms, methodologies (e.g., "Python", "React", "AWS", "Kubernetes", "Agile", "CI/CD")
     2. **Top 5-7 Role-Specific Keywords**: Job-specific terms that define the role (e.g., "Frontend Engineer" → "UI/UX", "responsive design", "component library"; "Data Engineer" → "ETL", "data pipelines", "data warehousing")
     3. **Top 3-5 Soft Skills/Competencies**: Leadership, collaboration, problem-solving terms mentioned in the JD
+    4. **Top 30-40 Multi-Word Phrases (NEW - CRITICAL)**: Extract 2-4 word technical phrases that appear in the JD
+       - Examples: "cross-functional teams", "scalable architecture", "production systems", "cloud infrastructure", "deployment pipeline", "modern frameworks", "data-driven decisions", "customer-facing features", "end-to-end ownership"
+       - These phrases are MORE valuable than isolated keywords for JD mirroring
+       - Rank by frequency and position in JD
+    5. **Top 15-20 Action Verbs FROM JD (NEW - CRITICAL)**: Extract ALL action verbs used in the JD
+       - Examples: "build", "develop", "drive", "lead", "collaborate", "design", "implement", "optimize", "scale", "deliver"
+       - Rank by frequency in JD
+       - These verbs will be your PRIMARY verb source when synthesizing bullets
 -   **Create a Keyword Priority List**: Rank all extracted keywords by:
     - Frequency of mention in the JD (higher = more important)
     - Position in the JD (earlier = more important)
     - Whether it's in the "Required" vs "Preferred" section
+-   **Create a Phrase Priority List (NEW)**: Rank extracted phrases by:
+    - Frequency in JD (higher = more important)
+    - Technical specificity (more specific = more important)
+    - Position in JD (earlier = more important)
 -   **Keyword Matching Score**: For each item in the master resume (work experiences, projects), calculate a relevance score based on how many priority keywords appear in its content.
--   **IMPORTANT**: Keep this keyword list in mind throughout ALL subsequent steps. Your goal is to maximize keyword coverage while maintaining authenticity.
+-   **IMPORTANT**: Keep this keyword list, phrase list, and verb list in mind throughout ALL subsequent steps. Your goal is to maximize keyword AND phrase coverage while maintaining authenticity.
 
-**Step 1.5: Strategic Job Title Alignment (WORK-EVIDENCE BASED TRANSFORMATION)**
+**Step 1.5: JD Sentence Pattern Extraction (LINGUISTIC MIRRORING - NEW)**
+
+**CRITICAL:** Before synthesizing ANY bullets, you MUST extract the JD's linguistic DNA to mirror its sentence patterns.
+
+**OBJECTIVE:** Make your resume bullets sound like they were written by the same person who wrote the JD.
+
+**EXTRACTION PROCESS:**
+
+1. **Extract 5-8 Common Sentence Structures from JD:**
+   - Read through JD responsibilities and requirements
+   - Identify recurring sentence patterns
+   - Examples of patterns to look for:
+     - "Build/Develop X using Y to achieve Z"
+     - "Design scalable X for Y"
+     - "Collaborate with X to deliver Y"
+     - "Own end-to-end X"
+     - "Drive X through Y"
+     - "Implement X that enables Y"
+   - Write down the 5-8 most common patterns you find
+   - Rank by frequency (most common = highest priority)
+
+2. **Extract 10-15 Technical Phrasing Patterns:**
+   - How does the JD describe technical work?
+   - Examples:
+     - "scalable architecture", "production systems", "cloud infrastructure"
+     - "modern frameworks", "cross-functional teams", "data-driven decisions"
+     - "customer-facing features", "deployment pipeline", "microservices"
+   - These are 2-4 word technical phrases you extracted in Step 1
+   - Prioritize phrases that appear multiple times
+
+3. **Extract Responsibility Framing:**
+   - How does the JD frame ownership and scope?
+   - Examples:
+     - "Own end-to-end development of X"
+     - "Lead design and implementation of Y"
+     - "Contribute to Z"
+     - "Partner with teams to deliver X"
+   - Note the difference between ownership language vs collaborative language
+
+4. **Prioritize JD Action Verbs (from Step 1):**
+   - Use your extracted verb list from Step 1 #5
+   - These are your PRIMARY verb source when writing bullets
+   - Only fall back to Action Verb Diversity Bank when:
+     a) JD verb doesn't match `role_clarity` (accuracy first)
+     b) JD verb already used 2+ times (diversity rule)
+
+**CRITICAL RULE:** When synthesizing bullets in Step 4, you MUST explicitly map each bullet to one of these extracted patterns. Your bullets should mirror the JD's structure, not just contain its keywords.
+
+**Example Transformation:**
+
+**JD Pattern Extracted:** "Build scalable systems using modern technologies to improve platform reliability"
+
+**Your Work (from narrative_context):** Built AWS Lambda architecture that improved uptime to 99.9%
+
+**Generic Bullet (BEFORE - BAD):**
+> "Developed serverless architecture improving system uptime to 99.9%"
+
+**JD-Mirroring Bullet (AFTER - GOOD):**
+> "99.9% uptime: Built scalable Lambda system using AWS to improve platform reliability"
+
+Notice how the AFTER bullet:
+- Uses JD's sentence structure: "Build scalable X using Y to improve Z"
+- Uses JD's exact phrases: "scalable", "platform reliability"
+- Uses JD's action verb: "Build"
+- Still front-loads the metric (99.9%)
+
+**Step 1.6: Strategic Job Title Alignment (WORK-EVIDENCE BASED TRANSFORMATION)**
 
 CRITICAL: You MUST analyze whether any work_experience job titles should be transformed to better match the target job title WHILE MAINTAINING FACTUAL ACCURACY.
 
@@ -205,25 +283,47 @@ For EACH work_experience entry, follow this decision tree:
 **IF TARGET IS SPECIALIZED:**
 - Proceed to STEP C (work evidence evaluation)
 
-**STEP C: Evaluate Work Evidence (ONLY for specialized targets)**
+**STEP C: Evaluate Work Evidence (ONLY for specialized targets) - AGGRESSIVE MODE**
 
-1. **Analyze `narrative_context.technical_story`:**
+**CRITICAL CHANGE:** Evidence threshold has been LOWERED for aggressive transformation. Specialty transformation now takes priority over generic normalization.
+
+1. **Technology Auto-Transformation (CHECK FIRST - HIGHEST PRIORITY):**
+   
+   **If target specialty matches AND you have 1+ technologies from the corresponding row → AUTO-TRANSFORM immediately (skip remaining checks)**
+   
+   | Target Specialty | Required: ANY 1+ of these technologies |
+   |------------------|----------------------------------------|
+   | DevOps Engineer | Terraform, IaC, Infrastructure-as-code, Kubernetes, Docker, CI/CD, Azure DevOps, Jenkins, Ansible, GitLab CI |
+   | Cloud Engineer | AWS, Azure, GCP, Lambda, Serverless, Cloud Functions, S3, EC2, CloudFormation, cloud infrastructure |
+   | Backend Engineer | Spring Boot, FastAPI, Django, REST API, GraphQL, Lambda, Microservices, APIs, PostgreSQL, MongoDB, OpenSearch, server-side |
+   | Frontend Engineer | React, Vue, Angular, Fluent UI, TypeScript (with UI context), JavaScript (with UI context), responsive design, component library, DOM |
+   | Mobile Engineer | iOS, Android, Swift, Kotlin, React Native, Flutter, mobile, cross-platform apps, mobile constraints |
+   | Full-Stack Engineer | (Frontend tech + Backend tech in same role) |
+   | ML Engineer | PyTorch, TensorFlow, NLP, LLM, machine learning, model training, ML pipelines, Sentence-Transformers |
+   | Data Engineer | Pandas, PySpark, ETL, data pipelines, data warehouses, data processing, Airflow |
+   
+   **Example:**
+   - Target: "Cloud DevOps Engineer"
+   - Your technologies: AWS, Terraform, CI/CD
+   - **Action:** IMMEDIATE transformation to "Cloud DevOps Engineer" (3 matching technologies)
+
+2. **Analyze `narrative_context.technical_story` (if auto-transformation didn't trigger):**
    - Does this story describe [specialty]-specific work?
    - Are the technologies in `technologies_deep_dive` specific to [specialty]?
    - Do the challenges in `challenges_overcome` relate to [specialty]?
 
-2. **Evidence Threshold (MUST meet 2+ of 3):**
-   - ✅ Technical story explicitly mentions specialty-specific work
-   - ✅ Technologies list includes 3+ specialty-specific tools/frameworks
-   - ✅ Challenges/achievements demonstrate specialty-specific expertise
+3. **Evidence Threshold (AGGRESSIVE - MUST meet ANY 1+ of 3):**
+   - ✅ Technical story explicitly mentions specialty-specific work (1/3 passes)
+   - ✅ Technologies list includes 2+ specialty-specific tools/frameworks (1/3 passes - LOWERED from 3+)
+   - ✅ Challenges/achievements demonstrate specialty-specific expertise (1/3 passes)
 
-3. **IF evidence threshold MET (2+ of 3):**
+4. **IF evidence threshold MET (ANY 1+ of 3):**
    - Transform job_title to match target specialty
    - Example: "Software Development Engineer" → "Mobile Engineer"
 
-4. **IF evidence threshold NOT MET:**
+5. **IF evidence threshold NOT MET (0 of 3) AND auto-transformation didn't trigger:**
    - Normalize to generic equivalent: "Software Development Engineer" → "Software Engineer"
-   - Do NOT force specialty transformation
+   - This should be RARE in aggressive mode
 
 **CONCRETE EXAMPLES:**
 
@@ -237,7 +337,7 @@ For EACH work_experience entry, follow this decision tree:
   - **DO NOT specialize to "Mobile Engineer"** (target didn't ask for specialty)
 - **FINAL OUTPUT:** "Software Engineer" ✅
 
-**Example 2: Specialized Target (Mobile)**
+**Example 2: Specialized Target (Mobile) - AGGRESSIVE MODE**
 - Target: "Mobile Engineer, University Grad" (specialized - contains "Mobile")
 - Your title at Tally: "Software Development Engineer"
 - Work evidence:
@@ -246,19 +346,30 @@ For EACH work_experience entry, follow this decision tree:
   - Challenges: "mobile layout constraints", "progressive disclosure for mobile screens"
 - **DECISION PATH:**
   - Step A: Target is SPECIALIZED → proceed to Step C
-  - Step C: Evidence threshold = 3/3 ✅
+  - Step C: Auto-transformation check: Has "React" + "cross-platform" → matches Mobile Engineer table
+  - **Action:** IMMEDIATE transformation via technology table
 - **FINAL OUTPUT:** "Mobile Engineer" ✅
 
-**Example 3: Specialized Target (Backend)**
+**Example 3: Specialized Target (DevOps) - AGGRESSIVE MODE**
+- Target: "Cloud DevOps Engineer" (specialized - contains "DevOps")
+- Your title at UNC RDMC: "Software Development Engineer"
+- Work evidence:
+  - Technologies: AWS, Terraform, CI/CD, Azure DevOps, Kubernetes, Docker
+  - **Action:** IMMEDIATE transformation (6 matching DevOps technologies in auto-table)
+- **DECISION PATH:**
+  - Step A: Target is SPECIALIZED → proceed to Step C
+  - Step C: Auto-transformation triggered immediately (AWS, Terraform, CI/CD all in DevOps table)
+- **FINAL OUTPUT:** "Cloud DevOps Engineer" ✅ (specialty matches target exactly)
+
+**Example 4: Specialized Target (Backend) - AGGRESSIVE MODE**
 - Target: "Backend Engineer" (specialized - contains "Backend")
 - Your title at Vivriti: "Software Development Engineer"
 - Work evidence:
-  - Technical_story: "AWS Lambda, Spring Boot, event-driven architecture"
-  - Technologies: Spring Boot, AWS S3, Lambda, OpenSearch, serverless
-  - Challenges: "section-specific processing", "queue-based architecture"
+  - Technologies: Spring Boot, AWS Lambda, S3, OpenSearch (4 backend technologies)
+  - **Action:** IMMEDIATE transformation via technology table
 - **DECISION PATH:**
   - Step A: Target is SPECIALIZED → proceed to Step C
-  - Step C: Evidence threshold = 3/3 ✅
+  - Step C: Auto-transformation triggered (Spring Boot, Lambda, APIs in Backend table)
 - **FINAL OUTPUT:** "Backend Engineer" ✅
 
 **Example 4: Specialized Target but No Evidence**
@@ -593,6 +704,27 @@ For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
       - narrative_context: "Built Python script using NLP Sentence-Transformers"
       - With Keywords (for ML role): "NLP-powered automation using Sentence-Transformers reduced manual grading 90%"
     
+    -   **MANDATORY JD PATTERN MIRRORING (NEW - CRITICAL):**
+      - For EACH bullet point you synthesize, you MUST explicitly map it to a JD pattern from Step 1.5
+      - **Process:**
+        1. Review your extracted JD sentence patterns from Step 1.5
+        2. Select the pattern that best fits the work described in `narrative_context`
+        3. Structure your bullet using that pattern's syntax
+        4. Use JD verbs from Step 1 (prioritize over generic verb bank)
+        5. Incorporate JD phrases (2-4 word chunks) from Step 1
+        6. Still maintain metric front-loading (first 10 chars when possible)
+      - **Pattern Matching Priority:**
+        1. Use JD's exact sentence structure (highest priority)
+        2. Use JD's exact multi-word phrases (e.g., "scalable architecture", "production systems")
+        3. Use JD's action verbs (when they match `role_clarity`)
+        4. Maintain authenticity per `narrative_context` (never force patterns that don't fit)
+      - **Example Transformation:**
+        - **JD Pattern:** "Build scalable systems using modern technologies to improve X"
+        - **Your Work:** AWS Lambda architecture, improved uptime to 99.9%
+        - **Generic (BAD):** "Developed serverless architecture improving system uptime to 99.9%"
+        - **JD-Mirroring (GOOD):** "99.9% uptime: Built scalable Lambda system using AWS to improve platform reliability"
+        - Notice: Uses JD's verb ("Built"), JD's phrase ("scalable system"), JD's pattern ("Build X using Y to improve Z")
+    
     -   **ACTION VERB DIVERSITY (MANDATORY)**: As you write each bullet point, track which action verbs you've already used. Consult the Action Verb Diversity Bank and select synonyms that:
       1. Accurately reflect the nature of the work per `role_clarity`
       2. Have NOT been used more than once already in the resume
@@ -621,11 +753,12 @@ For EACH work experience and project, order bullets as follows (PRIORITY ORDER):
       3. If needed, rename categories to better match JD terminology (e.g., "Frontend Technologies" → "Frontend Development" if JD uses that term)
     -   **Smart Skill Selection (KEYWORD-FIRST)**:
       - For each category, select 8-75 characters worth of skills
-      - **PRIORITY ORDER**:
-        1. Skills that appear in your Step 1 keyword list (MUST INCLUDE)
-        2. Skills that are synonyms/related to JD keywords
-        3. Skills that demonstrate depth in the role's domain
-      - **CRITICAL**: Prioritize JD keywords over everything else. If "React" is in the JD and in your skills, it MUST appear in the final resume.
+      - **ABSOLUTE HARD CONSTRAINT - READ FIRST**: You may ONLY include skills that exist verbatim or as a direct subset in the master `skills` object. NEVER add any skill from the JD, from [JOB_RESONANCE].technical_keywords, or from any other source that is not already present in master_resume.json. Including skills absent from master_resume.json is a critical hallucination that will cause candidate rejection. If a JD keyword like "Appium", "XCUI", "Espresso", "KIF", or ANY other tool is NOT in the master skills, it MUST NOT appear in the output — period.
+      - **PRIORITY ORDER** (all constrained by the HARD CONSTRAINT above):
+        1. Skills from master_resume.json that ALSO appear in your Step 1 keyword list (MUST INCLUDE if in master)
+        2. Skills from master_resume.json that are synonyms/related to JD keywords
+        3. Skills from master_resume.json that demonstrate depth in the role's domain
+      - **CRITICAL**: Prioritize JD keywords over everything else — BUT only keywords that exist in master_resume.json. If "React" is in the JD AND in your master skills, it MUST appear. If "Appium" is in the JD but NOT in your master skills, it MUST NOT appear.
       - **ORDER WITHIN CATEGORY**: List skills in order of JD relevance (most important keywords first for eye-tracking optimization)
     -   **Natural Relevance**: Skills should feel organic to the candidate's experience while maximizing keyword coverage.
     -   **CRITICAL FORMAT REQUIREMENT**: Each skill category value MUST be a comma-separated STRING, NOT an array.
@@ -749,6 +882,7 @@ For EVERY skill category in the skills object:
   - Recount after revision
 - Verify that priority keywords from Step 1 are present and listed FIRST in each category
 - Confirm: EXACTLY 8 categories used
+- **HALLUCINATION CHECK - MANDATORY**: For EVERY individual skill token in your output, verify it exists in the master `skills` object. Cross-reference each skill token against the master resume skills dict. If ANY skill appears in your output that is NOT in the master skills (e.g., Appium, XCUI, Espresso, KIF, Greenhopper, Clover, or any mobile testing framework not in master), REMOVE IT IMMEDIATELY. This is non-negotiable — including skills absent from master_resume.json is a fabrication that will harm the candidate.
 
 **STEP 7: VERIFY EXACT COUNTS (GRADUATED STRUCTURE)**
 - Confirm: EXACTLY 4 work experiences selected
@@ -881,7 +1015,46 @@ Only proceed to output if PASS.
 - Verify Bullet 1 for each experience/project is the strongest
 - Confirm: Eye-tracking optimization applied
 
-**STEP 14: FINAL JSON VALIDATION (LAST CHECK BEFORE OUTPUT - moved from previous Step 14)**
+**STEP 14: JD PHRASE COVERAGE VERIFICATION (NEW - LINGUISTIC MIRRORING CHECK)**
+
+**OBJECTIVE:** Verify that your bullets don't just contain JD keywords, but actually mirror JD's multi-word phrases.
+
+1. **Extract your phrase list from Step 1:**
+   - Review the 30-40 multi-word phrases you extracted (e.g., "cross-functional teams", "scalable architecture", "production systems")
+   - These are 2-4 word technical phrases from the JD
+
+2. **Count phrase matches in your resume:**
+   - Go through ALL bullets (work + projects)
+   - Count how many of your extracted phrases appear EXACTLY in your bullets
+   - Example matches:
+     - JD phrase: "scalable architecture" → Bullet contains "scalable architecture" ✓
+     - JD phrase: "cross-functional teams" → Bullet contains "cross-functional teams" ✓
+     - JD phrase: "production systems" → Bullet contains "production system" ✓ (singular/plural variants count)
+
+3. **Apply phrase coverage threshold:**
+   - **MINIMUM TARGET:** 15-20 exact phrase matches across all 32 bullets
+   - This means roughly 50% of your bullets should contain at least one JD phrase
+   - Calculate: (Number of exact phrase matches) / (Total extracted phrases) × 100
+
+4. **If phrase coverage is LOW (<15 matches):**
+   - STOP and identify bullets with generic language
+   - Replace generic phrases with JD phrases where authentic per `narrative_context`
+   - Examples:
+     - Generic: "worked with teams" → JD phrase: "collaborated with cross-functional teams"
+     - Generic: "built system" → JD phrase: "built scalable architecture"
+     - Generic: "deployed code" → JD phrase: "deployed to production systems"
+
+5. **Authenticity check:**
+   - Only use JD phrases where they accurately describe your work per `narrative_context`
+   - Don't force phrases that don't fit - authenticity > phrase matching
+   - When you have 2 ways to say the same thing, choose the way that mirrors JD phrasing
+
+6. **Write down:** "JD Phrase Coverage: X matches out of Y extracted phrases"
+   - Target: 15-20 matches minimum
+   - If < 15, revise bullets to incorporate more JD phrases
+   - Only proceed if threshold met OR all bullets are maximally authentic
+
+**STEP 15: FINAL JSON VALIDATION (LAST CHECK BEFORE OUTPUT - moved from previous Step 14)**
 - Perform one final mental parse of your entire JSON
 - Verify EVERY bullet point has opening AND closing quotes
 - Verify NO trailing commas anywhere
